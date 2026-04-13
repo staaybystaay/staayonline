@@ -11,7 +11,7 @@ import useCartStore from '../store/useCartStore'
 const heroSlides = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1400&q=80&fit=crop',
+    image: '/samba.jpg',
     tag: 'SS 2025 — Footwear',
     heading: ['STAY', 'ON', 'LINE.'],
     sub: 'Every step is a statement.',
@@ -20,7 +20,7 @@ const heroSlides = [
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=1400&q=80&fit=crop',
+    image: '/baggyjeans.jpg',
     tag: 'SS 2025 — Tops',
     heading: ['WEAR', 'THE', 'VOID.'],
     sub: 'Oversized. Minimal. Yours.',
@@ -29,7 +29,7 @@ const heroSlides = [
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=1400&q=80&fit=crop',
+    image: '/crocs.png',
     tag: 'SS 2025 — Bottoms',
     heading: ['NEW', 'DROP', '01.'],
     sub: 'Cargo culture refined.',
@@ -38,7 +38,7 @@ const heroSlides = [
   },
   {
     id: 4,
-    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1400&q=80&fit=crop',
+    image: '/fashionguy.jpg',
     tag: 'SS 2025 — Collection',
     heading: ['THE', 'EDIT.', ''],
     sub: 'Curated for those who refuse definition.',
@@ -53,30 +53,30 @@ const heroSlides = [
 const featuredDrops = [
   {
     id: 'f1',
-    label: 'AIR STAAY 01',
+    label: 'Under Armour Scorpion Chrome',
     price: '$320',
-    image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400&q=80&fit=crop',
+    image: '/airsneaker.jpg',
     tag: 'New',
   },
   {
     id: 'f2',
     label: 'VOID HOODIE',
     price: '$195',
-    image: 'https://images.unsplash.com/photo-1617952236317-0bd127407984?w=400&q=80&fit=crop',
+    image: '/hoodie.jpg',
     tag: 'Hot',
   },
   {
     id: 'f3',
-    label: 'CARGO PANT 02',
+    label: 'SHEIN CARGO PANT',
     price: '$240',
-    image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&q=80&fit=crop',
+    image: '/cargopant.jpg',
     tag: 'New',
   },
   {
     id: 'f4',
-    label: 'PHANTOM JACKET',
+    label: 'POLO JERSEY',
     price: '$420',
-    image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&q=80&fit=crop',
+    image: '/polojersey.jpg',
     tag: null,
   },
   {
