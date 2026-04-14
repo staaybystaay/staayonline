@@ -1004,7 +1004,7 @@ function EditorialSplit() {
             style={{ position: 'relative', height: '440px', overflow: 'hidden' }}
           >
             <img
-              src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&q=80&fit=crop"
+              src="/mendress.jpg"
               alt="New Release"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
@@ -1048,7 +1048,7 @@ function EditorialSplit() {
             style={{ position: 'relative', height: '440px', overflow: 'hidden' }}
           >
             <img
-              src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80&fit=crop"
+              src="/womendress.jpg"
               alt="Coming Soon"
               style={{
                 width: '100%', height: '100%',
