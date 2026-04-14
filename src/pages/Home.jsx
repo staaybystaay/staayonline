@@ -1,82 +1,87 @@
-import { useState, useEffect, useRef, Suspense } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { useTexture } from '@react-three/drei'
-import * as THREE from 'three'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import { products } from '../data/products'
 import useCartStore from '../store/useCartStore'
 
 // ═══════════════════════════════════════════════════════
-// HERO SLIDES — your data unchanged
+// SLIDES — swap URLs to your local paths
 // ═══════════════════════════════════════════════════════
 const heroSlides = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1600&q=90&fit=crop',
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&q=90&fit=crop',
     tag: 'SS 2025 — Footwear',
-    lines: ['STAY', 'ON', 'LINE.'],
-    italic: 1,
+    heading: ['STEP', 'INTO', 'NOW.'],
+    accentLine: 1,
     sub: 'Every step is a statement.',
     cta: 'Shop Sneakers',
-    accent: '#e63946',
+    accent: '#E63946',
+    bgLeft: '#0D0000',
+    imagePos: 'center center',
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=1600&q=90&fit=crop',
+    image: '/visionhoodie.jpg',
     tag: 'SS 2025 — Tops',
-    lines: ['WEAR', 'THE', 'VOID.'],
-    italic: 2,
+    heading: ['WEAR', 'THE', 'VOID.'],
+    accentLine: 2,
     sub: 'Oversized. Minimal. Yours.',
     cta: 'Shop Hoodies',
-    accent: '#c8a44a',
+    accent: '#F0C040',
+    bgLeft: '#0A0800',
+    imagePos: 'center 20%',
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=1600&q=90&fit=crop',
+    image: '/baggy.jpg',
     tag: 'SS 2025 — Bottoms',
-    lines: ['NEW', 'DROP', '01.'],
-    italic: 0,
+    heading: ['NEW', 'DROP', '01.'],
+    accentLine: 0,
     sub: 'Cargo culture refined.',
     cta: 'Shop Bottoms',
-    accent: '#c8a44a',
+    accent: '#F0C040',
+    bgLeft: '#060808',
+    imagePos: 'center center',
   },
   {
     id: 4,
-    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&q=90&fit=crop',
+    image: '/hood.jpg',
     tag: 'SS 2025 — Collection',
-    lines: ['THE', 'EDIT.', ''],
-    italic: 1,
+    heading: ['THE', 'EDIT.', ''],
+    accentLine: 1,
     sub: 'Curated for those who refuse definition.',
     cta: 'Shop All',
-    accent: '#c8a44a',
+    accent: '#F0C040',
+    bgLeft: '#080808',
+    imagePos: 'center top',
   },
 ]
 
 // ═══════════════════════════════════════════════════════
-// FEATURED DROPS — your data unchanged
+// FEATURED DROPS DATA
 // ═══════════════════════════════════════════════════════
 const featuredDrops = [
   {
     id: 'f1',
     label: 'AIR STAAY 01',
     price: '$320',
-    image: 'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400&q=80&fit=crop',
+    image: '/airsneaker.jpg',
     tag: 'New',
   },
   {
     id: 'f2',
     label: 'VOID HOODIE',
     price: '$195',
-    image: 'https://images.unsplash.com/photo-1617952236317-0bd127407984?w=400&q=80&fit=crop',
+    image: '/hoodie.jpg',
     tag: 'Hot',
   },
   {
     id: 'f3',
     label: 'CARGO PANT 02',
     price: '$240',
-    image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=400&q=80&fit=crop',
+    image: '/cargopant.jpg',
     tag: 'New',
   },
   {
@@ -88,16 +93,13 @@ const featuredDrops = [
   },
   {
     id: 'f5',
-    label: 'STAAY RUNNER',
+    label: 'CROCS',
     price: '$280',
-    image: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&q=80&fit=crop',
+    image: '/crocs.png',
     tag: 'Sale',
   },
 ]
 
-// ═══════════════════════════════════════════════════════
-// BADGE MAP
-// ═══════════════════════════════════════════════════════
 const badgeMap = {
   New:  { background: 'var(--badge-new-bg)',  color: 'var(--badge-new-fg)'  },
   Hot:  { background: 'var(--badge-hot-bg)',  color: 'var(--badge-hot-fg)', border: '1px solid var(--accent)' },
@@ -105,172 +107,33 @@ const badgeMap = {
 }
 
 // ═══════════════════════════════════════════════════════
-// THREE.JS — 360 PHOTO SPHERE
-// ═══════════════════════════════════════════════════════
-function PhotoSphere({ url, opacity = 1 }) {
-  const texture = useTexture(url)
-  const meshRef = useRef()
-
-  texture.mapping    = THREE.EquirectangularReflectionMapping
-  texture.colorSpace = THREE.SRGBColorSpace
-  texture.minFilter  = THREE.LinearFilter
-  texture.magFilter  = THREE.LinearFilter
-
-  useFrame(({ clock }) => {
-    if (meshRef.current)
-      meshRef.current.rotation.y = clock.getElapsedTime() * 0.018
-  })
-
-  return (
-    <mesh ref={meshRef} scale={[-1, 1, 1]}>
-      <sphereGeometry args={[8, 80, 40]} />
-      <meshBasicMaterial
-        map={texture}
-        side={THREE.BackSide}
-        transparent
-        opacity={opacity}
-        toneMapped={false}
-      />
-    </mesh>
-  )
-}
-
-// ═══════════════════════════════════════════════════════
-// THREE.JS — CAMERA FOLLOWS MOUSE
-// ═══════════════════════════════════════════════════════
-function CameraRig() {
-  const { camera } = useThree()
-  const targetX    = useRef(0)
-  const targetY    = useRef(0)
-
-  useEffect(() => {
-    const onMove = (e) => {
-      targetX.current = (e.clientX / window.innerWidth  - 0.5) * 0.35
-      targetY.current = (e.clientY / window.innerHeight - 0.5) * 0.18
-    }
-    window.addEventListener('mousemove', onMove)
-    return () => window.removeEventListener('mousemove', onMove)
-  }, [])
-
-  useFrame(() => {
-    camera.rotation.y += ((-targetX.current) - camera.rotation.y) * 0.04
-    camera.rotation.x += ((-targetY.current) - camera.rotation.x) * 0.04
-  })
-
-  return null
-}
-
-// ═══════════════════════════════════════════════════════
-// THREE.JS — DARK VIGNETTE
-// ═══════════════════════════════════════════════════════
-function VignetteSphere() {
-  return (
-    <mesh scale={[-1, 1, 1]}>
-      <sphereGeometry args={[7.8, 32, 16]} />
-      <meshBasicMaterial
-        color="#000000"
-        side={THREE.BackSide}
-        transparent
-        opacity={0.48}
-        depthWrite={false}
-      />
-    </mesh>
-  )
-}
-
-// ═══════════════════════════════════════════════════════
-// THREE.JS — CROSSFADE BETWEEN SLIDES
-// ═══════════════════════════════════════════════════════
-function CrossfadeScene({ currentUrl, prevUrl, fading }) {
-  const [opacity, setOpacity] = useState(1)
-
-  useFrame(() => {
-    if (fading) setOpacity(o => Math.max(0, o - 0.035))
-    else        setOpacity(o => Math.min(1, o + 0.035))
-  })
-
-  return (
-    <>
-      {prevUrl && fading && (
-        <PhotoSphere url={prevUrl} opacity={opacity} />
-      )}
-      <PhotoSphere
-        url={currentUrl}
-        opacity={fading ? 1 - opacity : opacity}
-      />
-      <CameraRig />
-    </>
-  )
-}
-
-// ═══════════════════════════════════════════════════════
-// SPLIT TEXT — your code unchanged
-// ═══════════════════════════════════════════════════════
-function SplitText({ text, delay = 0, italic = false, color = '#fff' }) {
-  const chars = text.split('')
-  return (
-    <span style={{ display: 'inline-block', overflow: 'hidden' }}>
-      {chars.map((char, i) => (
-        <motion.span
-          key={i}
-          initial={{ y: '110%', opacity: 0 }}
-          animate={{ y: '0%', opacity: 1 }}
-          transition={{
-            duration: 0.55,
-            delay: delay + i * 0.032,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-          style={{
-            display: 'inline-block',
-            fontStyle: italic ? 'italic' : 'normal',
-            fontWeight: italic ? 300 : 800,
-            color,
-          }}
-        >
-          {char === ' ' ? '\u00A0' : char}
-        </motion.span>
-      ))}
-    </span>
-  )
-}
-
-// ═══════════════════════════════════════════════════════
-// HERO SECTION
+// HERO
 // ═══════════════════════════════════════════════════════
 function HeroSection() {
   const [current, setCurrent] = useState(0)
-  const [prev,    setPrev]    = useState(null)
-  const [fading,  setFading]  = useState(false)
+  const [dir,     setDir]     = useState(1)
   const [paused,  setPaused]  = useState(false)
-  const [reveal,  setReveal]  = useState(true)
   const { theme }             = useTheme()
+  const slide                 = heroSlides[current]
 
-  const slide = heroSlides[current]
-
-  // Auto-advance
   useEffect(() => {
     if (paused) return
-    const id = setInterval(() => advance(1), 7000)
+    const id = setInterval(() => go(1), 6500)
     return () => clearInterval(id)
   }, [current, paused])
 
-  const advance = (dir) => {
-    const next = (current + dir + heroSlides.length) % heroSlides.length
-    setPrev(current)
-    setFading(true)
-    setReveal(false)
-    setTimeout(() => { setCurrent(next); setReveal(true) }, 300)
-    setTimeout(() => { setFading(false); setPrev(null)  }, 1200)
+  const go = (d) => {
+    setDir(d)
+    setCurrent(c => (c + d + heroSlides.length) % heroSlides.length)
   }
 
   const goTo = (i) => {
     if (i === current) return
-    setPrev(current)
-    setFading(true)
-    setReveal(false)
-    setTimeout(() => { setCurrent(i); setReveal(true) }, 300)
-    setTimeout(() => { setFading(false); setPrev(null)  }, 1200)
+    setDir(i > current ? 1 : -1)
+    setCurrent(i)
   }
+
+  const lines = slide.heading.filter(Boolean)
 
   return (
     <section
@@ -279,165 +142,207 @@ function HeroSection() {
       style={{
         position: 'relative',
         height: 'calc(100vh - 64px)',
-        minHeight: '560px',
+        minHeight: '620px',
         overflow: 'hidden',
-        background: '#000',
-        cursor: 'crosshair',
+        background: '#050505',
       }}
     >
 
-      {/* ── Three.js 360 sphere canvas ── */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-        <Canvas
-          camera={{ position: [0, 0, 0.1], fov: 85 }}
-          gl={{
-            antialias: true,
-            alpha: false,
-            toneMapping: THREE.NoToneMapping,
-          }}
-          style={{ background: '#000' }}
-        >
-          <Suspense fallback={null}>
-            <CrossfadeScene
-              currentUrl={heroSlides[current].image}
-              prevUrl={prev !== null ? heroSlides[prev].image : null}
-              fading={fading}
-            />
-            <VignetteSphere />
-          </Suspense>
-        </Canvas>
-      </div>
-
-      {/* ── Left gradient ── */}
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 1,
-        pointerEvents: 'none',
-        background: 'linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.5) 42%, rgba(0,0,0,0.15) 70%, rgba(0,0,0,0.05) 100%)',
-      }} />
-
-      {/* ── Bottom gradient ── */}
-      <div style={{
-        position: 'absolute', inset: 0, zIndex: 1,
-        pointerEvents: 'none',
-        background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 40%)',
-      }} />
-
-      {/* ── Colored tint strip from slide accent ── */}
-      <motion.div
-        key={`tint-${slide.id}`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.12 }}
-        transition={{ duration: 1.2 }}
-        style={{
-          position: 'absolute', inset: 0, zIndex: 1,
-          pointerEvents: 'none',
-          background: `radial-gradient(ellipse at 75% 40%, ${slide.accent} 0%, transparent 65%)`,
-        }}
-      />
-
-      {/* ── Oversized ghost word ── */}
-      <AnimatePresence mode="wait">
+      {/* ── FULL BLEED BACKGROUND IMAGE ── */}
+      <AnimatePresence custom={dir} initial={false}>
         <motion.div
-          key={`ghost-${slide.id}`}
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -30 }}
-          transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
-          style={{
-            position: 'absolute',
-            right: '-2%', top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 1,
-            fontFamily: "'Fraunces', serif",
-            fontWeight: 800,
-            fontSize: 'clamp(140px, 20vw, 280px)',
-            lineHeight: 0.85,
-            color: 'rgba(255,255,255,0.04)',
-            letterSpacing: '-0.04em',
-            userSelect: 'none',
-            pointerEvents: 'none',
-            whiteSpace: 'nowrap',
-          }}
+          key={`img-${slide.id}`}
+          custom={dir}
+          initial={{ clipPath: dir > 0 ? 'inset(0 100% 0 0)' : 'inset(0 0 0 100%)' }}
+          animate={{ clipPath: 'inset(0 0% 0 0)' }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.95, ease: [0.76, 0, 0.24, 1] }}
+          style={{ position: 'absolute', inset: 0, zIndex: 0 }}
         >
-          {slide.lines[0]}
+          <img
+            src={slide.image}
+            alt={slide.tag}
+            style={{
+              width: '100%', height: '100%',
+              objectFit: 'cover',
+              objectPosition: slide.imagePos,
+              display: 'block',
+            }}
+          />
         </motion.div>
       </AnimatePresence>
 
-      {/* ── Text content ── */}
+      {/* ── GRADIENT OVERLAYS ── */}
+      {/* Left dark overlay so text is readable */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 1,
+        background: 'linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.65) 40%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0.05) 100%)',
+      }} />
+      {/* Bottom fade */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0,
+        height: '200px', zIndex: 1,
+        background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
+      }} />
+      {/* Accent color tint */}
+      <motion.div
+        key={`tint-${slide.id}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.4 }}
+        style={{
+          position: 'absolute', inset: 0, zIndex: 1,
+          background: `radial-gradient(ellipse at 15% 60%, ${slide.accent}25 0%, transparent 55%)`,
+        }}
+      />
+
+      {/* ── ACCENT TOP STRIPE ── */}
+      <motion.div
+        key={`stripe-${slide.id}`}
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          position: 'absolute', top: 0, left: 0, right: 0,
+          height: '3px', background: slide.accent,
+          transformOrigin: 'left', zIndex: 3,
+        }}
+      />
+
+      {/* ── NEW SEASON BADGE ── */}
+      <motion.div
+        key={`badge-${slide.id}`}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+        style={{
+          position: 'absolute', top: '24px', right: '24px',
+          zIndex: 3,
+          background: slide.accent,
+          padding: '6px 14px',
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: '9px', letterSpacing: '0.3em',
+          textTransform: 'uppercase', fontWeight: 600,
+          color: slide.accent === '#F0C040' ? '#080808' : '#fff',
+        }}
+      >
+        New Season
+      </motion.div>
+
+      {/* ── GHOST NUMBER ── */}
+      <div style={{
+        position: 'absolute',
+        bottom: '-10px', right: '2%',
+        zIndex: 1, pointerEvents: 'none',
+        fontFamily: "'Bebas Neue', sans-serif",
+        fontSize: 'clamp(200px, 28vw, 420px)',
+        lineHeight: 1,
+        color: 'rgba(255,255,255,0.04)',
+        userSelect: 'none',
+        letterSpacing: '-0.05em',
+      }}>
+        {String(current + 1).padStart(2, '0')}
+      </div>
+
+      {/* ── TEXT CONTENT ── */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 2,
         display: 'flex', alignItems: 'center',
-        padding: '0 80px',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: '100%',
+        maxWidth: '1200px', margin: '0 auto',
+        left: '50%', transform: 'translateX(-50%)',
+        width: '100%', padding: '0 80px',
       }}>
-        {reveal && (
-          <div style={{ maxWidth: '580px' }}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`text-${slide.id}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            style={{ maxWidth: '560px' }}
+          >
 
-            {/* Tag line */}
+            {/* Tag */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
               style={{
                 display: 'flex', alignItems: 'center',
-                gap: '12px', marginBottom: '20px',
+                gap: '12px', marginBottom: '28px',
               }}
             >
               <motion.span
                 initial={{ width: 0 }}
-                animate={{ width: '28px' }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                animate={{ width: '32px' }}
+                transition={{ duration: 0.5, delay: 0.25 }}
                 style={{
-                  display: 'block', height: '1px',
+                  display: 'block', height: '2px',
                   background: slide.accent, overflow: 'hidden',
                 }}
               />
               <span style={{
                 fontFamily: "'Outfit', sans-serif",
-                fontSize: '10px', letterSpacing: '0.3em',
+                fontSize: '11px', letterSpacing: '0.3em',
                 textTransform: 'uppercase',
-                color: slide.accent, fontWeight: 400,
+                color: slide.accent, fontWeight: 500,
               }}>
                 {slide.tag}
               </span>
             </motion.div>
 
-            {/* Headline */}
+            {/* HEADLINE */}
             <h1 style={{
-              fontFamily: "'Fraunces', serif",
-              fontSize: 'clamp(54px, 7.5vw, 100px)',
-              lineHeight: 0.88,
-              letterSpacing: '-0.03em',
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(80px, 10vw, 140px)',
+              lineHeight: 0.9,
+              letterSpacing: '0.01em',
               margin: '0 0 24px',
-              overflow: 'hidden',
+              textTransform: 'uppercase',
             }}>
-              {slide.lines.filter(l => l).map((line, i) => (
-                <div key={`${slide.id}-${i}`} style={{ overflow: 'hidden', display: 'block' }}>
-                  <SplitText
-                    text={line}
-                    delay={0.15 + i * 0.1}
-                    italic={i === slide.italic}
-                    color={i === slide.italic ? slide.accent : '#ffffff'}
-                  />
-                </div>
+              {lines.map((line, i) => (
+                <motion.div
+                  key={`${slide.id}-${i}`}
+                  initial={{ y: '100%', opacity: 0 }}
+                  animate={{ y: '0%', opacity: 1 }}
+                  transition={{
+                    duration: 0.65,
+                    delay: 0.2 + i * 0.1,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  style={{
+                    display: 'block',
+                    overflow: 'hidden',
+                    color: i === slide.accentLine ? slide.accent : '#ffffff',
+                  }}
+                >
+                  <span style={{ display: 'block' }}>{line}</span>
+                </motion.div>
               ))}
             </h1>
 
-            {/* Subtext */}
+            {/* Divider */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.7, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                height: '2px', background: slide.accent,
+                transformOrigin: 'left', width: '60px', marginBottom: '18px',
+              }}
+            />
+
+            {/* Sub */}
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.55 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
               style={{
                 fontFamily: "'Fraunces', serif",
                 fontStyle: 'italic', fontWeight: 300,
-                fontSize: '16px', lineHeight: 1.65,
+                fontSize: '16px', lineHeight: 1.7,
                 color: 'rgba(255,255,255,0.5)',
-                marginBottom: '36px',
+                marginBottom: '36px', maxWidth: '320px',
               }}
             >
               {slide.sub}
@@ -445,32 +350,30 @@ function HeroSection() {
 
             {/* CTAs */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.68 }}
+              transition={{ duration: 0.6, delay: 0.72 }}
               style={{ display: 'flex', gap: '12px', alignItems: 'center' }}
             >
               <Link
                 to="/shop"
                 style={{
-                  background: '#ffffff', color: '#080808',
+                  background: slide.accent,
+                  color: slide.accent === '#F0C040' ? '#080808' : '#fff',
                   padding: '14px 36px',
                   fontFamily: "'Outfit', sans-serif",
-                  fontSize: '11px', letterSpacing: '0.2em',
+                  fontSize: '11px', letterSpacing: '0.22em',
                   textTransform: 'uppercase', fontWeight: 500,
-                  display: 'inline-block',
-                  transition: 'all 0.3s',
-                  border: '1px solid #ffffff',
+                  display: 'inline-block', transition: 'all 0.3s',
+                  border: `2px solid ${slide.accent}`,
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.background  = slide.accent
-                  e.currentTarget.style.borderColor = slide.accent
-                  e.currentTarget.style.color = '#fff'
+                  e.currentTarget.style.background = 'transparent'
+                  e.currentTarget.style.color = slide.accent
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.background  = '#ffffff'
-                  e.currentTarget.style.borderColor = '#ffffff'
-                  e.currentTarget.style.color = '#080808'
+                  e.currentTarget.style.background = slide.accent
+                  e.currentTarget.style.color = slide.accent === '#F0C040' ? '#080808' : '#fff'
                 }}
               >
                 {slide.cta}
@@ -479,13 +382,12 @@ function HeroSection() {
                 to="/shop"
                 style={{
                   border: '1px solid rgba(255,255,255,0.25)',
-                  color: 'rgba(255,255,255,0.65)',
-                  padding: '13px 36px',
+                  color: 'rgba(255,255,255,0.6)',
+                  padding: '13px 32px',
                   fontFamily: "'Outfit', sans-serif",
-                  fontSize: '11px', letterSpacing: '0.2em',
+                  fontSize: '11px', letterSpacing: '0.22em',
                   textTransform: 'uppercase', fontWeight: 300,
-                  display: 'inline-block',
-                  transition: 'all 0.3s',
+                  display: 'inline-block', transition: 'all 0.3s',
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.borderColor = slide.accent
@@ -493,146 +395,108 @@ function HeroSection() {
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'
-                  e.currentTarget.style.color = 'rgba(255,255,255,0.65)'
+                  e.currentTarget.style.color = 'rgba(255,255,255,0.6)'
                 }}
               >
                 Lookbook
               </Link>
             </motion.div>
 
-          </div>
-        )}
-      </div>
-
-      {/* ── Prev / Next arrows ── */}
-      {[
-        { dir: -1, side: 'left',  pos: '24px' },
-        { dir:  1, side: 'right', pos: '64px' },
-      ].map(({ dir, side, pos }) => (
-        <button
-          key={side}
-          onClick={() => advance(dir)}
-          style={{
-            position: 'absolute',
-            [side]: pos,
-            top: '50%', transform: 'translateY(-50%)',
-            zIndex: 3,
-            width: '44px', height: '44px',
-            background: 'rgba(255,255,255,0.07)',
-            border: '1px solid rgba(255,255,255,0.15)',
-            color: 'rgba(255,255,255,0.6)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', fontSize: '16px',
-            transition: 'all 0.25s',
-            backdropFilter: 'blur(4px)',
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.background  = slide.accent
-            e.currentTarget.style.borderColor = slide.accent
-            e.currentTarget.style.color = '#fff'
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.background  = 'rgba(255,255,255,0.07)'
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'
-            e.currentTarget.style.color = 'rgba(255,255,255,0.6)'
-          }}
-        >
-          {dir === -1 ? '←' : '→'}
-        </button>
-      ))}
-
-      {/* ── Slide counter top right ── */}
-      <div style={{
-        position: 'absolute', top: '32px', right: '40px',
-        zIndex: 3,
-        display: 'flex', alignItems: 'center', gap: '10px',
-      }}>
-        <AnimatePresence mode="wait">
-          <motion.span
-            key={current}
-            initial={{ y: -14, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 14, opacity: 0 }}
-            transition={{ duration: 0.35 }}
-            style={{
-              fontFamily: "'Fraunces', serif",
-              fontWeight: 800, fontSize: '18px',
-              color: '#fff', lineHeight: 1,
-            }}
-          >
-            {String(current + 1).padStart(2, '0')}
-          </motion.span>
+          </motion.div>
         </AnimatePresence>
-        <span style={{
-          fontFamily: "'Outfit', sans-serif",
-          fontSize: '11px', color: 'rgba(255,255,255,0.25)',
-        }}>
-          / {String(heroSlides.length).padStart(2, '0')}
-        </span>
       </div>
 
-      {/* ── Dot indicators ── */}
+      {/* ── BOTTOM BAR — counter + dots + arrows ── */}
       <div style={{
-        position: 'absolute', bottom: '32px', left: '80px',
+        position: 'absolute', bottom: '32px', left: '50%',
+        transform: 'translateX(-50%)',
+        width: '100%', maxWidth: '1200px',
+        padding: '0 80px',
         zIndex: 3,
-        display: 'flex', alignItems: 'center', gap: '20px',
+        display: 'flex', alignItems: 'center',
+        justifyContent: 'space-between',
       }}>
-        {heroSlides.map((s, i) => (
-          <button
-            key={s.id}
-            onClick={() => goTo(i)}
-            style={{
-              background: 'none', border: 'none',
-              cursor: 'pointer', padding: 0,
-              display: 'flex', flexDirection: 'column',
-              alignItems: 'center', gap: '6px',
-            }}
-          >
-            <motion.div
-              animate={{
-                width: i === current ? '32px' : '16px',
-                background: i === current
-                  ? slide.accent
-                  : 'rgba(255,255,255,0.25)',
-              }}
-              transition={{ duration: 0.4 }}
-              style={{ height: '2px', borderRadius: '2px' }}
-            />
+        {/* Counter + dots */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={current}
+                initial={{ y: -10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 10, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                style={{
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: '22px', color: slide.accent, lineHeight: 1,
+                }}
+              >
+                {String(current + 1).padStart(2, '0')}
+              </motion.span>
+            </AnimatePresence>
             <span style={{
               fontFamily: "'Outfit', sans-serif",
-              fontSize: '8px', letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: i === current
-                ? 'rgba(255,255,255,0.6)'
-                : 'rgba(255,255,255,0.2)',
-              transition: 'color 0.3s',
+              fontSize: '11px', color: 'rgba(255,255,255,0.25)',
             }}>
-              {String(i + 1).padStart(2, '0')}
+              / {String(heroSlides.length).padStart(2, '0')}
             </span>
-          </button>
-        ))}
+          </div>
+          <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            {heroSlides.map((s, i) => (
+              <button
+                key={s.id}
+                onClick={() => goTo(i)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px 2px' }}
+              >
+                <motion.div
+                  animate={{
+                    width:      i === current ? '20px' : '6px',
+                    background: i === current ? slide.accent : 'rgba(255,255,255,0.25)',
+                  }}
+                  transition={{ duration: 0.3 }}
+                  style={{ height: '3px', borderRadius: '2px' }}
+                />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Arrows */}
+        <div style={{ display: 'flex', gap: '8px' }}>
+          {[-1, 1].map(d => (
+            <button
+              key={d}
+              onClick={() => go(d)}
+              style={{
+                width: '48px', height: '48px',
+                background: 'rgba(0,0,0,0.45)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                color: 'rgba(255,255,255,0.7)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer', fontSize: '16px',
+                transition: 'all 0.25s',
+                backdropFilter: 'blur(8px)',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background  = slide.accent
+                e.currentTarget.style.borderColor = slide.accent
+                e.currentTarget.style.color = slide.accent === '#F0C040' ? '#080808' : '#fff'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background  = 'rgba(0,0,0,0.45)'
+                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)'
+                e.currentTarget.style.color = 'rgba(255,255,255,0.7)'
+              }}
+            >
+              {d === -1 ? '←' : '→'}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* ── Progress bar ── */}
-      {!paused && (
-        <motion.div
-          key={`${slide.id}-bar`}
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 7, ease: 'linear' }}
-          style={{
-            position: 'absolute', bottom: 0, left: 0, right: 0,
-            height: '2px',
-            background: slide.accent,
-            transformOrigin: 'left',
-            zIndex: 3, opacity: 0.7,
-          }}
-        />
-      )}
-
-      {/* ── Vertical brand label ── */}
+      {/* ── VERTICAL BRAND LABEL ── */}
       <div style={{
-        position: 'absolute', bottom: '120px', left: '20px',
+        position: 'absolute', bottom: '120px', left: '18px',
         transform: 'rotate(-90deg)',
         transformOrigin: 'left center',
         zIndex: 3,
@@ -641,24 +505,38 @@ function HeroSection() {
           fontFamily: "'Outfit', sans-serif",
           fontSize: '8px', letterSpacing: '0.32em',
           textTransform: 'uppercase',
-          color: 'rgba(255,255,255,0.2)',
+          color: 'rgba(255,255,255,0.18)',
           whiteSpace: 'nowrap',
         }}>
           stayyonline.com — SS2025
         </span>
       </div>
 
+      {/* ── PROGRESS BAR ── */}
+      {!paused && (
+        <motion.div
+          key={`bar-${slide.id}`}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 6.5, ease: 'linear' }}
+          style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            height: '3px', background: slide.accent,
+            transformOrigin: 'left', zIndex: 3,
+          }}
+        />
+      )}
+
     </section>
   )
 }
-
 // ═══════════════════════════════════════════════════════
-// FEATURED DROPS STRIP — your code unchanged
+// FEATURED DROPS STRIP
 // ═══════════════════════════════════════════════════════
 function FeaturedDropsStrip() {
   const [hovered, setHovered] = useState(null)
 
-  const badgeStyle = {
+  const stripBadge = {
     New:  { background: 'var(--badge-new-bg)',  color: 'var(--badge-new-fg)'  },
     Hot:  { background: 'transparent', color: 'var(--accent)', border: '1px solid var(--accent)' },
     Sale: { background: 'var(--badge-sale-bg)', color: 'var(--badge-sale-fg)' },
@@ -671,21 +549,16 @@ function FeaturedDropsStrip() {
       padding: '40px 0',
     }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
-
         <div style={{
           display: 'flex', alignItems: 'center',
           justifyContent: 'space-between', marginBottom: '24px',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{
-              display: 'block', width: '20px', height: '1px',
-              background: 'var(--accent)',
-            }} />
+            <span style={{ display: 'block', width: '20px', height: '1px', background: 'var(--accent)' }} />
             <span style={{
               fontFamily: "'Outfit', sans-serif",
               fontSize: '10px', letterSpacing: '0.3em',
-              textTransform: 'uppercase', color: 'var(--accent)',
-              fontWeight: 400,
+              textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 400,
             }}>
               Just dropped
             </span>
@@ -703,13 +576,9 @@ function FeaturedDropsStrip() {
             See all →
           </Link>
         </div>
-
         <div
           className="fe-scrollbar"
-          style={{
-            display: 'flex', gap: '16px',
-            overflowX: 'auto', paddingBottom: '4px',
-          }}
+          style={{ display: 'flex', gap: '16px', overflowX: 'auto', paddingBottom: '4px' }}
         >
           {featuredDrops.map((drop, i) => (
             <motion.div
@@ -721,27 +590,22 @@ function FeaturedDropsStrip() {
               onMouseEnter={() => setHovered(drop.id)}
               onMouseLeave={() => setHovered(null)}
               style={{
-                flexShrink: 0, width: '200px',
-                cursor: 'pointer',
+                flexShrink: 0, width: '200px', cursor: 'pointer',
                 transition: 'transform 0.35s',
                 transform: hovered === drop.id ? 'translateY(-4px)' : 'translateY(0)',
               }}
             >
               <div style={{
                 position: 'relative', width: '200px', height: '220px',
-                overflow: 'hidden',
-                background: 'var(--bg-card)',
+                overflow: 'hidden', background: 'var(--bg-card)',
                 border: `1px solid ${hovered === drop.id ? 'var(--border-mid)' : 'var(--border)'}`,
                 transition: 'border-color 0.3s',
               }}>
-                <img
-                  src={drop.image} alt={drop.label}
-                  style={{
-                    width: '100%', height: '100%', objectFit: 'cover',
-                    transition: 'transform 0.65s',
-                    transform: hovered === drop.id ? 'scale(1.06)' : 'scale(1)',
-                  }}
-                />
+                <img src={drop.image} alt={drop.label} style={{
+                  width: '100%', height: '100%', objectFit: 'cover',
+                  transition: 'transform 0.65s',
+                  transform: hovered === drop.id ? 'scale(1.06)' : 'scale(1)',
+                }} />
                 {drop.tag && (
                   <span style={{
                     position: 'absolute', top: '10px', left: '10px',
@@ -749,7 +613,7 @@ function FeaturedDropsStrip() {
                     fontFamily: "'Outfit', sans-serif",
                     fontSize: '9px', letterSpacing: '0.16em',
                     textTransform: 'uppercase', fontWeight: 500,
-                    ...badgeStyle[drop.tag],
+                    ...stripBadge[drop.tag],
                   }}>
                     {drop.tag}
                   </span>
@@ -759,15 +623,13 @@ function FeaturedDropsStrip() {
                 <p style={{
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: '11px', letterSpacing: '0.1em',
-                  color: 'var(--text)', fontWeight: 500,
-                  marginBottom: '3px',
+                  color: 'var(--text)', fontWeight: 500, marginBottom: '3px',
                 }}>
                   {drop.label}
                 </p>
                 <p style={{
                   fontFamily: "'Fraunces', serif",
-                  fontStyle: 'italic', fontSize: '15px',
-                  color: 'var(--accent)',
+                  fontStyle: 'italic', fontSize: '15px', color: 'var(--accent)',
                 }}>
                   {drop.price}
                 </p>
@@ -781,7 +643,7 @@ function FeaturedDropsStrip() {
 }
 
 // ═══════════════════════════════════════════════════════
-// MARQUEE — your code unchanged
+// MARQUEE
 // ═══════════════════════════════════════════════════════
 function EditorialMarquee() {
   const words = [
@@ -799,10 +661,7 @@ function EditorialMarquee() {
       <motion.div
         animate={{ x: ['0%', '-50%'] }}
         transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
-        style={{
-          display: 'flex', gap: '40px',
-          whiteSpace: 'nowrap', width: 'max-content',
-        }}
+        style={{ display: 'flex', gap: '40px', whiteSpace: 'nowrap', width: 'max-content' }}
       >
         {[...words, ...words].map((word, i) => (
           <span key={i} style={{
@@ -820,7 +679,7 @@ function EditorialMarquee() {
 }
 
 // ═══════════════════════════════════════════════════════
-// CATEGORIES — your code unchanged
+// CATEGORIES
 // ═══════════════════════════════════════════════════════
 const categoryData = [
   { label: 'All',     icon: '◎' },
@@ -838,12 +697,10 @@ function CategoriesSection({ active, setActive }) {
 
   return (
     <section style={{
-      background: 'var(--bg)',
-      padding: '72px 0 52px',
+      background: 'var(--bg)', padding: '72px 0 52px',
       borderBottom: '1px solid var(--border)',
     }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
-
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -864,9 +721,9 @@ function CategoriesSection({ active, setActive }) {
               Browse by
             </p>
             <h2 style={{
-              fontFamily: "'Fraunces', serif", fontWeight: 800,
-              fontSize: 'clamp(26px, 3vw, 38px)',
-              color: 'var(--text)', lineHeight: 1, letterSpacing: '-0.02em',
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(32px, 4vw, 48px)',
+              color: 'var(--text)', lineHeight: 1, letterSpacing: '0.02em',
             }}>
               Categories
             </h2>
@@ -890,7 +747,6 @@ function CategoriesSection({ active, setActive }) {
             View All →
           </Link>
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -911,9 +767,7 @@ function CategoriesSection({ active, setActive }) {
                   padding: '9px 18px',
                   background: isActive ? 'var(--accent)' : 'transparent',
                   border: `1px solid ${isActive ? 'var(--accent)' : 'var(--border-mid)'}`,
-                  color: isActive
-                    ? (isLight ? '#fff' : '#080808')
-                    : 'var(--text-muted)',
+                  color: isActive ? (isLight ? '#fff' : '#080808') : 'var(--text-muted)',
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: '11px', letterSpacing: '0.14em',
                   textTransform: 'uppercase',
@@ -933,7 +787,7 @@ function CategoriesSection({ active, setActive }) {
 }
 
 // ═══════════════════════════════════════════════════════
-// PRODUCT CARD — your code unchanged
+// PRODUCT CARD
 // ═══════════════════════════════════════════════════════
 function ProductCard({ product, index }) {
   const [hovered, setHovered] = useState(false)
@@ -1019,17 +873,14 @@ function ProductCard({ product, index }) {
         <button style={{
           position: 'absolute', top: '12px', right: '12px',
           width: '30px', height: '30px',
-          background: 'var(--bg)',
-          border: '1px solid var(--border)',
+          background: 'var(--bg)', border: '1px solid var(--border)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          cursor: 'pointer', fontSize: '13px',
-          color: 'var(--text-muted)',
+          cursor: 'pointer', fontSize: '13px', color: 'var(--text-muted)',
           opacity: hovered ? 1 : 0, transition: 'opacity 0.3s',
         }}>
           ♡
         </button>
       </div>
-
       <div style={{ padding: '14px 16px' }}>
         <p style={{
           fontFamily: "'Outfit', sans-serif",
@@ -1040,9 +891,9 @@ function ProductCard({ product, index }) {
           {product.category}
         </p>
         <h3 style={{
-          fontFamily: "'Fraunces', serif", fontWeight: 700,
-          fontSize: '14px', color: 'var(--text)',
-          marginBottom: '8px', letterSpacing: '-0.01em', lineHeight: 1.3,
+          fontFamily: "'Bebas Neue', sans-serif",
+          fontSize: '18px', color: 'var(--text)',
+          marginBottom: '8px', letterSpacing: '0.04em', lineHeight: 1.2,
         }}>
           {product.name}
         </h3>
@@ -1066,7 +917,7 @@ function ProductCard({ product, index }) {
 }
 
 // ═══════════════════════════════════════════════════════
-// PRODUCT GRID — your code unchanged
+// PRODUCT GRID
 // ═══════════════════════════════════════════════════════
 function ProductGridSection({ activeCategory }) {
   const filtered = activeCategory === 'All'
@@ -1096,9 +947,9 @@ function ProductGridSection({ activeCategory }) {
               Featured drops
             </p>
             <h2 style={{
-              fontFamily: "'Fraunces', serif", fontWeight: 800,
-              fontSize: 'clamp(26px, 3vw, 38px)',
-              color: 'var(--text)', lineHeight: 1, letterSpacing: '-0.02em',
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(32px, 4vw, 48px)',
+              color: 'var(--text)', lineHeight: 1, letterSpacing: '0.02em',
             }}>
               New Arrivals
             </h2>
@@ -1137,12 +988,9 @@ function ProductGridSection({ activeCategory }) {
 }
 
 // ═══════════════════════════════════════════════════════
-// EDITORIAL SPLIT — your code unchanged
+// EDITORIAL SPLIT
 // ═══════════════════════════════════════════════════════
 function EditorialSplit() {
-  const { theme } = useTheme()
-  const isLight   = theme === 'light'
-
   return (
     <section style={{ background: 'var(--bg)', padding: '0 0 96px' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
@@ -1174,12 +1022,11 @@ function EditorialSplit() {
                 New Release
               </span>
               <h3 style={{
-                fontFamily: "'Fraunces', serif", fontWeight: 800,
-                fontSize: '26px', color: '#F2EEE6',
-                lineHeight: 1.05, letterSpacing: '-0.02em', marginBottom: '14px',
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: '36px', color: '#F2EEE6',
+                lineHeight: 1, letterSpacing: '0.02em', marginBottom: '14px',
               }}>
-                Void Series<br />
-                <em style={{ fontWeight: 300, fontStyle: 'italic' }}>Drop 01</em>
+                VOID SERIES<br />DROP 01
               </h3>
               <Link to="/shop" style={{
                 display: 'inline-flex', alignItems: 'center', gap: '8px',
@@ -1223,19 +1070,18 @@ function EditorialSplit() {
                 Coming soon —
               </span>
               <h3 style={{
-                fontFamily: "'Fraunces', serif", fontWeight: 800,
-                fontSize: '26px', color: '#F2EEE6',
-                lineHeight: 1.05, letterSpacing: '-0.02em', marginBottom: '20px',
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: '36px', color: '#F2EEE6',
+                lineHeight: 1, letterSpacing: '0.02em', marginBottom: '20px',
               }}>
-                Next drop<br />
-                <em style={{ fontWeight: 300, fontStyle: 'italic' }}>is coming.</em>
+                NEXT DROP<br />IS COMING.
               </h3>
               <div style={{ display: 'flex', gap: '20px' }}>
                 {[{ v: '04', l: 'Days' }, { v: '16', l: 'Hours' }, { v: '38', l: 'Min' }].map((t, i) => (
                   <div key={i}>
                     <div style={{
-                      fontFamily: "'Fraunces', serif", fontWeight: 800,
-                      fontSize: '24px', color: 'var(--accent)', lineHeight: 1,
+                      fontFamily: "'Bebas Neue', sans-serif",
+                      fontSize: '32px', color: 'var(--accent)', lineHeight: 1,
                     }}>
                       {t.v}
                     </div>
