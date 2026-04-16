@@ -388,14 +388,15 @@ export default function Navbar() {
             }}
           >
             {/* Gold coin mark */}
-            <motion.img
+          <motion.img
               src="/stayonlinelogo.jpeg"
               alt="Staay"
-              animate={{ height: scrolled ? '32px' : '38px' }}
+              animate={{ width: scrolled ? '34px' : '40px', height: scrolled ? '34px' : '40px' }}
               transition={{ duration: 0.3 }}
               style={{
-                width: 'auto', objectFit: 'contain',
+                objectFit: 'cover',
                 borderRadius: '50%',
+                flexShrink: 0,
               }}
             />
             {/* Wordmark */}
