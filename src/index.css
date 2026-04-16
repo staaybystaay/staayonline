@@ -1,60 +1,69 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400&family=Outfit:wght@300;400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Theme tokens ── */
-[data-theme="light"] {
-  --bg:           #FFFFFF;
-  --bg-surface:   #F4F4F4;
-  --bg-card:      #FAFAFA;
-  --text:         #080808;
-  --text-muted:   rgba(8,8,8,0.45);
-  --text-faint:   rgba(8,8,8,0.22);
-  --border:       rgba(8,8,8,0.08);
-  --border-mid:   rgba(8,8,8,0.15);
-  --accent:       #111111;
-  --accent-soft:  rgba(8,8,8,0.06);
-  --accent-text:  #111111;
-  --canvas-bg:    #F4F4F4;
-  --nav-bg:       rgba(255,255,255,0.92);
-  --badge-new-bg: #111111;
-  --badge-new-fg: #FFFFFF;
-  --badge-sale-bg:#CC2E2E;
-  --badge-sale-fg:#FFFFFF;
-  --badge-hot-bg: transparent;
-  --badge-hot-fg: #111111;
-  --shadow:       0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.07);
+/* ── Brand tokens ── */
+:root {
+  --gold:         #C9A44A;
+  --gold-light:   #E2BC6A;
+  --gold-dark:    #9A7A30;
+  --cream:        #EDE8DF;
+  --near-black:   #111111;
 }
 
-[data-theme="dark"] {
-  --bg:           #080808;
-  --bg-surface:   #111111;
-  --bg-card:      #0E0E0E;
-  --text:         #F2EEE6;
-  --text-muted:   rgba(242,238,230,0.45);
-  --text-faint:   rgba(242,238,230,0.18);
-  --border:       rgba(242,238,230,0.07);
-  --border-mid:   rgba(242,238,230,0.14);
-  --accent:       #C8A44A;
-  --accent-soft:  rgba(200,164,74,0.1);
-  --accent-text:  #C8A44A;
-  --canvas-bg:    #080808;
-  --nav-bg:       rgba(8,8,8,0.92);
-  --badge-new-bg: #C8A44A;
-  --badge-new-fg: #080808;
+/* ── Light theme ── */
+[data-theme="light"] {
+  --bg:           #EDE8DF;
+  --bg-surface:   #E4DDD2;
+  --bg-card:      #F5F1EB;
+  --text:         #111111;
+  --text-muted:   rgba(17,17,17,0.5);
+  --text-faint:   rgba(17,17,17,0.25);
+  --border:       rgba(17,17,17,0.1);
+  --border-mid:   rgba(17,17,17,0.18);
+  --accent:       #C9A44A;
+  --accent-soft:  rgba(201,164,74,0.12);
+  --accent-text:  #7A5F28;
+  --canvas-bg:    #EDE8DF;
+  --nav-bg:       rgba(237,232,223,0.94);
+  --badge-new-bg: #111111;
+  --badge-new-fg: #EDE8DF;
   --badge-sale-bg:#C0392B;
-  --badge-sale-fg:#FFFFFF;
+  --badge-sale-fg:#ffffff;
   --badge-hot-bg: transparent;
-  --badge-hot-fg: #C8A44A;
-  --shadow:       0 1px 3px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.2);
+  --badge-hot-fg: #C9A44A;
+  --shadow:       0 2px 8px rgba(17,17,17,0.08), 0 12px 32px rgba(17,17,17,0.06);
+}
+
+/* ── Dark theme ── */
+[data-theme="dark"] {
+  --bg:           #0C0B09;
+  --bg-surface:   #131109;
+  --bg-card:      #111009;
+  --text:         #EDE8DF;
+  --text-muted:   rgba(237,232,223,0.45);
+  --text-faint:   rgba(237,232,223,0.18);
+  --border:       rgba(237,232,223,0.07);
+  --border-mid:   rgba(237,232,223,0.14);
+  --accent:       #C9A44A;
+  --accent-soft:  rgba(201,164,74,0.12);
+  --accent-text:  #C9A44A;
+  --canvas-bg:    #0C0B09;
+  --nav-bg:       rgba(12,11,9,0.94);
+  --badge-new-bg: #C9A44A;
+  --badge-new-fg: #0C0B09;
+  --badge-sale-bg:#C0392B;
+  --badge-sale-fg:#ffffff;
+  --badge-hot-bg: transparent;
+  --badge-hot-fg: #C9A44A;
+  --shadow:       0 2px 8px rgba(0,0,0,0.4), 0 12px 32px rgba(201,164,74,0.06);
 }
 
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
   color: var(--text);
@@ -62,14 +71,13 @@ body {
   -webkit-font-smoothing: antialiased;
   transition: background 0.35s, color 0.35s;
 }
-
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; }
-
 ::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--accent-soft); }
-
+::-webkit-scrollbar-thumb { background: rgba(201,164,74,0.3); }
+.fe-scrollbar::-webkit-scrollbar { display: none; }
+.fe-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 @media (max-width: 768px) {
   .mobile-only { display: flex !important; }
   .desktop-only { display: none !important; }
