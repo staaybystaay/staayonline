@@ -4,63 +4,57 @@ import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
 import { useTheme } from '../context/ThemeContext'
 
-// ─────────────────────────────────────────────
-// ICONS
-// ─────────────────────────────────────────────
+// ─── Icons ────────────────────────────────────────────────────────────────────
 const SearchIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" strokeWidth="1.2" />
-    <path d="M10.5 10.5L14 14" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" strokeWidth="1.2"/>
+    <path d="M10.5 10.5L14 14" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 
 const CartIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <path d="M1 1.5h2.2l1.6 7.5h6.8l1.4-5H4.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-    <circle cx="7" cy="12.5" r="1" fill="currentColor" />
-    <circle cx="11" cy="12.5" r="1" fill="currentColor" />
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M1 1.5h2.2l1.6 7.5h6.8l1.4-5H4.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="7" cy="12.5" r="1" fill="currentColor"/>
+    <circle cx="11" cy="12.5" r="1" fill="currentColor"/>
   </svg>
 )
 
 const HeartIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <path d="M7.5 13S1.5 9.2 1.5 5.2A3.2 3.2 0 0 1 7.5 3.6a3.2 3.2 0 0 1 6 1.6C13.5 9.2 7.5 13 7.5 13z"
-      stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M8 13.5S2 9.8 2 5.8A3.3 3.3 0 0 1 8 4a3.3 3.3 0 0 1 6 2c0 4-6 7.5-6 7.5z"
+      stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
   </svg>
 )
 
 const SunIcon = () => (
   <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <circle cx="7.5" cy="7.5" r="2.8" stroke="currentColor" strokeWidth="1.2" />
+    <circle cx="7.5" cy="7.5" r="2.8" stroke="currentColor" strokeWidth="1.2"/>
     <path d="M7.5 1v1.4M7.5 12.6V14M1 7.5h1.4M12.6 7.5H14M2.9 2.9l1 1M11.1 11.1l1 1M11.1 2.9l-1 1M2.9 11.1l1-1"
-      stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 
 const MoonIcon = () => (
   <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
     <path d="M11.5 9.5A5.5 5.5 0 0 1 5.5 3.5a5.5 5.5 0 1 0 6 6z"
-      stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+      stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 
 const MenuIcon = () => (
   <svg width="18" height="13" viewBox="0 0 18 13" fill="none">
-    <path d="M1 1h16M1 6.5h10M1 12h16"
-      stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    <path d="M1 1h16M1 6.5h10M1 12h16" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 
 const CloseIcon = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-    <path d="M2 2l10 10M12 2L2 12"
-      stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+    <path d="M2 2l10 10M12 2L2 12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 
-// ─────────────────────────────────────────────
-// NAV LINKS
-// ─────────────────────────────────────────────
+// ─── Nav links ────────────────────────────────────────────────────────────────
 const navLinks = [
   { label: 'Home',        path: '/'      },
   { label: 'Shop',        path: '/shop'  },
@@ -68,9 +62,7 @@ const navLinks = [
   { label: 'Editorial',   path: '/'      },
 ]
 
-// ─────────────────────────────────────────────
-// SEARCH OVERLAY
-// ─────────────────────────────────────────────
+// ─── Search Overlay ───────────────────────────────────────────────────────────
 function SearchOverlay({ open, onClose }) {
   return (
     <AnimatePresence>
@@ -83,10 +75,8 @@ function SearchOverlay({ open, onClose }) {
             transition={{ duration: 0.25 }}
             onClick={onClose}
             style={{
-              position: 'fixed', inset: 0,
-              zIndex: 997,
-              background: 'rgba(0,0,0,0.25)',
-              backdropFilter: 'blur(2px)',
+              position: 'fixed', inset: 0, zIndex: 997,
+              background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(3px)',
             }}
           />
           <motion.div
@@ -95,10 +85,8 @@ function SearchOverlay({ open, onClose }) {
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              position: 'fixed',
-              top: '64px', left: 0, right: 0,
-              zIndex: 998,
-              background: 'var(--bg)',
+              position: 'fixed', top: '64px', left: 0, right: 0,
+              zIndex: 998, background: 'var(--bg)',
               borderBottom: '1px solid var(--border)',
               padding: '24px 80px',
             }}
@@ -107,21 +95,16 @@ function SearchOverlay({ open, onClose }) {
               maxWidth: '1200px', margin: '0 auto',
               display: 'flex', alignItems: 'center', gap: '16px',
             }}>
-              <span style={{ color: 'var(--text-faint)', flexShrink: 0 }}>
-                <SearchIcon />
-              </span>
+              <span style={{ color: 'var(--text-faint)', flexShrink: 0 }}><SearchIcon /></span>
               <input
                 autoFocus
                 placeholder="Search for pieces, collections..."
                 style={{
-                  flex: 1,
-                  background: 'transparent',
+                  flex: 1, background: 'transparent',
                   border: 'none', outline: 'none',
-                  fontFamily: "'Fraunces', serif",
-                  fontWeight: 700,
-                  fontSize: '20px',
-                  color: 'var(--text)',
-                  letterSpacing: '-0.01em',
+                  fontFamily: "'Bebas Neue', sans-serif",
+                  fontSize: '22px', color: 'var(--text)',
+                  letterSpacing: '0.04em',
                 }}
               />
               <button
@@ -132,40 +115,34 @@ function SearchOverlay({ open, onClose }) {
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: '10px', letterSpacing: '0.22em',
                   textTransform: 'uppercase', cursor: 'pointer',
-                  padding: '6px 10px',
                   transition: 'color 0.2s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.color = 'var(--text)' }}
+                onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)' }}
                 onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-faint)' }}
               >
                 ESC
               </button>
             </div>
 
-            {/* Quick links */}
+            {/* Trending tags */}
             <div style={{
-              maxWidth: '1200px', margin: '16px auto 0',
+              maxWidth: '1200px', margin: '14px auto 0',
               display: 'flex', alignItems: 'center', gap: '8px',
             }}>
               <span style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: '10px', letterSpacing: '0.2em',
-                textTransform: 'uppercase',
-                color: 'var(--text-faint)',
-                marginRight: '4px',
+                textTransform: 'uppercase', color: 'var(--text-faint)',
               }}>
                 Trending:
               </span>
-              {['Oversized Jackets', 'Cargo Pants', 'Minimal Coats', 'New Arrivals'].map(tag => (
+              {['Sneakers', 'Cargo Pants', 'Oversized Hoodies', 'New Arrivals'].map(tag => (
                 <Link
-                  key={tag}
-                  to="/shop"
-                  onClick={onClose}
+                  key={tag} to="/shop" onClick={onClose}
                   style={{
                     fontFamily: "'Outfit', sans-serif",
                     fontSize: '10px', letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    color: 'var(--text-muted)',
+                    textTransform: 'uppercase', color: 'var(--text-muted)',
                     padding: '5px 12px',
                     border: '1px solid var(--border)',
                     transition: 'all 0.2s',
@@ -190,40 +167,30 @@ function SearchOverlay({ open, onClose }) {
   )
 }
 
-// ─────────────────────────────────────────────
-// MOBILE DRAWER
-// ─────────────────────────────────────────────
+// ─── Mobile Drawer ────────────────────────────────────────────────────────────
 function MobileDrawer({ open, onClose, cartCount, theme, toggleTheme }) {
   return (
     <AnimatePresence>
       {open && (
         <>
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
             onClick={onClose}
             style={{
-              position: 'fixed', inset: 0,
-              zIndex: 999,
-              background: 'rgba(0,0,0,0.5)',
-              backdropFilter: 'blur(4px)',
+              position: 'fixed', inset: 0, zIndex: 999,
+              background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)',
             }}
           />
-
-          {/* Panel */}
           <motion.div
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
             style={{
-              position: 'fixed',
-              top: 0, right: 0, bottom: 0,
-              width: '300px',
-              zIndex: 1000,
+              position: 'fixed', top: 0, right: 0, bottom: 0,
+              width: '300px', zIndex: 1000,
               background: 'var(--bg)',
               borderLeft: '1px solid var(--border)',
               display: 'flex', flexDirection: 'column',
@@ -236,17 +203,11 @@ function MobileDrawer({ open, onClose, cartCount, theme, toggleTheme }) {
               padding: '20px 24px',
               borderBottom: '1px solid var(--border)',
             }}>
-              <Link
-                to="/"
-                onClick={onClose}
-                style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontWeight: 800, fontSize: '17px',
-                  color: 'var(--text)', letterSpacing: '-0.01em',
-                }}
-              >
-                STAY<em style={{ color: 'var(--accent)', fontStyle: 'italic', fontWeight: 300 }}>on</em>LINE
-              </Link>
+              <img
+                src="/stayonlinelogo.jpeg"
+                alt="Staay"
+                style={{ width: '32px', height: '32px', objectFit: 'contain' }}
+              />
               <button
                 onClick={onClose}
                 style={{
@@ -255,7 +216,7 @@ function MobileDrawer({ open, onClose, cartCount, theme, toggleTheme }) {
                   border: '1px solid var(--border)',
                   color: 'var(--text-muted)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  cursor: 'pointer', transition: 'all 0.2s',
+                  cursor: 'pointer',
                 }}
               >
                 <CloseIcon />
@@ -266,60 +227,53 @@ function MobileDrawer({ open, onClose, cartCount, theme, toggleTheme }) {
             <div style={{
               flex: 1, padding: '28px 24px',
               display: 'flex', flexDirection: 'column', gap: '2px',
-              overflowY: 'auto',
             }}>
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.label}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.35, delay: 0.08 + i * 0.05 }}
+                  transition={{ duration: 0.35, delay: 0.06 + i * 0.05 }}
                 >
                   <Link
-                    to={link.path}
-                    onClick={onClose}
+                    to={link.path} onClick={onClose}
                     style={{
                       display: 'block',
-                      fontFamily: "'Fraunces', serif",
-                      fontWeight: 700,
-                      fontSize: '26px',
-                      letterSpacing: '-0.02em',
+                      fontFamily: "'Bebas Neue', sans-serif",
+                      fontSize: '32px', letterSpacing: '0.04em',
                       color: 'var(--text-muted)',
-                      padding: '10px 0',
+                      padding: '8px 0',
                       borderBottom: '1px solid var(--border)',
                       transition: 'color 0.2s',
                     }}
                     onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)' }}
                     onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)' }}
                   >
-                    {link.label}
+                    {link.label.toUpperCase()}
                   </Link>
                 </motion.div>
               ))}
-
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.35, delay: 0.32 }}
+                transition={{ duration: 0.35, delay: 0.3 }}
                 style={{ marginTop: '16px' }}
               >
                 <Link
-                  to="/login"
-                  onClick={onClose}
+                  to="/login" onClick={onClose}
                   style={{
                     display: 'block',
-                    fontFamily: "'Fraunces', serif",
-                    fontWeight: 700, fontSize: '26px',
-                    letterSpacing: '-0.02em',
+                    fontFamily: "'Bebas Neue', sans-serif",
+                    fontSize: '32px', letterSpacing: '0.04em',
                     color: 'var(--text-muted)',
-                    padding: '10px 0',
+                    padding: '8px 0',
                     borderBottom: '1px solid var(--border)',
                     transition: 'color 0.2s',
                   }}
                   onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)' }}
                   onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)' }}
                 >
-                  Login
+                  LOGIN
                 </Link>
               </motion.div>
             </div>
@@ -328,10 +282,8 @@ function MobileDrawer({ open, onClose, cartCount, theme, toggleTheme }) {
             <div style={{
               padding: '20px 24px',
               borderTop: '1px solid var(--border)',
-              display: 'flex', alignItems: 'center',
-              justifyContent: 'space-between',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             }}>
-              {/* Theme toggle */}
               <button
                 onClick={toggleTheme}
                 style={{
@@ -343,17 +295,13 @@ function MobileDrawer({ open, onClose, cartCount, theme, toggleTheme }) {
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: '10px', letterSpacing: '0.18em',
                   textTransform: 'uppercase', cursor: 'pointer',
-                  transition: 'all 0.2s',
                 }}
               >
                 {theme === 'light' ? <MoonIcon /> : <SunIcon />}
                 {theme === 'light' ? 'Dark' : 'Light'}
               </button>
-
-              {/* Cart link */}
               <Link
-                to="/cart"
-                onClick={onClose}
+                to="/cart" onClick={onClose}
                 style={{
                   display: 'flex', alignItems: 'center', gap: '8px',
                   fontFamily: "'Outfit', sans-serif",
@@ -366,11 +314,10 @@ function MobileDrawer({ open, onClose, cartCount, theme, toggleTheme }) {
                   <span style={{
                     width: '18px', height: '18px',
                     background: 'var(--accent)',
-                    color: theme === 'light' ? '#fff' : '#080808',
+                    color: theme === 'light' ? '#fff' : '#0C0B09',
                     borderRadius: '50%',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: '9px', fontWeight: 700,
-                    fontFamily: "'Outfit', sans-serif",
                   }}>
                     {cartCount}
                   </span>
@@ -384,32 +331,27 @@ function MobileDrawer({ open, onClose, cartCount, theme, toggleTheme }) {
   )
 }
 
-// ─────────────────────────────────────────────
-// NAVBAR
-// ─────────────────────────────────────────────
+// ─── Main Navbar ──────────────────────────────────────────────────────────────
 export default function Navbar() {
-  const [scrolled,    setScrolled]    = useState(false)
-  const [searchOpen,  setSearchOpen]  = useState(false)
-  const [mobileOpen,  setMobileOpen]  = useState(false)
-  const location                      = useLocation()
-  const { theme, toggleTheme }        = useTheme()
-  const items                         = useCartStore(s => s.items)
-  const cartCount                     = items.reduce((n, i) => n + i.qty, 0)
+  const [scrolled,   setScrolled]   = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const location                    = useLocation()
+  const { theme, toggleTheme }      = useTheme()
+  const items                       = useCartStore(s => s.items)
+  const cartCount                   = items.reduce((n, i) => n + i.qty, 0)
 
-  // Shrink on scroll
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close overlays on route change
   useEffect(() => {
     setSearchOpen(false)
     setMobileOpen(false)
   }, [location])
 
-  // ESC key closes search
   useEffect(() => {
     const onKey = e => { if (e.key === 'Escape') setSearchOpen(false) }
     window.addEventListener('keydown', onKey)
@@ -419,8 +361,8 @@ export default function Navbar() {
   return (
     <>
       <motion.nav
-        animate={{ height: scrolled ? '56px' : '64px' }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
+        animate={{ height: scrolled ? '56px' : '66px' }}
+        transition={{ duration: 0.3 }}
         style={{
           position: 'sticky', top: 0, zIndex: 996,
           background: 'var(--nav-bg)',
@@ -441,34 +383,50 @@ export default function Navbar() {
           <Link
             to="/"
             style={{
-              fontFamily: "'Fraunces', serif",
-              fontWeight: 800,
-              fontSize: scrolled ? '16px' : '18px',
-              color: 'var(--text)',
-              letterSpacing: '-0.01em',
-              transition: 'font-size 0.3s',
-              flexShrink: 0,
-              lineHeight: 1,
+              display: 'flex', alignItems: 'center', gap: '10px',
+              flexShrink: 0, textDecoration: 'none',
             }}
           >
-            STAY
-            <em style={{
-              fontStyle: 'italic',
-              fontWeight: 300,
-              color: 'var(--accent)',
-            }}>
-              on
-            </em>
-            LINE
+            {/* Gold coin mark */}
+            <motion.img
+              src="/stayonlinelogo.jpeg"
+              alt="Staay"
+              animate={{ height: scrolled ? '32px' : '38px' }}
+              transition={{ duration: 0.3 }}
+              style={{
+                width: 'auto', objectFit: 'contain',
+                borderRadius: '50%',
+              }}
+            />
+            {/* Wordmark */}
+            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+              <span style={{
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: scrolled ? '17px' : '20px',
+                color: 'var(--text)',
+                letterSpacing: '0.06em',
+                transition: 'font-size 0.3s',
+              }}>
+                STAAY
+              </span>
+              <span style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: '8px',
+                letterSpacing: '0.4em',
+                textTransform: 'uppercase',
+                color: 'var(--accent)',
+                fontWeight: 400,
+                marginTop: '1px',
+              }}>
+                ONLINE
+              </span>
+            </div>
           </Link>
 
           {/* ── Desktop links ── */}
           <div
             className="desktop-only"
-            style={{
-              display: 'flex', alignItems: 'center',
-              gap: '32px', flex: 1,
-            }}
+            style={{ display: 'flex', alignItems: 'center', gap: '32px', flex: 1 }}
           >
             {navLinks.map(link => {
               const active = location.pathname === link.path
@@ -479,30 +437,22 @@ export default function Navbar() {
                   style={{
                     position: 'relative',
                     fontFamily: "'Outfit', sans-serif",
-                    fontSize: '11px',
-                    letterSpacing: '0.16em',
-                    textTransform: 'uppercase',
-                    fontWeight: 400,
+                    fontSize: '11px', letterSpacing: '0.16em',
+                    textTransform: 'uppercase', fontWeight: 400,
                     color: active ? 'var(--text)' : 'var(--text-muted)',
                     paddingBottom: '3px',
                     transition: 'color 0.2s',
                   }}
-                  onMouseEnter={e => {
-                    if (!active) e.currentTarget.style.color = 'var(--text)'
-                  }}
-                  onMouseLeave={e => {
-                    if (!active) e.currentTarget.style.color = 'var(--text-muted)'
-                  }}
+                  onMouseEnter={e => { if (!active) e.currentTarget.style.color = 'var(--text)' }}
+                  onMouseLeave={e => { if (!active) e.currentTarget.style.color = 'var(--text-muted)' }}
                 >
                   {link.label}
                   {active && (
                     <motion.span
                       layoutId="nav-underline"
                       style={{
-                        position: 'absolute',
-                        bottom: 0, left: 0, right: 0,
-                        height: '1px',
-                        background: 'var(--accent)',
+                        position: 'absolute', bottom: 0, left: 0, right: 0,
+                        height: '2px', background: 'var(--accent)',
                       }}
                     />
                   )}
@@ -520,7 +470,6 @@ export default function Navbar() {
             {/* Search */}
             <button
               onClick={() => setSearchOpen(v => !v)}
-              title="Search"
               style={{
                 width: '38px', height: '38px',
                 background: 'transparent', border: 'none',
@@ -528,28 +477,22 @@ export default function Navbar() {
                 color: searchOpen ? 'var(--accent)' : 'var(--text-muted)',
                 cursor: 'pointer', transition: 'color 0.2s',
               }}
-              onMouseEnter={e => { e.currentTarget.style.color = 'var(--text)' }}
-              onMouseLeave={e => {
-                e.currentTarget.style.color = searchOpen
-                  ? 'var(--accent)'
-                  : 'var(--text-muted)'
-              }}
+              onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)' }}
+              onMouseLeave={e => { e.currentTarget.style.color = searchOpen ? 'var(--accent)' : 'var(--text-muted)' }}
             >
               <SearchIcon />
             </button>
 
             {/* Wishlist */}
             <button
-              title="Wishlist"
               className="desktop-only"
               style={{
                 width: '38px', height: '38px',
                 background: 'transparent', border: 'none',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: 'var(--text-muted)',
-                cursor: 'pointer', transition: 'color 0.2s',
+                color: 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s',
               }}
-              onMouseEnter={e => { e.currentTarget.style.color = 'var(--text)' }}
+              onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)' }}
               onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)' }}
             >
               <HeartIcon />
@@ -558,13 +501,11 @@ export default function Navbar() {
             {/* Theme toggle */}
             <button
               onClick={toggleTheme}
-              title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
               style={{
                 width: '38px', height: '38px',
                 background: 'transparent', border: 'none',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: 'var(--text-muted)',
-                cursor: 'pointer', transition: 'color 0.2s',
+                color: 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s',
               }}
               onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)' }}
               onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)' }}
@@ -575,22 +516,18 @@ export default function Navbar() {
             {/* Divider */}
             <div style={{
               width: '1px', height: '18px',
-              background: 'var(--border)',
-              margin: '0 6px',
+              background: 'var(--border)', margin: '0 6px',
             }} />
 
             {/* Cart */}
             <Link
               to="/cart"
-              title="Shopping Bag"
               style={{
-                position: 'relative',
-                width: '38px', height: '38px',
+                position: 'relative', width: '38px', height: '38px',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: 'var(--text-muted)',
-                transition: 'color 0.2s',
+                color: 'var(--text-muted)', transition: 'color 0.2s',
               }}
-              onMouseEnter={e => { e.currentTarget.style.color = 'var(--text)' }}
+              onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)' }}
               onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)' }}
             >
               <CartIcon />
@@ -602,15 +539,13 @@ export default function Navbar() {
                     animate={{ scale: 1 }}
                     exit={{ scale: 0 }}
                     style={{
-                      position: 'absolute',
-                      top: '5px', right: '4px',
+                      position: 'absolute', top: '5px', right: '4px',
                       width: '14px', height: '14px',
-                      background: 'var(--accent)',
-                      borderRadius: '50%',
+                      background: 'var(--accent)', borderRadius: '50%',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       fontFamily: "'Outfit', sans-serif",
                       fontSize: '8px', fontWeight: 700,
-                      color: theme === 'light' ? '#fff' : '#080808',
+                      color: theme === 'light' ? '#fff' : '#0C0B09',
                     }}
                   >
                     {cartCount}
@@ -619,7 +554,7 @@ export default function Navbar() {
               </AnimatePresence>
             </Link>
 
-            {/* Login — desktop only */}
+            {/* Login */}
             <Link
               to="/login"
               className="desktop-only"
@@ -631,7 +566,6 @@ export default function Navbar() {
                 padding: '8px 16px',
                 border: '1px solid var(--border)',
                 transition: 'all 0.22s',
-                display: 'inline-block',
                 marginLeft: '4px',
               }}
               onMouseEnter={e => {
@@ -646,17 +580,15 @@ export default function Navbar() {
               Login
             </Link>
 
-            {/* Mobile menu button */}
+            {/* Mobile menu */}
             <button
               onClick={() => setMobileOpen(true)}
               className="mobile-only"
               style={{
-                display: 'none',
-                width: '38px', height: '38px',
+                display: 'none', width: '38px', height: '38px',
                 background: 'transparent', border: 'none',
                 alignItems: 'center', justifyContent: 'center',
-                color: 'var(--text-muted)',
-                cursor: 'pointer', marginLeft: '4px',
+                color: 'var(--text-muted)', cursor: 'pointer', marginLeft: '4px',
               }}
             >
               <MenuIcon />
@@ -666,13 +598,7 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Search overlay */}
-      <SearchOverlay
-        open={searchOpen}
-        onClose={() => setSearchOpen(false)}
-      />
-
-      {/* Mobile drawer */}
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
       <MobileDrawer
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
