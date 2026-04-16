@@ -159,17 +159,18 @@ function HeroSection() {
           transition={{ duration: 0.95, ease: [0.76, 0, 0.24, 1] }}
           style={{ position: 'absolute', inset: 0, zIndex: 0 }}
         >
-          <img
-            src={slide.image}
-            alt={slide.tag}
-            style={{
-              width: '100%', height: '100%',
-              objectFit: 'cover',
-              objectPosition: slide.imagePos,
-              display: 'block',
-            }}
-          />
-        </motion.div>
+         <img
+          src={slide.image}
+          alt=""
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+            objectPosition: 'center center',
+            display: 'block',
+          }}
+        />
+      </motion.div>
       </AnimatePresence>
 
       {/* ── GRADIENT OVERLAYS ── */}
