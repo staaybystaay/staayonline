@@ -11,54 +11,25 @@ import useCartStore from '../store/useCartStore'
 const heroSlides = [
   {
     id: 1,
-    image: '/yellowblue.jpg',
-    tag: 'SS 2025 — Footwear',
-    heading: ['STEP', 'INTO', 'NOW.'],
-    accentLine: 1,
-    sub: 'Every step is a statement.',
-    cta: 'Shop Sneakers',
-    accent: '#C9A44A',
-    bgLeft: '#080600',
-    imagePos: 'center center',
+    ...
+    imagePos: 'center 40%',   // sneaker — shows full shoe
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=1200&q=90&fit=crop',
-    tag: 'SS 2025 — Tops',
-    heading: ['WEAR', 'THE', 'VOID.'],
-    accentLine: 2,
-    sub: 'Oversized. Minimal. Yours.',
-    cta: 'Shop Hoodies',
-    accent: '#C9A44A',
-    bgLeft: '#050400',
-    imagePos: 'center 20%',
+    ...
+    imagePos: 'center 25%',   // hoodie — shows upper body
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=1200&q=90&fit=crop',
-    tag: 'SS 2025 — Bottoms',
-    heading: ['NEW', 'DROP', '01.'],
-    accentLine: 0,
-    sub: 'Cargo culture refined.',
-    cta: 'Shop Bottoms',
-    accent: '#C9A44A',
-    bgLeft: '#040400',
-    imagePos: 'center center',
+    ...
+    imagePos: 'center 35%',   // cargo — shows full outfit
   },
   {
     id: 4,
-    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&q=90&fit=crop',
-    tag: 'SS 2025 — Collection',
-    heading: ['THE', 'EDIT.', ''],
-    accentLine: 1,
-    sub: 'Curated for those who refuse definition.',
-    cta: 'Shop All',
-    accent: '#C9A44A',
-    bgLeft: '#050400',
-    imagePos: 'center top',
+    ...
+    imagePos: 'center 20%',   // collection — shows face/upper
   },
 ]
-
 // ═══════════════════════════════════════════════════════
 // FEATURED DROPS DATA
 // ═══════════════════════════════════════════════════════
