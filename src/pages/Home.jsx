@@ -11,7 +11,7 @@ import useCartStore from '../store/useCartStore'
 const heroSlides = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1200&q=90&fit=crop',
+    image: '/yellowblue.jpg',
     tag: 'SS 2025 — Footwear',
     heading: ['STEP', 'INTO', 'NOW.'],
     accentLine: 1,
