@@ -11,25 +11,54 @@ import useCartStore from '../store/useCartStore'
 const heroSlides = [
   {
     id: 1,
-    ...
-    imagePos: 'center 40%',   // sneaker — shows full shoe
+    image: '/yellowblue.jpg',
+    tag: 'SS 2025 — Footwear',
+    heading: ['STEP', 'INTO', 'NOW.'],
+    accentLine: 1,
+    sub: 'Every step is a statement.',
+    cta: 'Shop Sneakers',
+    accent: '#E63946',
+    bgLeft: '#0D0000',
+    imagePos: 'center center',
   },
   {
     id: 2,
-    ...
-    imagePos: 'center 25%',   // hoodie — shows upper body
+    image: '/visionhoodie.jpg',
+    tag: 'SS 2025 — Tops',
+    heading: ['WEAR', 'THE', 'VOID.'],
+    accentLine: 2,
+    sub: 'Oversized. Minimal. Yours.',
+    cta: 'Shop Hoodies',
+    accent: '#F0C040',
+    bgLeft: '#0A0800',
+    imagePos: 'center 20%',
   },
   {
     id: 3,
-    ...
-    imagePos: 'center 35%',   // cargo — shows full outfit
+    image: '/baggy.jpg',
+    tag: 'SS 2025 — Bottoms',
+    heading: ['NEW', 'DROP', '01.'],
+    accentLine: 0,
+    sub: 'Cargo culture refined.',
+    cta: 'Shop Bottoms',
+    accent: '#F0C040',
+    bgLeft: '#060808',
+    imagePos: 'center center',
   },
   {
     id: 4,
-    ...
-    imagePos: 'center 20%',   // collection — shows face/upper
+    image: '/hood.jpg',
+    tag: 'SS 2025 — Collection',
+    heading: ['THE', 'EDIT.', ''],
+    accentLine: 1,
+    sub: 'Curated for those who refuse definition.',
+    cta: 'Shop All',
+    accent: '#F0C040',
+    bgLeft: '#080808',
+    imagePos: 'center top',
   },
 ]
+
 // ═══════════════════════════════════════════════════════
 // FEATURED DROPS DATA
 // ═══════════════════════════════════════════════════════
