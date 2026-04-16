@@ -218,17 +218,16 @@ function HeroSection() {
         style={{
           position: 'absolute', top: '24px', right: '24px',
           zIndex: 3,
-          background: slide.accent,
+          background: 'var(--accent)',
           padding: '6px 14px',
           fontFamily: "'Outfit', sans-serif",
           fontSize: '9px', letterSpacing: '0.3em',
           textTransform: 'uppercase', fontWeight: 600,
-          color: slide.accent === '#F0C040' ? '#080808' : '#fff',
+          color: '#0C0B09',
         }}
       >
         New Season
       </motion.div>
-
       {/* ── GHOST NUMBER ── */}
       <div style={{
         position: 'absolute',
