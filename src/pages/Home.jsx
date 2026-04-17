@@ -23,7 +23,7 @@ const heroSlides = [
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=1200&q=90&fit=crop',
+    image: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=1600&q=90&fit=crop',
     tag: 'SS 2025 — Tops',
     heading: ['WEAR', 'THE', 'VOID.'],
     accentLine: 2,
@@ -35,7 +35,7 @@ const heroSlides = [
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=1200&q=90&fit=crop',
+    image: 'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=1600&q=90&fit=crop',
     tag: 'SS 2025 — Bottoms',
     heading: ['NEW', 'DROP', '01.'],
     accentLine: 0,
@@ -47,7 +47,7 @@ const heroSlides = [
   },
   {
     id: 4,
-    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1200&q=90&fit=crop',
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&q=90&fit=crop',
     tag: 'SS 2025 — Collection',
     heading: ['THE', 'EDIT.', ''],
     accentLine: 1,
@@ -156,53 +156,36 @@ function HeroSection() {
     animate={{ clipPath: 'inset(0 0% 0 0)' }}
     exit={{ opacity: 0 }}
     transition={{ duration: 0.95, ease: [0.76, 0, 0.24, 1] }}
-    style={{ position: 'absolute', inset: 0, zIndex: 0 }}
+    style={{
+      position: 'absolute', inset: 0, zIndex: 0,
+      backgroundImage: `url(${slide.image})`,
+      backgroundSize: 'cover',
+      backgroundPosition: slide.imagePos || 'center center',
+      backgroundRepeat: 'no-repeat',
+    }}
   >
-    {/* Dark base */}
+    {/* Dark overlay so text is readable */}
     <div style={{
       position: 'absolute', inset: 0,
-      background: slide.bgLeft || '#080600',
+      background: 'linear-gradient(to right, rgba(8,6,0,0.88) 0%, rgba(8,6,0,0.55) 40%, rgba(8,6,0,0.15) 75%, rgba(8,6,0,0.05) 100%)',
     }} />
-
-    {/* Image — right 60%, contained so full image shows */}
-    <div style={{
-      position: 'absolute',
-      top: 0, right: 0,
-      width: '62%', height: '100%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      overflow: 'hidden',
-    }}>
-      <img
-        src={slide.image}
-        alt=""
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'contain',
-          objectPosition: 'center center',
-          display: 'block',
-        }}
-      />
-    </div>
-
-    {/* Fade from dark left into image */}
-    <div style={{
-      position: 'absolute', inset: 0,
-      background: 'linear-gradient(to right, rgba(8,6,0,1) 0%, rgba(8,6,0,0.92) 25%, rgba(8,6,0,0.5) 45%, rgba(8,6,0,0.1) 65%, rgba(8,6,0,0) 100%)',
-      zIndex: 1,
-    }} />
-
-    {/* Bottom fade */}
     <div style={{
       position: 'absolute', bottom: 0, left: 0, right: 0,
-      height: '180px', zIndex: 1,
-      background: 'linear-gradient(to top, rgba(8,6,0,0.9), transparent)',
+      height: '200px',
+      background: 'linear-gradient(to top, rgba(8,6,0,0.85), transparent)',
     }} />
+    <motion.div
+      key={`tint-${slide.id}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.4 }}
+      style={{
+        position: 'absolute', inset: 0,
+        background: `radial-gradient(ellipse at 15% 60%, ${slide.accent}20 0%, transparent 55%)`,
+      }}
+    />
   </motion.div>
 </AnimatePresence>
-
       {/* ── GRADIENT OVERLAYS ── */}
       {/* Left dark overlay so text is readable */}
       <div style={{
