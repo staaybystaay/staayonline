@@ -5,34 +5,84 @@ import { motion } from 'framer-motion'
 // ─────────────────────────────────────────────
 // ICONS
 // ─────────────────────────────────────────────
-const InstagramIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <rect x="1.5" y="1.5" width="13" height="13" rx="3.5" stroke="currentColor" strokeWidth="1.2"/>
-    <circle cx="8" cy="8" r="3" stroke="currentColor" strokeWidth="1.2"/>
-    <circle cx="11.8" cy="4.2" r="0.8" fill="currentColor"/>
-  </svg>
-)
+function InstagramIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <rect x="1.5" y="1.5" width="13" height="13" rx="3.5" stroke="currentColor" strokeWidth="1.2"/>
+      <circle cx="8" cy="8" r="3" stroke="currentColor" strokeWidth="1.2"/>
+      <circle cx="11.8" cy="4.2" r="0.8" fill="currentColor"/>
+    </svg>
+  )
+}
 
-const TwitterIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M2 2.5l5 6L2 14h1.5l4.3-5 3.7 5H14L8.8 7.8 13.5 2H12l-3.8 4.3L5 2H2z"
-      stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
-  </svg>
-)
+function TwitterIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M2 2.5l5 6L2 14h1.5l4.3-5 3.7 5H14L8.8 7.8 13.5 2H12l-3.8 4.3L5 2H2z"
+        stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+    </svg>
+  )
+}
 
-const TikTokIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M10.5 1.5c.2 1.5 1 2.5 2.5 2.8v2c-.9 0-1.8-.3-2.5-.8v4.5a4 4 0 1 1-4-4v2.1a2 2 0 1 0 2 2V1.5h2z"
-      stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
-  </svg>
-)
+function TikTokIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M10.5 1.5c.2 1.5 1 2.5 2.5 2.8v2c-.9 0-1.8-.3-2.5-.8v4.5a4 4 0 1 1-4-4v2.1a2 2 0 1 0 2 2V1.5h2z"
+        stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+    </svg>
+  )
+}
 
-const ArrowIcon = () => (
-  <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-    <path d="M1 6.5h11M7.5 2.5l4 4-4 4"
-      stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-)
+function ArrowIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+      <path d="M1 6.5h11M7.5 2.5l4 4-4 4"
+        stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+function UpArrowIcon() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+      <path d="M6 10V2M2 6l4-4 4 4"
+        stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+function TruckIcon() {
+  return (
+    <svg width="14" height="12" viewBox="0 0 14 12" fill="none">
+      <path d="M1 1h8v7H1zM9 3.5h2.5L13 6v2h-4V3.5z"
+        stroke="currentColor" strokeWidth="1.1" strokeLinejoin="round"/>
+      <circle cx="3" cy="10" r="1.1" stroke="currentColor" strokeWidth="1"/>
+      <circle cx="10.5" cy="10" r="1.1" stroke="currentColor" strokeWidth="1"/>
+    </svg>
+  )
+}
+
+function ReturnIcon() {
+  return (
+    <svg width="14" height="12" viewBox="0 0 14 12" fill="none">
+      <path d="M1 4h8a4 4 0 0 1 0 8H5"
+        stroke="currentColor" strokeWidth="1.1" strokeLinecap="round"/>
+      <path d="M4 1L1 4l3 3"
+        stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+function ShieldIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+      <path d="M6.5 1.5L2 3.5v3.5c0 2.5 2 4.5 4.5 5 2.5-.5 4.5-2.5 4.5-5V3.5L6.5 1.5z"
+        stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
+      <path d="M4.5 6.5l1.5 1.5 2.5-2.5"
+        stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+    </svg>
+  )
+}
 
 // ─────────────────────────────────────────────
 // DATA
@@ -41,22 +91,22 @@ const footerLinks = [
   {
     heading: 'Shop',
     links: [
-      { label: 'New Arrivals',  path: '/shop' },
-      { label: 'Footwear',      path: '/shop' },
-      { label: 'Tops',          path: '/shop' },
-      { label: 'Bottoms',       path: '/shop' },
-      { label: 'Coats',         path: '/shop' },
-      { label: 'Sale',          path: '/shop' },
+      { label: 'New Arrivals',   path: '/shop' },
+      { label: 'Footwear',       path: '/shop' },
+      { label: 'Tops',           path: '/shop' },
+      { label: 'Bottoms',        path: '/shop' },
+      { label: 'Coats',          path: '/shop' },
+      { label: 'Sale',           path: '/shop' },
     ],
   },
   {
     heading: 'Company',
     links: [
-      { label: 'About Us',      path: '/' },
-      { label: 'Careers',       path: '/' },
-      { label: 'Editorial',     path: '/' },
-      { label: 'Press',         path: '/' },
-      { label: 'Sustainability', path: '/' },
+      { label: 'About Us',       path: '/' },
+      { label: 'Careers',        path: '/' },
+      { label: 'Editorial',      path: '/' },
+      { label: 'Press',          path: '/' },
+      { label: 'Sustainability',  path: '/' },
     ],
   },
   {
@@ -80,11 +130,7 @@ const footerLinks = [
   },
 ]
 
-const socials = [
-  { Icon: InstagramIcon, label: 'Instagram', url: 'https://instagram.com' },
-  { Icon: TwitterIcon,   label: 'X',         url: 'https://x.com'        },
-  { Icon: TikTokIcon,    label: 'TikTok',    url: 'https://tiktok.com'   },
-]
+const payments = ['Visa', 'Mastercard', 'PayPal', 'Apple Pay', 'Paystack']
 
 // ─────────────────────────────────────────────
 // NEWSLETTER
@@ -106,14 +152,14 @@ function Newsletter() {
       <p style={{
         fontFamily: "'Outfit', sans-serif",
         fontSize: '10px', letterSpacing: '0.3em',
-        textTransform: 'uppercase', color: 'var(--accent)',
-        marginBottom: '12px', fontWeight: 400,
+        textTransform: 'uppercase',
+        color: 'var(--accent)', marginBottom: '12px', fontWeight: 400,
       }}>
         Stay in the loop
       </p>
       <h3 style={{
         fontFamily: "'Bebas Neue', sans-serif",
-        fontSize: 'clamp(28px, 3vw, 38px)',
+        fontSize: 'clamp(26px, 3vw, 36px)',
         color: 'var(--text)', letterSpacing: '0.04em',
         lineHeight: 1, marginBottom: '10px',
       }}>
@@ -125,7 +171,7 @@ function Newsletter() {
         fontSize: '14px', lineHeight: 1.65,
         color: 'var(--text-muted)', marginBottom: '24px',
       }}>
-        New drops, exclusive offers, and editorial content — delivered to your inbox first.
+        New drops, exclusive offers, and editorial content — delivered first.
       </p>
 
       {submitted ? (
@@ -149,7 +195,7 @@ function Newsletter() {
           </span>
         </motion.div>
       ) : (
-        <div style={{ display: 'flex', gap: '0' }}>
+        <div style={{ display: 'flex' }}>
           <input
             type="email"
             value={email}
@@ -196,10 +242,9 @@ function Newsletter() {
       <p style={{
         fontFamily: "'Outfit', sans-serif",
         fontSize: '10px', color: 'var(--text-faint)',
-        marginTop: '10px', letterSpacing: '0.04em',
-        fontWeight: 300,
+        marginTop: '10px', letterSpacing: '0.04em', fontWeight: 300,
       }}>
-        No spam. Unsubscribe anytime. We respect your privacy.
+        No spam. Unsubscribe anytime.
       </p>
     </div>
   )
@@ -215,11 +260,12 @@ export default function Footer() {
       borderTop: '1px solid var(--border)',
     }}>
 
-      {/* Gold top accent line */}
+      {/* Gold accent line */}
       <div style={{ height: '3px', background: 'var(--accent)' }} />
 
-      {/* Main footer body */}
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '72px 80px 48px' }}>
+
+        {/* Main grid */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1.4fr 1fr 1fr 1fr 1fr',
@@ -229,11 +275,13 @@ export default function Footer() {
 
           {/* Brand column */}
           <div>
-            {/* Logo */}
-            <Link to="/" style={{
-              display: 'flex', alignItems: 'center',
-              gap: '10px', marginBottom: '20px',
-            }}>
+            <Link
+              to="/"
+              style={{
+                display: 'flex', alignItems: 'center',
+                gap: '10px', marginBottom: '20px',
+              }}
+            >
               <img
                 src="/stayonlinelogo.jpeg"
                 alt="Staay"
@@ -245,16 +293,15 @@ export default function Footer() {
               <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
                 <span style={{
                   fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: '20px', color: 'var(--text)',
-                  letterSpacing: '0.06em',
+                  fontSize: '20px', color: 'var(--text)', letterSpacing: '0.06em',
                 }}>
                   STAAY
                 </span>
                 <span style={{
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: '8px', letterSpacing: '0.4em',
-                  textTransform: 'uppercase', color: 'var(--accent)',
-                  fontWeight: 400, marginTop: '1px',
+                  textTransform: 'uppercase',
+                  color: 'var(--accent)', fontWeight: 400, marginTop: '1px',
                 }}>
                   ONLINE
                 </span>
@@ -266,42 +313,110 @@ export default function Footer() {
               fontStyle: 'italic', fontWeight: 300,
               fontSize: '13px', lineHeight: 1.7,
               color: 'var(--text-muted)',
-              marginBottom: '24px',
-              maxWidth: '220px',
+              marginBottom: '24px', maxWidth: '220px',
             }}>
               Garments built for those who exist between edges. No rules. No season.
             </p>
 
+            {/* Trust icons */}
+            <div style={{
+              display: 'flex', flexDirection: 'column',
+              gap: '10px', marginBottom: '24px',
+            }}>
+              {[
+                { Icon: TruckIcon,  text: 'Free shipping over $200' },
+                { Icon: ReturnIcon, text: 'Free returns — 30 days'  },
+                { Icon: ShieldIcon, text: 'SSL secured checkout'    },
+              ].map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ color: 'var(--accent)', flexShrink: 0, opacity: 0.8 }}>
+                    <item.Icon />
+                  </span>
+                  <span style={{
+                    fontFamily: "'Outfit', sans-serif",
+                    fontSize: '11px', color: 'var(--text-faint)',
+                    fontWeight: 300, letterSpacing: '0.04em',
+                  }}>
+                    {item.text}
+                  </span>
+                </div>
+              ))}
+            </div>
+
             {/* Socials */}
             <div style={{ display: 'flex', gap: '8px' }}>
-              {socials.map(({ Icon, label, url }) => (
-                
-                  key={label}
-                  href={url}
-                  target="_blank"
-                  rel="noreferrer"
-                  title={label}
-                  style={{
-                    width: '36px', height: '36px',
-                    border: '1px solid var(--border)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: 'var(--text-muted)',
-                    transition: 'all 0.22s',
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = 'var(--accent)'
-                    e.currentTarget.style.color = 'var(--accent)'
-                    e.currentTarget.style.background = 'var(--accent-soft)'
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.borderColor = 'var(--border)'
-                    e.currentTarget.style.color = 'var(--text-muted)'
-                    e.currentTarget.style.background = 'transparent'
-                  }}
-                >
-                  <Icon />
-                </a>
-              ))}
+              
+                href="https://instagram.com"
+                target="_blank"
+                rel="noreferrer"
+                title="Instagram"
+                style={{
+                  width: '36px', height: '36px',
+                  border: '1px solid var(--border)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: 'var(--text-muted)', transition: 'all 0.22s',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = 'var(--accent)'
+                  e.currentTarget.style.color = 'var(--accent)'
+                  e.currentTarget.style.background = 'var(--accent-soft)'
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = 'var(--border)'
+                  e.currentTarget.style.color = 'var(--text-muted)'
+                  e.currentTarget.style.background = 'transparent'
+                }}
+              >
+                <InstagramIcon />
+              </a>
+              
+                href="https://x.com"
+                target="_blank"
+                rel="noreferrer"
+                title="X"
+                style={{
+                  width: '36px', height: '36px',
+                  border: '1px solid var(--border)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: 'var(--text-muted)', transition: 'all 0.22s',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = 'var(--accent)'
+                  e.currentTarget.style.color = 'var(--accent)'
+                  e.currentTarget.style.background = 'var(--accent-soft)'
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = 'var(--border)'
+                  e.currentTarget.style.color = 'var(--text-muted)'
+                  e.currentTarget.style.background = 'transparent'
+                }}
+              >
+                <TwitterIcon />
+              </a>
+              
+                href="https://tiktok.com"
+                target="_blank"
+                rel="noreferrer"
+                title="TikTok"
+                style={{
+                  width: '36px', height: '36px',
+                  border: '1px solid var(--border)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: 'var(--text-muted)', transition: 'all 0.22s',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = 'var(--accent)'
+                  e.currentTarget.style.color = 'var(--accent)'
+                  e.currentTarget.style.background = 'var(--accent-soft)'
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = 'var(--border)'
+                  e.currentTarget.style.color = 'var(--text-muted)'
+                  e.currentTarget.style.background = 'transparent'
+                }}
+              >
+                <TikTokIcon />
+              </a>
             </div>
           </div>
 
@@ -315,7 +430,10 @@ export default function Footer() {
               }}>
                 {col.heading}
               </h4>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <ul style={{
+                listStyle: 'none',
+                display: 'flex', flexDirection: 'column', gap: '10px',
+              }}>
                 {col.links.map(link => (
                   <li key={link.label}>
                     <Link
@@ -324,8 +442,7 @@ export default function Footer() {
                         fontFamily: "'Outfit', sans-serif",
                         fontSize: '12px', color: 'var(--text-muted)',
                         fontWeight: 300, letterSpacing: '0.04em',
-                        transition: 'color 0.2s',
-                        display: 'inline-block',
+                        transition: 'color 0.2s', display: 'inline-block',
                       }}
                       onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)' }}
                       onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)' }}
@@ -342,8 +459,7 @@ export default function Footer() {
         {/* Newsletter */}
         <div style={{
           borderTop: '1px solid var(--border)',
-          paddingTop: '52px',
-          marginBottom: '52px',
+          paddingTop: '52px', marginBottom: '52px',
         }}>
           <Newsletter />
         </div>
@@ -353,22 +469,21 @@ export default function Footer() {
           borderTop: '1px solid var(--border)',
           paddingTop: '24px',
           display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap', gap: '12px',
         }}>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '11px', color: 'var(--text-faint)',
-              letterSpacing: '0.06em', fontWeight: 300,
-            }}>
-              © {new Date().getFullYear()} Staay Online. All rights reserved.
-            </span>
-          </div>
+          <span style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: '11px', color: 'var(--text-faint)',
+            letterSpacing: '0.06em', fontWeight: 300,
+          }}>
+            © {new Date().getFullYear()} Staay Online. All rights reserved.
+          </span>
 
-          {/* Payment icons — text based */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            {['Visa', 'Mastercard', 'PayPal', 'Apple Pay', 'Paystack'].map(p => (
+          {/* Payment methods */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            {payments.map(p => (
               <span
                 key={p}
                 style={{
@@ -377,8 +492,7 @@ export default function Footer() {
                   textTransform: 'uppercase',
                   color: 'var(--text-faint)',
                   border: '1px solid var(--border)',
-                  padding: '4px 8px',
-                  fontWeight: 400,
+                  padding: '4px 8px', fontWeight: 400,
                 }}
               >
                 {p}
@@ -394,22 +508,19 @@ export default function Footer() {
               background: 'transparent', border: 'none',
               fontFamily: "'Outfit', sans-serif",
               fontSize: '10px', letterSpacing: '0.2em',
-              textTransform: 'uppercase', color: 'var(--text-muted)',
+              textTransform: 'uppercase',
+              color: 'var(--text-muted)',
               cursor: 'pointer', transition: 'color 0.2s',
             }}
             onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)' }}
             onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)' }}
           >
             Back to top
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M6 10V2M2 6l4-4 4 4"
-                stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <UpArrowIcon />
           </button>
 
         </div>
       </div>
-
     </footer>
   )
 }
