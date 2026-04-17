@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { products, categories } from '../data/products'
 import useCartStore from '../store/useCartStore'
+import { Link } from 'react-router-dom'
 
 // ─────────────────────────────────────────────
 // ICONS
@@ -314,6 +315,7 @@ function ProductCardGrid({ product, index, wishlisted, onWishlist }) {
       }}
     >
       {/* Image */}
+      <Link to={`/product/${product.id}`} style={{ textDecoration: 'none', display: 'block' }}>
       <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden', background: '#1a1a1a' }}>
         <div style={{
           position: 'absolute', inset: 0,
@@ -339,7 +341,7 @@ function ProductCardGrid({ product, index, wishlisted, onWishlist }) {
             objectFit: 'cover', transition: 'transform 0.7s',
             transform: hovered ? 'scale(1.07)' : 'scale(1)',
           }}
-        />
+        /> </Link>
 
         {/* Hover overlay + CTA */}
         <div style={{
