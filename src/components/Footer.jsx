@@ -323,24 +323,42 @@ export default function Footer() {
               display: 'flex', flexDirection: 'column',
               gap: '10px', marginBottom: '24px',
             }}>
-              {[
-                { Icon: TruckIcon,  text: 'Free shipping over $200' },
-                { Icon: ReturnIcon, text: 'Free returns — 30 days'  },
-                { Icon: ShieldIcon, text: 'SSL secured checkout'    },
-              ].map((item, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ color: 'var(--accent)', flexShrink: 0, opacity: 0.8 }}>
-                    <item.Icon />
-                  </span>
-                  <span style={{
-                    fontFamily: "'Outfit', sans-serif",
-                    fontSize: '11px', color: 'var(--text-faint)',
-                    fontWeight: 300, letterSpacing: '0.04em',
-                  }}>
-                    {item.text}
-                  </span>
-                </div>
-              ))}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+  <span style={{ color: 'var(--accent)', flexShrink: 0, opacity: 0.8 }}>
+    <TruckIcon />
+  </span>
+  <span style={{
+    fontFamily: "'Outfit', sans-serif",
+    fontSize: '11px', color: 'var(--text-faint)',
+    fontWeight: 300, letterSpacing: '0.04em',
+  }}>
+    Free shipping over $200
+  </span>
+</div>
+<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+  <span style={{ color: 'var(--accent)', flexShrink: 0, opacity: 0.8 }}>
+    <ReturnIcon />
+  </span>
+  <span style={{
+    fontFamily: "'Outfit', sans-serif",
+    fontSize: '11px', color: 'var(--text-faint)',
+    fontWeight: 300, letterSpacing: '0.04em',
+  }}>
+    Free returns — 30 days
+  </span>
+</div>
+<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+  <span style={{ color: 'var(--accent)', flexShrink: 0, opacity: 0.8 }}>
+    <ShieldIcon />
+  </span>
+  <span style={{
+    fontFamily: "'Outfit', sans-serif",
+    fontSize: '11px', color: 'var(--text-faint)',
+    fontWeight: 300, letterSpacing: '0.04em',
+  }}>
+    SSL secured checkout
+  </span>
+</div>
             </div>
 
             {/* Socials */}
