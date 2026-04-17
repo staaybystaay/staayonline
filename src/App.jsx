@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Shop from './pages/Shop'
 import Cart from './pages/Cart'
 import Auth from './pages/Auth'
+import Product from './pages/Product'
 
 export default function App() {
   return (
@@ -13,10 +14,11 @@ export default function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path="/"      element={<Home />} />
-          <Route path="/shop"  element={<Shop />} />
-          <Route path="/cart"  element={<Cart />} />
-          <Route path="/login" element={<Auth />} />
+          <Route path="/"           element={<Home />}    />
+          <Route path="/shop"       element={<Shop />}    />
+          <Route path="/cart"       element={<Cart />}    />
+          <Route path="/login"      element={<Auth />}    />
+          <Route path="/product/:id" element={<Product />} />
         </Routes>
         <Footer />
       </BrowserRouter>
