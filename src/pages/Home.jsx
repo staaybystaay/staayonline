@@ -147,32 +147,61 @@ function HeroSection() {
       }}
     >
 
-      {/* ── FULL BLEED BACKGROUND IMAGE ── */}
-      <AnimatePresence custom={dir} initial={false}>
-        <motion.div
-          key={`img-${slide.id}`}
-          custom={dir}
-          initial={{ clipPath: dir > 0 ? 'inset(0 100% 0 0)' : 'inset(0 0 0 100%)' }}
-          animate={{ clipPath: 'inset(0 0% 0 0)' }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.95, ease: [0.76, 0, 0.24, 1] }}
-          style={{ position: 'absolute', inset: 0, zIndex: 0 }}
-        >
-        <img
-          src={slide.image}
-          alt=""
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: slide.imagePos || 'center 30%',
-            transform: 'scale(0.85)',
-            transformOrigin: 'center center',
-            display: 'block',
-          }}
-        />
-      </motion.div>
-      </AnimatePresence>
+      {/* ── BACKGROUND — dark left, full image right ── */}
+<AnimatePresence custom={dir} initial={false}>
+  <motion.div
+    key={`img-${slide.id}`}
+    custom={dir}
+    initial={{ clipPath: dir > 0 ? 'inset(0 100% 0 0)' : 'inset(0 0 0 100%)' }}
+    animate={{ clipPath: 'inset(0 0% 0 0)' }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.95, ease: [0.76, 0, 0.24, 1] }}
+    style={{ position: 'absolute', inset: 0, zIndex: 0 }}
+  >
+    {/* Dark base */}
+    <div style={{
+      position: 'absolute', inset: 0,
+      background: slide.bgLeft || '#080600',
+    }} />
+
+    {/* Image — right 60%, contained so full image shows */}
+    <div style={{
+      position: 'absolute',
+      top: 0, right: 0,
+      width: '62%', height: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      overflow: 'hidden',
+    }}>
+      <img
+        src={slide.image}
+        alt=""
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'contain',
+          objectPosition: 'center center',
+          display: 'block',
+        }}
+      />
+    </div>
+
+    {/* Fade from dark left into image */}
+    <div style={{
+      position: 'absolute', inset: 0,
+      background: 'linear-gradient(to right, rgba(8,6,0,1) 0%, rgba(8,6,0,0.92) 25%, rgba(8,6,0,0.5) 45%, rgba(8,6,0,0.1) 65%, rgba(8,6,0,0) 100%)',
+      zIndex: 1,
+    }} />
+
+    {/* Bottom fade */}
+    <div style={{
+      position: 'absolute', bottom: 0, left: 0, right: 0,
+      height: '180px', zIndex: 1,
+      background: 'linear-gradient(to top, rgba(8,6,0,0.9), transparent)',
+    }} />
+  </motion.div>
+</AnimatePresence>
 
       {/* ── GRADIENT OVERLAYS ── */}
       {/* Left dark overlay so text is readable */}
