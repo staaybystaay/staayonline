@@ -169,7 +169,7 @@ function Newsletter() {
             background: 'var(--accent-soft)',
           }}
         >
-          <span style={{ color: 'var(--accent)', fontSize: '16px' }}>&#10003;</span>
+         <span style={{ color: 'var(--accent)', fontSize: '16px' }}>{'✓'}</span>
           <span style={{
             fontFamily: "'Outfit', sans-serif",
             fontSize: '12px',
@@ -355,7 +355,7 @@ export default function Footer() {
               {trustItems.map(function(item) {
                 return (
                   <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ color: 'var(--accent)', fontSize: '11px', flexShrink: 0 }}>&#10022;</span>
+                  <span style={{ color: 'var(--accent)', fontSize: '11px', flexShrink: 0 }}>{'✦'}</span>
                     <span style={{
                       fontFamily: "'Outfit', sans-serif",
                       fontSize: '11px',
