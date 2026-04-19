@@ -521,7 +521,7 @@ function HeroSection() {
           color: 'rgba(255,255,255,0.18)',
           whiteSpace: 'nowrap',
         }}>
-          stayyonline.com — SS2025
+          staayonline.com — SS2025
         </span>
       </div>
 
@@ -659,9 +659,9 @@ function FeaturedDropsStrip() {
 // ═══════════════════════════════════════════════════════
 function EditorialMarquee() {
   const words = [
-    'STAYYONLINE', '✦', 'SS 2025', '✦',
+    'STAAY', '✦', 'SS 2025', '✦',
     'NEW COLLECTION', '✦', 'WEAR THE VOID', '✦',
-    'STAYYONLINE', '✦', 'SS 2025', '✦',
+    'STAAY', '✦', 'SS 2025', '✦',
   ]
   return (
     <div style={{
