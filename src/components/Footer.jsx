@@ -194,35 +194,7 @@ export default function Footer() {
               </a>
             </div>
 
-            {/* Contact info */}
-            <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <a
-                href="mailto:info@staayonline.com"
-                style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'var(--text-muted)', fontWeight: 300, letterSpacing: '0.04em', transition: 'color 0.2s', display: 'block' }}
-                onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
-                onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-muted)' }}>
-                info@staayonline.com
-              </a>
-              <a
-                href="https://wa.me/233503977985"
-                target="_blank"
-                rel="noreferrer"
-                style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'var(--text-muted)', fontWeight: 300, letterSpacing: '0.04em', transition: 'color 0.2s', display: 'block' }}
-                onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
-                onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-muted)' }}>
-                +233 50 397 7985
-              </a>
-              <a
-                href="https://instagram.com/staaybystaay"
-                target="_blank"
-                rel="noreferrer"
-                style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', color: 'var(--text-faint)', letterSpacing: '0.08em', transition: 'color 0.2s' }}
-                onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
-                onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-faint)' }}>
-                @staaybystaay
-              </a>
-            </div>
-          </div>
+        
 
           <LinkColumn heading="Shop" links={shopLinks} />
           <LinkColumn heading="Company" links={companyLinks} />
