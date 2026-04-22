@@ -236,7 +236,7 @@ export default function Footer() {
 
         <div style={{ borderTop: '1px solid var(--border)', paddingTop: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
           <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'var(--text-faint)', letterSpacing: '0.06em', fontWeight: 300 }}>
-            {year} Staay Online. All rights reserved.
+            {year} STAAY. All rights reserved.
           </span>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
             {paymentMethods.map(function(method) {
