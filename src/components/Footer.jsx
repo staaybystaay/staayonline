@@ -18,12 +18,7 @@ const companyLinks = [
 ]
 
 // ✅ FIX 1: supportLinks was referenced but never defined — added it here
-const supportLinks = [
-  { label: 'Track My Order', path: '/' },
-  { label: 'Returns & Exchanges', path: '/' },
-  { label: 'Help Center', path: '/' },
-  { label: 'Contact Support', path: '/' },
-]
+
 
 const legalLinks = [
   { label: 'Privacy Policy', path: '/' },
