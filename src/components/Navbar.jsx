@@ -57,9 +57,10 @@ const CloseIcon = () => (
 // ─── Nav links ────────────────────────────────────────────────────────────────
 const navLinks = [
   { label: 'Home',        path: '/'      },
+   { label: 'Our Brand',   path: '/'      },
   { label: 'Shop',        path: '/shop'  },
   { label: 'Collections', path: '/shop'  },
-  { label: 'Editorial',   path: '/'      },
+  { label: 'Reviews',   path: '/'      },
 ]
 
 // ─── Search Overlay ───────────────────────────────────────────────────────────
@@ -410,17 +411,7 @@ export default function Navbar() {
               }}>
                 STAAY
               </span>
-              <span style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '8px',
-                letterSpacing: '0.4em',
-                textTransform: 'uppercase',
-                color: 'var(--accent)',
-                fontWeight: 400,
-                marginTop: '1px',
-              }}>
-                ONLINE
-              </span>
+             
             </div>
           </Link>
 
