@@ -63,41 +63,11 @@ const heroSlides = [
 // FEATURED DROPS DATA
 // ═══════════════════════════════════════════════════════
 const featuredDrops = [
-  {
-    id: 'f1',
-    label: 'AIR STAAY 01',
-    price: '$320',
-    image: '/airsneaker.jpg',
-    tag: 'New',
-  },
-  {
-    id: 'f2',
-    label: 'VOID HOODIE',
-    price: '$195',
-    image: '/hoodie.jpg',
-    tag: 'Hot',
-  },
-  {
-    id: 'f3',
-    label: 'CARGO PANT 02',
-    price: '$240',
-    image: '/cargopant.jpg',
-    tag: 'New',
-  },
-  {
-    id: 'f4',
-    label: 'PHANTOM JACKET',
-    price: '$420',
-    image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&q=80&fit=crop',
-    tag: null,
-  },
-  {
-    id: 'f5',
-    label: 'CROCS',
-    price: '$280',
-    image: '/crocs.png',
-    tag: 'Sale',
-  },
+  { id: 'f1', label: 'AIR STAAY 01',    price: '$320', image: '/airsneaker.jpg', tag: 'New'  },
+  { id: 'f2', label: 'VOID HOODIE',     price: '$195', image: '/hoodie.jpg',     tag: 'Hot'  },
+  { id: 'f3', label: 'CARGO PANT 02',   price: '$240', image: '/cargopant.jpg',  tag: 'New'  },
+  { id: 'f4', label: 'PHANTOM JACKET',  price: '$420', image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&q=80&fit=crop', tag: null },
+  { id: 'f5', label: 'CROCS',           price: '$280', image: '/crocs.png',      tag: 'Sale' },
 ]
 
 const badgeMap = {
@@ -107,31 +77,10 @@ const badgeMap = {
 }
 
 // ═══════════════════════════════════════════════════════
-// PROMO POPUP
+// PROMO POPUP — centred image, close button only, no timer
 // ═══════════════════════════════════════════════════════
 function PromoPopup() {
   const [visible, setVisible] = useState(true)
-  const [seconds, setSeconds] = useState(30)
-  const [progress, setProgress] = useState(100)
-
-  useEffect(() => {
-    if (!visible) return
-    const timer = setInterval(() => {
-      setSeconds(function(s) {
-        if (s <= 1) {
-          clearInterval(timer)
-          setVisible(false)
-          return 0
-        }
-        return s - 1
-      })
-      setProgress(function(p) {
-        var next = p - (100 / 30)
-        return next < 0 ? 0 : next
-      })
-    }, 1000)
-    return function() { clearInterval(timer) }
-  }, [visible])
 
   if (!visible) return null
 
@@ -141,7 +90,7 @@ function PromoPopup() {
         position: 'fixed', inset: 0,
         zIndex: 9999,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'rgba(0,0,0,0.8)',
+        background: 'rgba(0,0,0,0.82)',
         backdropFilter: 'blur(6px)',
         padding: '20px',
       }}
@@ -153,42 +102,61 @@ function PromoPopup() {
         onClick={function(e) { e.stopPropagation() }}
         style={{
           position: 'relative',
-          maxWidth: '400px',
+          maxWidth: '420px',
           width: '100%',
           background: '#0C0B09',
           border: '1px solid var(--border)',
           overflow: 'hidden',
+          /* ✅ Centre the card itself */
+          margin: 'auto',
         }}>
-        {/* Progress bar */}
-        <div style={{ height: '3px', background: 'var(--border)', position: 'relative' }}>
-          <div style={{
-            position: 'absolute', top: 0, left: 0,
-            height: '100%',
-            background: 'var(--accent)',
-            width: progress + '%',
-            transition: 'width 1s linear',
-          }} />
-        </div>
 
-        {/* Timer badge */}
+        {/* ✅ Close button — top right, always visible, no timer */}
+        <button
+          onClick={function() { setVisible(false) }}
+          style={{
+            position: 'absolute', top: '12px', right: '12px',
+            zIndex: 10,
+            width: '32px', height: '32px',
+            background: 'rgba(12,11,9,0.75)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            borderRadius: '50%',
+            color: '#fff',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer',
+            fontSize: '16px', lineHeight: 1,
+            transition: 'background 0.2s, border-color 0.2s',
+            backdropFilter: 'blur(4px)',
+          }}
+          onMouseEnter={function(e) {
+            e.currentTarget.style.background = 'var(--accent)'
+            e.currentTarget.style.borderColor = 'var(--accent)'
+            e.currentTarget.style.color = '#0C0B09'
+          }}
+          onMouseLeave={function(e) {
+            e.currentTarget.style.background = 'rgba(12,11,9,0.75)'
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'
+            e.currentTarget.style.color = '#fff'
+          }}
+          aria-label="Close promo">
+          ✕
+        </button>
+
+        {/* ✅ Flyer image — object-fit: contain so nothing gets cropped or off-centre */}
         <div style={{
-          position: 'absolute', top: '14px', right: '14px',
-          background: 'rgba(12,11,9,0.85)',
-          border: '1px solid var(--border)',
-          padding: '4px 10px',
-          fontFamily: "'Outfit', sans-serif",
-          fontSize: '10px', letterSpacing: '0.1em',
-          color: 'var(--text-faint)',
-          zIndex: 2,
+          width: '100%',
+          background: '#fff',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
         }}>
-          Closes in {seconds}s
+          <img
+            src="/heroflyer.jpg"
+            alt="Promo"
+            style={{
+              width: '100%',
+              display: 'block',
+              objectFit: 'contain',
+            }} />
         </div>
-
-        {/* Flyer image */}
-        <img
-          src="/heroflyer.jpg"
-          alt="Promo"
-          style={{ width: '100%', display: 'block' }} />
 
         {/* Bottom bar */}
         <div style={{
@@ -242,7 +210,7 @@ function PromoPopup() {
 }
 
 // ═══════════════════════════════════════════════════════
-// STAT CARDS — just 2, compact
+// STAT CARDS
 // ═══════════════════════════════════════════════════════
 function StatCards() {
   return (
@@ -273,22 +241,11 @@ function StatCards() {
               2,400+
             </div>
             <div>
-              <div style={{
-                width: '24px', height: '2px',
-                background: 'var(--accent)', marginBottom: '8px',
-              }} />
-              <div style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '13px', color: 'var(--text)',
-                fontWeight: 500, letterSpacing: '0.04em', marginBottom: '3px',
-              }}>
+              <div style={{ width: '24px', height: '2px', background: 'var(--accent)', marginBottom: '8px' }} />
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', color: 'var(--text)', fontWeight: 500, letterSpacing: '0.04em', marginBottom: '3px' }}>
                 Pieces Available
               </div>
-              <div style={{
-                fontFamily: "'Fraunces', serif",
-                fontStyle: 'italic', fontSize: '12px',
-                color: 'var(--text-faint)', fontWeight: 300,
-              }}>
+              <div style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontSize: '12px', color: 'var(--text-faint)', fontWeight: 300 }}>
                 Across all categories
               </div>
             </div>
@@ -311,22 +268,11 @@ function StatCards() {
               98%
             </div>
             <div>
-              <div style={{
-                width: '24px', height: '2px',
-                background: 'var(--accent)', marginBottom: '8px',
-              }} />
-              <div style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '13px', color: 'var(--text)',
-                fontWeight: 500, letterSpacing: '0.04em', marginBottom: '3px',
-              }}>
+              <div style={{ width: '24px', height: '2px', background: 'var(--accent)', marginBottom: '8px' }} />
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', color: 'var(--text)', fontWeight: 500, letterSpacing: '0.04em', marginBottom: '3px' }}>
                 Satisfaction Rate
               </div>
-              <div style={{
-                fontFamily: "'Fraunces', serif",
-                fontStyle: 'italic', fontSize: '12px',
-                color: 'var(--text-faint)', fontWeight: 300,
-              }}>
+              <div style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontSize: '12px', color: 'var(--text-faint)', fontWeight: 300 }}>
                 From verified buyers
               </div>
             </div>
@@ -379,7 +325,6 @@ function HeroSection() {
         background: '#050505',
       }}>
 
-      {/* Background image */}
       <AnimatePresence custom={dir} initial={false}>
         <motion.div
           key={'img-' + slide.id}
@@ -407,7 +352,6 @@ function HeroSection() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Extra gradient overlays */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 1,
         background: 'linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.1) 70%, transparent 100%)',
@@ -427,7 +371,6 @@ function HeroSection() {
           background: 'radial-gradient(ellipse at 15% 60%, ' + slide.accent + '25 0%, transparent 55%)',
         }} />
 
-      {/* Top accent stripe */}
       <motion.div
         key={'stripe-' + slide.id}
         initial={{ scaleX: 0 }}
@@ -439,7 +382,6 @@ function HeroSection() {
           transformOrigin: 'left', zIndex: 3,
         }} />
 
-      {/* New Season badge */}
       <motion.div
         key={'badge-' + slide.id}
         initial={{ opacity: 0, y: -10 }}
@@ -458,7 +400,6 @@ function HeroSection() {
         New Season
       </motion.div>
 
-      {/* Ghost number */}
       <div style={{
         position: 'absolute',
         bottom: '-10px', right: '2%',
@@ -473,7 +414,6 @@ function HeroSection() {
         {String(current + 1).padStart(2, '0')}
       </div>
 
-      {/* Text content */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 2,
         display: 'flex', alignItems: 'center',
@@ -490,7 +430,6 @@ function HeroSection() {
             transition={{ duration: 0.4 }}
             style={{ maxWidth: '560px' }}>
 
-            {/* Tag */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -511,7 +450,6 @@ function HeroSection() {
               </span>
             </motion.div>
 
-            {/* Headline */}
             <h1 style={{
               fontFamily: "'Bebas Neue', sans-serif",
               fontSize: 'clamp(80px, 10vw, 140px)',
@@ -537,7 +475,6 @@ function HeroSection() {
               })}
             </h1>
 
-            {/* Divider */}
             <motion.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
@@ -547,7 +484,6 @@ function HeroSection() {
                 transformOrigin: 'left', width: '60px', marginBottom: '18px',
               }} />
 
-            {/* Sub */}
             <motion.p
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -562,7 +498,6 @@ function HeroSection() {
               {slide.sub}
             </motion.p>
 
-            {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -617,7 +552,6 @@ function HeroSection() {
         </AnimatePresence>
       </div>
 
-      {/* Bottom bar */}
       <div style={{
         position: 'absolute', bottom: '32px', left: '50%',
         transform: 'translateX(-50%)',
@@ -701,7 +635,6 @@ function HeroSection() {
         </div>
       </div>
 
-      {/* Vertical brand label */}
       <div style={{
         position: 'absolute', bottom: '120px', left: '18px',
         transform: 'rotate(-90deg)', transformOrigin: 'left center', zIndex: 3,
@@ -716,7 +649,6 @@ function HeroSection() {
         </span>
       </div>
 
-      {/* Progress bar */}
       {!paused && (
         <motion.div
           key={'bar-' + slide.id}
