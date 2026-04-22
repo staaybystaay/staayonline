@@ -11,17 +11,14 @@ const shopLinks = [
 ]
 
 const companyLinks = [
-  { label: 'About Us', path: '/' },
-  { label: 'Careers', path: '/' },
-  { label: 'Editorial', path: '/' },
-  { label: 'Press', path: '/' },
-  { label: 'Sustainability', path: '/' },
+  { label: 'Our Brand', path: '/' },
+   { label: 'Return Policy', path: '/' },
+ 
 ]
 
 const supportLinks = [
   { label: 'Contact Us', path: '/' },
   { label: 'Shipping Info', path: '/' },
-  { label: 'Returns', path: '/' },
   { label: 'Size Guide', path: '/' },
   { label: 'FAQ', path: '/' },
 ]
@@ -143,9 +140,6 @@ export default function Footer() {
               <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
                 <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '20px', color: 'var(--text)', letterSpacing: '0.06em' }}>
                   STAAY
-                </span>
-                <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '8px', letterSpacing: '0.4em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 400, marginTop: '1px' }}>
-                  ONLINE
                 </span>
               </div>
             </Link>
