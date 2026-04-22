@@ -12,8 +12,7 @@ const shopLinks = [
 
 const companyLinks = [
   { label: 'Our Brand', path: '/' },
-   { label: 'Return Policy', path: '/' },
- 
+  { label: 'Return Policy', path: '/' },
 ]
 
 const supportLinks = [
@@ -134,6 +133,8 @@ export default function Footer() {
       <div style={{ height: '3px', background: 'var(--accent)' }} />
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '72px 80px 48px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr 1fr', gap: '48px', marginBottom: '64px' }}>
+
+          {/* Brand column */}
           <div>
             <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
               <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '44px', height: '44px', objectFit: 'cover', borderRadius: '50%' }} />
@@ -143,9 +144,12 @@ export default function Footer() {
                 </span>
               </div>
             </Link>
+
             <p style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontWeight: 300, fontSize: '13px', lineHeight: 1.7, color: 'var(--text-muted)', marginBottom: '24px', maxWidth: '220px' }}>
               Garments built for those who exist between edges. No rules. No season.
             </p>
+
+            {/* Trust items */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
               {trustItems.map(function(item) {
                 return (
@@ -158,84 +162,78 @@ export default function Footer() {
                 )
               })}
             </div>
+
+            {/* Social icons */}
             <div style={{ display: 'flex', gap: '8px' }}>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer"
+              <a
+                href="https://instagram.com/staaybystaay"
+                target="_blank"
+                rel="noreferrer"
                 style={{ width: '36px', height: '36px', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', transition: 'all 0.22s', fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 500, textDecoration: 'none' }}
                 onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)' }}
                 onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-muted)' }}>
                 IG
               </a>
-              <a href="https://x.com" target="_blank" rel="noreferrer"
+              <a
+                href="https://x.com"
+                target="_blank"
+                rel="noreferrer"
                 style={{ width: '36px', height: '36px', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', transition: 'all 0.22s', fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 500, textDecoration: 'none' }}
                 onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)' }}
                 onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-muted)' }}>
                 X
               </a>
-              <a href="https://tiktok.com" target="_blank" rel="noreferrer"
+              <a
+                href="https://tiktok.com/@staaybystaay"
+                target="_blank"
+                rel="noreferrer"
                 style={{ width: '36px', height: '36px', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', transition: 'all 0.22s', fontFamily: "'Outfit', sans-serif", fontSize: '10px', fontWeight: 500, textDecoration: 'none' }}
                 onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)' }}
                 onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-muted)' }}>
                 TT
               </a>
             </div>
+
+            {/* Contact info */}
+            <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <a
+                href="mailto:info@staayonline.com"
+                style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'var(--text-muted)', fontWeight: 300, letterSpacing: '0.04em', transition: 'color 0.2s', display: 'block' }}
+                onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
+                onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-muted)' }}>
+                info@staayonline.com
+              </a>
+              <a
+                href="https://wa.me/233503977985"
+                target="_blank"
+                rel="noreferrer"
+                style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'var(--text-muted)', fontWeight: 300, letterSpacing: '0.04em', transition: 'color 0.2s', display: 'block' }}
+                onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
+                onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-muted)' }}>
+                +233 50 397 7985
+              </a>
+              <a
+                href="https://instagram.com/staaybystaay"
+                target="_blank"
+                rel="noreferrer"
+                style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', color: 'var(--text-faint)', letterSpacing: '0.08em', transition: 'color 0.2s' }}
+                onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
+                onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-faint)' }}>
+                @staaybystaay
+              </a>
+            </div>
           </div>
-          {/* Contact info */}
-<div style={{
-  marginTop: '20px',
-  paddingTop: '20px',
-  borderTop: '1px solid var(--border)',
-  display: 'flex', flexDirection: 'column', gap: '8px',
-}}>
-  
-    href="mailto:info@staayonline.com"
-    style={{
-      fontFamily: "'Outfit', sans-serif",
-      fontSize: '11px', color: 'var(--text-muted)',
-      fontWeight: 300, letterSpacing: '0.04em',
-      transition: 'color 0.2s', display: 'block',
-    }}
-    onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
-    onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-muted)' }}>
-    info@staayonline.com
-  </a>
-  
-    href="https://wa.me/233503977985"
-    target="_blank"
-    rel="noreferrer"
-    style={{
-      fontFamily: "'Outfit', sans-serif",
-      fontSize: '11px', color: 'var(--text-muted)',
-      fontWeight: 300, letterSpacing: '0.04em',
-      transition: 'color 0.2s', display: 'block',
-    }}
-    onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
-    onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-muted)' }}>
-    +233 50 397 7985
-  </a>
-  <div style={{ display: 'flex', gap: '12px', marginTop: '4px' }}>
-    
-      href="https://instagram.com/staaybystaay"
-      target="_blank"
-      rel="noreferrer"
-      style={{
-        fontFamily: "'Outfit', sans-serif",
-        fontSize: '10px', color: 'var(--text-faint)',
-        letterSpacing: '0.08em', transition: 'color 0.2s',
-      }}
-      onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
-      onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-faint)' }}>
-      @staaybystaay
-    </a>
-  </div>
-</div>
+
           <LinkColumn heading="Shop" links={shopLinks} />
           <LinkColumn heading="Company" links={companyLinks} />
           <LinkColumn heading="Support" links={supportLinks} />
           <LinkColumn heading="Legal" links={legalLinks} />
         </div>
+
         <div style={{ borderTop: '1px solid var(--border)', paddingTop: '52px', marginBottom: '52px' }}>
           <Newsletter />
         </div>
+
         <div style={{ borderTop: '1px solid var(--border)', paddingTop: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
           <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'var(--text-faint)', letterSpacing: '0.06em', fontWeight: 300 }}>
             {year} Staay Online. All rights reserved.
