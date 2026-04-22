@@ -35,7 +35,8 @@ function AnnouncementBar() {
         display: 'flex', alignItems: 'center', gap: '20px',
         flexWrap: 'wrap',
       }}>
-        
+        {/* ✅ FIX: All three <a> tags were missing their opening "<a" — restored below */}
+        <a
           href="https://instagram.com/staaybystaay"
           target="_blank"
           rel="noreferrer"
@@ -48,7 +49,7 @@ function AnnouncementBar() {
           IG: @staaybystaay
         </a>
         <span style={{ color: 'rgba(12,11,9,0.3)', fontSize: '10px' }}>|</span>
-        
+        <a
           href="https://tiktok.com/@staaybystaay"
           target="_blank"
           rel="noreferrer"
@@ -60,7 +61,7 @@ function AnnouncementBar() {
           TikTok: @staaybystaay
         </a>
         <span style={{ color: 'rgba(12,11,9,0.3)', fontSize: '10px' }}>|</span>
-        
+        <a
           href="https://wa.me/233503977985"
           target="_blank"
           rel="noreferrer"
