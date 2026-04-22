@@ -12,21 +12,20 @@ const shopLinks = [
 
 const companyLinks = [
   { label: 'Our Brand', path: '/' },
-  { label: 'Return Policy', path: '/' },
+  { label: 'Contact Us', path: '/' },
+  { label: 'FAQ', path: '/' },
+  { label: 'Size Guide', path: '/' },
+
 ]
 
-const supportLinks = [
-  { label: 'Contact Us', path: '/' },
-  { label: 'Shipping Info', path: '/' },
-  { label: 'Size Guide', path: '/' },
-  { label: 'FAQ', path: '/' },
-]
+
 
 const legalLinks = [
   { label: 'Privacy Policy', path: '/' },
-  { label: 'Terms of Use', path: '/' },
+  { label: 'Shipping Information', path: '/' },
+  { label: 'Return Policy', path: '/' },
   { label: 'Cookie Policy', path: '/' },
-  { label: 'Accessibility', path: '/' },
+  
 ]
 
 const trustItems = [
