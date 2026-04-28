@@ -7,67 +7,55 @@ import useCartStore from '../store/useCartStore'
 // ─────────────────────────────────────────────
 // ICONS
 // ─────────────────────────────────────────────
-const ArrowIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-    <path d="M2 7h10M8 3l4 4-4 4"
-      stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-)
+function PlusIcon() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+      <path d="M5.5 1v9M1 5.5h9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+    </svg>
+  )
+}
 
-const HeartIcon = ({ filled }) => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill={filled ? 'var(--accent)' : 'none'}>
-    <path d="M8 13.5S2 9.8 2 5.8A3.3 3.3 0 0 1 8 4a3.3 3.3 0 0 1 6 2c0 4-6 7.5-6 7.5z"
-      stroke="var(--accent)" strokeWidth="1.2" strokeLinejoin="round"/>
-  </svg>
-)
+function MinusIcon() {
+  return (
+    <svg width="11" height="3" viewBox="0 0 11 3" fill="none">
+      <path d="M1 1.5h9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+    </svg>
+  )
+}
 
-const ShareIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <circle cx="12" cy="3" r="1.5" stroke="currentColor" strokeWidth="1.2"/>
-    <circle cx="12" cy="12" r="1.5" stroke="currentColor" strokeWidth="1.2"/>
-    <circle cx="3" cy="7.5" r="1.5" stroke="currentColor" strokeWidth="1.2"/>
-    <path d="M10.5 3.8L4.5 6.8M4.5 8.2l6 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-  </svg>
-)
+function HeartIcon({ filled }) {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill={filled ? 'var(--accent)' : 'none'}>
+      <path d="M8 13.5S2 9.8 2 5.8A3.3 3.3 0 0 1 8 4a3.3 3.3 0 0 1 6 2c0 4-6 7.5-6 7.5z"
+        stroke="var(--accent)" strokeWidth="1.2" strokeLinejoin="round"/>
+    </svg>
+  )
+}
 
-const MinusIcon = () => (
-  <svg width="10" height="2" viewBox="0 0 10 2" fill="none">
-    <path d="M1 1h8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-  </svg>
-)
+function ShareIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+      <circle cx="12" cy="3" r="1.5" stroke="currentColor" strokeWidth="1.2"/>
+      <circle cx="12" cy="12" r="1.5" stroke="currentColor" strokeWidth="1.2"/>
+      <circle cx="3" cy="7.5" r="1.5" stroke="currentColor" strokeWidth="1.2"/>
+      <path d="M10.5 3.8L4.5 6.8M4.5 8.2l6 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+    </svg>
+  )
+}
 
-const PlusIcon = () => (
-  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-    <path d="M5 1v8M1 5h8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-  </svg>
-)
-
-const ChevronIcon = ({ open }) => (
-  <svg width="13" height="13" viewBox="0 0 13 13" fill="none"
-    style={{ transition: 'transform 0.3s', transform: open ? 'rotate(180deg)' : 'rotate(0)' }}>
-    <path d="M2 4.5l4.5 4.5 4.5-4.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-  </svg>
-)
-
-const TruckIcon = () => (
-  <svg width="15" height="13" viewBox="0 0 15 13" fill="none">
-    <path d="M1 2h9v7H1zM10 4.5h2.5L14 7v2h-4V4.5z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round"/>
-    <circle cx="3.5" cy="10.5" r="1.2" stroke="currentColor" strokeWidth="1.1"/>
-    <circle cx="11" cy="10.5" r="1.2" stroke="currentColor" strokeWidth="1.1"/>
-  </svg>
-)
-
-const ReturnIcon = () => (
-  <svg width="15" height="13" viewBox="0 0 15 13" fill="none">
-    <path d="M1 4h8a4 4 0 0 1 0 8H5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-    <path d="M4 1L1 4l3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-)
+function ChevronIcon({ open }) {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"
+      style={{ transition: 'transform 0.3s', transform: open ? 'rotate(180deg)' : 'rotate(0)' }}>
+      <path d="M2 4.5l4.5 4.5 4.5-4.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+    </svg>
+  )
+}
 
 // ─────────────────────────────────────────────
-// ACCORDION PANEL
+// ACCORDION
 // ─────────────────────────────────────────────
-function AccordionPanel({ title, children }) {
+function Accordion({ title, children }) {
   const [open, setOpen] = useState(false)
   return (
     <div style={{ borderBottom: '1px solid var(--border)' }}>
@@ -75,14 +63,15 @@ function AccordionPanel({ title, children }) {
         onClick={() => setOpen(v => !v)}
         style={{
           width: '100%', background: 'transparent', border: 'none',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '16px 0', cursor: 'pointer',
-        }}
-      >
+          display: 'flex', alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '18px 0', cursor: 'pointer',
+        }}>
         <span style={{
-          fontFamily: "'Bebas Neue', sans-serif",
-          fontSize: '14px', color: 'var(--text)',
-          letterSpacing: '0.1em',
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: '11px', letterSpacing: '0.22em',
+          textTransform: 'uppercase', color: 'var(--text)',
+          fontWeight: 500,
         }}>
           {title}
         </span>
@@ -97,9 +86,8 @@ function AccordionPanel({ title, children }) {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            style={{ overflow: 'hidden' }}
-          >
-            <div style={{ paddingBottom: '16px' }}>
+            style={{ overflow: 'hidden' }}>
+            <div style={{ paddingBottom: '20px' }}>
               {children}
             </div>
           </motion.div>
@@ -110,151 +98,108 @@ function AccordionPanel({ title, children }) {
 }
 
 // ─────────────────────────────────────────────
-// RELATED PRODUCTS
+// RELATED CARD
 // ─────────────────────────────────────────────
-function RelatedProducts({ currentId, category }) {
-  const related = products
-    .filter(p => p.category === category && p.id !== currentId)
-    .slice(0, 4)
-
+function RelatedCard({ product }) {
+  const [hovered, setHovered] = useState(false)
   const addItem = useCartStore(s => s.addItem)
-  const [hovered, setHovered] = useState(null)
-
-  if (!related.length) return null
 
   return (
-    <section style={{
-      borderTop: '1px solid var(--border)',
-      padding: '72px 0',
-    }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        borderTop: '2px solid var(--text)',
+        cursor: 'pointer',
+      }}>
+      <Link to={`/product/${product.id}`} style={{ textDecoration: 'none', display: 'block' }}>
         <div style={{
-          display: 'flex', alignItems: 'flex-end',
-          justifyContent: 'space-between', marginBottom: '40px',
+          position: 'relative', aspectRatio: '3/4',
+          background: 'var(--bg-surface)', overflow: 'hidden',
         }}>
-          <div>
-            <div style={{ width: '40px', height: '3px', background: 'var(--accent)', marginBottom: '14px' }} />
-            <h2 style={{
+          <div style={{
+            position: 'absolute', inset: 0,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <span style={{
               fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(28px, 3.5vw, 44px)',
-              color: 'var(--text)', letterSpacing: '0.04em', lineHeight: 1,
+              fontSize: '10px', letterSpacing: '0.3em',
+              color: 'var(--text-faint)',
             }}>
-              YOU MAY ALSO LIKE
-            </h2>
+              {product.category}
+            </span>
           </div>
-          <Link to="/shop" style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: '11px', letterSpacing: '0.2em',
-            textTransform: 'uppercase', color: 'var(--text-muted)',
-            borderBottom: '1px solid var(--border-mid)', paddingBottom: '3px',
-            transition: 'color 0.2s',
-          }}
-            onMouseEnter={e => { e.target.style.color = 'var(--accent)' }}
-            onMouseLeave={e => { e.target.style.color = 'var(--text-muted)' }}
-          >
-            View All →
-          </Link>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '14px' }}>
-          {related.map((product, i) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              onMouseEnter={() => setHovered(product.id)}
-              onMouseLeave={() => setHovered(null)}
+          <img
+            src={product.image} alt={product.name}
+            onError={e => { e.target.style.display = 'none' }}
+            style={{
+              position: 'absolute', inset: 0,
+              width: '100%', height: '100%', objectFit: 'cover',
+              transition: 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)',
+              transform: hovered ? 'scale(1.04)' : 'scale(1)',
+            }}
+          />
+          {product.badge && (
+            <span style={{
+              position: 'absolute', top: 0, left: 0,
+              background: product.badge === 'Sale' ? '#e63946' : 'var(--accent)',
+              color: product.badge === 'Sale' ? '#fff' : '#0C0B09',
+              padding: '5px 10px',
+              fontFamily: "'Outfit', sans-serif",
+              fontSize: '9px', fontWeight: 700,
+              letterSpacing: '0.14em', textTransform: 'uppercase',
+            }}>
+              {product.badge}
+            </span>
+          )}
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            background: 'var(--text)',
+            transform: hovered ? 'translateY(0)' : 'translateY(100%)',
+            transition: 'transform 0.3s cubic-bezier(0.25,0.46,0.45,0.94)',
+          }}>
+            <button
+              onClick={e => { e.preventDefault(); e.stopPropagation(); addItem(product) }}
               style={{
-                background: 'var(--bg-card)',
-                border: `1px solid ${hovered === product.id ? 'var(--border-mid)' : 'var(--border)'}`,
-                overflow: 'hidden', cursor: 'pointer',
-                transition: 'all 0.3s',
-                transform: hovered === product.id ? 'translateY(-4px)' : 'translateY(0)',
-                boxShadow: hovered === product.id ? '0 12px 32px rgba(201,164,74,0.1)' : 'none',
-              }}
-            >
-              <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }}>
-                <div style={{ aspectRatio: '3/4', position: 'relative', background: 'var(--bg-surface)', overflow: 'hidden' }}>
-                  <div style={{
-                    position: 'absolute', inset: 0,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}>
-                    <span style={{
-                      fontFamily: "'Bebas Neue', sans-serif",
-                      fontSize: '11px', color: 'rgba(201,164,74,0.08)', letterSpacing: '0.2em',
-                    }}>
-                      {product.category}
-                    </span>
-                  </div>
-                  <img
-                    src={product.image} alt={product.name}
-                    onError={e => { e.target.style.display = 'none' }}
-                    style={{
-                      position: 'absolute', inset: 0, width: '100%', height: '100%',
-                      objectFit: 'cover', transition: 'transform 0.6s',
-                      transform: hovered === product.id ? 'scale(1.05)' : 'scale(1)',
-                    }}
-                  />
-                  {/* Quick add */}
-                  <div style={{
-                    position: 'absolute', inset: 0,
-                    background: 'linear-gradient(to top, rgba(12,11,9,0.85) 0%, transparent 55%)',
-                    opacity: hovered === product.id ? 1 : 0, transition: 'opacity 0.3s',
-                    display: 'flex', alignItems: 'flex-end', padding: '14px',
-                  }}>
-                    <button
-                      onClick={e => { e.preventDefault(); addItem(product) }}
-                      style={{
-                        width: '100%', background: 'var(--accent)', color: '#0C0B09',
-                        border: 'none', padding: '10px',
-                        fontFamily: "'Outfit', sans-serif", fontSize: '9px',
-                        letterSpacing: '0.2em', textTransform: 'uppercase',
-                        fontWeight: 500, cursor: 'pointer',
-                      }}
-                    >
-                      Quick Add
-                    </button>
-                  </div>
-                  {product.badge && (
-                    <span style={{
-                      position: 'absolute', top: '12px', left: '12px',
-                      padding: '3px 9px', background: 'var(--accent)', color: '#0C0B09',
-                      fontFamily: "'Outfit', sans-serif", fontSize: '9px',
-                      letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 500,
-                    }}>
-                      {product.badge}
-                    </span>
-                  )}
-                </div>
-                <div style={{ padding: '12px 14px' }}>
-                  <p style={{
-                    fontFamily: "'Outfit', sans-serif", fontSize: '9px',
-                    letterSpacing: '0.22em', textTransform: 'uppercase',
-                    color: 'var(--text-faint)', marginBottom: '4px', fontWeight: 300,
-                  }}>
-                    {product.category}
-                  </p>
-                  <h4 style={{
-                    fontFamily: "'Bebas Neue', sans-serif", fontSize: '16px',
-                    color: 'var(--text)', letterSpacing: '0.04em', marginBottom: '6px',
-                  }}>
-                    {product.name}
-                  </h4>
-                  <span style={{
-                    fontFamily: "'Fraunces', serif",
-                    fontStyle: 'italic', fontSize: '16px', color: 'var(--accent)',
-                  }}>
-                    ${product.price}
-                  </span>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+                width: '100%', padding: '12px',
+                background: 'transparent', border: 'none',
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: '10px', fontWeight: 600,
+                letterSpacing: '0.22em', textTransform: 'uppercase',
+                color: 'var(--bg)', cursor: 'pointer',
+              }}>
+              Add to Bag
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+        <div style={{ padding: '10px 0 20px' }}>
+          <p style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontSize: '9px', letterSpacing: '0.2em',
+            textTransform: 'uppercase', color: 'var(--text-faint)',
+            marginBottom: '3px', fontWeight: 300,
+          }}>
+            {product.category}
+          </p>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+            <h4 style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: '17px', color: 'var(--text)',
+              letterSpacing: '0.04em',
+            }}>
+              {product.name}
+            </h4>
+            <span style={{
+              fontFamily: "'Fraunces', serif",
+              fontStyle: 'italic', fontSize: '16px',
+              color: 'var(--accent)',
+            }}>
+              ${product.price}
+            </span>
+          </div>
+        </div>
+      </Link>
+    </div>
   )
 }
 
@@ -262,49 +207,55 @@ function RelatedProducts({ currentId, category }) {
 // PRODUCT PAGE
 // ─────────────────────────────────────────────
 export default function Product() {
-  const { id }       = useParams()
-  const product      = products.find(p => p.id === Number(id))
-  const addItem      = useCartStore(s => s.addItem)
+  const { id }   = useParams()
+  const product  = products.find(p => p.id === Number(id))
+  const addItem  = useCartStore(s => s.addItem)
 
+  const [activeImage,   setActiveImage]   = useState(0)
   const [selectedSize,  setSelectedSize]  = useState(null)
   const [selectedColor, setSelectedColor] = useState(null)
   const [qty,           setQty]           = useState(1)
-  const [activeImage,   setActiveImage]   = useState(0)
   const [wishlisted,    setWishlisted]    = useState(false)
   const [addedToBag,    setAddedToBag]    = useState(false)
   const [sizeError,     setSizeError]     = useState(false)
 
-  if (!product) return (
-    <div style={{
-      background: 'var(--bg)', minHeight: '100vh',
-      display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center', gap: '20px',
-    }}>
-      <span style={{
-        fontFamily: "'Bebas Neue', sans-serif",
-        fontSize: '80px', color: 'rgba(201,164,74,0.06)',
+  if (!product) {
+    return (
+      <div style={{
+        background: 'var(--bg)', minHeight: '100vh',
+        display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
+        gap: '24px',
       }}>
-        404
-      </span>
-      <p style={{
-        fontFamily: "'Outfit', sans-serif", fontSize: '12px',
-        letterSpacing: '0.2em', textTransform: 'uppercase',
-        color: 'var(--text-muted)',
-      }}>
-        Product not found
-      </p>
-      <Link to="/shop" style={{
-        background: 'var(--accent)', color: '#0C0B09',
-        padding: '12px 28px',
-        fontFamily: "'Outfit', sans-serif", fontSize: '11px',
-        letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 500,
-      }}>
-        Back to Shop
-      </Link>
-    </div>
-  )
+        <p style={{
+          fontFamily: "'Bebas Neue', sans-serif",
+          fontSize: '80px', color: 'var(--text-faint)',
+          letterSpacing: '0.06em',
+        }}>
+          404
+        </p>
+        <p style={{
+          fontFamily: "'Outfit', sans-serif",
+          fontSize: '11px', letterSpacing: '0.22em',
+          textTransform: 'uppercase', color: 'var(--text-muted)',
+        }}>
+          Product not found
+        </p>
+        <Link
+          to="/shop"
+          style={{
+            background: 'var(--text)', color: 'var(--bg)',
+            padding: '14px 36px',
+            fontFamily: "'Bebas Neue', sans-serif",
+            fontSize: '16px', letterSpacing: '0.1em',
+          }}>
+          Back to Shop
+        </Link>
+      </div>
+    )
+  }
 
-  const handleAddToBag = () => {
+  function handleAddToBag() {
     if (!selectedSize) { setSizeError(true); return }
     setSizeError(false)
     addItem({ ...product, qty })
@@ -312,184 +263,212 @@ export default function Product() {
     setTimeout(() => setAddedToBag(false), 2500)
   }
 
+  const images = product.images || [product.image, product.image, product.image]
+  const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4)
+
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
 
-      {/* Breadcrumb */}
+      {/* ── BREADCRUMB BAR ── */}
       <div style={{
-        background: 'var(--bg-surface)',
         borderBottom: '1px solid var(--border)',
         padding: '14px 80px',
+        background: 'var(--bg-surface)',
       }}>
         <div style={{
           maxWidth: '1200px', margin: '0 auto',
           display: 'flex', alignItems: 'center', gap: '8px',
         }}>
-          {['Home', '/', 'Shop', '/', product.category, '/', product.name].map((c, i) => (
-            <span key={i} style={{
+          {[
+            { label: 'Home',           to: '/'     },
+            { label: '/',              to: null    },
+            { label: 'Shop',           to: '/shop' },
+            { label: '/',              to: null    },
+            { label: product.category, to: '/shop' },
+            { label: '/',              to: null    },
+            { label: product.name,     to: null    },
+          ].map((c, i) => c.to ? (
+            <Link key={i} to={c.to} style={{
               fontFamily: "'Outfit', sans-serif",
               fontSize: '10px', letterSpacing: '0.16em',
-              textTransform: 'uppercase',
+              textTransform: 'uppercase', color: 'var(--text-faint)',
+              fontWeight: 300, transition: 'color 0.2s',
+            }}
+              onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)' }}
+              onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-faint)' }}>
+              {c.label}
+            </Link>
+          ) : (
+            <span key={i} style={{
+              fontFamily: "'Outfit', sans-serif",
+              fontSize: '10px',
               color: i === 6 ? 'var(--accent)' : 'var(--text-faint)',
+              letterSpacing: i === 6 ? '0.1em' : '0',
               fontWeight: i === 6 ? 400 : 300,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden', textOverflow: 'ellipsis',
-              maxWidth: i === 6 ? '180px' : 'auto',
+              textTransform: i === 6 ? 'uppercase' : 'none',
+              maxWidth: i === 6 ? '200px' : 'auto',
+              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
             }}>
-              {c}
+              {c.label}
             </span>
           ))}
         </div>
       </div>
 
-      {/* Main product layout */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '52px 80px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'flex-start' }}>
+      {/* ── MAIN PRODUCT LAYOUT ── */}
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
+        <div style={{
+          display: 'grid', gridTemplateColumns: '1fr 1fr',
+          borderBottom: '1px solid var(--border)',
+        }}>
 
-          {/* ── LEFT — Images ── */}
-          <div style={{ position: 'sticky', top: '80px' }}>
-
+          {/* ── LEFT — Image gallery ── */}
+          <div style={{
+            borderRight: '1px solid var(--border)',
+            position: 'sticky', top: '64px',
+            alignSelf: 'flex-start',
+          }}>
             {/* Main image */}
-            <motion.div
-              key={activeImage}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-              style={{
-                position: 'relative',
-                aspectRatio: '4/5',
-                background: 'var(--bg-surface)',
-                overflow: 'hidden',
-                marginBottom: '12px',
-                border: '1px solid var(--border)',
-              }}
-            >
-              {/* Placeholder */}
+            <div style={{
+              position: 'relative',
+              aspectRatio: '4/5',
+              background: 'var(--bg-surface)',
+              overflow: 'hidden',
+              borderBottom: '1px solid var(--border)',
+            }}>
               <div style={{
                 position: 'absolute', inset: 0,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
                 <span style={{
                   fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: '18px', color: 'rgba(201,164,74,0.06)',
-                  letterSpacing: '0.2em',
+                  fontSize: '14px', letterSpacing: '0.3em',
+                  color: 'var(--text-faint)',
                 }}>
                   {product.category}
                 </span>
               </div>
 
-              <img
-                src={product.images?.[activeImage] || product.image}
-                alt={product.name}
-                onError={e => { e.target.style.display = 'none' }}
-                style={{
-                  position: 'absolute', inset: 0,
-                  width: '100%', height: '100%',
-                  objectFit: 'cover', display: 'block',
-                }}
-              />
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={activeImage}
+                  src={images[activeImage] || product.image}
+                  alt={product.name}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  onError={e => { e.target.style.display = 'none' }}
+                  style={{
+                    position: 'absolute', inset: 0,
+                    width: '100%', height: '100%',
+                    objectFit: 'cover', display: 'block',
+                  }}
+                />
+              </AnimatePresence>
 
               {/* Badge */}
               {product.badge && (
                 <span style={{
-                  position: 'absolute', top: '16px', left: '16px',
-                  padding: '5px 12px',
-                  background: 'var(--accent)', color: '#0C0B09',
+                  position: 'absolute', top: 0, left: 0,
+                  background: product.badge === 'Sale' ? '#e63946' : 'var(--accent)',
+                  color: product.badge === 'Sale' ? '#fff' : '#0C0B09',
+                  padding: '7px 14px',
                   fontFamily: "'Outfit', sans-serif",
-                  fontSize: '9px', letterSpacing: '0.2em',
-                  textTransform: 'uppercase', fontWeight: 600,
+                  fontSize: '9px', fontWeight: 700,
+                  letterSpacing: '0.2em', textTransform: 'uppercase',
                 }}>
                   {product.badge}
                 </span>
               )}
 
-              {/* Wishlist */}
-              <button
-                onClick={() => setWishlisted(v => !v)}
-                style={{
-                  position: 'absolute', top: '16px', right: '16px',
-                  width: '36px', height: '36px',
-                  background: 'var(--bg)',
-                  border: `1px solid ${wishlisted ? 'var(--accent)' : 'var(--border)'}`,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  cursor: 'pointer', transition: 'all 0.2s',
-                }}
-              >
-                <HeartIcon filled={wishlisted} />
-              </button>
-            </motion.div>
+              {/* Gold bottom stripe */}
+              <div style={{
+                position: 'absolute', bottom: 0, left: 0, right: 0,
+                height: '3px', background: 'var(--accent)',
+              }} />
+            </div>
 
-            {/* Thumbnails */}
-            <div style={{ display: 'flex', gap: '8px' }}>
-              {(product.images || [product.image]).map((img, i) => (
+            {/* Thumbnails row */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
+              {images.slice(0, 3).map((img, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveImage(i)}
                   style={{
-                    width: '72px', height: '88px', flexShrink: 0,
+                    position: 'relative', aspectRatio: '1/1',
                     background: 'var(--bg-surface)',
-                    border: `2px solid ${activeImage === i ? 'var(--accent)' : 'var(--border)'}`,
-                    overflow: 'hidden', cursor: 'pointer',
-                    transition: 'border-color 0.2s', padding: 0,
-                    position: 'relative',
-                  }}
-                >
+                    border: 'none', padding: 0, cursor: 'pointer',
+                    borderRight: i < 2 ? '1px solid var(--border)' : 'none',
+                    borderTop: '1px solid var(--border)',
+                    borderBottom: activeImage === i ? '3px solid var(--accent)' : '3px solid transparent',
+                    transition: 'border-bottom-color 0.2s',
+                    overflow: 'hidden',
+                  }}>
                   <img
-                    src={img} alt={`${product.name} view ${i + 1}`}
+                    src={img} alt={`View ${i + 1}`}
                     onError={e => { e.target.style.display = 'none' }}
                     style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   />
+                  {/* Active overlay */}
+                  <div style={{
+                    position: 'absolute', inset: 0,
+                    background: 'var(--accent)',
+                    opacity: activeImage === i ? 0.1 : 0,
+                    transition: 'opacity 0.2s',
+                  }} />
                 </button>
               ))}
             </div>
-
           </div>
 
-          {/* ── RIGHT — Info ── */}
-          <div>
+          {/* ── RIGHT — Product info ── */}
+          <div style={{ padding: '48px 0 48px 56px' }}>
 
             {/* Category + SKU */}
             <div style={{
               display: 'flex', alignItems: 'center',
-              justifyContent: 'space-between', marginBottom: '16px',
+              justifyContent: 'space-between', marginBottom: '20px',
             }}>
               <span style={{
                 fontFamily: "'Outfit', sans-serif",
-                fontSize: '10px', letterSpacing: '0.3em',
+                fontSize: '10px', letterSpacing: '0.32em',
                 textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 400,
               }}>
                 {product.category}
               </span>
               <span style={{
                 fontFamily: "'Outfit', sans-serif",
-                fontSize: '10px', letterSpacing: '0.18em',
+                fontSize: '10px', letterSpacing: '0.16em',
                 color: 'var(--text-faint)', fontWeight: 300,
               }}>
-                SKU: {product.sku}
+                {product.sku || 'SOL-001'}
               </span>
             </div>
 
-            {/* Gold accent line */}
-            <div style={{ width: '40px', height: '3px', background: 'var(--accent)', marginBottom: '16px' }} />
+            {/* 2px top border — editorial */}
+            <div style={{ height: '2px', background: 'var(--text)', marginBottom: '20px' }} />
 
             {/* Name */}
             <h1 style={{
               fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(36px, 4.5vw, 56px)',
-              color: 'var(--text)', letterSpacing: '0.02em',
-              lineHeight: 0.95, marginBottom: '20px',
+              fontSize: 'clamp(40px, 5vw, 64px)',
+              color: 'var(--text)', lineHeight: 0.9,
+              letterSpacing: '0.01em', margin: '0 0 20px',
             }}>
               {product.name}
             </h1>
 
-            {/* Price */}
+            {/* Price row */}
             <div style={{
               display: 'flex', alignItems: 'baseline',
-              gap: '12px', marginBottom: '28px',
+              gap: '14px', marginBottom: '24px',
+              paddingBottom: '24px',
+              borderBottom: '1px solid var(--border)',
             }}>
               <span style={{
                 fontFamily: "'Fraunces', serif",
-                fontStyle: 'italic', fontSize: '36px',
+                fontStyle: 'italic', fontSize: '40px',
                 color: 'var(--accent)', lineHeight: 1,
               }}>
                 ${product.price}
@@ -497,10 +476,10 @@ export default function Product() {
               {product.badge === 'Sale' && (
                 <span style={{
                   fontFamily: "'Outfit', sans-serif",
-                  fontSize: '13px', color: 'var(--text-faint)',
+                  fontSize: '14px', color: 'var(--text-faint)',
                   textDecoration: 'line-through',
                 }}>
-                  ${Math.round(product.price * 1.25)}
+                  ${Math.round(product.price * 1.3)}
                 </span>
               )}
             </div>
@@ -509,18 +488,18 @@ export default function Product() {
             <p style={{
               fontFamily: "'Fraunces', serif",
               fontStyle: 'italic', fontWeight: 300,
-              fontSize: '15px', lineHeight: 1.7,
+              fontSize: '15px', lineHeight: 1.75,
               color: 'var(--text-muted)',
               marginBottom: '32px',
               paddingBottom: '32px',
               borderBottom: '1px solid var(--border)',
             }}>
-              {product.description}
+              {product.description || 'A statement piece built to outlast trends and defined by precision.'}
             </p>
 
             {/* Color selector */}
-            {product.colors && (
-              <div style={{ marginBottom: '24px' }}>
+            {product.colors && product.colors.length > 0 && (
+              <div style={{ marginBottom: '28px' }}>
                 <div style={{
                   display: 'flex', alignItems: 'center',
                   justifyContent: 'space-between', marginBottom: '12px',
@@ -528,7 +507,8 @@ export default function Product() {
                   <span style={{
                     fontFamily: "'Outfit', sans-serif",
                     fontSize: '10px', letterSpacing: '0.24em',
-                    textTransform: 'uppercase', color: 'var(--text-muted)', fontWeight: 400,
+                    textTransform: 'uppercase', color: 'var(--text-muted)',
+                    fontWeight: 400,
                   }}>
                     Colour
                   </span>
@@ -542,24 +522,38 @@ export default function Product() {
                     </span>
                   )}
                 </div>
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  {product.colors.map(color => (
-                    <button
-                      key={color}
-                      onClick={() => setSelectedColor(color)}
-                      style={{
-                        padding: '8px 16px',
-                        background: selectedColor === color ? 'var(--accent)' : 'transparent',
-                        border: `1px solid ${selectedColor === color ? 'var(--accent)' : 'var(--border-mid)'}`,
-                        color: selectedColor === color ? '#0C0B09' : 'var(--text-muted)',
-                        fontFamily: "'Outfit', sans-serif",
-                        fontSize: '11px', letterSpacing: '0.1em',
-                        cursor: 'pointer', transition: 'all 0.2s',
-                      }}
-                    >
-                      {color}
-                    </button>
-                  ))}
+                <div style={{ display: 'flex', gap: '0', flexWrap: 'wrap' }}>
+                  {product.colors.map(color => {
+                    const active = selectedColor === color
+                    return (
+                      <button
+                        key={color}
+                        onClick={() => setSelectedColor(color)}
+                        style={{
+                          padding: '10px 18px',
+                          background: active ? 'var(--text)' : 'transparent',
+                          border: '1px solid var(--border)',
+                          borderLeft: 'none',
+                          color: active ? 'var(--bg)' : 'var(--text-muted)',
+                          fontFamily: "'Outfit', sans-serif",
+                          fontSize: '11px', letterSpacing: '0.1em',
+                          cursor: 'pointer', transition: 'all 0.18s',
+                          marginLeft: '0',
+                        }}
+                        style={{
+                          padding: '10px 18px',
+                          background: active ? 'var(--text)' : 'transparent',
+                          border: `1px solid ${active ? 'var(--text)' : 'var(--border)'}`,
+                          color: active ? 'var(--bg)' : 'var(--text-muted)',
+                          fontFamily: "'Outfit', sans-serif",
+                          fontSize: '11px', letterSpacing: '0.1em',
+                          cursor: 'pointer', transition: 'all 0.18s',
+                          marginRight: '6px', marginBottom: '6px',
+                        }}>
+                        {color}
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
             )}
@@ -574,103 +568,106 @@ export default function Product() {
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: '10px', letterSpacing: '0.24em',
                   textTransform: 'uppercase',
-                  color: sizeError ? '#C0392B' : 'var(--text-muted)',
-                  fontWeight: 400,
+                  color: sizeError ? '#e63946' : 'var(--text-muted)',
+                  fontWeight: 400, transition: 'color 0.2s',
                 }}>
-                  {sizeError ? 'Please select a size' : 'Size'}
+                  {sizeError ? 'Select a size to continue' : 'Size'}
                 </span>
                 <button style={{
                   background: 'transparent', border: 'none',
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: '10px', letterSpacing: '0.14em',
                   textTransform: 'uppercase', color: 'var(--accent)',
-                  cursor: 'pointer', textDecoration: 'underline',
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                  textUnderlineOffset: '3px',
                 }}>
                   Size Guide
                 </button>
               </div>
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                {product.sizes.map(size => (
-                  <button
-                    key={size}
-                    onClick={() => { setSelectedSize(size); setSizeError(false) }}
-                    style={{
-                      width: '52px', height: '52px',
-                      background: selectedSize === size ? 'var(--accent)' : 'transparent',
-                      border: `1px solid ${
-                        sizeError
-                          ? 'rgba(192,57,43,0.4)'
-                          : selectedSize === size
-                          ? 'var(--accent)'
-                          : 'var(--border-mid)'
-                      }`,
-                      color: selectedSize === size ? '#0C0B09' : 'var(--text-muted)',
-                      fontFamily: "'Outfit', sans-serif",
-                      fontSize: '11px', letterSpacing: '0.08em',
-                      fontWeight: selectedSize === size ? 500 : 300,
-                      cursor: 'pointer', transition: 'all 0.2s',
-                    }}
-                    onMouseEnter={e => {
-                      if (selectedSize !== size) {
-                        e.currentTarget.style.borderColor = 'var(--accent)'
-                        e.currentTarget.style.color = 'var(--accent)'
-                      }
-                    }}
-                    onMouseLeave={e => {
-                      if (selectedSize !== size) {
-                        e.currentTarget.style.borderColor = sizeError ? 'rgba(192,57,43,0.4)' : 'var(--border-mid)'
-                        e.currentTarget.style.color = 'var(--text-muted)'
-                      }
-                    }}
-                  >
-                    {size}
-                  </button>
-                ))}
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '0' }}>
+                {(product.sizes || ['XS','S','M','L','XL','XXL']).map((size, i, arr) => {
+                  const active = selectedSize === size
+                  return (
+                    <button
+                      key={size}
+                      onClick={() => { setSelectedSize(size); setSizeError(false) }}
+                      style={{
+                        aspectRatio: '1/1',
+                        background: active ? 'var(--text)' : 'transparent',
+                        border: `1px solid ${sizeError ? '#e63946' : active ? 'var(--text)' : 'var(--border)'}`,
+                        borderLeft: i > 0 ? 'none' : `1px solid ${sizeError ? '#e63946' : active ? 'var(--text)' : 'var(--border)'}`,
+                        color: active ? 'var(--bg)' : 'var(--text-muted)',
+                        fontFamily: "'Outfit', sans-serif",
+                        fontSize: '11px', fontWeight: active ? 600 : 300,
+                        letterSpacing: '0.06em',
+                        cursor: 'pointer', transition: 'all 0.18s',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      }}
+                      onMouseEnter={e => {
+                        if (!active) {
+                          e.currentTarget.style.background = 'var(--bg-surface)'
+                          e.currentTarget.style.color = 'var(--text)'
+                        }
+                      }}
+                      onMouseLeave={e => {
+                        if (!active) {
+                          e.currentTarget.style.background = 'transparent'
+                          e.currentTarget.style.color = 'var(--text-muted)'
+                        }
+                      }}>
+                      {size}
+                    </button>
+                  )
+                })}
               </div>
             </div>
 
             {/* Qty + Add to bag */}
-            <div style={{ display: 'flex', gap: '12px', marginBottom: '16px' }}>
+            <div style={{ display: 'flex', gap: '0', marginBottom: '14px' }}>
 
-              {/* Qty */}
-              <div style={{ display: 'flex', alignItems: 'center', border: '1px solid var(--border)' }}>
+              {/* Qty stepper */}
+              <div style={{
+                display: 'flex', alignItems: 'stretch',
+                border: '1px solid var(--border)',
+                flexShrink: 0,
+              }}>
                 <button
                   onClick={() => setQty(q => Math.max(1, q - 1))}
                   style={{
-                    width: '44px', height: '52px',
+                    width: '48px',
                     background: 'transparent', border: 'none',
+                    borderRight: '1px solid var(--border)',
                     color: 'var(--text-muted)', cursor: 'pointer',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    transition: 'color 0.2s',
+                    transition: 'all 0.18s',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)' }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)' }}
-                >
+                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-surface)' }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}>
                   <MinusIcon />
                 </button>
                 <span style={{
-                  width: '40px', textAlign: 'center',
+                  width: '48px',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontFamily: "'Bebas Neue', sans-serif",
                   fontSize: '18px', color: 'var(--text)',
                   letterSpacing: '0.04em',
-                  borderLeft: '1px solid var(--border)',
-                  borderRight: '1px solid var(--border)',
-                  lineHeight: '52px',
                 }}>
                   {qty}
                 </span>
                 <button
                   onClick={() => setQty(q => q + 1)}
                   style={{
-                    width: '44px', height: '52px',
+                    width: '48px',
                     background: 'transparent', border: 'none',
+                    borderLeft: '1px solid var(--border)',
                     color: 'var(--text-muted)', cursor: 'pointer',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    transition: 'color 0.2s',
+                    transition: 'all 0.18s',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)' }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)' }}
-                >
+                  onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-surface)' }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}>
                   <PlusIcon />
                 </button>
               </div>
@@ -679,139 +676,119 @@ export default function Product() {
               <button
                 onClick={handleAddToBag}
                 style={{
-                  flex: 1, height: '52px',
-                  background: addedToBag ? '#2D7A2D' : 'var(--accent)',
-                  color: '#0C0B09',
-                  border: 'none',
+                  flex: 1,
+                  background: addedToBag ? '#2a7a2a' : 'var(--text)',
+                  color: 'var(--bg)', border: 'none',
+                  borderLeft: 'none',
                   fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: '16px', letterSpacing: '0.1em',
-                  cursor: 'pointer',
+                  fontSize: '17px', letterSpacing: '0.1em',
+                  cursor: 'pointer', transition: 'all 0.3s',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  gap: '10px', transition: 'all 0.3s',
-                }}
-                onMouseEnter={e => { if (!addedToBag) e.currentTarget.style.opacity = '0.88' }}
-                onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}
-              >
+                  gap: '10px',
+                }}>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={addedToBag ? 'added' : 'add'}
-                    initial={{ opacity: 0, y: 8 }}
+                    initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.2 }}
-                    style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-                  >
-                    {addedToBag ? '✓ ADDED TO BAG' : (
-                      <>ADD TO BAG <ArrowIcon /></>
-                    )}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.2 }}>
+                    {addedToBag ? '✓ ADDED TO BAG' : 'ADD TO BAG'}
                   </motion.span>
                 </AnimatePresence>
               </button>
-
             </div>
 
-            {/* Wishlist + Share row */}
-            <div style={{
-              display: 'flex', gap: '8px',
-              marginBottom: '32px',
-            }}>
+            {/* Wishlist + Share */}
+            <div style={{ display: 'flex', gap: '0', marginBottom: '36px' }}>
               <button
                 onClick={() => setWishlisted(v => !v)}
                 style={{
-                  flex: 1, height: '44px',
+                  flex: 1, padding: '13px',
                   background: 'transparent',
                   border: `1px solid ${wishlisted ? 'var(--accent)' : 'var(--border)'}`,
                   color: wishlisted ? 'var(--accent)' : 'var(--text-muted)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   gap: '8px', cursor: 'pointer',
                   fontFamily: "'Outfit', sans-serif",
-                  fontSize: '11px', letterSpacing: '0.16em',
+                  fontSize: '10px', letterSpacing: '0.18em',
                   textTransform: 'uppercase', transition: 'all 0.22s',
-                }}
-                onMouseEnter={e => {
-                  if (!wishlisted) {
-                    e.currentTarget.style.borderColor = 'var(--accent)'
-                    e.currentTarget.style.color = 'var(--accent)'
-                  }
-                }}
-                onMouseLeave={e => {
-                  if (!wishlisted) {
-                    e.currentTarget.style.borderColor = 'var(--border)'
-                    e.currentTarget.style.color = 'var(--text-muted)'
-                  }
-                }}
-              >
+                }}>
                 <HeartIcon filled={wishlisted} />
                 {wishlisted ? 'Wishlisted' : 'Wishlist'}
               </button>
-              <button style={{
-                width: '44px', height: '44px',
-                background: 'transparent',
-                border: '1px solid var(--border)',
-                color: 'var(--text-muted)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                cursor: 'pointer', transition: 'all 0.22s',
-              }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.borderColor = 'var(--accent)'
-                  e.currentTarget.style.color = 'var(--accent)'
+              <button
+                style={{
+                  width: '50px', padding: '13px',
+                  background: 'transparent',
+                  border: '1px solid var(--border)',
+                  borderLeft: 'none',
+                  color: 'var(--text-muted)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  cursor: 'pointer', transition: 'all 0.22s',
                 }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.borderColor = 'var(--border)'
-                  e.currentTarget.style.color = 'var(--text-muted)'
-                }}
-              >
+                onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-muted)' }}>
                 <ShareIcon />
               </button>
             </div>
 
-            {/* Shipping + returns */}
+            {/* Shipping info strip */}
             <div style={{
-              display: 'flex', gap: '0',
+              display: 'grid', gridTemplateColumns: '1fr 1fr',
               marginBottom: '32px',
             }}>
               {[
-                { Icon: TruckIcon,  text: 'Free shipping over $200' },
-                { Icon: ReturnIcon, text: 'Free returns — 30 days'  },
-              ].map(({ Icon, text }, i) => (
+                { label: 'Free shipping', sub: 'On orders over $200' },
+                { label: 'Free returns',  sub: 'Within 30 days'      },
+              ].map((item, i) => (
                 <div
-                  key={i}
+                  key={item.label}
                   style={{
-                    flex: 1,
-                    display: 'flex', alignItems: 'center', gap: '8px',
-                    padding: '12px 14px',
-                    background: 'var(--bg-surface)',
+                    padding: '14px',
                     border: '1px solid var(--border)',
                     borderLeft: i === 1 ? 'none' : '1px solid var(--border)',
-                  }}
-                >
-                  <span style={{ color: 'var(--accent)', flexShrink: 0, opacity: 0.8 }}><Icon /></span>
-                  <span style={{
-                    fontFamily: "'Outfit', sans-serif",
-                    fontSize: '10px', letterSpacing: '0.08em',
-                    color: 'var(--text-muted)', fontWeight: 300,
                   }}>
-                    {text}
-                  </span>
+                  <p style={{
+                    fontFamily: "'Outfit', sans-serif",
+                    fontSize: '11px', fontWeight: 500,
+                    letterSpacing: '0.08em', color: 'var(--text)',
+                    marginBottom: '2px',
+                  }}>
+                    {item.label}
+                  </p>
+                  <p style={{
+                    fontFamily: "'Outfit', sans-serif",
+                    fontSize: '10px', fontWeight: 300,
+                    letterSpacing: '0.06em', color: 'var(--text-faint)',
+                  }}>
+                    {item.sub}
+                  </p>
                 </div>
               ))}
             </div>
 
             {/* Accordions */}
             <div style={{ borderTop: '1px solid var(--border)' }}>
-              <AccordionPanel title="Product Details">
-                <ul style={{
-                  listStyle: 'none',
-                  display: 'flex', flexDirection: 'column', gap: '8px',
-                }}>
-                  {product.details?.map((d, i) => (
-                    <li key={i} style={{
-                      display: 'flex', alignItems: 'flex-start', gap: '10px',
-                    }}>
-                      <span style={{ color: 'var(--accent)', marginTop: '2px', flexShrink: 0 }}>—</span>
+              <Accordion title="Product Details">
+                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {(product.details || [
+                    'Premium quality fabric',
+                    'Designed in Accra, Ghana',
+                    'Limited edition run',
+                    'Dry clean recommended',
+                  ]).map((d, i) => (
+                    <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+                      <span style={{
+                        color: 'var(--accent)', flexShrink: 0, marginTop: '2px',
+                        fontFamily: "'Bebas Neue', sans-serif",
+                        fontSize: '12px', letterSpacing: '0.1em',
+                      }}>
+                        —
+                      </span>
                       <span style={{
                         fontFamily: "'Outfit', sans-serif",
-                        fontSize: '12px', color: 'var(--text-muted)',
+                        fontSize: '13px', color: 'var(--text-muted)',
                         fontWeight: 300, lineHeight: 1.6,
                       }}>
                         {d}
@@ -819,34 +796,38 @@ export default function Product() {
                     </li>
                   ))}
                 </ul>
-              </AccordionPanel>
+              </Accordion>
 
-              <AccordionPanel title="Size & Fit">
+              <Accordion title="Size & Fit">
                 <p style={{
                   fontFamily: "'Outfit', sans-serif",
-                  fontSize: '12px', color: 'var(--text-muted)',
+                  fontSize: '13px', color: 'var(--text-muted)',
                   fontWeight: 300, lineHeight: 1.7,
                 }}>
-                  Model is 6'1" and wears size M. This piece is designed with an oversized fit — size down if you prefer a more fitted silhouette. For standard fit, take your usual size.
+                  Model is 5'10" and wears size M. This piece runs true to size. For an oversized look, size up. For a tailored fit, size down.
                 </p>
-              </AccordionPanel>
+              </Accordion>
 
-              <AccordionPanel title="Shipping & Returns">
-                <div style={{
-                  display: 'flex', flexDirection: 'column', gap: '10px',
-                }}>
+              <Accordion title="Shipping & Returns">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {[
                     'Standard delivery: 3–5 business days',
                     'Express delivery: 1–2 business days',
                     'Free shipping on orders over $200',
                     'Free returns within 30 days of delivery',
-                    'Items must be unworn, unwashed, with tags attached',
+                    'Items must be unworn, with tags attached',
                   ].map((line, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                      <span style={{ color: 'var(--accent)', flexShrink: 0 }}>—</span>
+                      <span style={{
+                        color: 'var(--accent)', flexShrink: 0,
+                        fontFamily: "'Bebas Neue', sans-serif",
+                        fontSize: '12px',
+                      }}>
+                        —
+                      </span>
                       <span style={{
                         fontFamily: "'Outfit', sans-serif",
-                        fontSize: '12px', color: 'var(--text-muted)',
+                        fontSize: '13px', color: 'var(--text-muted)',
                         fontWeight: 300, lineHeight: 1.6,
                       }}>
                         {line}
@@ -854,15 +835,70 @@ export default function Product() {
                     </div>
                   ))}
                 </div>
-              </AccordionPanel>
+              </Accordion>
             </div>
 
           </div>
         </div>
       </div>
 
-      {/* Related products */}
-      <RelatedProducts currentId={product.id} category={product.category} />
+      {/* ── YOU MAY ALSO LIKE ── */}
+      {related.length > 0 && (
+        <section style={{ padding: '72px 0' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
+
+            {/* Section header */}
+            <div style={{
+              borderTop: '2px solid var(--text)',
+              paddingTop: '32px', marginBottom: '40px',
+              display: 'flex', alignItems: 'flex-end',
+              justifyContent: 'space-between',
+            }}>
+              <h2 style={{
+                fontFamily: "'Bebas Neue', sans-serif",
+                fontSize: 'clamp(32px, 4vw, 52px)',
+                color: 'var(--text)', lineHeight: 0.9,
+                letterSpacing: '0.01em',
+              }}>
+                YOU MAY<br />
+                <span style={{ color: 'var(--accent)' }}>ALSO LIKE</span>
+              </h2>
+              <Link
+                to="/shop"
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontSize: '10px', letterSpacing: '0.22em',
+                  textTransform: 'uppercase', color: 'var(--text-muted)',
+                  borderBottom: '1px solid var(--border)', paddingBottom: '3px',
+                  transition: 'color 0.2s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.borderBottomColor = 'var(--accent)' }}
+                onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.borderBottomColor = 'var(--border)' }}>
+                View All
+              </Link>
+            </div>
+
+            {/* Grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: `repeat(${Math.min(related.length, 4)}, 1fr)`,
+              gap: '0',
+            }}>
+              {related.map((p, i) => (
+                <div
+                  key={p.id}
+                  style={{
+                    borderRight: i < related.length - 1 ? '1px solid var(--border)' : 'none',
+                    padding: '0 20px',
+                  }}>
+                  <RelatedCard product={p} />
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+      )}
 
     </div>
   )
