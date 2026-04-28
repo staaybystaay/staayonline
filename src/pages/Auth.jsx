@@ -127,7 +127,7 @@ function LoginForm({ onSwitch }) {
           fontStyle: 'italic', fontSize: '14px',
           color: 'var(--text-muted)',
         }}>
-          You're signed in to Staay Online.
+          You're signed in to Staay .
         </p>
         <Link
           to="/shop"
@@ -591,14 +591,7 @@ export default function Auth() {
             }}>
               STAAY
             </span>
-            <span style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '7px', letterSpacing: '0.4em',
-              textTransform: 'uppercase', color: 'var(--accent)',
-              fontWeight: 400,
-            }}>
-              ONLINE
-            </span>
+          
           </div>
         </Link>
 
