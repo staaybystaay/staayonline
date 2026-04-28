@@ -60,7 +60,7 @@ const navLinks = [
    { label: 'Our Brand',   path: '/'      },
   { label: 'Shop',        path: '/shop'  },
   { label: 'Collections', path: '/shop'  },
-  { label: 'Reviews',   path: '/'      },
+  { label: 'Featured',   path: '/'      },
 ]
 
 // ─── Search Overlay ───────────────────────────────────────────────────────────
@@ -400,19 +400,7 @@ export default function Navbar() {
                 flexShrink: 0,
               }}
             />
-            {/* Wordmark */}
-            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-              <span style={{
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: scrolled ? '17px' : '20px',
-                color: 'var(--text)',
-                letterSpacing: '0.06em',
-                transition: 'font-size 0.3s',
-              }}>
-                STAAY
-              </span>
-             
-            </div>
+           
           </Link>
 
           {/* ── Desktop links ── */}
