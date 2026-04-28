@@ -32,11 +32,7 @@ const legalLinks = [
   { label: 'Cookie Policy', path: '/' },
 ]
 
-const trustItems = [
-  'Free shipping on orders over $200',
-  'Free returns within 30 days',
-  'SSL secured checkout',
-]
+
 
 const paymentMethods = ['Visa', 'Mastercard', 'PayPal', 'Apple Pay', 'Paystack']
 
@@ -141,7 +137,7 @@ function Newsletter() {
         Stay in the loop
       </p>
       <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(26px, 3vw, 36px)', color: 'var(--text)', letterSpacing: '0.04em', lineHeight: 1, marginBottom: '10px' }}>
-        JOIN THE STAAY MOVEMENT
+        THE STAAY WOMAN STARTS HERE
       </h3>
       <p style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontWeight: 300, fontSize: '14px', lineHeight: 1.65, color: 'var(--text-muted)', marginBottom: '24px' }}>
         New drops, exclusive offers and editorial content. Delivered first.
