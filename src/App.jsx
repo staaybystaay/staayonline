@@ -8,6 +8,7 @@ import Cart from './pages/Cart'
 import Auth from './pages/Auth'
 import Product from './pages/Product'
 import Featured from './pages/Featured'
+import Brand from './pages/Brand'
 
 function AnnouncementBar() {
   return (
@@ -91,6 +92,7 @@ export default function App() {
           <Route path="/login"       element={<Auth />}    />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/featured" element={<Featured />} />
+          <Route path="/brand" element={<Brand />} />
         </Routes>
         <Footer />
       </BrowserRouter>
