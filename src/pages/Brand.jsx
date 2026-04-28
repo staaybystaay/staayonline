@@ -547,7 +547,7 @@ function Founder() {
               color: 'var(--text)', lineHeight: 0.9,
               letterSpacing: '0.02em', margin: '0 0 28px',
             }}>
-              MR. JONAS<br />GOGMI
+              MRS. GRANT<br />STAAY
             </h2>
 
             <p style={{
