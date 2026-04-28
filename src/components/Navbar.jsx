@@ -56,11 +56,10 @@ const CloseIcon = () => (
 
 // ─── Nav links ────────────────────────────────────────────────────────────────
 const navLinks = [
-  { label: 'Home',        path: '/'      },
-   { label: 'Our Brand',   path: '/'      },
-  { label: 'Shop',        path: '/shop'  },
-  { label: 'Collections', path: '/shop'  },
-  { label: 'Featured',   path: '/'      },
+  { label: 'Home',     path: '/'         },
+  { label: 'Shop',     path: '/shop'     },
+  { label: 'Our Brand', path: '/'        },
+  { label: 'Featured', path: '/featured' },
 ]
 
 // ─── Search Overlay ───────────────────────────────────────────────────────────
