@@ -6,7 +6,7 @@ import { products } from '../data/products'
 import useCartStore from '../store/useCartStore'
 
 // ═══════════════════════════════════════════════════════
-// HERO SLIDES
+// HERO SLIDES — kept exactly as client had them
 // ═══════════════════════════════════════════════════════
 const heroSlides = [
   {
@@ -60,14 +60,14 @@ const heroSlides = [
 ]
 
 // ═══════════════════════════════════════════════════════
-// FEATURED DROPS DATA
+// FEATURED DROPS — kept exactly as client had them
 // ═══════════════════════════════════════════════════════
 const featuredDrops = [
-  { id: 'f1', label: 'AIR STAAY 01',    price: '$320', image: '/airsneaker.jpg', tag: 'New'  },
-  { id: 'f2', label: 'VOID HOODIE',     price: '$195', image: '/hoodie.jpg',     tag: 'Hot'  },
-  { id: 'f3', label: 'CARGO PANT 02',   price: '$240', image: '/cargopant.jpg',  tag: 'New'  },
-  { id: 'f4', label: 'PHANTOM JACKET',  price: '$420', image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&q=80&fit=crop', tag: null },
-  { id: 'f5', label: 'CROCS',           price: '$280', image: '/crocs.png',      tag: 'Sale' },
+  { id: 'f1', label: 'AIR STAAY 01',   price: '$320', image: '/airsneaker.jpg', tag: 'New'  },
+  { id: 'f2', label: 'VOID HOODIE',    price: '$195', image: '/hoodie.jpg',     tag: 'Hot'  },
+  { id: 'f3', label: 'CARGO PANT 02',  price: '$240', image: '/cargopant.jpg',  tag: 'New'  },
+  { id: 'f4', label: 'PHANTOM JACKET', price: '$420', image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&q=80&fit=crop', tag: null },
+  { id: 'f5', label: 'CROCS',          price: '$280', image: '/crocs.png',      tag: 'Sale' },
 ]
 
 const badgeMap = {
@@ -77,7 +77,8 @@ const badgeMap = {
 }
 
 // ═══════════════════════════════════════════════════════
-// PROMO POPUP — centred image, close button only, no timer
+// PROMO POPUP — kept exactly as client changed it
+// close button only, no timer, centred image
 // ═══════════════════════════════════════════════════════
 function PromoPopup() {
   const [visible, setVisible] = useState(true)
@@ -107,11 +108,8 @@ function PromoPopup() {
           background: '#0C0B09',
           border: '1px solid var(--border)',
           overflow: 'hidden',
-          /* ✅ Centre the card itself */
           margin: 'auto',
         }}>
-
-        {/* ✅ Close button — top right, always visible, no timer */}
         <button
           onClick={function() { setVisible(false) }}
           style={{
@@ -142,7 +140,6 @@ function PromoPopup() {
           ✕
         </button>
 
-        {/* ✅ Flyer image — object-fit: contain so nothing gets cropped or off-centre */}
         <div style={{
           width: '100%',
           background: '#fff',
@@ -151,14 +148,9 @@ function PromoPopup() {
           <img
             src="/heroflyer.jpg"
             alt="Promo"
-            style={{
-              width: '100%',
-              display: 'block',
-              objectFit: 'contain',
-            }} />
+            style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
         </div>
 
-        {/* Bottom bar */}
         <div style={{
           display: 'flex', alignItems: 'center',
           justifyContent: 'space-between',
@@ -210,88 +202,12 @@ function PromoPopup() {
 }
 
 // ═══════════════════════════════════════════════════════
-// STAT CARDS
-// ═══════════════════════════════════════════════════════
-function StatCards() {
-  return (
-    <section style={{
-      background: 'var(--bg-surface)',
-      borderTop: '1px solid var(--border)',
-      borderBottom: '1px solid var(--border)',
-      padding: '0',
-    }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            style={{
-              padding: '36px 40px',
-              borderRight: '1px solid var(--border)',
-              display: 'flex', alignItems: 'center', gap: '24px',
-            }}>
-            <div style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: '52px', color: 'var(--accent)',
-              letterSpacing: '0.02em', lineHeight: 1, flexShrink: 0,
-            }}>
-              2,400+
-            </div>
-            <div>
-              <div style={{ width: '24px', height: '2px', background: 'var(--accent)', marginBottom: '8px' }} />
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', color: 'var(--text)', fontWeight: 500, letterSpacing: '0.04em', marginBottom: '3px' }}>
-                Pieces Available
-              </div>
-              <div style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontSize: '12px', color: 'var(--text-faint)', fontWeight: 300 }}>
-                Across all categories
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            style={{
-              padding: '36px 40px',
-              display: 'flex', alignItems: 'center', gap: '24px',
-            }}>
-            <div style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: '52px', color: 'var(--accent)',
-              letterSpacing: '0.02em', lineHeight: 1, flexShrink: 0,
-            }}>
-              98%
-            </div>
-            <div>
-              <div style={{ width: '24px', height: '2px', background: 'var(--accent)', marginBottom: '8px' }} />
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: '13px', color: 'var(--text)', fontWeight: 500, letterSpacing: '0.04em', marginBottom: '3px' }}>
-                Satisfaction Rate
-              </div>
-              <div style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontSize: '12px', color: 'var(--text-faint)', fontWeight: 300 }}>
-                From verified buyers
-              </div>
-            </div>
-          </motion.div>
-
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ═══════════════════════════════════════════════════════
 // HERO SECTION
 // ═══════════════════════════════════════════════════════
 function HeroSection() {
   const [current, setCurrent] = useState(0)
   const [dir,     setDir]     = useState(1)
   const [paused,  setPaused]  = useState(false)
-  const { theme }             = useTheme()
   const slide                 = heroSlides[current]
 
   useEffect(function() {
@@ -443,8 +359,7 @@ function HeroSection() {
               <span style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: '11px', letterSpacing: '0.3em',
-                textTransform: 'uppercase',
-                color: slide.accent, fontWeight: 500,
+                textTransform: 'uppercase', color: slide.accent, fontWeight: 500,
               }}>
                 {slide.tag}
               </span>
@@ -453,10 +368,8 @@ function HeroSection() {
             <h1 style={{
               fontFamily: "'Bebas Neue', sans-serif",
               fontSize: 'clamp(80px, 10vw, 140px)',
-              lineHeight: 0.9,
-              letterSpacing: '0.01em',
-              margin: '0 0 24px',
-              textTransform: 'uppercase',
+              lineHeight: 0.9, letterSpacing: '0.01em',
+              margin: '0 0 24px', textTransform: 'uppercase',
             }}>
               {lines.map(function(line, i) {
                 return (
@@ -506,8 +419,7 @@ function HeroSection() {
               <Link
                 to="/shop"
                 style={{
-                  background: slide.accent,
-                  color: '#0C0B09',
+                  background: slide.accent, color: '#0C0B09',
                   padding: '14px 36px',
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: '11px', letterSpacing: '0.22em',
@@ -568,17 +480,11 @@ function HeroSection() {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 10, opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                style={{
-                  fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: '22px', color: slide.accent, lineHeight: 1,
-                }}>
+                style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '22px', color: slide.accent, lineHeight: 1 }}>
                 {String(current + 1).padStart(2, '0')}
               </motion.span>
             </AnimatePresence>
-            <span style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '11px', color: 'rgba(255,255,255,0.25)',
-            }}>
+            <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.25)' }}>
               / {String(heroSlides.length).padStart(2, '0')}
             </span>
           </div>
@@ -601,7 +507,6 @@ function HeroSection() {
             })}
           </div>
         </div>
-
         <div style={{ display: 'flex', gap: '8px' }}>
           {[-1, 1].map(function(d) {
             return (
@@ -615,8 +520,7 @@ function HeroSection() {
                   color: 'rgba(255,255,255,0.7)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   cursor: 'pointer', fontSize: '16px',
-                  transition: 'all 0.25s',
-                  backdropFilter: 'blur(8px)',
+                  transition: 'all 0.25s', backdropFilter: 'blur(8px)',
                 }}
                 onMouseEnter={function(e) {
                   e.currentTarget.style.background = slide.accent
@@ -642,8 +546,7 @@ function HeroSection() {
         <span style={{
           fontFamily: "'Outfit', sans-serif",
           fontSize: '8px', letterSpacing: '0.32em',
-          textTransform: 'uppercase',
-          color: 'rgba(255,255,255,0.18)', whiteSpace: 'nowrap',
+          textTransform: 'uppercase', color: 'rgba(255,255,255,0.18)', whiteSpace: 'nowrap',
         }}>
           staayonline.com — SS2025
         </span>
@@ -661,7 +564,169 @@ function HeroSection() {
             transformOrigin: 'left', zIndex: 3,
           }} />
       )}
+    </section>
+  )
+}
 
+// ═══════════════════════════════════════════════════════
+// STAT CARDS — 2 cards, compact, feminine
+// ═══════════════════════════════════════════════════════
+function StatCards() {
+  return (
+    <section style={{
+      background: 'var(--bg-surface)',
+      borderTop: '1px solid var(--border)',
+      borderBottom: '1px solid var(--border)',
+    }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={{
+              padding: '36px 40px', borderRight: '1px solid var(--border)',
+              display: 'flex', alignItems: 'center', gap: '24px',
+            }}>
+            <div style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: '52px', color: 'var(--accent)',
+              letterSpacing: '0.02em', lineHeight: 1, flexShrink: 0,
+            }}>
+              2,400+
+            </div>
+            <div>
+              <div style={{ width: '24px', height: '2px', background: 'var(--accent)', marginBottom: '8px' }} />
+              <div style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: '13px', color: 'var(--text)', fontWeight: 500,
+                letterSpacing: '0.04em', marginBottom: '3px',
+              }}>
+                Pieces Available
+              </div>
+              <div style={{
+                fontFamily: "'Fraunces', serif",
+                fontStyle: 'italic', fontSize: '12px',
+                color: 'var(--text-faint)', fontWeight: 300,
+              }}>
+                Across all categories
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            style={{
+              padding: '36px 40px',
+              display: 'flex', alignItems: 'center', gap: '24px',
+            }}>
+            <div style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: '52px', color: 'var(--accent)',
+              letterSpacing: '0.02em', lineHeight: 1, flexShrink: 0,
+            }}>
+              98%
+            </div>
+            <div>
+              <div style={{ width: '24px', height: '2px', background: 'var(--accent)', marginBottom: '8px' }} />
+              <div style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: '13px', color: 'var(--text)', fontWeight: 500,
+                letterSpacing: '0.04em', marginBottom: '3px',
+              }}>
+                Satisfaction Rate
+              </div>
+              <div style={{
+                fontFamily: "'Fraunces', serif",
+                fontStyle: 'italic', fontSize: '12px',
+                color: 'var(--text-faint)', fontWeight: 300,
+              }}>
+                From verified buyers
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ═══════════════════════════════════════════════════════
+// FEMININE MANIFESTO — NEW SECTION
+// ═══════════════════════════════════════════════════════
+function Manifesto() {
+  return (
+    <section style={{
+      background: 'var(--bg)',
+      padding: '80px 0',
+      borderBottom: '1px solid var(--border)',
+    }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
+        <div style={{
+          display: 'grid', gridTemplateColumns: '1fr 2fr',
+          gap: '64px', alignItems: 'center',
+        }}>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}>
+            <div style={{ width: '40px', height: '3px', background: 'var(--accent)', marginBottom: '16px' }} />
+            <p style={{
+              fontFamily: "'Outfit', sans-serif",
+              fontSize: '10px', letterSpacing: '0.3em',
+              textTransform: 'uppercase', color: 'var(--accent)',
+              fontWeight: 400, marginBottom: '12px',
+            }}>
+              Our Promise
+            </p>
+            <h2 style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(32px, 3.5vw, 48px)',
+              color: 'var(--text)', lineHeight: 1,
+              letterSpacing: '0.02em',
+            }}>
+              FOR EVERY WOMAN. EVERY DAY.
+            </h2>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}>
+            <p style={{
+              fontFamily: "'Fraunces', serif",
+              fontStyle: 'italic', fontWeight: 300,
+              fontSize: 'clamp(20px, 2.5vw, 28px)',
+              lineHeight: 1.65, color: 'var(--text)',
+              margin: 0,
+            }}>
+              "Staay is not about fashion seasons or runway rules.
+              It's about the ordinary woman who is{' '}
+              <span style={{ color: 'var(--accent)' }}>
+                extraordinary
+              </span>{' '}
+              in her own way — young, timeless, local and global all at once."
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '28px' }}>
+              <div style={{ width: '32px', height: '1px', background: 'var(--accent)' }} />
+              <span style={{
+                fontFamily: "'Outfit', sans-serif",
+                fontSize: '11px', letterSpacing: '0.2em',
+                textTransform: 'uppercase', color: 'var(--text-muted)',
+                fontWeight: 300,
+              }}>
+                Mr. Jonas Gogmi, Founder
+              </span>
+            </div>
+          </motion.div>
+        </div>
+      </div>
     </section>
   )
 }
@@ -679,21 +744,29 @@ function FeaturedDropsStrip() {
   }
 
   return (
-    <section style={{ background: 'var(--bg-surface)', padding: '40px 0' }}>
+    <section style={{ background: 'var(--bg-surface)', padding: '56px 0' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
         <div style={{
-          display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between', marginBottom: '24px',
+          display: 'flex', alignItems: 'flex-end',
+          justifyContent: 'space-between', marginBottom: '32px',
         }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ display: 'block', width: '20px', height: '1px', background: 'var(--accent)' }} />
-            <span style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '10px', letterSpacing: '0.3em',
-              textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 400,
+          <div>
+            <div style={{ width: '32px', height: '2px', background: 'var(--accent)', marginBottom: '12px' }} />
+            <h2 style={{
+              fontFamily: "'Bebas Neue', sans-serif",
+              fontSize: 'clamp(28px, 3vw, 40px)',
+              color: 'var(--text)', lineHeight: 1, letterSpacing: '0.02em',
             }}>
-              Just dropped
-            </span>
+              Just Dropped
+            </h2>
+            <p style={{
+              fontFamily: "'Fraunces', serif",
+              fontStyle: 'italic', fontWeight: 300,
+              fontSize: '13px', color: 'var(--text-muted)',
+              marginTop: '6px',
+            }}>
+              Fresh pieces, straight from Accra.
+            </p>
           </div>
           <Link
             to="/shop"
@@ -709,6 +782,7 @@ function FeaturedDropsStrip() {
             See all
           </Link>
         </div>
+
         <div
           className="fe-scrollbar"
           style={{ display: 'flex', gap: '16px', overflowX: 'auto', paddingBottom: '4px' }}>
@@ -725,12 +799,12 @@ function FeaturedDropsStrip() {
                 style={{
                   flexShrink: 0, width: '200px', cursor: 'pointer',
                   transition: 'transform 0.35s',
-                  transform: hovered === drop.id ? 'translateY(-4px)' : 'translateY(0)',
+                  transform: hovered === drop.id ? 'translateY(-6px)' : 'translateY(0)',
                 }}>
                 <div style={{
-                  position: 'relative', width: '200px', height: '220px',
+                  position: 'relative', width: '200px', height: '240px',
                   overflow: 'hidden', background: 'var(--bg-card)',
-                  border: hovered === drop.id ? '1px solid var(--border-mid)' : '1px solid var(--border)',
+                  border: hovered === drop.id ? '1px solid var(--accent)' : '1px solid var(--border)',
                   transition: 'border-color 0.3s',
                 }}>
                   <img
@@ -744,27 +818,35 @@ function FeaturedDropsStrip() {
                   {drop.tag && (
                     <span style={{
                       position: 'absolute', top: '10px', left: '10px',
-                      padding: '3px 8px',
+                      padding: '4px 10px',
                       fontFamily: "'Outfit', sans-serif",
                       fontSize: '9px', letterSpacing: '0.16em',
-                      textTransform: 'uppercase', fontWeight: 500,
+                      textTransform: 'uppercase', fontWeight: 600,
                       ...stripBadge[drop.tag],
                     }}>
                       {drop.tag}
                     </span>
                   )}
+                  {/* Gold bottom accent on hover */}
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: 0, right: 0,
+                    height: '3px', background: 'var(--accent)',
+                    transform: hovered === drop.id ? 'scaleX(1)' : 'scaleX(0)',
+                    transformOrigin: 'left',
+                    transition: 'transform 0.35s',
+                  }} />
                 </div>
-                <div style={{ padding: '10px 0' }}>
+                <div style={{ padding: '12px 0' }}>
                   <p style={{
                     fontFamily: "'Outfit', sans-serif",
                     fontSize: '11px', letterSpacing: '0.1em',
-                    color: 'var(--text)', fontWeight: 500, marginBottom: '3px',
+                    color: 'var(--text)', fontWeight: 500, marginBottom: '4px',
                   }}>
                     {drop.label}
                   </p>
                   <p style={{
                     fontFamily: "'Fraunces', serif",
-                    fontStyle: 'italic', fontSize: '15px', color: 'var(--accent)',
+                    fontStyle: 'italic', fontSize: '16px', color: 'var(--accent)',
                   }}>
                     {drop.price}
                   </p>
@@ -779,13 +861,14 @@ function FeaturedDropsStrip() {
 }
 
 // ═══════════════════════════════════════════════════════
-// MARQUEE
+// MARQUEE — kept but made warmer
 // ═══════════════════════════════════════════════════════
 function EditorialMarquee() {
   const words = [
     'STAAY', '✦', 'SS 2025', '✦',
-    'NEW COLLECTION', '✦', 'WEAR THE VOID', '✦',
-    'STAAY', '✦', 'SS 2025', '✦',
+    'MADE IN ACCRA', '✦', 'FOR HER WORLD', '✦',
+    'YOUNG. CLASSIC. LOCAL.', '✦', 'SS 2025', '✦',
+    'STAAY', '✦', 'DESIGNED FOR YOU', '✦',
   ]
   return (
     <div style={{
@@ -796,13 +879,14 @@ function EditorialMarquee() {
     }}>
       <motion.div
         animate={{ x: ['0%', '-50%'] }}
-        transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: 36, repeat: Infinity, ease: 'linear' }}
         style={{ display: 'flex', gap: '40px', whiteSpace: 'nowrap', width: 'max-content' }}>
         {[...words, ...words].map(function(word, i) {
           return (
             <span key={i} style={{
               fontFamily: "'Outfit', sans-serif",
-              fontWeight: 500, fontSize: '11px',
+              fontWeight: word === '✦' ? 400 : 300,
+              fontSize: '11px',
               letterSpacing: '0.22em', textTransform: 'uppercase',
               color: word === '✦' ? 'var(--accent)' : 'var(--text-faint)',
             }}>
@@ -816,7 +900,7 @@ function EditorialMarquee() {
 }
 
 // ═══════════════════════════════════════════════════════
-// CATEGORIES
+// CATEGORIES — softened, feminine
 // ═══════════════════════════════════════════════════════
 const categoryData = [
   { label: 'All',     icon: '◎' },
@@ -854,7 +938,7 @@ function CategoriesSection(props) {
               fontFamily: "'Outfit', sans-serif",
               fontSize: '10px', letterSpacing: '0.3em',
               textTransform: 'uppercase', color: 'var(--accent)',
-              marginBottom: '10px', fontWeight: 400,
+              marginBottom: '8px', fontWeight: 400,
             }}>
               Browse by
             </p>
@@ -863,8 +947,16 @@ function CategoriesSection(props) {
               fontSize: 'clamp(32px, 4vw, 48px)',
               color: 'var(--text)', lineHeight: 1, letterSpacing: '0.02em',
             }}>
-              Categories
+              Shop by Category
             </h2>
+            <p style={{
+              fontFamily: "'Fraunces', serif",
+              fontStyle: 'italic', fontWeight: 300,
+              fontSize: '13px', color: 'var(--text-muted)',
+              marginTop: '6px',
+            }}>
+              Every style. Every woman.
+            </p>
           </div>
           <Link
             to="/shop"
@@ -886,6 +978,7 @@ function CategoriesSection(props) {
             View All
           </Link>
         </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -898,21 +991,21 @@ function CategoriesSection(props) {
               <motion.button
                 key={cat.label}
                 onClick={function() { setActive(cat.label) }}
-                whileHover={{ y: -1 }}
+                whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.97 }}
                 style={{
                   display: 'flex', alignItems: 'center', gap: '7px',
-                  padding: '9px 18px',
+                  padding: '10px 20px',
                   background: isActive ? 'var(--accent)' : 'transparent',
                   border: isActive ? '1px solid var(--accent)' : '1px solid var(--border-mid)',
-                  color: isActive ? (isLight ? '#fff' : '#080808') : 'var(--text-muted)',
+                  color: isActive ? '#0C0B09' : 'var(--text-muted)',
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: '11px', letterSpacing: '0.14em',
                   textTransform: 'uppercase',
-                  fontWeight: isActive ? 500 : 300,
+                  fontWeight: isActive ? 600 : 300,
                   cursor: 'pointer', transition: 'all 0.22s',
+                  borderRadius: '0',
                 }}>
-                <span style={{ fontSize: '11px' }}>{cat.icon}</span>
                 {cat.label}
               </motion.button>
             )
@@ -943,11 +1036,11 @@ function ProductCard(props) {
       style={{
         position: 'relative',
         background: 'var(--bg-card)',
-        border: hovered ? '1px solid var(--border-mid)' : '1px solid var(--border)',
+        border: hovered ? '1px solid var(--accent)' : '1px solid var(--border)',
         overflow: 'hidden', cursor: 'pointer',
         transition: 'border-color 0.3s, transform 0.4s, box-shadow 0.3s',
-        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
-        boxShadow: hovered ? 'var(--shadow)' : 'none',
+        transform: hovered ? 'translateY(-5px)' : 'translateY(0)',
+        boxShadow: hovered ? '0 12px 32px rgba(201,164,74,0.12)' : 'none',
       }}>
       <div style={{
         position: 'relative', aspectRatio: '3/4',
@@ -976,7 +1069,7 @@ function ProductCard(props) {
           }} />
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)',
+          background: 'linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%)',
           opacity: hovered ? 1 : 0, transition: 'opacity 0.3s',
           display: 'flex', alignItems: 'flex-end', padding: '14px',
         }}>
@@ -984,10 +1077,10 @@ function ProductCard(props) {
             onClick={function(e) { e.stopPropagation(); addItem(product) }}
             style={{
               width: '100%', background: 'var(--accent)',
-              color: '#0C0B09', border: 'none', padding: '11px',
+              color: '#0C0B09', border: 'none', padding: '12px',
               fontFamily: "'Outfit', sans-serif",
               fontSize: '10px', letterSpacing: '0.2em',
-              textTransform: 'uppercase', fontWeight: 500,
+              textTransform: 'uppercase', fontWeight: 600,
               cursor: 'pointer', transition: 'opacity 0.2s',
             }}
             onMouseEnter={function(e) { e.target.style.opacity = '0.85' }}
@@ -997,11 +1090,11 @@ function ProductCard(props) {
         </div>
         {product.badge && (
           <span style={{
-            position: 'absolute', top: '12px', left: '12px',
-            padding: '3px 9px',
+            position: 'absolute', top: '0', left: '0',
+            padding: '5px 12px',
             fontFamily: "'Outfit', sans-serif",
             fontSize: '9px', letterSpacing: '0.18em',
-            textTransform: 'uppercase', fontWeight: 500,
+            textTransform: 'uppercase', fontWeight: 700,
             ...badgeMap[product.badge],
           }}>
             {product.badge}
@@ -1009,21 +1102,22 @@ function ProductCard(props) {
         )}
         <button style={{
           position: 'absolute', top: '12px', right: '12px',
-          width: '30px', height: '30px',
-          background: 'var(--bg)', border: '1px solid var(--border)',
+          width: '32px', height: '32px',
+          background: 'rgba(250,247,242,0.9)',
+          border: '1px solid var(--border)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          cursor: 'pointer', fontSize: '13px', color: 'var(--text-muted)',
+          cursor: 'pointer', fontSize: '14px', color: 'var(--accent)',
           opacity: hovered ? 1 : 0, transition: 'opacity 0.3s',
         }}>
           ♡
         </button>
       </div>
-      <div style={{ padding: '14px 16px' }}>
+      <div style={{ padding: '14px 16px 18px' }}>
         <p style={{
           fontFamily: "'Outfit', sans-serif",
           fontSize: '9px', letterSpacing: '0.22em',
           textTransform: 'uppercase', color: 'var(--text-faint)',
-          marginBottom: '5px', fontWeight: 300,
+          marginBottom: '4px', fontWeight: 300,
         }}>
           {product.category}
         </p>
@@ -1037,16 +1131,22 @@ function ProductCard(props) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <span style={{
             fontFamily: "'Fraunces', serif",
-            fontStyle: 'italic', fontSize: '17px', color: 'var(--accent)',
+            fontStyle: 'italic', fontSize: '18px', color: 'var(--accent)',
           }}>
             ${product.price}
           </span>
-          <span style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: '9px', color: 'var(--text-faint)', letterSpacing: '0.1em',
-          }}>
-            In stock
-          </span>
+          <Link
+            to={`/product/${product.id}`}
+            style={{
+              fontFamily: "'Outfit', sans-serif",
+              fontSize: '9px', letterSpacing: '0.16em',
+              textTransform: 'uppercase', color: 'var(--text-faint)',
+              transition: 'color 0.2s',
+            }}
+            onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
+            onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-faint)' }}>
+            View
+          </Link>
         </div>
       </div>
     </motion.div>
@@ -1075,14 +1175,7 @@ function ProductGridSection(props) {
             justifyContent: 'space-between', marginBottom: '36px',
           }}>
           <div>
-            <p style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '10px', letterSpacing: '0.3em',
-              textTransform: 'uppercase', color: 'var(--accent)',
-              marginBottom: '10px', fontWeight: 400,
-            }}>
-              Featured drops
-            </p>
+            <div style={{ width: '32px', height: '2px', background: 'var(--accent)', marginBottom: '12px' }} />
             <h2 style={{
               fontFamily: "'Bebas Neue', sans-serif",
               fontSize: 'clamp(32px, 4vw, 48px)',
@@ -1090,13 +1183,20 @@ function ProductGridSection(props) {
             }}>
               New Arrivals
             </h2>
+            <p style={{
+              fontFamily: "'Fraunces', serif",
+              fontStyle: 'italic', fontWeight: 300,
+              fontSize: '13px', color: 'var(--text-muted)', marginTop: '6px',
+            }}>
+              Pieces made for her, wherever she is.
+            </p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <span style={{
               fontFamily: "'Outfit', sans-serif",
               fontSize: '11px', color: 'var(--text-faint)',
             }}>
-              {filtered.length} items
+              {filtered.length} pieces
             </span>
             <Link
               to="/shop"
@@ -1124,12 +1224,25 @@ function ProductGridSection(props) {
 }
 
 // ═══════════════════════════════════════════════════════
-// EDITORIAL SPLIT
+// EDITORIAL SPLIT — kept with client's images
 // ═══════════════════════════════════════════════════════
 function EditorialSplit() {
   return (
     <section style={{ background: 'var(--bg)', padding: '0 0 96px' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
+
+        {/* Section header */}
+        <div style={{ marginBottom: '32px' }}>
+          <div style={{ width: '32px', height: '2px', background: 'var(--accent)', marginBottom: '12px' }} />
+          <h2 style={{
+            fontFamily: "'Bebas Neue', sans-serif",
+            fontSize: 'clamp(28px, 3.5vw, 44px)',
+            color: 'var(--text)', lineHeight: 1, letterSpacing: '0.02em',
+          }}>
+            The Collection
+          </h2>
+        </div>
+
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2px' }}>
 
           <motion.div
@@ -1137,31 +1250,39 @@ function EditorialSplit() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            style={{ position: 'relative', height: '440px', overflow: 'hidden' }}>
+            style={{ position: 'relative', height: '480px', overflow: 'hidden' }}>
             <img
               src="/mendress.jpg"
               alt="New Release"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             <div style={{
               position: 'absolute', inset: 0,
-              background: 'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.15) 60%)',
+              background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 55%)',
             }} />
-            <div style={{ position: 'absolute', bottom: '30px', left: '30px', right: '30px' }}>
+            <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
               <span style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: '9px', letterSpacing: '0.3em',
                 textTransform: 'uppercase', color: 'var(--accent)',
-                marginBottom: '10px', display: 'block',
+                marginBottom: '10px', display: 'block', fontWeight: 400,
               }}>
                 New Release
               </span>
               <h3 style={{
                 fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: '36px', color: '#F2EEE6',
-                lineHeight: 1, letterSpacing: '0.02em', marginBottom: '14px',
+                fontSize: '38px', color: '#F2EEE6',
+                lineHeight: 1, letterSpacing: '0.02em', marginBottom: '8px',
               }}>
                 VOID SERIES<br />DROP 01
               </h3>
+              <p style={{
+                fontFamily: "'Fraunces', serif",
+                fontStyle: 'italic', fontWeight: 300,
+                fontSize: '13px', color: 'rgba(242,238,230,0.65)',
+                marginBottom: '16px', lineHeight: 1.6,
+              }}>
+                Built for the woman who moves with purpose.
+              </p>
               <Link
                 to="/shop"
                 style={{
@@ -1169,7 +1290,16 @@ function EditorialSplit() {
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: '10px', letterSpacing: '0.18em',
                   textTransform: 'uppercase', color: '#fff',
-                  borderBottom: '1px solid rgba(255,255,255,0.3)', paddingBottom: '3px',
+                  borderBottom: '1px solid rgba(255,255,255,0.35)', paddingBottom: '3px',
+                  transition: 'color 0.2s, border-color 0.2s',
+                }}
+                onMouseEnter={function(e) {
+                  e.currentTarget.style.color = 'var(--accent)'
+                  e.currentTarget.style.borderBottomColor = 'var(--accent)'
+                }}
+                onMouseLeave={function(e) {
+                  e.currentTarget.style.color = '#fff'
+                  e.currentTarget.style.borderBottomColor = 'rgba(255,255,255,0.35)'
                 }}>
                 Discover the collection
               </Link>
@@ -1181,42 +1311,42 @@ function EditorialSplit() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            style={{ position: 'relative', height: '440px', overflow: 'hidden' }}>
+            style={{ position: 'relative', height: '480px', overflow: 'hidden' }}>
             <img
               src="/womendress.jpg"
               alt="Coming Soon"
               style={{
                 width: '100%', height: '100%',
-                objectFit: 'cover', display: 'block', filter: 'grayscale(30%)',
+                objectFit: 'cover', display: 'block',
               }} />
             <div style={{
               position: 'absolute', inset: 0,
-              background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 60%)',
+              background: 'linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.15) 55%)',
               borderLeft: '3px solid var(--accent)',
             }} />
-            <div style={{ position: 'absolute', bottom: '30px', left: '30px', right: '30px' }}>
+            <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
               <span style={{
                 fontFamily: "'Outfit', sans-serif",
                 fontSize: '9px', letterSpacing: '0.3em',
                 textTransform: 'uppercase', color: 'var(--accent)',
-                marginBottom: '10px', display: 'block',
+                marginBottom: '10px', display: 'block', fontWeight: 400,
               }}>
-                Coming soon
+                Coming Soon
               </span>
               <h3 style={{
                 fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: '36px', color: '#F2EEE6',
-                lineHeight: 1, letterSpacing: '0.02em', marginBottom: '20px',
+                fontSize: '38px', color: '#F2EEE6',
+                lineHeight: 1, letterSpacing: '0.02em', marginBottom: '24px',
               }}>
                 NEXT DROP<br />IS COMING.
               </h3>
-              <div style={{ display: 'flex', gap: '20px' }}>
+              <div style={{ display: 'flex', gap: '24px' }}>
                 {[{ v: '04', l: 'Days' }, { v: '16', l: 'Hours' }, { v: '38', l: 'Min' }].map(function(t, i) {
                   return (
                     <div key={i}>
                       <div style={{
                         fontFamily: "'Bebas Neue', sans-serif",
-                        fontSize: '32px', color: 'var(--accent)', lineHeight: 1,
+                        fontSize: '36px', color: 'var(--accent)', lineHeight: 1,
                       }}>
                         {t.v}
                       </div>
@@ -1224,7 +1354,7 @@ function EditorialSplit() {
                         fontFamily: "'Outfit', sans-serif",
                         fontSize: '9px', letterSpacing: '0.18em',
                         textTransform: 'uppercase',
-                        color: 'rgba(242,238,230,0.4)', marginTop: '4px',
+                        color: 'rgba(242,238,230,0.45)', marginTop: '4px',
                       }}>
                         {t.l}
                       </div>
@@ -1252,6 +1382,7 @@ export default function Home() {
       <PromoPopup />
       <HeroSection />
       <StatCards />
+      <Manifesto />
       <FeaturedDropsStrip />
       <EditorialMarquee />
       <CategoriesSection active={activeCategory} setActive={setActiveCategory} />
