@@ -19,7 +19,7 @@ const runways = [
     season: 'SS 2025',
     title: 'Void Series — Full Show',
     looks: 24,
-    image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=900&q=80&fit=crop',
+    image: '/feature.jpg',
     date: 'March 2025',
   },
   {
@@ -43,7 +43,7 @@ const runways = [
 const lookbook = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&q=80&fit=crop',
+    image: '/feature1.jpg',
     look: '01',
     title: 'Void Jacket + Cargo',
   },
@@ -55,19 +55,19 @@ const lookbook = [
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80&fit=crop',
+    image: '/feature2.jpg',
     look: '03',
     title: 'Phase Silk + Denim',
   },
   {
     id: 4,
-    image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=600&q=80&fit=crop',
+    image: '/feature3.jpg',
     look: '04',
     title: 'Relic Coat Story',
   },
   {
     id: 5,
-    image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&q=80&fit=crop',
+    image: '/africanshirt.jpg',
     look: '05',
     title: 'Noir Edit',
   },
