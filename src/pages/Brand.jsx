@@ -73,9 +73,9 @@ const stats = [
 ]
 
 const editorialImages = [
-  { src: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80&fit=crop', label: 'SS 2025 Campaign' },
-  { src: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80&fit=crop', label: 'Void Series Runway' },
-  { src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',    label: 'Accra 2024' },
+  { src: '/brand1.jpg', label: 'SS 2025 Campaign' },
+  { src: '/brand2.jpg', label: 'Void Series Runway' },
+  { src: '/brand3.jpg',    label: 'Accra 2024' },
 ]
 
 const contactItems = [
@@ -138,7 +138,7 @@ function BrandHero() {
               borderRight: `1px solid ${BR}`,
             }}>
             <img
-              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=90&fit=crop"
+              src="/brandhero.jpg"
               alt="Staay Brand"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
