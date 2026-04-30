@@ -21,7 +21,7 @@ const F = { fontFamily: "'Inter', sans-serif" }
 const heroSlides = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1800&q=90&fit=crop',
+    image: '/fashionlady.jpg',
     tag: 'SS 2025 Collection',
     headline: 'Summer Arrival\nof Outfit',
     sub: 'Discover quality fashion that reflects your style and makes everyday enjoyable.',
