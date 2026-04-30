@@ -31,7 +31,7 @@ const heroSlides = [
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=90&fit=crop',
+    image: '/fashionlady2.jpg',
     tag: 'New Arrivals',
     headline: 'Effortless Style\nFor Every Woman',
     sub: 'Pieces that move with you — from morning to night, Accra to anywhere.',
@@ -41,7 +41,7 @@ const heroSlides = [
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1800&q=90&fit=crop',
+    image: '/fashionlady3.jpg',
     tag: 'The Staay Edit',
     headline: 'Made in Accra.\nWorn Everywhere.',
     sub: 'Local craftsmanship meeting international standards.',
@@ -98,7 +98,7 @@ function PromoPopup() {
           onMouseLeave={e => { e.currentTarget.style.background = 'rgba(17,17,17,0.08)'; e.currentTarget.style.color = DK }}>
           ✕
         </button>
-        <img src="/heroflyer.jpg" alt="Promo" style={{ width: '100%', display: 'block' }} />
+        <img src="/fashionlady4.jpg" alt="Promo" style={{ width: '100%', display: 'block' }} />
         <div style={{ display: 'flex', gap: '10px', padding: '14px 16px', borderTop: `1px solid ${BR}` }}>
           <Link
             to="/shop"
