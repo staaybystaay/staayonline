@@ -4,150 +4,123 @@ import { Link } from 'react-router-dom'
 import { products } from '../data/products'
 import useCartStore from '../store/useCartStore'
 
-// ─────────────────────────────────────────────
-// DESIGN TOKENS — warm, feminine, classic
-// These override the CSS variables inline so the
-// home page always feels warm regardless of theme
-// ─────────────────────────────────────────────
-const cream   = '#FAF7F2'
-const cream2  = '#F2EDE4'
-const gold    = '#C9A44A'
-const dark    = '#1A1209'
-const muted   = '#8A7560'
-const faint   = '#C4B5A0'
-const border  = '#E8DDD0'
+const G = '#B8903A'
+const GL = '#F5ECD8'
+const W = '#FFFFFF'
+const OW = '#F8F7F4'
+const B2 = '#F2EFE9'
+const BK = '#111111'
+const DK = '#222222'
+const MD = '#666666'
+const FT = '#999999'
+const BR = '#E4E0D8'
+const RD = '#B91C1C'
 
-// ─────────────────────────────────────────────
-// HERO SLIDES
-// ─────────────────────────────────────────────
+const F = { fontFamily: "'Inter', sans-serif" }
+
 const heroSlides = [
   {
     id: 1,
-    image: '/yellowblue.jpg',
-    tag: 'SS 2025',
-    headline: 'Dressed\nfor her\nworld.',
-    sub: 'Every step is a statement.',
-    cta: 'Shop Now',
-    imagePos: 'center center',
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1800&q=90&fit=crop',
+    tag: 'SS 2025 Collection',
+    headline: 'Summer Arrival\nof Outfit',
+    sub: 'Discover quality fashion that reflects your style and makes everyday enjoyable.',
+    cta: 'Explore Products',
+    href: '/shop',
+    pos: 'center 20%',
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=1600&q=90&fit=crop',
-    tag: 'New In',
-    headline: 'Effortless.\nEvery\nday.',
-    sub: 'Oversized. Minimal. Yours.',
-    cta: 'Shop Hoodies',
-    imagePos: 'center 20%',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1800&q=90&fit=crop',
+    tag: 'New Arrivals',
+    headline: 'Effortless Style\nFor Every Woman',
+    sub: 'Pieces that move with you — from morning to night, Accra to anywhere.',
+    cta: 'Shop Now',
+    href: '/shop',
+    pos: 'center 30%',
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1600&q=90&fit=crop',
-    tag: 'The Edit',
-    headline: 'Local.\nGlobal.\nHers.',
-    sub: 'Proudly crafted in Accra.',
-    cta: 'View Collection',
-    imagePos: 'center top',
+    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1800&q=90&fit=crop',
+    tag: 'The Staay Edit',
+    headline: 'Made in Accra.\nWorn Everywhere.',
+    sub: 'Local craftsmanship meeting international standards.',
+    cta: 'View the Edit',
+    href: '/featured',
+    pos: 'center 25%',
   },
 ]
 
-const featuredDrops = [
-  { id: 'f1', label: 'Air Staay 01',    price: 320, image: '/airsneaker.jpg',  tag: 'New'  },
-  { id: 'f2', label: 'Void Hoodie',     price: 195, image: '/hoodie.jpg',      tag: null   },
-  { id: 'f3', label: 'Cargo Pant 02',   price: 240, image: '/cargopant.jpg',   tag: 'New'  },
-  { id: 'f4', label: 'Phantom Jacket',  price: 420, image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&q=80&fit=crop', tag: null },
-  { id: 'f5', label: 'Staay Crocs',     price: 280, image: '/crocs.png',       tag: 'Sale' },
+const drops = [
+  { id: 'f1', name: 'Air Staay 01',   price: 320, image: '/airsneaker.jpg', tag: 'New'  },
+  { id: 'f2', name: 'Void Hoodie',    price: 195, image: '/hoodie.jpg',     tag: null   },
+  { id: 'f3', name: 'Cargo Pant 02',  price: 240, image: '/cargopant.jpg',  tag: 'New'  },
+  { id: 'f4', name: 'Phantom Jacket', price: 420, image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&q=80', tag: null },
+  { id: 'f5', name: 'Staay Crocs',    price: 280, image: '/crocs.png',      tag: 'Sale' },
 ]
 
-// ─────────────────────────────────────────────
-// HELPERS
-// ─────────────────────────────────────────────
-function FadeUp({ children, delay = 0, style = {} }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-      style={style}>
-      {children}
-    </motion.div>
-  )
-}
+const CATS = ['All', 'Tops', 'Bottoms', 'Jackets', 'Coats']
 
-// ─────────────────────────────────────────────
-// PROMO POPUP — kept exactly as client had it
-// ─────────────────────────────────────────────
+// ─── PROMO POPUP ─────────────────────────────
 function PromoPopup() {
-  const [visible, setVisible] = useState(true)
-  if (!visible) return null
+  const [open, setOpen] = useState(true)
+  if (!open) return null
   return (
     <div
+      onClick={() => setOpen(false)}
       style={{
         position: 'fixed', inset: 0, zIndex: 9999,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'rgba(26,18,9,0.75)',
-        backdropFilter: 'blur(6px)', padding: '20px',
-      }}
-      onClick={() => setVisible(false)}>
+        background: 'rgba(17,17,17,0.6)', backdropFilter: 'blur(6px)', padding: '20px',
+      }}>
       <motion.div
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
         onClick={e => e.stopPropagation()}
         style={{
-          position: 'relative', maxWidth: '420px', width: '100%',
-          background: cream, overflow: 'hidden',
-          boxShadow: '0 40px 100px rgba(26,18,9,0.3)',
+          position: 'relative', maxWidth: '400px', width: '100%',
+          background: W, overflow: 'hidden',
+          boxShadow: '0 24px 60px rgba(17,17,17,0.25)',
         }}>
-        {/* Top accent */}
-        <div style={{ height: '3px', background: gold }} />
-        {/* Close */}
+        <div style={{ height: '3px', background: G }} />
         <button
-          onClick={() => setVisible(false)}
+          onClick={() => setOpen(false)}
           style={{
-            position: 'absolute', top: '14px', right: '14px', zIndex: 10,
-            width: '30px', height: '30px',
-            background: 'rgba(26,18,9,0.08)',
-            border: 'none', borderRadius: '50%',
-            color: dark, display: 'flex', alignItems: 'center', justifyContent: 'center',
-            cursor: 'pointer', fontSize: '14px', transition: 'background 0.2s',
+            position: 'absolute', top: '12px', right: '12px', zIndex: 2,
+            width: '28px', height: '28px', borderRadius: '50%',
+            background: 'rgba(17,17,17,0.08)', border: 'none',
+            cursor: 'pointer', fontSize: '13px', color: DK,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            transition: 'background 0.2s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = gold; e.currentTarget.style.color = cream }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(26,18,9,0.08)'; e.currentTarget.style.color = dark }}>
+          onMouseEnter={e => { e.currentTarget.style.background = BK; e.currentTarget.style.color = W }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(17,17,17,0.08)'; e.currentTarget.style.color = DK }}>
           ✕
         </button>
-        <div style={{ background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <img src="/heroflyer.jpg" alt="Promo" style={{ width: '100%', display: 'block', objectFit: 'contain' }} />
-        </div>
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '16px 20px', borderTop: `1px solid ${border}`, gap: '12px',
-        }}>
+        <img src="/heroflyer.jpg" alt="Promo" style={{ width: '100%', display: 'block' }} />
+        <div style={{ display: 'flex', gap: '10px', padding: '14px 16px', borderTop: `1px solid ${BR}` }}>
           <Link
             to="/shop"
-            onClick={() => setVisible(false)}
+            onClick={() => setOpen(false)}
             style={{
-              background: gold, color: cream,
-              padding: '11px 28px',
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '11px', fontWeight: 600, letterSpacing: '0.16em',
-              textTransform: 'uppercase', transition: 'opacity 0.2s',
+              flex: 1, textAlign: 'center', background: G, color: W,
+              padding: '11px', ...F, fontSize: '12px', fontWeight: 600,
+              letterSpacing: '0.06em', textTransform: 'uppercase', transition: 'opacity 0.2s',
             }}
             onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}>
             Shop Now
           </Link>
           <button
-            onClick={() => setVisible(false)}
+            onClick={() => setOpen(false)}
             style={{
-              background: 'transparent', border: `1px solid ${border}`,
-              color: muted, padding: '10px 20px',
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '10px', letterSpacing: '0.14em',
-              textTransform: 'uppercase', cursor: 'pointer', transition: 'all 0.2s',
+              background: 'transparent', border: `1px solid ${BR}`, color: FT,
+              padding: '11px 16px', cursor: 'pointer', ...F, fontSize: '12px',
+              transition: 'all 0.2s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = gold; e.currentTarget.style.color = gold }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = border; e.currentTarget.style.color = muted }}>
+            onMouseEnter={e => { e.currentTarget.style.borderColor = DK; e.currentTarget.style.color = DK }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = BR; e.currentTarget.style.color = FT }}>
             Skip
           </button>
         </div>
@@ -156,138 +129,126 @@ function PromoPopup() {
   )
 }
 
-// ─────────────────────────────────────────────
-// HERO — full bleed, elegant serif headline
-// ─────────────────────────────────────────────
-function HeroSection() {
-  const [current, setCurrent] = useState(0)
-  const [paused,  setPaused]  = useState(false)
-  const slide = heroSlides[current]
+// ─── HERO ─────────────────────────────────────
+function Hero() {
+  const [idx, setIdx]       = useState(0)
+  const [paused, setPaused] = useState(false)
+  const s = heroSlides[idx]
 
   useEffect(() => {
     if (paused) return
-    const id = setInterval(() => setCurrent(c => (c + 1) % heroSlides.length), 7000)
-    return () => clearInterval(id)
-  }, [current, paused])
+    const t = setInterval(() => setIdx(i => (i + 1) % heroSlides.length), 5500)
+    return () => clearInterval(t)
+  }, [idx, paused])
 
   return (
     <section
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
-      style={{
-        position: 'relative',
-        height: '100vh', minHeight: '600px',
-        overflow: 'hidden',
-      }}>
+      style={{ position: 'relative', height: '92vh', minHeight: '580px', overflow: 'hidden', background: BK }}>
 
-      {/* Background images */}
-      <AnimatePresence mode="wait">
+      {/* Background */}
+      <AnimatePresence mode="crossfade">
         <motion.div
-          key={slide.id}
+          key={s.id}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.2 }}
+          transition={{ duration: 1.0 }}
           style={{
             position: 'absolute', inset: 0,
-            backgroundImage: 'url(' + slide.image + ')',
+            backgroundImage: `url(${s.image})`,
             backgroundSize: 'cover',
-            backgroundPosition: slide.imagePos,
+            backgroundPosition: s.pos,
           }}>
-          {/* Warm feminine overlay — not harsh black */}
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'linear-gradient(135deg, rgba(26,18,9,0.72) 0%, rgba(26,18,9,0.35) 50%, rgba(26,18,9,0.1) 100%)',
+            background: 'linear-gradient(to right, rgba(17,17,17,0.80) 0%, rgba(17,17,17,0.45) 55%, rgba(17,17,17,0.15) 100%)',
           }} />
           <div style={{
             position: 'absolute', inset: 0,
-            background: 'linear-gradient(to top, rgba(26,18,9,0.6) 0%, transparent 50%)',
+            background: 'linear-gradient(to top, rgba(17,17,17,0.55) 0%, transparent 45%)',
           }} />
         </motion.div>
       </AnimatePresence>
 
-      {/* Content */}
+      {/* Text content */}
       <div style={{
-        position: 'absolute', inset: 0,
-        display: 'flex', alignItems: 'center',
-        padding: '0 8vw', zIndex: 2,
+        position: 'absolute', inset: 0, zIndex: 2,
+        maxWidth: '1280px', width: '100%', margin: '0 auto',
+        padding: '0 64px', display: 'flex', alignItems: 'center',
       }}>
         <AnimatePresence mode="wait">
           <motion.div
-            key={'hero-text-' + slide.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            style={{ maxWidth: '600px' }}>
+            key={s.id + 't'}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 20 }}
+            transition={{ duration: 0.55 }}
+            style={{ maxWidth: '560px' }}>
 
-            {/* Season tag */}
+            {/* Tag chip */}
             <div style={{
-              display: 'inline-flex', alignItems: 'center', gap: '10px',
-              marginBottom: '24px',
+              display: 'inline-block',
+              background: GL, color: G,
+              padding: '5px 14px',
+              ...F, fontSize: '11px', fontWeight: 600,
+              letterSpacing: '0.07em', textTransform: 'uppercase',
+              marginBottom: '20px',
             }}>
-              <div style={{ width: '28px', height: '1px', background: gold }} />
-              <span style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '11px', letterSpacing: '0.3em',
-                textTransform: 'uppercase', color: gold, fontWeight: 400,
-              }}>
-                {slide.tag}
-              </span>
+              {s.tag}
             </div>
 
-            {/* Headline — FRAUNCES serif, not Bebas */}
+            {/* Headline */}
             <h1 style={{
-              fontFamily: "'Fraunces', serif",
-              fontWeight: 300,
-              fontSize: 'clamp(60px, 9vw, 130px)',
-              lineHeight: 0.95, letterSpacing: '-0.01em',
-              color: '#FAF7F2',
-              margin: '0 0 28px',
+              ...F, fontWeight: 700,
+              fontSize: 'clamp(40px, 5.5vw, 72px)',
+              lineHeight: 1.1, letterSpacing: '-0.025em',
+              color: W, margin: '0 0 18px',
               whiteSpace: 'pre-line',
             }}>
-              {slide.headline}
+              {s.headline}
             </h1>
 
             {/* Sub */}
             <p style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '15px', letterSpacing: '0.08em',
-              color: 'rgba(250,247,242,0.6)',
-              marginBottom: '36px', fontWeight: 300,
+              ...F, fontWeight: 300,
+              fontSize: '15px', lineHeight: 1.65,
+              color: 'rgba(255,255,255,0.68)',
+              marginBottom: '32px', maxWidth: '420px',
             }}>
-              {slide.sub}
+              {s.sub}
             </p>
 
             {/* CTAs */}
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <Link
+                to={s.href}
+                style={{
+                  background: G, color: W,
+                  padding: '14px 32px',
+                  ...F, fontSize: '13px', fontWeight: 600,
+                  letterSpacing: '0.03em',
+                  display: 'inline-flex', alignItems: 'center', gap: '8px',
+                  transition: 'background 0.25s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#9A7830' }}
+                onMouseLeave={e => { e.currentTarget.style.background = G }}>
+                {s.cta} →
+              </Link>
               <Link
                 to="/shop"
                 style={{
-                  background: gold, color: dark,
-                  padding: '14px 36px',
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '11px', letterSpacing: '0.2em',
-                  textTransform: 'uppercase', fontWeight: 600,
-                  transition: 'all 0.3s',
+                  background: 'transparent',
+                  border: '1px solid rgba(255,255,255,0.45)',
+                  color: 'rgba(255,255,255,0.88)',
+                  padding: '14px 28px',
+                  ...F, fontSize: '13px', fontWeight: 400,
+                  transition: 'all 0.25s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = '#FAF7F2'; e.currentTarget.style.color = dark }}
-                onMouseLeave={e => { e.currentTarget.style.background = gold; e.currentTarget.style.color = dark }}>
-                {slide.cta}
-              </Link>
-              <Link
-                to="/featured"
-                style={{
-                  color: 'rgba(250,247,242,0.75)',
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '11px', letterSpacing: '0.2em',
-                  textTransform: 'uppercase', fontWeight: 300,
-                  borderBottom: '1px solid rgba(250,247,242,0.3)',
-                  paddingBottom: '2px', transition: 'all 0.3s',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.color = gold; e.currentTarget.style.borderBottomColor = gold }}
-                onMouseLeave={e => { e.currentTarget.style.color = 'rgba(250,247,242,0.75)'; e.currentTarget.style.borderBottomColor = 'rgba(250,247,242,0.3)' }}>
-                View Lookbook
+                onMouseEnter={e => { e.currentTarget.style.borderColor = W; e.currentTarget.style.color = W }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.45)'; e.currentTarget.style.color = 'rgba(255,255,255,0.88)' }}>
+                Browse All
               </Link>
             </div>
 
@@ -295,435 +256,343 @@ function HeroSection() {
         </AnimatePresence>
       </div>
 
-      {/* Slide indicators — bottom left */}
+      {/* Slide indicators */}
       <div style={{
-        position: 'absolute', bottom: '40px', left: '8vw',
-        zIndex: 3, display: 'flex', alignItems: 'center', gap: '16px',
+        position: 'absolute', bottom: '36px', left: '64px',
+        zIndex: 3, display: 'flex', alignItems: 'center', gap: '8px',
       }}>
-        <div style={{ display: 'flex', gap: '8px' }}>
-          {heroSlides.map((s, i) => (
-            <button
-              key={s.id}
-              onClick={() => setCurrent(i)}
-              style={{
-                background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-              }}>
-              <div style={{
-                height: '2px', borderRadius: '1px',
-                background: i === current ? gold : 'rgba(250,247,242,0.3)',
-                width: i === current ? '32px' : '16px',
-                transition: 'all 0.4s',
-              }} />
-            </button>
-          ))}
-        </div>
-        <span style={{
-          fontFamily: "'Outfit', sans-serif",
-          fontSize: '10px', letterSpacing: '0.2em',
-          color: 'rgba(250,247,242,0.35)', fontWeight: 300,
-        }}>
-          {String(current + 1).padStart(2,'0')} / {String(heroSlides.length).padStart(2,'0')}
-        </span>
+        {heroSlides.map((sl, i) => (
+          <button
+            key={sl.id}
+            onClick={() => setIdx(i)}
+            style={{
+              height: '3px', padding: 0, border: 'none', cursor: 'pointer',
+              borderRadius: '2px', transition: 'all 0.35s',
+              width: i === idx ? '32px' : '12px',
+              background: i === idx ? G : 'rgba(255,255,255,0.35)',
+            }} />
+        ))}
       </div>
 
-      {/* Scroll hint */}
+      {/* Prev / Next */}
       <div style={{
-        position: 'absolute', bottom: '40px', right: '8vw',
-        zIndex: 3, display: 'flex', flexDirection: 'column',
-        alignItems: 'center', gap: '8px',
+        position: 'absolute', bottom: '24px', right: '64px',
+        zIndex: 3, display: 'flex', gap: '8px',
       }}>
-        <span style={{
-          fontFamily: "'Outfit', sans-serif",
-          fontSize: '9px', letterSpacing: '0.28em',
-          textTransform: 'uppercase', color: 'rgba(250,247,242,0.35)',
-          transform: 'rotate(90deg)', transformOrigin: 'center',
-        }}>
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ width: '1px', height: '32px', background: 'rgba(201,164,74,0.5)' }} />
+        {[-1, 1].map(d => (
+          <button
+            key={d}
+            onClick={() => setIdx(i => (i + d + heroSlides.length) % heroSlides.length)}
+            style={{
+              width: '40px', height: '40px',
+              background: 'rgba(255,255,255,0.12)',
+              border: '1px solid rgba(255,255,255,0.25)',
+              color: W, cursor: 'pointer', fontSize: '16px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transition: 'all 0.22s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.borderColor = G }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)' }}>
+            {d === -1 ? '←' : '→'}
+          </button>
+        ))}
       </div>
 
     </section>
   )
 }
 
-// ─────────────────────────────────────────────
-// BRAND STRIP — warm cream, soft statement
-// ─────────────────────────────────────────────
-function BrandStrip() {
-  return (
-    <section style={{ background: cream, borderBottom: `1px solid ${border}`, padding: '0' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ overflow: 'hidden', padding: '18px 0' }}>
-          <motion.div
-            animate={{ x: ['0%', '-50%'] }}
-            transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-            style={{ display: 'flex', gap: '48px', whiteSpace: 'nowrap', width: 'max-content' }}>
-            {[
-              'Young', '·', 'Classic', '·', 'Local', '·', 'International', '·', 'Feminine',
-              '·', 'Made in Accra', '·', 'SS 2025', '·', 'For Every Woman',
-              '·', 'Young', '·', 'Classic', '·', 'Local', '·', 'International', '·', 'Feminine',
-              '·', 'Made in Accra', '·', 'SS 2025', '·', 'For Every Woman', '·',
-            ].map((w, i) => (
-              <span key={i} style={{
-                fontFamily: w === '·' ? "'Outfit', sans-serif" : "'Fraunces', serif",
-                fontStyle: w === '·' ? 'normal' : 'italic',
-                fontSize: w === '·' ? '16px' : '14px',
-                letterSpacing: w === '·' ? '0' : '0.04em',
-                color: w === '·' ? gold : muted,
-                fontWeight: 300,
-              }}>
-                {w}
-              </span>
-            ))}
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ─────────────────────────────────────────────
-// MANIFESTO — personal, warm, feminine
-// ─────────────────────────────────────────────
-function Manifesto() {
-  return (
-    <section style={{ background: cream, padding: '100px 0' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
-        <div style={{
-          display: 'grid', gridTemplateColumns: '1fr 1.6fr',
-          gap: '80px', alignItems: 'center',
-        }}>
-          {/* Left */}
-          <FadeUp>
-            <div>
-              <div style={{
-                width: '40px', height: '1px',
-                background: gold, marginBottom: '20px',
-              }} />
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '10px', letterSpacing: '0.3em',
-                textTransform: 'uppercase', color: gold,
-                marginBottom: '20px', fontWeight: 400,
-              }}>
-                Est. 2009 · Accra, Ghana
-              </p>
-              <h2 style={{
-                fontFamily: "'Fraunces', serif",
-                fontWeight: 300, fontStyle: 'italic',
-                fontSize: 'clamp(32px, 3.5vw, 48px)',
-                color: dark, lineHeight: 1.15, letterSpacing: '-0.01em',
-              }}>
-                She is ordinary.<br />
-                <span style={{ color: gold }}>She is everything.</span>
-              </h2>
-              <Link
-                to="/brand"
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  marginTop: '28px',
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '11px', letterSpacing: '0.2em',
-                  textTransform: 'uppercase', color: muted,
-                  borderBottom: `1px solid ${faint}`, paddingBottom: '3px',
-                  transition: 'all 0.25s',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.color = gold; e.currentTarget.style.borderBottomColor = gold }}
-                onMouseLeave={e => { e.currentTarget.style.color = muted; e.currentTarget.style.borderBottomColor = faint }}>
-                Our Story
-              </Link>
-            </div>
-          </FadeUp>
-
-          {/* Right */}
-          <FadeUp delay={0.15}>
-            <p style={{
-              fontFamily: "'Fraunces', serif",
-              fontWeight: 300, fontStyle: 'italic',
-              fontSize: 'clamp(22px, 2.8vw, 34px)',
-              lineHeight: 1.6, color: dark,
-              letterSpacing: '-0.01em',
-            }}>
-              "We design for the woman who does not need a stage
-              to be seen. She is young at heart, classic in spirit,
-              at home in Accra and confident in any room in the world."
-            </p>
-            <div style={{
-              display: 'flex', alignItems: 'center',
-              gap: '12px', marginTop: '24px',
-            }}>
-              <div style={{ width: '24px', height: '1px', background: gold }} />
-              <span style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '11px', letterSpacing: '0.16em',
-                color: muted, fontWeight: 300,
-              }}>
-                Mr. Jonas Gogmi, Founder
-              </span>
-            </div>
-          </FadeUp>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ─────────────────────────────────────────────
-// FEATURED DROPS — light, clean, elegant
-// ─────────────────────────────────────────────
-function FeaturedDropsStrip() {
-  const [hovered, setHovered] = useState(null)
-  const addItem = useCartStore(s => s.addItem)
-
-  return (
-    <section style={{ background: cream2, padding: '80px 0', borderTop: `1px solid ${border}` }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
-
-        <FadeUp style={{ marginBottom: '48px' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
-            <div>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '10px', letterSpacing: '0.3em',
-                textTransform: 'uppercase', color: gold,
-                marginBottom: '10px', fontWeight: 400,
-              }}>
-                Just Dropped
-              </p>
-              <h2 style={{
-                fontFamily: "'Fraunces', serif",
-                fontWeight: 300, fontStyle: 'italic',
-                fontSize: 'clamp(28px, 3.5vw, 44px)',
-                color: dark, lineHeight: 1,
-              }}>
-                Fresh from the Studio
-              </h2>
-            </div>
-            <Link
-              to="/shop"
-              style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '11px', letterSpacing: '0.18em',
-                textTransform: 'uppercase', color: muted,
-                borderBottom: `1px solid ${faint}`, paddingBottom: '2px',
-                transition: 'all 0.25s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.color = gold; e.currentTarget.style.borderBottomColor = gold }}
-              onMouseLeave={e => { e.currentTarget.style.color = muted; e.currentTarget.style.borderBottomColor = faint }}>
-              View All
-            </Link>
-          </div>
-        </FadeUp>
-
-        <div
-          className="fe-scrollbar"
-          style={{ display: 'flex', gap: '20px', overflowX: 'auto', paddingBottom: '4px' }}>
-          {featuredDrops.map((drop, i) => (
-            <motion.div
-              key={drop.id}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              onMouseEnter={() => setHovered(drop.id)}
-              onMouseLeave={() => setHovered(null)}
-              style={{
-                flexShrink: 0, width: '220px', cursor: 'pointer',
-              }}>
-              <div style={{
-                position: 'relative', width: '220px', height: '280px',
-                overflow: 'hidden', background: '#EDE8DF',
-              }}>
-                <img
-                  src={drop.image} alt={drop.label}
-                  style={{
-                    width: '100%', height: '100%', objectFit: 'cover',
-                    transition: 'transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94)',
-                    transform: hovered === drop.id ? 'scale(1.05)' : 'scale(1)',
-                  }}
-                />
-                {/* Soft overlay on hover */}
-                <div style={{
-                  position: 'absolute', inset: 0,
-                  background: 'rgba(26,18,9,0.35)',
-                  opacity: hovered === drop.id ? 1 : 0,
-                  transition: 'opacity 0.3s',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                  <button
-                    onClick={() => addItem({ ...drop, badge: drop.tag })}
-                    style={{
-                      background: gold, color: dark,
-                      border: 'none', padding: '11px 24px',
-                      fontFamily: "'Outfit', sans-serif",
-                      fontSize: '10px', fontWeight: 600,
-                      letterSpacing: '0.16em', textTransform: 'uppercase',
-                      cursor: 'pointer',
-                    }}>
-                    Add to Bag
-                  </button>
-                </div>
-                {drop.tag && (
-                  <span style={{
-                    position: 'absolute', top: '12px', left: '12px',
-                    background: drop.tag === 'Sale' ? '#B5362A' : dark,
-                    color: cream, padding: '4px 10px',
-                    fontFamily: "'Outfit', sans-serif",
-                    fontSize: '9px', fontWeight: 600,
-                    letterSpacing: '0.14em', textTransform: 'uppercase',
-                  }}>
-                    {drop.tag}
-                  </span>
-                )}
-              </div>
-              <div style={{ padding: '14px 0' }}>
-                <p style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '12px', color: dark,
-                  fontWeight: 400, letterSpacing: '0.04em',
-                  marginBottom: '4px',
-                }}>
-                  {drop.label}
-                </p>
-                <p style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontStyle: 'italic', fontSize: '17px', color: gold,
-                }}>
-                  ${drop.price}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ─────────────────────────────────────────────
-// CATEGORIES — clean pill links
-// ─────────────────────────────────────────────
-const cats = ['All', 'Tops', 'Bottoms', 'Jackets', 'Coats', 'Dresses']
-
-function CategoriesSection({ active, setActive }) {
+// ─── TRUST BAR ───────────────────────────────
+function TrustBar() {
+  const items = [
+    { title: 'Free Shipping', sub: 'Orders over $200' },
+    { title: 'Secure Payment', sub: 'Multiple options' },
+    { title: '98% Satisfaction', sub: 'Verified buyers' },
+    { title: 'Free Returns', sub: 'Within 30 days' },
+  ]
   return (
     <section style={{
-      background: cream, padding: '72px 0 52px',
-      borderTop: `1px solid ${border}`, borderBottom: `1px solid ${border}`,
+      background: W,
+      borderTop: `1px solid ${BR}`,
+      borderBottom: `1px solid ${BR}`,
     }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
-        <FadeUp style={{ marginBottom: '36px' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
-            <div>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '10px', letterSpacing: '0.3em',
-                textTransform: 'uppercase', color: gold,
-                marginBottom: '8px', fontWeight: 400,
-              }}>
-                Shop by Category
-              </p>
-              <h2 style={{
-                fontFamily: "'Fraunces', serif",
-                fontWeight: 300, fontStyle: 'italic',
-                fontSize: 'clamp(28px, 3.5vw, 40px)',
-                color: dark, lineHeight: 1,
-              }}>
-                Every style, for every woman.
-              </h2>
+      <div style={{
+        maxWidth: '1280px', margin: '0 auto',
+        padding: '0 64px',
+        display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)',
+      }}>
+        {items.map((item, i) => (
+          <div
+            key={item.title}
+            style={{
+              display: 'flex', alignItems: 'center', gap: '12px',
+              padding: '20px 24px',
+              borderRight: i < 3 ? `1px solid ${BR}` : 'none',
+            }}>
+            <div style={{
+              width: '36px', height: '36px', flexShrink: 0,
+              background: GL, borderRadius: '50%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <span style={{ fontSize: '16px' }}>
+                {['🚚', '🔒', '⭐', '↩️'][i]}
+              </span>
             </div>
-            <Link
-              to="/shop"
-              style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '11px', letterSpacing: '0.18em',
-                textTransform: 'uppercase', color: muted,
-                borderBottom: `1px solid ${faint}`, paddingBottom: '3px',
-                transition: 'all 0.25s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.color = gold; e.currentTarget.style.borderBottomColor = gold }}
-              onMouseLeave={e => { e.currentTarget.style.color = muted; e.currentTarget.style.borderBottomColor = faint }}>
-              View All
-            </Link>
+            <div>
+              <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '1px' }}>
+                {item.title}
+              </p>
+              <p style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD }}>
+                {item.sub}
+              </p>
+            </div>
           </div>
-        </FadeUp>
-        <FadeUp delay={0.1}>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            {cats.map(cat => {
-              const isActive = active === cat
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setActive(cat)}
-                  style={{
-                    padding: '10px 22px',
-                    background: isActive ? dark : 'transparent',
-                    border: `1px solid ${isActive ? dark : faint}`,
-                    color: isActive ? cream : muted,
-                    fontFamily: "'Outfit', sans-serif",
-                    fontSize: '12px', letterSpacing: '0.1em',
-                    fontWeight: isActive ? 500 : 300,
-                    cursor: 'pointer', transition: 'all 0.22s',
-                  }}
-                  onMouseEnter={e => {
-                    if (!isActive) {
-                      e.currentTarget.style.borderColor = dark
-                      e.currentTarget.style.color = dark
-                    }
-                  }}
-                  onMouseLeave={e => {
-                    if (!isActive) {
-                      e.currentTarget.style.borderColor = faint
-                      e.currentTarget.style.color = muted
-                    }
-                  }}>
-                  {cat}
-                </button>
-              )
-            })}
-          </div>
-        </FadeUp>
+        ))}
       </div>
     </section>
   )
 }
 
-// ─────────────────────────────────────────────
-// PRODUCT CARD — light, clean, feminine
-// ─────────────────────────────────────────────
+// ─── PROMO CARDS — reference image 1 style ───
+function PromoCards() {
+  return (
+    <section style={{ background: W, padding: '48px 64px' }}>
+      <div style={{
+        maxWidth: '1280px', margin: '0 auto',
+        display: 'grid', gridTemplateColumns: '1fr 1fr',
+        gap: '16px',
+      }}>
+
+        {/* Card 1 — gold */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          style={{
+            position: 'relative',
+            background: GL,
+            padding: '40px',
+            minHeight: '200px',
+            overflow: 'hidden',
+            display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+          }}>
+          <div>
+            <p style={{ ...F, fontSize: '12px', fontWeight: 500, color: G, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '10px' }}>
+              For Women
+            </p>
+            <h3 style={{ ...F, fontSize: 'clamp(22px, 2.5vw, 30px)', fontWeight: 700, color: DK, lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: '8px' }}>
+              Where dreams<br />meet couture
+            </h3>
+            <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD }}>
+              SS 2025 — New drops every week
+            </p>
+          </div>
+          <Link
+            to="/shop"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+              background: DK, color: W,
+              padding: '11px 22px', marginTop: '24px',
+              ...F, fontSize: '12px', fontWeight: 600,
+              letterSpacing: '0.04em', width: 'fit-content',
+              transition: 'background 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = G }}
+            onMouseLeave={e => { e.currentTarget.style.background = DK }}>
+            Shop Now →
+          </Link>
+        </motion.div>
+
+        {/* Card 2 — image */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          style={{
+            position: 'relative',
+            minHeight: '200px',
+            overflow: 'hidden',
+            background: '#E8E0D8',
+          }}>
+          <img
+            src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80&fit=crop"
+            alt="Collection"
+            style={{
+              position: 'absolute', inset: 0,
+              width: '100%', height: '100%', objectFit: 'cover',
+            }}
+          />
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(to right, rgba(17,17,17,0.65) 0%, rgba(17,17,17,0.1) 70%)',
+          }} />
+          <div style={{ position: 'relative', padding: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+            <div>
+              <p style={{ ...F, fontSize: '12px', fontWeight: 500, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '10px' }}>
+                The Edit
+              </p>
+              <h3 style={{ ...F, fontSize: 'clamp(22px, 2.5vw, 30px)', fontWeight: 700, color: W, lineHeight: 1.15, letterSpacing: '-0.01em' }}>
+                Enchanting styles<br />for every woman
+              </h3>
+            </div>
+            <Link
+              to="/featured"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                background: W, color: DK,
+                padding: '11px 22px', marginTop: '24px',
+                ...F, fontSize: '12px', fontWeight: 600,
+                letterSpacing: '0.04em', width: 'fit-content',
+                transition: 'background 0.2s, color 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.color = W }}
+              onMouseLeave={e => { e.currentTarget.style.background = W; e.currentTarget.style.color = DK }}>
+              Shop Now →
+            </Link>
+          </div>
+        </motion.div>
+
+      </div>
+    </section>
+  )
+}
+
+// ─── CATEGORIES ──────────────────────────────
+function Categories({ active, setActive }) {
+  const catImages = {
+    All:     'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=300&q=80&fit=crop',
+    Tops:    '/hoodie.jpg',
+    Bottoms: '/cargopant.jpg',
+    Jackets: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=300&q=80&fit=crop',
+    Coats:   'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&q=80&fit=crop',
+  }
+
+  return (
+    <section style={{ background: OW, padding: '64px', borderTop: `1px solid ${BR}` }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+
+        <div style={{
+          display: 'flex', alignItems: 'center',
+          justifyContent: 'space-between', marginBottom: '32px',
+        }}>
+          <div>
+            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
+              Browse by
+            </p>
+            <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>
+              Categories
+            </h2>
+          </div>
+
+          {/* Category pills */}
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            {CATS.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActive(cat)}
+                style={{
+                  padding: '8px 18px',
+                  background: active === cat ? BK : W,
+                  border: `1px solid ${active === cat ? BK : BR}`,
+                  color: active === cat ? W : DK,
+                  ...F, fontSize: '12px', fontWeight: active === cat ? 600 : 400,
+                  cursor: 'pointer', borderRadius: '100px',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={e => {
+                  if (active !== cat) {
+                    e.currentTarget.style.borderColor = DK
+                    e.currentTarget.style.color = DK
+                  }
+                }}
+                onMouseLeave={e => {
+                  if (active !== cat) {
+                    e.currentTarget.style.borderColor = BR
+                    e.currentTarget.style.color = DK
+                  }
+                }}>
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Category image tiles */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gap: '12px',
+        }}>
+          {CATS.map((cat, i) => (
+            <motion.button
+              key={cat}
+              onClick={() => setActive(cat)}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.06 }}
+              style={{
+                position: 'relative', aspectRatio: '3/4',
+                overflow: 'hidden', border: 'none', cursor: 'pointer', padding: 0,
+                outline: active === cat ? `2px solid ${G}` : 'none',
+                outlineOffset: '2px',
+              }}>
+              <img
+                src={catImages[cat]}
+                alt={cat}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(to top, rgba(17,17,17,0.65) 0%, transparent 55%)',
+              }} />
+              <div style={{
+                position: 'absolute', bottom: '14px', left: '14px', right: '14px',
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              }}>
+                <span style={{
+                  ...F, fontSize: '13px', fontWeight: 600,
+                  color: W, letterSpacing: '0.02em',
+                }}>
+                  {cat}
+                </span>
+              </div>
+            </motion.button>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  )
+}
+
+// ─── PRODUCT CARD ────────────────────────────
 function ProductCard({ product, index }) {
   const [hovered, setHovered] = useState(false)
   const addItem = useCartStore(s => s.addItem)
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.55, delay: index * 0.07 }}
+      transition={{ duration: 0.45, delay: index * 0.06 }}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{ cursor: 'pointer' }}>
-      <Link to={`/product/${product.id}`} style={{ textDecoration: 'none', display: 'block' }}>
+      onMouseLeave={() => setHovered(false)}>
+
+      <Link to={`/product/${product.id}`} style={{ display: 'block', textDecoration: 'none' }}>
+        {/* Image */}
         <div style={{
           position: 'relative', aspectRatio: '3/4',
-          overflow: 'hidden', background: '#EDE8DF',
-          marginBottom: '14px',
+          background: B2, overflow: 'hidden', marginBottom: '12px',
         }}>
           <div style={{
             position: 'absolute', inset: 0,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
           }}>
-            <span style={{
-              fontFamily: "'Fraunces', serif",
-              fontStyle: 'italic', fontSize: '11px', color: faint,
-            }}>
-              {product.category}
-            </span>
+            <span style={{ ...F, fontSize: '11px', color: FT }}>{product.category}</span>
           </div>
           <img
             src={product.image} alt={product.name}
@@ -731,345 +600,373 @@ function ProductCard({ product, index }) {
             style={{
               position: 'absolute', inset: 0,
               width: '100%', height: '100%', objectFit: 'cover',
-              transition: 'transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94)',
-              transform: hovered ? 'scale(1.04)' : 'scale(1)',
+              transition: 'transform 0.65s',
+              transform: hovered ? 'scale(1.05)' : 'scale(1)',
             }}
           />
-          {/* Hover overlay */}
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'rgba(26,18,9,0.4)',
-            opacity: hovered ? 1 : 0, transition: 'opacity 0.35s',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <button
-              onClick={e => { e.preventDefault(); e.stopPropagation(); addItem(product) }}
-              style={{
-                background: gold, color: dark,
-                border: 'none', padding: '12px 28px',
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '10px', fontWeight: 600,
-                letterSpacing: '0.18em', textTransform: 'uppercase',
-                cursor: 'pointer', transition: 'opacity 0.2s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
-              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}>
-              Add to Bag
-            </button>
-          </div>
           {product.badge && (
             <span style={{
-              position: 'absolute', top: '0', left: '0',
-              background: product.badge === 'Sale' ? '#B5362A' : dark,
-              color: cream, padding: '5px 12px',
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '9px', fontWeight: 600,
-              letterSpacing: '0.14em', textTransform: 'uppercase',
+              position: 'absolute', top: '10px', left: '10px',
+              background: product.badge === 'Sale' ? RD : BK,
+              color: W, padding: '4px 10px',
+              ...F, fontSize: '10px', fontWeight: 600,
+              letterSpacing: '0.05em', textTransform: 'uppercase',
             }}>
               {product.badge}
             </span>
           )}
+          {/* Add to bag */}
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            background: BK,
+            transform: hovered ? 'translateY(0)' : 'translateY(100%)',
+            transition: 'transform 0.3s',
+          }}>
+            <button
+              onClick={e => { e.preventDefault(); e.stopPropagation(); addItem(product) }}
+              style={{
+                width: '100%', padding: '13px', background: 'transparent',
+                border: 'none', color: W, cursor: 'pointer',
+                ...F, fontSize: '12px', fontWeight: 600,
+                letterSpacing: '0.05em', textTransform: 'uppercase',
+              }}>
+              Add to Bag
+            </button>
+          </div>
           {/* Wishlist */}
           <button
             onClick={e => { e.preventDefault(); e.stopPropagation() }}
             style={{
               position: 'absolute', top: '10px', right: '10px',
-              width: '30px', height: '30px',
-              background: 'rgba(250,247,242,0.9)',
-              border: 'none',
+              width: '32px', height: '32px', borderRadius: '50%',
+              background: W, border: 'none',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer', fontSize: '14px', color: gold,
-              opacity: hovered ? 1 : 0, transition: 'opacity 0.3s',
+              cursor: 'pointer', fontSize: '15px', color: DK,
+              opacity: hovered ? 1 : 0, transition: 'opacity 0.25s',
+              boxShadow: '0 1px 4px rgba(17,17,17,0.12)',
             }}>
             ♡
           </button>
         </div>
-        <p style={{
-          fontFamily: "'Outfit', sans-serif",
-          fontSize: '10px', letterSpacing: '0.18em',
-          textTransform: 'uppercase', color: muted,
-          marginBottom: '4px', fontWeight: 300,
-        }}>
+
+        {/* Info */}
+        <p style={{ ...F, fontSize: '10px', fontWeight: 400, color: FT, marginBottom: '3px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
           {product.category}
         </p>
-        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-          <h3 style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: '14px', color: dark,
-            letterSpacing: '0.04em', fontWeight: 400,
-          }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <p style={{ ...F, fontSize: '14px', fontWeight: 500, color: DK }}>
             {product.name}
-          </h3>
-          <span style={{
-            fontFamily: "'Fraunces', serif",
-            fontStyle: 'italic', fontSize: '17px', color: gold,
-          }}>
+          </p>
+          <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: G }}>
             ${product.price}
-          </span>
+          </p>
         </div>
       </Link>
     </motion.div>
   )
 }
 
-// ─────────────────────────────────────────────
-// PRODUCT GRID
-// ─────────────────────────────────────────────
-function ProductGridSection({ activeCategory }) {
+// ─── PRODUCTS SECTION ────────────────────────
+function ProductsSection({ activeCategory }) {
   const filtered = activeCategory === 'All'
     ? products
     : products.filter(p => p.category === activeCategory)
 
   return (
-    <section style={{ background: cream, padding: '72px 0 96px' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
-        <FadeUp style={{ marginBottom: '40px' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
-            <div>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '10px', letterSpacing: '0.3em',
-                textTransform: 'uppercase', color: gold,
-                marginBottom: '8px', fontWeight: 400,
+    <section style={{ background: W, padding: '64px', borderTop: `1px solid ${BR}` }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+
+        <div style={{
+          display: 'flex', alignItems: 'center',
+          justifyContent: 'space-between', marginBottom: '32px',
+        }}>
+          <div>
+            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
+              Our Products
+            </p>
+            <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>
+              Popular Products
+            </h2>
+          </div>
+          <Link
+            to="/shop"
+            style={{
+              ...F, fontSize: '13px', fontWeight: 500, color: DK,
+              display: 'flex', alignItems: 'center', gap: '6px',
+              borderBottom: `1px solid ${DK}`, paddingBottom: '1px',
+              transition: 'color 0.2s, border-color 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderBottomColor = G }}
+            onMouseLeave={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = DK }}>
+            View All →
+          </Link>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px 16px' }}>
+          {filtered.map((p, i) => (
+            <ProductCard key={p.id} product={p} index={i} />
+          ))}
+        </div>
+
+      </div>
+    </section>
+  )
+}
+
+// ─── JUST DROPPED STRIP ──────────────────────
+function JustDropped() {
+  const [hovered, setHovered] = useState(null)
+  const addItem = useCartStore(s => s.addItem)
+
+  return (
+    <section style={{ background: OW, padding: '64px', borderTop: `1px solid ${BR}` }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+
+        <div style={{
+          display: 'flex', alignItems: 'center',
+          justifyContent: 'space-between', marginBottom: '32px',
+        }}>
+          <div>
+            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
+              Just In
+            </p>
+            <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>
+              New Arrivals
+            </h2>
+          </div>
+          <Link
+            to="/shop"
+            style={{
+              ...F, fontSize: '13px', fontWeight: 500, color: DK,
+              display: 'flex', alignItems: 'center', gap: '6px',
+              borderBottom: `1px solid ${DK}`, paddingBottom: '1px',
+              transition: 'color 0.2s, border-color 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderBottomColor = G }}
+            onMouseLeave={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = DK }}>
+            View All →
+          </Link>
+        </div>
+
+        <div
+          className="hide-scroll"
+          style={{ display: 'flex', gap: '16px', overflowX: 'auto' }}>
+          {drops.map((item, i) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: i * 0.07 }}
+              onMouseEnter={() => setHovered(item.id)}
+              onMouseLeave={() => setHovered(null)}
+              style={{ flexShrink: 0, width: '210px' }}>
+              <div style={{
+                position: 'relative', height: '260px',
+                background: B2, overflow: 'hidden', marginBottom: '12px',
               }}>
-                New Arrivals
+                <img
+                  src={item.image} alt={item.name}
+                  style={{
+                    width: '100%', height: '100%', objectFit: 'cover',
+                    transition: 'transform 0.65s',
+                    transform: hovered === item.id ? 'scale(1.05)' : 'scale(1)',
+                  }}
+                />
+                {item.tag && (
+                  <span style={{
+                    position: 'absolute', top: '10px', left: '10px',
+                    background: item.tag === 'Sale' ? RD : BK, color: W,
+                    padding: '4px 10px',
+                    ...F, fontSize: '10px', fontWeight: 600,
+                    letterSpacing: '0.05em', textTransform: 'uppercase',
+                  }}>
+                    {item.tag}
+                  </span>
+                )}
+                <div style={{
+                  position: 'absolute', bottom: 0, left: 0, right: 0,
+                  background: BK,
+                  transform: hovered === item.id ? 'translateY(0)' : 'translateY(100%)',
+                  transition: 'transform 0.3s',
+                }}>
+                  <button
+                    onClick={() => addItem({ ...item, badge: item.tag })}
+                    style={{
+                      width: '100%', padding: '12px', background: 'transparent',
+                      border: 'none', color: W, cursor: 'pointer',
+                      ...F, fontSize: '11px', fontWeight: 600,
+                      letterSpacing: '0.05em', textTransform: 'uppercase',
+                    }}>
+                    Add to Bag
+                  </button>
+                </div>
+              </div>
+              <p style={{ ...F, fontSize: '13px', fontWeight: 500, color: DK, marginBottom: '3px' }}>
+                {item.name}
               </p>
-              <h2 style={{
-                fontFamily: "'Fraunces', serif",
-                fontWeight: 300, fontStyle: 'italic',
-                fontSize: 'clamp(28px, 3.5vw, 40px)',
-                color: dark, lineHeight: 1,
-              }}>
-                {filtered.length} pieces, made for you.
-              </h2>
-            </div>
+              <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: G }}>
+                ${item.price}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  )
+}
+
+// ─── EDITORIAL BANNER ────────────────────────
+function EditorialBanner() {
+  return (
+    <section style={{ borderTop: `1px solid ${BR}` }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          style={{ position: 'relative', minHeight: '400px', overflow: 'hidden' }}>
+          <img
+            src="/mendress.jpg" alt="Collection"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(to top, rgba(17,17,17,0.75) 0%, rgba(17,17,17,0.1) 55%)',
+          }} />
+          <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
+            <span style={{
+              display: 'inline-block',
+              background: G, color: W, padding: '4px 12px',
+              ...F, fontSize: '10px', fontWeight: 600,
+              letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: '12px',
+            }}>
+              New Release
+            </span>
+            <h3 style={{ ...F, fontWeight: 700, fontSize: '28px', color: W, lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: '14px' }}>
+              Void Series<br />Drop 01
+            </h3>
             <Link
               to="/shop"
               style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '11px', letterSpacing: '0.18em',
-                textTransform: 'uppercase', color: muted,
-                borderBottom: `1px solid ${faint}`, paddingBottom: '3px',
-                transition: 'all 0.25s',
+                display: 'inline-flex', alignItems: 'center', gap: '6px',
+                background: W, color: DK, padding: '10px 22px',
+                ...F, fontSize: '12px', fontWeight: 600,
+                letterSpacing: '0.04em', transition: 'background 0.2s, color 0.2s',
               }}
-              onMouseEnter={e => { e.currentTarget.style.color = gold; e.currentTarget.style.borderBottomColor = gold }}
-              onMouseLeave={e => { e.currentTarget.style.color = muted; e.currentTarget.style.borderBottomColor = faint }}>
-              Shop All
+              onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.color = W }}
+              onMouseLeave={e => { e.currentTarget.style.background = W; e.currentTarget.style.color = DK }}>
+              Shop Now →
             </Link>
           </div>
-        </FadeUp>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
-          {filtered.map((product, i) => (
-            <ProductCard key={product.id} product={product} index={i} />
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
+        </motion.div>
 
-// ─────────────────────────────────────────────
-// EDITORIAL SPLIT — warm, intimate
-// ─────────────────────────────────────────────
-function EditorialSplit() {
-  return (
-    <section style={{ background: cream2, borderTop: `1px solid ${border}` }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-
-          <FadeUp>
-            <div style={{ position: 'relative', height: '520px', overflow: 'hidden' }}>
-              <img
-                src="/mendress.jpg" alt="New Release"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-              <div style={{
-                position: 'absolute', inset: 0,
-                background: 'linear-gradient(to top, rgba(26,18,9,0.82) 0%, rgba(26,18,9,0.1) 55%)',
-              }} />
-              {/* Gold left accent */}
-              <div style={{
-                position: 'absolute', top: 0, left: 0, bottom: 0,
-                width: '3px', background: gold,
-              }} />
-              <div style={{ position: 'absolute', bottom: '36px', left: '36px', right: '36px' }}>
-                <span style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '9px', letterSpacing: '0.3em',
-                  textTransform: 'uppercase', color: gold,
-                  marginBottom: '10px', display: 'block', fontWeight: 400,
-                }}>
-                  New Release
-                </span>
-                <h3 style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontWeight: 300, fontStyle: 'italic',
-                  fontSize: '32px', color: '#FAF7F2',
-                  lineHeight: 1.15, marginBottom: '16px',
-                }}>
-                  Void Series<br />Drop 01
-                </h3>
-                <Link
-                  to="/shop"
-                  style={{
-                    fontFamily: "'Outfit', sans-serif",
-                    fontSize: '10px', letterSpacing: '0.18em',
-                    textTransform: 'uppercase', color: 'rgba(250,247,242,0.7)',
-                    borderBottom: '1px solid rgba(250,247,242,0.3)', paddingBottom: '3px',
-                    transition: 'all 0.25s',
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.color = gold; e.currentTarget.style.borderBottomColor = gold }}
-                  onMouseLeave={e => { e.currentTarget.style.color = 'rgba(250,247,242,0.7)'; e.currentTarget.style.borderBottomColor = 'rgba(250,247,242,0.3)' }}>
-                  Discover the collection
-                </Link>
-              </div>
-            </div>
-          </FadeUp>
-
-          <FadeUp delay={0.1}>
-            <div style={{ position: 'relative', height: '520px', overflow: 'hidden' }}>
-              <img
-                src="/womendress.jpg" alt="Coming Soon"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-              <div style={{
-                position: 'absolute', inset: 0,
-                background: 'linear-gradient(to top, rgba(26,18,9,0.88) 0%, rgba(26,18,9,0.15) 55%)',
-              }} />
-              <div style={{ position: 'absolute', bottom: '36px', left: '36px', right: '36px' }}>
-                <span style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '9px', letterSpacing: '0.3em',
-                  textTransform: 'uppercase', color: gold,
-                  marginBottom: '10px', display: 'block', fontWeight: 400,
-                }}>
-                  Coming Soon
-                </span>
-                <h3 style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontWeight: 300, fontStyle: 'italic',
-                  fontSize: '32px', color: '#FAF7F2',
-                  lineHeight: 1.15, marginBottom: '24px',
-                }}>
-                  Next drop<br />is coming.
-                </h3>
-                <div style={{ display: 'flex', gap: '28px' }}>
-                  {[{ v: '04', l: 'Days' }, { v: '16', l: 'Hours' }, { v: '38', l: 'Min' }].map((t, i) => (
-                    <div key={i}>
-                      <div style={{
-                        fontFamily: "'Fraunces', serif",
-                        fontStyle: 'italic',
-                        fontSize: '36px', color: gold, lineHeight: 1,
-                      }}>
-                        {t.v}
-                      </div>
-                      <div style={{
-                        fontFamily: "'Outfit', sans-serif",
-                        fontSize: '9px', letterSpacing: '0.18em',
-                        textTransform: 'uppercase',
-                        color: 'rgba(250,247,242,0.45)', marginTop: '4px',
-                      }}>
-                        {t.l}
-                      </div>
-                    </div>
-                  ))}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          style={{ position: 'relative', minHeight: '400px', overflow: 'hidden' }}>
+          <img
+            src="/womendress.jpg" alt="Coming Soon"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+          <div style={{
+            position: 'absolute', inset: 0,
+            background: 'linear-gradient(to top, rgba(17,17,17,0.82) 0%, rgba(17,17,17,0.1) 55%)',
+          }} />
+          <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
+            <span style={{
+              display: 'inline-block',
+              background: 'rgba(255,255,255,0.15)',
+              border: '1px solid rgba(255,255,255,0.3)',
+              color: W, padding: '4px 12px',
+              ...F, fontSize: '10px', fontWeight: 600,
+              letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: '12px',
+            }}>
+              Coming Soon
+            </span>
+            <h3 style={{ ...F, fontWeight: 700, fontSize: '28px', color: W, lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: '20px' }}>
+              Next Drop<br />Is Coming
+            </h3>
+            <div style={{ display: 'flex', gap: '20px' }}>
+              {[{ v: '04', l: 'Days' }, { v: '16', l: 'Hours' }, { v: '38', l: 'Min' }].map((t, i) => (
+                <div key={i}>
+                  <p style={{ ...F, fontWeight: 700, fontSize: '32px', color: G, lineHeight: 1 }}>
+                    {t.v}
+                  </p>
+                  <p style={{ ...F, fontSize: '10px', fontWeight: 400, color: 'rgba(255,255,255,0.5)', marginTop: '3px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                    {t.l}
+                  </p>
                 </div>
-              </div>
+              ))}
             </div>
-          </FadeUp>
+          </div>
+        </motion.div>
 
-        </div>
       </div>
     </section>
   )
 }
 
-// ─────────────────────────────────────────────
-// STAT STRIP — kept but redesigned warm
-// ─────────────────────────────────────────────
-function StatStrip() {
+// ─── STATS ───────────────────────────────────
+function Stats() {
+  const items = [
+    { value: '2,400+', label: 'Pieces Available', sub: 'Across all categories' },
+    { value: '98%',    label: 'Satisfaction Rate', sub: 'From verified buyers'  },
+    { value: '50+',    label: 'Countries Reached', sub: 'Worldwide delivery'    },
+    { value: '16 yrs', label: 'Of Craft',          sub: 'Est. 2009, Accra'      },
+  ]
   return (
-    <section style={{
-      background: dark,
-      padding: '56px 0',
-    }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', alignItems: 'center', gap: '48px' }}>
-          <FadeUp style={{ textAlign: 'center' }}>
-            <div style={{
-              fontFamily: "'Fraunces', serif",
-              fontStyle: 'italic',
-              fontSize: '64px', color: gold,
-              lineHeight: 1, marginBottom: '8px',
+    <section style={{ background: BK, padding: '56px 64px' }}>
+      <div style={{
+        maxWidth: '1280px', margin: '0 auto',
+        display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)',
+      }}>
+        {items.map((item, i) => (
+          <motion.div
+            key={item.value}
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: i * 0.08 }}
+            style={{
+              textAlign: 'center', padding: '20px',
+              borderRight: i < 3 ? '1px solid rgba(255,255,255,0.08)' : 'none',
             }}>
-              2,400+
-            </div>
-            <div style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '11px', letterSpacing: '0.2em',
-              textTransform: 'uppercase', color: 'rgba(250,247,242,0.5)',
-              fontWeight: 300,
-            }}>
-              Pieces Available
-            </div>
-            <p style={{
-              fontFamily: "'Fraunces', serif",
-              fontStyle: 'italic', fontSize: '12px',
-              color: 'rgba(250,247,242,0.3)', marginTop: '4px',
-            }}>
-              Across all categories
+            <p style={{ ...F, fontWeight: 800, fontSize: 'clamp(32px, 3.5vw, 48px)', color: G, lineHeight: 1, marginBottom: '6px', letterSpacing: '-0.02em' }}>
+              {item.value}
             </p>
-          </FadeUp>
-
-          <div style={{ width: '1px', height: '80px', background: 'rgba(201,164,74,0.2)' }} />
-
-          <FadeUp delay={0.1} style={{ textAlign: 'center' }}>
-            <div style={{
-              fontFamily: "'Fraunces', serif",
-              fontStyle: 'italic',
-              fontSize: '64px', color: gold,
-              lineHeight: 1, marginBottom: '8px',
-            }}>
-              98%
-            </div>
-            <div style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '11px', letterSpacing: '0.2em',
-              textTransform: 'uppercase', color: 'rgba(250,247,242,0.5)',
-              fontWeight: 300,
-            }}>
-              Satisfaction Rate
-            </div>
-            <p style={{
-              fontFamily: "'Fraunces', serif",
-              fontStyle: 'italic', fontSize: '12px',
-              color: 'rgba(250,247,242,0.3)', marginTop: '4px',
-            }}>
-              From verified buyers
+            <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: W, marginBottom: '3px' }}>
+              {item.label}
             </p>
-          </FadeUp>
-        </div>
+            <p style={{ ...F, fontSize: '12px', fontWeight: 300, color: 'rgba(255,255,255,0.4)' }}>
+              {item.sub}
+            </p>
+          </motion.div>
+        ))}
       </div>
     </section>
   )
 }
 
-// ─────────────────────────────────────────────
-// PAGE
-// ─────────────────────────────────────────────
+// ─── PAGE ────────────────────────────────────
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState('All')
   return (
-    <main style={{ background: cream, minHeight: '100vh' }}>
+    <main style={{ background: W }}>
       <PromoPopup />
-      <HeroSection />
-      <BrandStrip />
-      <Manifesto />
-      <FeaturedDropsStrip />
-      <CategoriesSection active={activeCategory} setActive={setActiveCategory} />
-      <ProductGridSection activeCategory={activeCategory} />
-      <EditorialSplit />
-      <StatStrip />
+      <Hero />
+      <TrustBar />
+      <PromoCards />
+      <Categories active={activeCategory} setActive={setActiveCategory} />
+      <ProductsSection activeCategory={activeCategory} />
+      <JustDropped />
+      <EditorialBanner />
+      <Stats />
     </main>
   )
 }
