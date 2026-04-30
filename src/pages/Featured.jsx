@@ -9,7 +9,7 @@ const heroFeature = {
   label: 'Runway — SS 2025',
   title: 'THE VOID SERIES',
   sub: 'Our first full runway presentation. 24 looks. One statement.',
-  image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=90&fit=crop',
+  image: '/void.jpg',
   date: 'March 2025',
 }
 
@@ -27,7 +27,7 @@ const runways = [
     season: 'AW 2024',
     title: 'Shadow Collection',
     looks: 18,
-    image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=900&q=80&fit=crop',
+    image: '/fashionlady6.jpg',
     date: 'October 2024',
   },
   {
@@ -35,7 +35,7 @@ const runways = [
     season: 'SS 2024',
     title: 'Drift — Opening Show',
     looks: 16,
-    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=900&q=80&fit=crop',
+    image: '/prada.jpg',
     date: 'April 2024',
   },
 ]
@@ -49,9 +49,9 @@ const lookbook = [
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&q=80&fit=crop',
+    image: '/denim.jpg',
     look: '02',
-    title: 'Shadow Knit Set',
+    title: 'Denim Jeans Set',
   },
   {
     id: 3,
