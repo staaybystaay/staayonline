@@ -830,7 +830,7 @@ function EditorialBanner() {
           transition={{ duration: 0.7 }}
           style={{ position: 'relative', minHeight: '400px', overflow: 'hidden' }}>
           <img
-            src="/mendress.jpg" alt="Collection"
+            src="/fashionlady5.jpg" alt="Collection"
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
           <div style={{
@@ -871,7 +871,7 @@ function EditorialBanner() {
           transition={{ duration: 0.7, delay: 0.15 }}
           style={{ position: 'relative', minHeight: '400px', overflow: 'hidden' }}>
           <img
-            src="/womendress.jpg" alt="Coming Soon"
+            src="/Suited.jpg" alt="Coming Soon"
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
           <div style={{
