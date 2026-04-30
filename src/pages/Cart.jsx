@@ -7,10 +7,10 @@ import useCartStore from '../store/useCartStore'
 // SUGGESTED PRODUCTS
 // ─────────────────────────────────────────────
 const suggested = [
-  { id: 9,  name: 'PHANTOM BOMBER',  price: 360, category: 'Jackets', image: '/images/product1.jpg' },
-  { id: 10, name: 'STEEL CARGO',     price: 210, category: 'Bottoms', image: '/images/product2.jpg' },
-  { id: 11, name: 'ARC ZIP HOODIE',  price: 175, category: 'Tops',    image: '/images/product3.jpg' },
-  { id: 12, name: 'MONOLITH COAT',   price: 640, category: 'Coats',   image: '/images/product4.jpg' },
+  { id: 9,  name: 'PHANTOM BOMBER',  price: 360, category: 'Jackets', image: '/phantom.jpg' },
+  { id: 10, name: 'STEEL CARGO',     price: 210, category: 'Bottoms', image: '/steelbaggy.jpg' },
+  { id: 11, name: 'ARC ZIP HOODIE',  price: 175, category: 'Tops',    image: '/archoodie.jpg' },
+  { id: 12, name: 'MONOLITH COAT',   price: 640, category: 'Coats',   image: '/coat.jpg' },
 ]
 
 // ─────────────────────────────────────────────
