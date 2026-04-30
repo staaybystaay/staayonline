@@ -98,7 +98,7 @@ function PromoPopup() {
           onMouseLeave={e => { e.currentTarget.style.background = 'rgba(17,17,17,0.08)'; e.currentTarget.style.color = DK }}>
           ✕
         </button>
-        <img src="/fashionlady4.jpg" alt="Promo" style={{ width: '100%', display: 'block' }} />
+        <img src="/heroflyer.jpg" alt="Promo" style={{ width: '100%', display: 'block' }} />
         <div style={{ display: 'flex', gap: '10px', padding: '14px 16px', borderTop: `1px solid ${BR}` }}>
           <Link
             to="/shop"
@@ -305,7 +305,7 @@ function Hero() {
 // ─── TRUST BAR ───────────────────────────────
 function TrustBar() {
   const items = [
-    { title: 'Free Shipping', sub: 'Orders over $200' },
+ 
     { title: 'Secure Payment', sub: 'Multiple options' },
     { title: '98% Satisfaction', sub: 'Verified buyers' },
     { title: 'Free Returns', sub: 'Within 30 days' },
@@ -417,7 +417,7 @@ function PromoCards() {
             background: '#E8E0D8',
           }}>
           <img
-            src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80&fit=crop"
+            src="/fashionlady4.jpg"
             alt="Collection"
             style={{
               position: 'absolute', inset: 0,
