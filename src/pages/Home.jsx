@@ -33,7 +33,7 @@ const edenPieces = [
 const heroSlides = [
   {
     id: 1,
-    image: '/ARI.jpg',
+    image: '/Ari.jpeg',
     tag: 'Eden Collection — SS 2025',
     headline: 'Where Beauty\nBegins.',
     sub: 'Soft, feminine, and graceful — but never without strength.',
@@ -43,7 +43,7 @@ const heroSlides = [
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1800&q=90&fit=crop',
+    image: 'fashionlady.jpg',
     tag: 'New Season — SS 2025',
     headline: 'Effortless Style\nFor Every Woman',
     sub: 'Pieces that move with you — from morning to night.',
@@ -53,7 +53,7 @@ const heroSlides = [
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1800&q=90&fit=crop',
+    image: 'fashionlady2.jpg',
     tag: 'The Staay Edit',
     headline: 'Made in Accra.\nWorn Everywhere.',
     sub: 'Local craftsmanship meeting international standards.',
