@@ -1,39 +1,47 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
+const G   = '#B8903A'
+const GL  = '#F5ECD8'
+const W   = '#FFFFFF'
+const OW  = '#F8F7F4'
+const BK  = '#111111'
+const DK  = '#222222'
+const MD  = '#666666'
+const FT  = '#999999'
+const BR  = '#E4E0D8'
+const F   = { fontFamily: "'Inter', sans-serif" }
+
 const shopLinks = [
-  { label: 'New Arrivals', path: '/shop' },
-  { label: 'Footwear', path: '/shop' },
-  { label: 'Tops', path: '/shop' },
-  { label: 'Bottoms', path: '/shop' },
-  { label: 'Coats', path: '/shop' },
-  { label: 'Sale', path: '/shop' },
+  { label: 'New Arrivals',  path: '/shop'     },
+  { label: 'Footwear',      path: '/shop'     },
+  { label: 'Tops',          path: '/shop'     },
+  { label: 'Bottoms',       path: '/shop'     },
+  { label: 'Coats',         path: '/shop'     },
+  { label: 'Sale',          path: '/shop'     },
 ]
 
 const companyLinks = [
-  { label: 'Our Brand', path: '/' },
-  { label: 'Contact Us', path: '/' },
-  { label: 'FAQ', path: '/' },
-  { label: 'Size Guide', path: '/' },
+  { label: 'Our Brand',     path: '/brand'    },
+  { label: 'Contact Us',    path: '/'         },
+  { label: 'FAQ',           path: '/'         },
+  { label: 'Size Guide',    path: '/'         },
 ]
 
 const supportLinks = [
-  { label: 'Track My Order', path: '/' },
+  { label: 'Track My Order',      path: '/' },
   { label: 'Returns & Exchanges', path: '/' },
-  { label: 'Help Center', path: '/' },
-  { label: 'Contact Support', path: '/' },
+  { label: 'Help Center',         path: '/' },
+  { label: 'Contact Support',     path: '/' },
 ]
 
 const legalLinks = [
-  { label: 'Privacy Policy', path: '/' },
-  { label: 'Shipping Information', path: '/' },
-  { label: 'Return Policy', path: '/' },
-  { label: 'Cookie Policy', path: '/' },
+  { label: 'Terms of Service',    path: '/terms'  },
+  { label: 'Privacy Policy',      path: '/'       },
+  { label: 'Shipping Information', path: '/'      },
+  { label: 'Return Policy',       path: '/'       },
+  { label: 'Cookie Policy',       path: '/'       },
 ]
-
-const paymentMethods = ['Visa', 'Mastercard', 'PayPal', 'Apple Pay', 'Paystack']
-
-const trustItems = ['SSL secured checkout']
 
 const socialLinks = [
   {
@@ -76,54 +84,57 @@ const socialLinks = [
   },
 ]
 
-function LinkColumn(props) {
+function LinkColumn({ heading, links }) {
   return (
     <div>
-      <h4 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '14px', color: 'var(--text)', letterSpacing: '0.1em', marginBottom: '18px' }}>
-        {props.heading}
+      <h4 style={{
+        ...F, fontSize: '13px', fontWeight: 700,
+        color: DK, letterSpacing: '0.02em',
+        marginBottom: '18px',
+      }}>
+        {heading}
       </h4>
       <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-        {props.links.map(function(link) {
-          return (
-            <li key={link.label}>
-              <Link
-                to={link.path}
-                style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', color: 'var(--text-muted)', fontWeight: 300, letterSpacing: '0.04em', transition: 'color 0.2s', display: 'inline-block' }}
-                onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
-                onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-muted)' }}>
-                {link.label}
-              </Link>
-            </li>
-          )
-        })}
+        {links.map(link => (
+          <li key={link.label}>
+            <Link
+              to={link.path}
+              style={{
+                ...F, fontSize: '13px', fontWeight: 300,
+                color: MD, letterSpacing: '0.01em',
+                transition: 'color 0.2s', display: 'inline-block',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = G }}
+              onMouseLeave={e => { e.currentTarget.style.color = MD }}>
+              {link.label}
+            </Link>
+          </li>
+        ))}
       </ul>
     </div>
   )
 }
 
 function Newsletter() {
-  var s1 = useState('')
-  var email = s1[0]
-  var setEmail = s1[1]
-  var s2 = useState(false)
-  var submitted = s2[0]
-  var setSubmitted = s2[1]
-  var s3 = useState(false)
-  var focused = s3[0]
-  var setFocused = s3[1]
+  const [email, setEmail] = useState('')
+  const [submitted, setSubmitted] = useState(false)
+  const [focused, setFocused] = useState(false)
 
   function handleSubmit() {
-    if (!email || email.indexOf('@') === -1) return
+    if (!email || !email.includes('@')) return
     setSubmitted(true)
     setEmail('')
-    setTimeout(function() { setSubmitted(false) }, 4000)
+    setTimeout(() => setSubmitted(false), 4000)
   }
 
   if (submitted) {
     return (
-      <div style={{ maxWidth: '440px', padding: '14px 20px', border: '1px solid var(--accent)', background: 'var(--accent-soft)' }}>
-        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '12px', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent)' }}>
-          You are in. Welcome to Staay.
+      <div style={{
+        maxWidth: '440px', padding: '14px 20px',
+        border: `1px solid ${G}`, background: GL,
+      }}>
+        <span style={{ ...F, fontSize: '13px', fontWeight: 500, color: G }}>
+          You're in. Welcome to Staay.
         </span>
       </div>
     )
@@ -131,34 +142,59 @@ function Newsletter() {
 
   return (
     <div style={{ maxWidth: '440px' }}>
-      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '12px', fontWeight: 400 }}>
+      <p style={{
+        ...F, fontSize: '11px', fontWeight: 600,
+        letterSpacing: '0.08em', textTransform: 'uppercase',
+        color: G, marginBottom: '10px',
+      }}>
         Stay in the loop
       </p>
-      <h3 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 'clamp(26px, 3vw, 36px)', color: 'var(--text)', letterSpacing: '0.04em', lineHeight: 1, marginBottom: '10px' }}>
-        THE STAAY WOMAN STARTS HERE
+      <h3 style={{
+        ...F, fontSize: 'clamp(22px, 2.5vw, 30px)',
+        fontWeight: 800, color: DK,
+        letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '10px',
+      }}>
+        The Staay Woman Starts Here
       </h3>
-      <p style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontWeight: 300, fontSize: '14px', lineHeight: 1.65, color: 'var(--text-muted)', marginBottom: '24px' }}>
+      <p style={{
+        ...F, fontSize: '14px', fontWeight: 300,
+        lineHeight: 1.65, color: MD, marginBottom: '24px',
+      }}>
         Early access to new pieces, thoughtful releases, and everything we're creating for you.
       </p>
       <div style={{ display: 'flex' }}>
         <input
           type="email"
           value={email}
-          onChange={function(e) { setEmail(e.target.value) }}
-          onFocus={function() { setFocused(true) }}
-          onBlur={function() { setFocused(false) }}
-          onKeyDown={function(e) { if (e.key === 'Enter') handleSubmit() }}
+          onChange={e => setEmail(e.target.value)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          onKeyDown={e => { if (e.key === 'Enter') handleSubmit() }}
           placeholder="your@email.com"
-          style={{ flex: 1, background: 'var(--bg-surface)', border: focused ? '1px solid var(--accent)' : '1px solid var(--border)', borderRight: 'none', padding: '13px 16px', fontFamily: "'Outfit', sans-serif", fontSize: '12px', color: 'var(--text)', outline: 'none', letterSpacing: '0.08em', transition: 'border-color 0.2s' }} />
+          style={{
+            flex: 1, background: W,
+            border: `1px solid ${focused ? BK : BR}`,
+            borderRight: 'none', padding: '13px 16px',
+            ...F, fontSize: '13px', color: DK,
+            outline: 'none', transition: 'border-color 0.2s',
+          }}
+        />
         <button
           onClick={handleSubmit}
-          onMouseEnter={function(e) { e.currentTarget.style.opacity = '0.85' }}
-          onMouseLeave={function(e) { e.currentTarget.style.opacity = '1' }}
-          style={{ background: 'var(--accent)', border: '1px solid var(--accent)', color: '#0C0B09', padding: '13px 20px', fontFamily: "'Outfit', sans-serif", fontSize: '11px', letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+          style={{
+            background: BK, border: `1px solid ${BK}`,
+            color: W, padding: '13px 22px',
+            ...F, fontSize: '12px', fontWeight: 600,
+            letterSpacing: '0.06em', textTransform: 'uppercase',
+            cursor: 'pointer', whiteSpace: 'nowrap',
+            transition: 'background 0.2s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.borderColor = G }}
+          onMouseLeave={e => { e.currentTarget.style.background = BK; e.currentTarget.style.borderColor = BK }}>
           Subscribe
         </button>
       </div>
-      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', color: 'var(--text-faint)', marginTop: '10px', letterSpacing: '0.04em', fontWeight: 300 }}>
+      <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: FT, marginTop: '8px' }}>
         No spam. Unsubscribe anytime.
       </p>
     </div>
@@ -166,118 +202,119 @@ function Newsletter() {
 }
 
 export default function Footer() {
-  var year = new Date().getFullYear()
-  return (
-    <footer style={{ background: 'var(--bg-surface)', borderTop: '1px solid var(--border)' }}>
-      <div style={{ height: '3px', background: 'var(--accent)' }} />
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '72px 80px 48px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr 1fr', gap: '48px', marginBottom: '64px' }}>
+  const year = new Date().getFullYear()
 
+  return (
+    <footer style={{ background: OW, borderTop: `1px solid ${BR}` }}>
+      <div style={{ height: '3px', background: G }} />
+
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '64px 64px 40px' }}>
+
+        {/* ── MAIN GRID ── */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1.4fr 1fr 1fr 1fr 1fr',
+          gap: '48px',
+          marginBottom: '56px',
+        }}>
+
+          {/* Brand column */}
           <div>
-            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
-              <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '44px', height: '44px', objectFit: 'cover', borderRadius: '50%' }} />
+            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+              <img
+                src="/stayonlinelogo.jpeg"
+                alt="Staay"
+                style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '50%' }}
+              />
               <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-                <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '20px', color: 'var(--text)', letterSpacing: '0.06em' }}>
+                <span style={{ ...F, fontSize: '18px', fontWeight: 800, color: DK, letterSpacing: '-0.01em' }}>
                   STAAY
+                </span>
+                <span style={{ ...F, fontSize: '8px', fontWeight: 500, color: G, letterSpacing: '0.25em', textTransform: 'uppercase', marginTop: '2px' }}>
+                  ONLINE
                 </span>
               </div>
             </Link>
 
-            <p style={{ fontFamily: "'Fraunces', serif", fontStyle: 'italic', fontWeight: 300, fontSize: '13px', lineHeight: 1.7, color: 'var(--text-muted)', marginBottom: '24px', maxWidth: '220px' }}>
+            <p style={{
+              ...F, fontSize: '13px', fontWeight: 300,
+              lineHeight: 1.7, color: MD, marginBottom: '20px',
+              maxWidth: '220px',
+            }}>
               Designed for women who live beyond limits. Effortless. Intentional. Always in season.
             </p>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '24px' }}>
-              {trustItems.map(function(item) {
-                return (
-                  <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ display: 'block', width: '4px', height: '4px', borderRadius: '50%', background: 'var(--accent)', flexShrink: 0 }} />
-                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'var(--text-faint)', fontWeight: 300, letterSpacing: '0.04em' }}>
-                      {item}
-                    </span>
-                  </div>
-                )
-              })}
+            {/* SSL badge */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '20px' }}>
+              <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: G, flexShrink: 0 }} />
+              <span style={{ ...F, fontSize: '11px', fontWeight: 400, color: FT }}>
+                SSL secured checkout
+              </span>
             </div>
 
+            {/* Social icons */}
             <div style={{ display: 'flex', gap: '8px' }}>
-              {socialLinks.map(function(social) {
-                return (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={social.label}
-                    style={{ width: '36px', height: '36px', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', transition: 'all 0.22s', textDecoration: 'none' }}
-                    onMouseEnter={function(e) { e.currentTarget.style.borderColor = 'var(--accent)'; e.currentTarget.style.color = 'var(--accent)' }}
-                    onMouseLeave={function(e) { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-muted)' }}>
-                    {social.icon}
-                  </a>
-                )
-              })}
-            </div>
-
-            <div style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <a
-                href="mailto:info@staayonline.com"
-                style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'var(--text-muted)', fontWeight: 300, letterSpacing: '0.04em', transition: 'color 0.2s', display: 'block' }}
-                onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
-                onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-muted)' }}>
-                info@staayonline.com
-              </a>
-              <a
-                href="https://wa.me/233503977985"
-                target="_blank"
-                rel="noreferrer"
-                style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'var(--text-muted)', fontWeight: 300, letterSpacing: '0.04em', transition: 'color 0.2s', display: 'block' }}
-                onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
-                onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-muted)' }}>
-                +233 50 397 7985
-              </a>
-              <a
-                href="https://instagram.com/staaybystaay"
-                target="_blank"
-                rel="noreferrer"
-                style={{ fontFamily: "'Outfit', sans-serif", fontSize: '10px', color: 'var(--text-faint)', letterSpacing: '0.08em', transition: 'color 0.2s' }}
-                onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
-                onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-faint)' }}>
-                @staaybystaay
-              </a>
+              {socialLinks.map(social => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={social.label}
+                  style={{
+                    width: '36px', height: '36px',
+                    border: `1px solid ${BR}`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: MD, transition: 'all 0.2s', background: W,
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = G; e.currentTarget.style.color = G }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = BR; e.currentTarget.style.color = MD }}>
+                  {social.icon}
+                </a>
+              ))}
             </div>
           </div>
 
-          <LinkColumn heading="Shop" links={shopLinks} />
+          <LinkColumn heading="Shop"    links={shopLinks}    />
           <LinkColumn heading="Company" links={companyLinks} />
           <LinkColumn heading="Support" links={supportLinks} />
-          <LinkColumn heading="Legal" links={legalLinks} />
+          <LinkColumn heading="Legal"   links={legalLinks}   />
+
         </div>
 
-        <div style={{ borderTop: '1px solid var(--border)', paddingTop: '52px', marginBottom: '52px' }}>
+        {/* ── NEWSLETTER ── */}
+        <div style={{
+          borderTop: `1px solid ${BR}`,
+          paddingTop: '48px', marginBottom: '48px',
+        }}>
           <Newsletter />
         </div>
 
-        <div style={{ borderTop: '1px solid var(--border)', paddingTop: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
-          <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: '11px', color: 'var(--text-faint)', letterSpacing: '0.06em', fontWeight: 300 }}>
-            {year} STAAY. All rights reserved.
+        {/* ── BOTTOM BAR ── */}
+        <div style={{
+          borderTop: `1px solid ${BR}`,
+          paddingTop: '20px',
+          display: 'flex', alignItems: 'center',
+          justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px',
+        }}>
+          <span style={{ ...F, fontSize: '12px', fontWeight: 300, color: FT }}>
+            © {year} STAAY. All rights reserved.
           </span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-            {paymentMethods.map(function(method) {
-              return (
-                <span key={method} style={{ fontFamily: "'Outfit', sans-serif", fontSize: '9px', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-faint)', border: '1px solid var(--border)', padding: '4px 8px', fontWeight: 400 }}>
-                  {method}
-                </span>
-              )
-            })}
-          </div>
           <button
-            onClick={function() { window.scrollTo({ top: 0, behavior: 'smooth' }) }}
-            onMouseEnter={function(e) { e.currentTarget.style.color = 'var(--accent)' }}
-            onMouseLeave={function(e) { e.currentTarget.style.color = 'var(--text-muted)' }}
-            style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'transparent', border: 'none', fontFamily: "'Outfit', sans-serif", fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', cursor: 'pointer', transition: 'color 0.2s' }}>
-            Back to top
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            style={{
+              display: 'flex', alignItems: 'center', gap: '6px',
+              background: 'transparent', border: 'none',
+              ...F, fontSize: '11px', fontWeight: 500,
+              letterSpacing: '0.06em', textTransform: 'uppercase',
+              color: MD, cursor: 'pointer', transition: 'color 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.color = G }}
+            onMouseLeave={e => { e.currentTarget.style.color = MD }}>
+            Back to top ↑
           </button>
         </div>
+
       </div>
     </footer>
   )
