@@ -10,6 +10,8 @@ import Product from './pages/Product'
 import Featured from './pages/Featured'
 import Brand from './pages/Brand'
 import Terms from './pages/Terms'
+import Privacy from './pages/Privacy'
+
 
 export default function App() {
   return (
@@ -25,6 +27,7 @@ export default function App() {
           <Route path="/featured"    element={<Featured />} />
           <Route path="/brand"       element={<Brand />}    />
           <Route path="/terms"       element={<Terms />}    />
+          <Route path="/privacy" element={<Privacy />} />
         </Routes>
         <Footer />
       </BrowserRouter>
