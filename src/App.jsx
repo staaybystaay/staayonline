@@ -23,18 +23,7 @@ function AnnouncementBar() {
       flexWrap: 'wrap',
       gap: '8px',
     }}>
-      <div style={{
-        display: 'flex', alignItems: 'center', gap: '24px',
-        flexWrap: 'wrap',
-      }}>
-        <span style={{
-          fontFamily: "'Outfit', sans-serif",
-          fontSize: '11px', letterSpacing: '0.14em',
-          textTransform: 'uppercase', color: '#0C0B09', fontWeight: 500,
-        }}>
-          Free shipping on orders over $200
-        </span>
-      </div>
+      
       <div style={{
         display: 'flex', alignItems: 'center', gap: '20px',
         flexWrap: 'wrap',
