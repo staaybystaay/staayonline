@@ -67,7 +67,7 @@ const drops = [
   { id: 'f1', name: 'Air Staay 01',   price: 320, image: '/airsneaker.jpg', tag: 'New'  },
   { id: 'f2', name: 'Void Hoodie',    price: 195, image: '/hoodie.jpg',     tag: null   },
   { id: 'f3', name: 'Cargo Pant 02',  price: 240, image: '/cargopant.jpg',  tag: 'New'  },
-  { id: 'f4', name: 'Phantom Jacket', price: 420, image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&q=80', tag: null },
+  { id: 'f4', name: 'Phantom Jacket', price: 420, image: 'phantom.jpg', tag: null },
   { id: 'f5', name: 'Staay Crocs',    price: 280, image: '/crocs.png',      tag: 'Sale' },
 ]
 
@@ -513,7 +513,7 @@ function PromoCards() {
           transition={{ duration: 0.5, delay: 0.1 }}
           style={{ position: 'relative', minHeight: '200px', overflow: 'hidden', background: '#E8E0D8' }}>
           <img
-            src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80&fit=crop"
+            src="fashionlady3.jpg"
             alt="Collection"
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
           />
@@ -541,11 +541,11 @@ function PromoCards() {
 
 function Categories({ active, setActive }) {
   const catImages = {
-    All:     'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=300&q=80&fit=crop',
+    All:     'localdress.jpg',
     Tops:    '/hoodie.jpg',
     Bottoms: '/cargopant.jpg',
-    Jackets: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=300&q=80&fit=crop',
-    Coats:   'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&q=80&fit=crop',
+    Jackets: 'hoodie.jpg',
+    Coats:   'leathercoat.jpeg',
   }
   return (
     <section style={{ background: OW, padding: '64px', borderTop: `1px solid ${BR}` }}>
@@ -746,7 +746,7 @@ function EditorialBanner() {
     <section style={{ borderTop: `1px solid ${BR}` }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }} style={{ position: 'relative', minHeight: '400px', overflow: 'hidden' }}>
-          <img src="/mendress.jpg" alt="Collection" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          <img src="/fashionlady6.jpg" alt="Collection" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(17,17,17,0.75) 0%, rgba(17,17,17,0.1) 55%)' }} />
           <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
             <span style={{ display: 'inline-block', background: G, color: W, padding: '4px 12px', ...F, fontSize: '10px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: '12px' }}>New Release</span>
@@ -755,7 +755,7 @@ function EditorialBanner() {
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.15 }} style={{ position: 'relative', minHeight: '400px', overflow: 'hidden' }}>
-          <img src="/womendress.jpg" alt="Coming Soon" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          <img src="/fashionlady5.jpg" alt="Coming Soon" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(17,17,17,0.82) 0%, rgba(17,17,17,0.1) 55%)' }} />
           <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
             <span style={{ display: 'inline-block', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', color: W, padding: '4px 12px', ...F, fontSize: '10px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: '12px' }}>Coming Soon</span>
