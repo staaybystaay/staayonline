@@ -17,21 +17,19 @@ const BR  = '#E4E0D8'
 const RD  = '#B91C1C'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
-// ─── EDEN COLLECTION DATA ─────────────────────
 const edenPieces = [
-  { id: 'e1',  name: 'ARI',     price: 1650,  image: '/Ari.jpeg'     },
-  { id: 'e2',  name: 'MIRA',    price: 1950,  image: '/Mira.jpeg'    },
-  { id: 'e3',  name: 'VERA',    price: 1700,  image: '/Vera.jpeg'    },
-  { id: 'e4',  name: 'SOLENNE', price: 2600,  image: '/Solenne.jpeg' },
-  { id: 'e5',  name: 'AYLA',    price: 1900,  image: '/Ayla.jpeg'    },
-  { id: 'e6',  name: 'AURA',    price: 2900,  image: '/Aura.jpeg'    },
-  { id: 'e7',  name: 'KAIA',    price: 2900,  image: '/Kaia.png'    },
-  { id: 'e8',  name: 'EVE',     price: 2400,  image: '/Eve.png'     },
-  { id: 'e9',  name: 'ELARA',   price: 2400,  image: '/Elara.jpeg'   },
-  { id: 'e10', name: 'DAHLIA',  price: 2200,  image: '/Dahlia.jpeg'  },
+  { id: 'e1',  name: 'ARI',     price: 1650, image: '/Ari.jpeg'     },
+  { id: 'e2',  name: 'MIRA',    price: 1950, image: '/Mira.jpeg'    },
+  { id: 'e3',  name: 'VERA',    price: 1700, image: '/Vera.jpeg'    },
+  { id: 'e4',  name: 'SOLENNE', price: 2600, image: '/Solenne.jpeg' },
+  { id: 'e5',  name: 'AYLA',    price: 1900, image: '/Ayla.jpeg'    },
+  { id: 'e6',  name: 'AURA',    price: 2900, image: '/Aura.jpeg'    },
+  { id: 'e7',  name: 'KAIA',    price: 2900, image: '/Kaia.png'     },
+  { id: 'e8',  name: 'EVE',     price: 2400, image: '/Eve.png'      },
+  { id: 'e9',  name: 'ELARA',   price: 2400, image: '/Elara.jpeg'   },
+  { id: 'e10', name: 'DAHLIA',  price: 2200, image: '/Dahlia.jpeg'  },
 ]
 
-// ─── HERO SLIDES ──────────────────────────────
 const heroSlides = [
   {
     id: 1,
@@ -75,7 +73,6 @@ const drops = [
 
 const CATS = ['All', 'Tops', 'Bottoms', 'Jackets', 'Coats']
 
-// ─── PROMO POPUP ──────────────────────────────
 function PromoPopup() {
   const [open, setOpen] = useState(true)
   if (!open) return null
@@ -143,7 +140,6 @@ function PromoPopup() {
   )
 }
 
-// ─── HERO ─────────────────────────────────────
 function Hero() {
   const [idx, setIdx] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -287,50 +283,39 @@ function Hero() {
   )
 }
 
-// ─── EDEN COLLECTION ──────────────────────────
 function EdenCollection() {
   const [hovered, setHovered] = useState(null)
   const [activeIdx, setActiveIdx] = useState(0)
   const addItem = useCartStore(s => s.addItem)
 
-  // Show 5 at a time, paginate
   const perPage = 5
   const totalPages = Math.ceil(edenPieces.length / perPage)
   const visible = edenPieces.slice(activeIdx * perPage, activeIdx * perPage + perPage)
 
   return (
     <section style={{ background: W, borderBottom: `1px solid ${BR}` }}>
-
-      {/* ── EDEN HERO BANNER ── */}
       <div style={{
-        position: 'relative',
-        height: '480px',
-        overflow: 'hidden',
-        background: '#1A1209',
+        position: 'relative', height: '480px',
+        overflow: 'hidden', background: '#1A1209',
       }}>
         <img
-          src="/SOLENNE.jpg"
+          src="/Solenne.jpeg"
           alt="Eden Collection"
           style={{
             position: 'absolute', inset: 0,
             width: '100%', height: '100%', objectFit: 'cover',
-            objectPosition: 'center 30%',
-            opacity: 0.55,
+            objectPosition: 'center 30%', opacity: 0.55,
           }}
         />
-        {/* Warm gradient overlay */}
         <div style={{
           position: 'absolute', inset: 0,
           background: 'linear-gradient(135deg, rgba(26,18,9,0.92) 0%, rgba(26,18,9,0.5) 50%, rgba(26,18,9,0.3) 100%)',
         }} />
-
-        {/* Content */}
         <div style={{
           position: 'absolute', inset: 0,
           maxWidth: '1280px', margin: '0 auto',
           padding: '0 64px',
-          display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -338,15 +323,9 @@ function EdenCollection() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
             style={{ maxWidth: '560px' }}>
-            <div style={{
-              display: 'inline-flex', alignItems: 'center', gap: '10px',
-              marginBottom: '20px',
-            }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
               <div style={{ width: '28px', height: '1px', background: G }} />
-              <span style={{
-                ...F, fontSize: '11px', fontWeight: 600,
-                color: G, letterSpacing: '0.1em', textTransform: 'uppercase',
-              }}>
+              <span style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
                 Latest Collection
               </span>
             </div>
@@ -380,19 +359,13 @@ function EdenCollection() {
               Shop Eden →
             </Link>
           </motion.div>
-
-          {/* Right — piece count */}
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
             style={{ textAlign: 'right' }}>
-            <p style={{
-              ...F, fontWeight: 800,
-              fontSize: '80px', color: 'rgba(255,255,255,0.06)',
-              lineHeight: 1, letterSpacing: '-0.04em',
-            }}>
+            <p style={{ ...F, fontWeight: 800, fontSize: '80px', color: 'rgba(255,255,255,0.06)', lineHeight: 1, letterSpacing: '-0.04em' }}>
               {edenPieces.length}
             </p>
             <p style={{ ...F, fontSize: '12px', fontWeight: 400, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
@@ -402,13 +375,8 @@ function EdenCollection() {
         </div>
       </div>
 
-      {/* ── EDEN PRODUCT GRID ── */}
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '56px 64px' }}>
-
-        <div style={{
-          display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between', marginBottom: '36px',
-        }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '36px' }}>
           <div>
             <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
               Eden Collection
@@ -419,19 +387,13 @@ function EdenCollection() {
           </div>
           <Link
             to="/shop"
-            style={{
-              ...F, fontSize: '13px', fontWeight: 500, color: DK,
-              display: 'flex', alignItems: 'center', gap: '6px',
-              borderBottom: `1px solid ${DK}`, paddingBottom: '1px',
-              transition: 'color 0.2s, border-color 0.2s',
-            }}
+            style={{ ...F, fontSize: '13px', fontWeight: 500, color: DK, display: 'flex', alignItems: 'center', gap: '6px', borderBottom: `1px solid ${DK}`, paddingBottom: '1px', transition: 'color 0.2s, border-color 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderBottomColor = G }}
             onMouseLeave={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = DK }}>
             View All →
           </Link>
         </div>
 
-        {/* 5-column grid */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIdx}
@@ -439,26 +401,14 @@ function EdenCollection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(5, 1fr)',
-              gap: '20px 16px',
-            }}>
-            {visible.map((piece, i) => (
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px 16px' }}>
+            {visible.map((piece) => (
               <div
                 key={piece.id}
                 onMouseEnter={() => setHovered(piece.id)}
                 onMouseLeave={() => setHovered(null)}>
-
-                {/* Image */}
-                <div style={{
-                  position: 'relative', aspectRatio: '3/4',
-                  background: B2, overflow: 'hidden', marginBottom: '12px',
-                }}>
-                  <div style={{
-                    position: 'absolute', inset: 0,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  }}>
+                <div style={{ position: 'relative', aspectRatio: '3/4', background: B2, overflow: 'hidden', marginBottom: '12px' }}>
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <span style={{ ...F, fontSize: '11px', color: FT }}>Eden</span>
                   </div>
                   <img
@@ -472,10 +422,8 @@ function EdenCollection() {
                       transform: hovered === piece.id ? 'scale(1.05)' : 'scale(1)',
                     }}
                   />
-                  {/* Add to bag */}
                   <div style={{
-                    position: 'absolute', bottom: 0, left: 0, right: 0,
-                    background: BK,
+                    position: 'absolute', bottom: 0, left: 0, right: 0, background: BK,
                     transform: hovered === piece.id ? 'translateY(0)' : 'translateY(100%)',
                     transition: 'transform 0.3s',
                   }}>
@@ -490,7 +438,6 @@ function EdenCollection() {
                       Add to Bag
                     </button>
                   </div>
-                  {/* New badge */}
                   <span style={{
                     position: 'absolute', top: 0, left: 0,
                     background: G, color: W, padding: '4px 10px',
@@ -500,30 +447,20 @@ function EdenCollection() {
                     New
                   </span>
                 </div>
-
-                {/* Info */}
                 <p style={{ ...F, fontSize: '10px', fontWeight: 500, color: G, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '3px' }}>
                   Eden
                 </p>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: DK }}>
-                    {piece.name}
-                  </p>
-                  <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: DK }}>
-                    GH₵{piece.price.toLocaleString()}
-                  </p>
+                  <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: DK }}>{piece.name}</p>
+                  <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: DK }}>GH₵{piece.price.toLocaleString()}</p>
                 </div>
               </div>
             ))}
           </motion.div>
         </AnimatePresence>
 
-        {/* Pagination dots */}
         {totalPages > 1 && (
-          <div style={{
-            display: 'flex', justifyContent: 'center',
-            alignItems: 'center', gap: '8px', marginTop: '40px',
-          }}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginTop: '40px' }}>
             {Array.from({ length: totalPages }).map((_, i) => (
               <button
                 key={i}
@@ -538,48 +475,31 @@ function EdenCollection() {
             ))}
           </div>
         )}
-
       </div>
     </section>
   )
 }
 
-// ─── PROMO CARDS ──────────────────────────────
 function PromoCards() {
   return (
     <section style={{ background: W, padding: '48px 64px' }}>
-      <div style={{
-        maxWidth: '1280px', margin: '0 auto',
-        display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px',
-      }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          style={{
-            background: GL, padding: '40px', minHeight: '200px',
-            overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-          }}>
+          style={{ background: GL, padding: '40px', minHeight: '200px', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
           <div>
-            <p style={{ ...F, fontSize: '12px', fontWeight: 500, color: G, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '10px' }}>
-              For Women
-            </p>
+            <p style={{ ...F, fontSize: '12px', fontWeight: 500, color: G, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '10px' }}>For Women</p>
             <h3 style={{ ...F, fontSize: 'clamp(22px, 2.5vw, 30px)', fontWeight: 700, color: DK, lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: '8px' }}>
               Where dreams<br />meet couture
             </h3>
-            <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD }}>
-              SS 2025 — New drops every week
-            </p>
+            <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD }}>SS 2025 — New drops every week</p>
           </div>
           <Link
             to="/shop"
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: '8px',
-              background: DK, color: W, padding: '11px 22px', marginTop: '24px',
-              ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em',
-              width: 'fit-content', transition: 'background 0.2s',
-            }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: DK, color: W, padding: '11px 22px', marginTop: '24px', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em', width: 'fit-content', transition: 'background 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.background = G }}
             onMouseLeave={e => { e.currentTarget.style.background = DK }}>
             Shop Now →
@@ -591,10 +511,7 @@ function PromoCards() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          style={{
-            position: 'relative', minHeight: '200px',
-            overflow: 'hidden', background: '#E8E0D8',
-          }}>
+          style={{ position: 'relative', minHeight: '200px', overflow: 'hidden', background: '#E8E0D8' }}>
           <img
             src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80&fit=crop"
             alt="Collection"
@@ -603,21 +520,14 @@ function PromoCards() {
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(17,17,17,0.65) 0%, rgba(17,17,17,0.1) 70%)' }} />
           <div style={{ position: 'relative', padding: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
             <div>
-              <p style={{ ...F, fontSize: '12px', fontWeight: 500, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '10px' }}>
-                The Edit
-              </p>
+              <p style={{ ...F, fontSize: '12px', fontWeight: 500, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '10px' }}>The Edit</p>
               <h3 style={{ ...F, fontSize: 'clamp(22px, 2.5vw, 30px)', fontWeight: 700, color: W, lineHeight: 1.15, letterSpacing: '-0.01em' }}>
                 Enchanting styles<br />for every woman
               </h3>
             </div>
             <Link
               to="/featured"
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '8px',
-                background: W, color: DK, padding: '11px 22px', marginTop: '24px',
-                ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em',
-                width: 'fit-content', transition: 'background 0.2s, color 0.2s',
-              }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: W, color: DK, padding: '11px 22px', marginTop: '24px', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em', width: 'fit-content', transition: 'background 0.2s, color 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.color = W }}
               onMouseLeave={e => { e.currentTarget.style.background = W; e.currentTarget.style.color = DK }}>
               Shop Now →
@@ -629,7 +539,6 @@ function PromoCards() {
   )
 }
 
-// ─── CATEGORIES ───────────────────────────────
 function Categories({ active, setActive }) {
   const catImages = {
     All:     'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=300&q=80&fit=crop',
@@ -692,7 +601,6 @@ function Categories({ active, setActive }) {
   )
 }
 
-// ─── PRODUCT CARD ─────────────────────────────
 function ProductCard({ product, index }) {
   const [hovered, setHovered] = useState(false)
   const addItem = useCartStore(s => s.addItem)
@@ -712,32 +620,17 @@ function ProductCard({ product, index }) {
           <img
             src={product.image} alt={product.name}
             onError={e => { e.target.style.display = 'none' }}
-            style={{
-              position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover',
-              transition: 'transform 0.65s', transform: hovered ? 'scale(1.05)' : 'scale(1)',
-            }}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.65s', transform: hovered ? 'scale(1.05)' : 'scale(1)' }}
           />
           {product.badge && (
-            <span style={{
-              position: 'absolute', top: '10px', left: '10px',
-              background: product.badge === 'Sale' ? RD : BK,
-              color: W, padding: '4px 10px',
-              ...F, fontSize: '10px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase',
-            }}>
+            <span style={{ position: 'absolute', top: '10px', left: '10px', background: product.badge === 'Sale' ? RD : BK, color: W, padding: '4px 10px', ...F, fontSize: '10px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               {product.badge}
             </span>
           )}
-          <div style={{
-            position: 'absolute', bottom: 0, left: 0, right: 0, background: BK,
-            transform: hovered ? 'translateY(0)' : 'translateY(100%)', transition: 'transform 0.3s',
-          }}>
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: BK, transform: hovered ? 'translateY(0)' : 'translateY(100%)', transition: 'transform 0.3s' }}>
             <button
               onClick={e => { e.preventDefault(); e.stopPropagation(); addItem(product) }}
-              style={{
-                width: '100%', padding: '13px', background: 'transparent',
-                border: 'none', color: W, cursor: 'pointer',
-                ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase',
-              }}>
+              style={{ width: '100%', padding: '13px', background: 'transparent', border: 'none', color: W, cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               Add to Bag
             </button>
           </div>
@@ -754,9 +647,7 @@ function ProductCard({ product, index }) {
             ♡
           </button>
         </div>
-        <p style={{ ...F, fontSize: '10px', fontWeight: 400, color: FT, marginBottom: '3px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-          {product.category}
-        </p>
+        <p style={{ ...F, fontSize: '10px', fontWeight: 400, color: FT, marginBottom: '3px', letterSpacing: '0.05em', textTransform: 'uppercase' }}>{product.category}</p>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <p style={{ ...F, fontSize: '14px', fontWeight: 500, color: DK }}>{product.name}</p>
           <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: G }}>${product.price}</p>
@@ -766,7 +657,6 @@ function ProductCard({ product, index }) {
   )
 }
 
-// ─── PRODUCTS SECTION ─────────────────────────
 function ProductsSection({ activeCategory }) {
   const filtered = activeCategory === 'All' ? products : products.filter(p => p.category === activeCategory)
   return (
@@ -774,12 +664,8 @@ function ProductsSection({ activeCategory }) {
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
           <div>
-            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
-              Our Products
-            </p>
-            <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>
-              Popular Products
-            </h2>
+            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>Our Products</p>
+            <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>Popular Products</h2>
           </div>
           <Link
             to="/shop"
@@ -797,7 +683,6 @@ function ProductsSection({ activeCategory }) {
   )
 }
 
-// ─── JUST DROPPED ─────────────────────────────
 function JustDropped() {
   const [hovered, setHovered] = useState(null)
   const addItem = useCartStore(s => s.addItem)
@@ -856,7 +741,6 @@ function JustDropped() {
   )
 }
 
-// ─── EDITORIAL BANNER ─────────────────────────
 function EditorialBanner() {
   return (
     <section style={{ borderTop: `1px solid ${BR}` }}>
@@ -891,21 +775,18 @@ function EditorialBanner() {
   )
 }
 
-// ─── PAGE ─────────────────────────────────────
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState('All')
   return (
     <main style={{ background: W }}>
       <PromoPopup />
       <Hero />
-      <TrustBar />
       <EdenCollection />
       <PromoCards />
       <Categories active={activeCategory} setActive={setActiveCategory} />
       <ProductsSection activeCategory={activeCategory} />
       <JustDropped />
       <EditorialBanner />
-      <Stats />
     </main>
   )
 }
