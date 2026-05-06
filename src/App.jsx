@@ -23,53 +23,38 @@ function AnnouncementBar() {
       flexWrap: 'wrap',
       gap: '8px',
     }}>
-      
-      <div style={{
-        display: 'flex', alignItems: 'center', gap: '20px',
-        flexWrap: 'wrap',
+
+      {/* LEFT — shipping message */}
+      <span style={{
+        fontFamily: "'Inter', sans-serif",
+        fontSize: '11px', letterSpacing: '0.1em',
+        color: '#0C0B09', fontWeight: 600,
+        textTransform: 'uppercase',
       }}>
-        {/* ✅ FIX: All three <a> tags were missing their opening "<a" — restored below */}
-        <a
-          href="https://instagram.com/staaybystaay"
-          target="_blank"
-          rel="noreferrer"
-          style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: '11px', letterSpacing: '0.12em',
-            color: '#0C0B09', fontWeight: 400,
-            display: 'flex', alignItems: 'center', gap: '5px',
-          }}>
+        Free Shipping on Orders Over GH₵500
+      </span>
+
+      {/* RIGHT — socials */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+        <a href="https://instagram.com/staaybystaay" target="_blank" rel="noreferrer"
+          style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', letterSpacing: '0.08em', color: '#0C0B09', fontWeight: 400 }}>
           IG: @staaybystaay
         </a>
         <span style={{ color: 'rgba(12,11,9,0.3)', fontSize: '10px' }}>|</span>
-        <a
-          href="https://tiktok.com/@staaybystaay"
-          target="_blank"
-          rel="noreferrer"
-          style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: '11px', letterSpacing: '0.12em',
-            color: '#0C0B09', fontWeight: 400,
-          }}>
+        <a href="https://tiktok.com/@staaybystaay" target="_blank" rel="noreferrer"
+          style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', letterSpacing: '0.08em', color: '#0C0B09', fontWeight: 400 }}>
           TikTok: @staaybystaay
         </a>
         <span style={{ color: 'rgba(12,11,9,0.3)', fontSize: '10px' }}>|</span>
-        <a
-          href="https://wa.me/233503977985"
-          target="_blank"
-          rel="noreferrer"
-          style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: '11px', letterSpacing: '0.12em',
-            color: '#0C0B09', fontWeight: 400,
-          }}>
+        <a href="https://wa.me/233503977985" target="_blank" rel="noreferrer"
+          style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', letterSpacing: '0.08em', color: '#0C0B09', fontWeight: 400 }}>
           WhatsApp: +233 50 397 7985
         </a>
       </div>
+
     </div>
   )
 }
-
 export default function App() {
   return (
     <ThemeProvider>
