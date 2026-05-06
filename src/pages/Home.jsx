@@ -19,16 +19,16 @@ const F   = { fontFamily: "'Inter', sans-serif" }
 
 // ─── EDEN COLLECTION DATA ─────────────────────
 const edenPieces = [
-  { id: 'e1',  name: 'ARI',     price: 1650,  image: '/ARI.jpg'     },
-  { id: 'e2',  name: 'MIRA',    price: 1950,  image: '/MIRA.jpg'    },
-  { id: 'e3',  name: 'VERA',    price: 1700,  image: '/VERA.jpg'    },
-  { id: 'e4',  name: 'SOLENNE', price: 2600,  image: '/SOLENNE.jpg' },
-  { id: 'e5',  name: 'AYLA',    price: 1900,  image: '/Ayla.jpg'    },
-  { id: 'e6',  name: 'AURA',    price: 2900,  image: '/Aura.jpg'    },
-  { id: 'e7',  name: 'KAIA',    price: 2900,  image: '/Kaia.jpg'    },
-  { id: 'e8',  name: 'EVE',     price: 2400,  image: '/Eve.jpg'     },
-  { id: 'e9',  name: 'ELARA',   price: 2400,  image: '/Elara.jpg'   },
-  { id: 'e10', name: 'DAHLIA',  price: 2200,  image: '/Dahlia.jpg'  },
+  { id: 'e1',  name: 'ARI',     price: 1650,  image: '/Ari.jpeg'     },
+  { id: 'e2',  name: 'MIRA',    price: 1950,  image: '/Mira.jpeg'    },
+  { id: 'e3',  name: 'VERA',    price: 1700,  image: '/Vera.jpeg'    },
+  { id: 'e4',  name: 'SOLENNE', price: 2600,  image: '/Solenne.jpeg' },
+  { id: 'e5',  name: 'AYLA',    price: 1900,  image: '/Ayla.jpeg'    },
+  { id: 'e6',  name: 'AURA',    price: 2900,  image: '/Aura.jpeg'    },
+  { id: 'e7',  name: 'KAIA',    price: 2900,  image: '/Kaia.png'    },
+  { id: 'e8',  name: 'EVE',     price: 2400,  image: '/Eve.png'     },
+  { id: 'e9',  name: 'ELARA',   price: 2400,  image: '/Elara.jpeg'   },
+  { id: 'e10', name: 'DAHLIA',  price: 2200,  image: '/Dahlia.jpeg'  },
 ]
 
 // ─── HERO SLIDES ──────────────────────────────
@@ -93,7 +93,7 @@ function PromoPopup() {
         transition={{ duration: 0.3 }}
         onClick={e => e.stopPropagation()}
         style={{
-          position: 'relative', maxWidth: '400px', width: '100%',
+          position: 'relative', maxWidth: '300px', width: '70%',
           background: W, overflow: 'hidden',
           boxShadow: '0 24px 60px rgba(17,17,17,0.25)',
         }}>
@@ -281,47 +281,6 @@ function Hero() {
             onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)' }}>
             {d === -1 ? '←' : '→'}
           </button>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-// ─── TRUST BAR ────────────────────────────────
-function TrustBar() {
-  const items = [
-    { icon: '🚚', title: 'Free Shipping',    sub: 'On orders over GH₵500' },
-    { icon: '🔒', title: 'Secure Payment',   sub: 'Multiple options'       },
-    { icon: '⭐', title: '98% Satisfaction', sub: 'Verified buyers'        },
-    { icon: '↩️', title: 'Free Returns',     sub: 'Within 30 days'         },
-  ]
-  return (
-    <section style={{ background: W, borderTop: `1px solid ${BR}`, borderBottom: `1px solid ${BR}` }}>
-      <div style={{
-        maxWidth: '1280px', margin: '0 auto', padding: '0 64px',
-        display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)',
-      }}>
-        {items.map((item, i) => (
-          <div
-            key={item.title}
-            style={{
-              display: 'flex', alignItems: 'center', gap: '12px',
-              padding: '20px 24px',
-              borderRight: i < 3 ? `1px solid ${BR}` : 'none',
-            }}>
-            <div style={{
-              width: '36px', height: '36px', flexShrink: 0,
-              background: GL, borderRadius: '50%',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '16px',
-            }}>
-              {item.icon}
-            </div>
-            <div>
-              <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '1px' }}>{item.title}</p>
-              <p style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD }}>{item.sub}</p>
-            </div>
-          </div>
         ))}
       </div>
     </section>
@@ -927,35 +886,6 @@ function EditorialBanner() {
             </div>
           </div>
         </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ─── STATS ────────────────────────────────────
-function Stats() {
-  const items = [
-    { value: '2,400+', label: 'Pieces Available',  sub: 'Across all categories' },
-    { value: '98%',    label: 'Satisfaction Rate',  sub: 'From verified buyers'  },
-    { value: '50+',    label: 'Countries Reached',  sub: 'Worldwide delivery'    },
-    { value: '16 yrs', label: 'Of Craft',           sub: 'Est. 2009, Accra'      },
-  ]
-  return (
-    <section style={{ background: BK, padding: '56px 64px' }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)' }}>
-        {items.map((item, i) => (
-          <motion.div
-            key={item.value}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.08 }}
-            style={{ textAlign: 'center', padding: '20px', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.08)' : 'none' }}>
-            <p style={{ ...F, fontWeight: 800, fontSize: 'clamp(32px, 3.5vw, 48px)', color: G, lineHeight: 1, marginBottom: '6px', letterSpacing: '-0.02em' }}>{item.value}</p>
-            <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: W, marginBottom: '3px' }}>{item.label}</p>
-            <p style={{ ...F, fontSize: '12px', fontWeight: 300, color: 'rgba(255,255,255,0.4)' }}>{item.sub}</p>
-          </motion.div>
-        ))}
       </div>
     </section>
   )
