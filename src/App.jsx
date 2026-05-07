@@ -11,7 +11,7 @@ import Featured from './pages/Featured'
 import Brand from './pages/Brand'
 import Terms from './pages/Terms'
 import Privacy from './pages/Privacy'
-import ContactSupport from './components/ContactSupport'
+import ContactSupport from './pages/ContactSupport'
 
 
 export default function App() {
