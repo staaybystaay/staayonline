@@ -14,11 +14,10 @@ const F   = { fontFamily: "'Inter', sans-serif" }
 
 const shopLinks = [
   { label: 'New Arrivals',  path: '/shop'     },
-  { label: 'Footwear',      path: '/shop'     },
   { label: 'Tops',          path: '/shop'     },
   { label: 'Bottoms',       path: '/shop'     },
   { label: 'Coats',         path: '/shop'     },
-  { label: 'Sale',          path: '/shop'     },
+  
 ]
 
 const companyLinks = [
@@ -31,7 +30,6 @@ const companyLinks = [
 const supportLinks = [
   { label: 'Track My Order',      path: '/' },
   { label: 'Returns & Exchanges', path: '/terms' },
-  { label: 'Help Center',         path: '/' },
   { label: 'Contact Support',     path: '/' },
 ]
 
