@@ -38,7 +38,7 @@ const heroSlides = [
     headline: 'Where Beauty\nBegins.',
     sub: 'Soft, feminine, and graceful — but never without strength.',
     cta: 'Explore Eden',
-    href: '/shop',
+    href: '/brand',
     pos: 'center 20%',
   },
   {
