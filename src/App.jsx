@@ -11,7 +11,7 @@ import Featured from './pages/Featured'
 import Brand from './pages/Brand'
 import Terms from './pages/Terms'
 import Privacy from './pages/Privacy'
-import ContactSupport from './pages/ContactSupport'
+// import ContactSupport from './pages/ContactSupport'
 
 
 export default function App() {
@@ -29,7 +29,7 @@ export default function App() {
           <Route path="/brand"       element={<Brand />}    />
           <Route path="/terms"       element={<Terms />}    />
           <Route path="/privacy" element={<Privacy />} />
-          <Route path="/contact" element={<ContactSupport />} />
+          {/* <Route path="/contact" element={<ContactSupport />} /> */}
         </Routes>
         <Footer />
       </BrowserRouter>
