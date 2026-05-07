@@ -29,7 +29,7 @@ const companyLinks = [
 const supportLinks = [
   { label: 'Track My Order',      path: '/' },
   { label: 'Returns & Exchanges', path: '/terms' },
-  { label: 'Contact Support',     path: '/' },
+  { label: 'Contact Support',     path: '/contact' },
 ]
 
 const legalLinks = [
