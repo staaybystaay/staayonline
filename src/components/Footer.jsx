@@ -84,6 +84,8 @@ const socialLinks = [
   },
 ]
 
+const scrollTop = () => window.scrollTo(0, 0)
+
 function LinkColumn({ heading, links }) {
   return (
     <div>
@@ -99,6 +101,7 @@ function LinkColumn({ heading, links }) {
           <li key={link.label}>
             <Link
               to={link.path}
+              onClick={scrollTop}
               style={{
                 ...F, fontSize: '13px', fontWeight: 300,
                 color: MD, letterSpacing: '0.01em',
@@ -220,7 +223,7 @@ export default function Footer() {
 
           {/* Brand column */}
           <div>
-            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+            <Link to="/" onClick={scrollTop} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
               <img
                 src="/stayonlinelogo.jpeg"
                 alt="Staay"
