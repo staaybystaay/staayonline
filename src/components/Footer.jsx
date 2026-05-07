@@ -22,7 +22,6 @@ const shopLinks = [
 
 const companyLinks = [
   { label: 'Our Brand',     path: '/brand'    },
-  { label: 'Contact Us',    path: '/'         },
   { label: 'FAQ',           path: '/'         },
   { label: 'Size Guide',    path: '/'         },
 ]
