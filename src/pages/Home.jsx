@@ -356,7 +356,7 @@ function EdenCollection() {
               }}
               onMouseEnter={e => { e.currentTarget.style.background = '#9A7830' }}
               onMouseLeave={e => { e.currentTarget.style.background = G }}>
-              Shop Eden →
+              Explore Our Brand →
             </Link>
           </motion.div>
           <motion.div
@@ -379,7 +379,7 @@ function EdenCollection() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '36px' }}>
           <div>
             <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
-              Eden Collection
+              Our Journey
             </p>
             <h3 style={{ ...F, fontSize: '24px', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>
               {edenPieces.length} Pieces — All priced in GH₵
