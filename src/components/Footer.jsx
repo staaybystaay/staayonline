@@ -36,7 +36,7 @@ const supportLinks = [
 const legalLinks = [
   { label: 'Terms of Service',    path: '/terms'  },
   { label: 'Privacy Policy', path: '/privacy' },
-  { label: 'Shipping Information', path: '/'      },
+  { label: 'Shipping Information', path: '/terms'      },
   { label: 'Cookie Policy',       path: '/'       },
 ]
 
