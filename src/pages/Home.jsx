@@ -224,18 +224,6 @@ function Hero() {
                 onMouseLeave={e => { e.currentTarget.style.background = G }}>
                 {s.cta} →
               </Link>
-              <Link
-                to="/shop"
-                style={{
-                  background: 'transparent',
-                  border: '1px solid rgba(255,255,255,0.45)',
-                  color: 'rgba(255,255,255,0.88)', padding: '14px 28px',
-                  ...F, fontSize: '13px', fontWeight: 400, transition: 'all 0.25s',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = W; e.currentTarget.style.color = W }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.45)'; e.currentTarget.style.color = 'rgba(255,255,255,0.88)' }}>
-                Browse All
-              </Link>
             </div>
           </motion.div>
         </AnimatePresence>
@@ -347,7 +335,7 @@ function EdenCollection() {
               one that feels natural, full of life, and deeply intentional.
             </p>
             <Link
-              to="/shop"
+              to="/brand"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '8px',
                 background: G, color: W, padding: '14px 32px',
