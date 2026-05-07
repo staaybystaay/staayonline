@@ -314,7 +314,7 @@ function EdenCollection() {
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
               <div style={{ width: '28px', height: '1px', background: G }} />
               <span style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                Latest Collection
+                Our Journey
               </span>
             </div>
             <h2 style={{
@@ -367,7 +367,7 @@ function EdenCollection() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '36px' }}>
           <div>
             <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
-              Our Journey
+              Latest Collectio
             </p>
             <h3 style={{ ...F, fontSize: '24px', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>
               {edenPieces.length} Pieces — All priced in GH₵
