@@ -33,17 +33,17 @@ const edenPieces = [
 const heroSlides = [
   {
     id: 1,
-    image: '/Ari.jpeg',
+    image: '/ARI.jpg',
     tag: 'Eden Collection — SS 2025',
     headline: 'Where Beauty\nBegins.',
     sub: 'Soft, feminine, and graceful — but never without strength.',
     cta: 'Explore Eden',
-    href: '/brand',
+    href: '/shop',
     pos: 'center 20%',
   },
   {
     id: 2,
-    image: 'fashionlady.jpg',
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1800&q=90&fit=crop',
     tag: 'New Season — SS 2025',
     headline: 'Effortless Style\nFor Every Woman',
     sub: 'Pieces that move with you — from morning to night.',
@@ -53,7 +53,7 @@ const heroSlides = [
   },
   {
     id: 3,
-    image: 'fashionlady2.jpg',
+    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1800&q=90&fit=crop',
     tag: 'The Staay Edit',
     headline: 'Made in Accra.\nWorn Everywhere.',
     sub: 'Local craftsmanship meeting international standards.',
@@ -67,7 +67,7 @@ const drops = [
   { id: 'f1', name: 'Air Staay 01',   price: 320, image: '/airsneaker.jpg', tag: 'New'  },
   { id: 'f2', name: 'Void Hoodie',    price: 195, image: '/hoodie.jpg',     tag: null   },
   { id: 'f3', name: 'Cargo Pant 02',  price: 240, image: '/cargopant.jpg',  tag: 'New'  },
-  { id: 'f4', name: 'Phantom Jacket', price: 420, image: 'phantom.jpg', tag: null },
+  { id: 'f4', name: 'Phantom Jacket', price: 420, image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&q=80', tag: null },
   { id: 'f5', name: 'Staay Crocs',    price: 280, image: '/crocs.png',      tag: 'Sale' },
 ]
 
@@ -224,6 +224,18 @@ function Hero() {
                 onMouseLeave={e => { e.currentTarget.style.background = G }}>
                 {s.cta} →
               </Link>
+              <Link
+                to="/shop"
+                style={{
+                  background: 'transparent',
+                  border: '1px solid rgba(255,255,255,0.45)',
+                  color: 'rgba(255,255,255,0.88)', padding: '14px 28px',
+                  ...F, fontSize: '13px', fontWeight: 400, transition: 'all 0.25s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = W; e.currentTarget.style.color = W }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.45)'; e.currentTarget.style.color = 'rgba(255,255,255,0.88)' }}>
+                Browse All
+              </Link>
             </div>
           </motion.div>
         </AnimatePresence>
@@ -280,6 +292,194 @@ function EdenCollection() {
   const totalPages = Math.ceil(edenPieces.length / perPage)
   const visible = edenPieces.slice(activeIdx * perPage, activeIdx * perPage + perPage)
 
+  return (
+    <section style={{ background: W, borderBottom: `1px solid ${BR}` }}>
+      <div style={{
+        position: 'relative', height: '480px',
+        overflow: 'hidden', background: '#1A1209',
+      }}>
+        <img
+          src="/Solenne.jpeg"
+          alt="Eden Collection"
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%', objectFit: 'cover',
+            objectPosition: 'center 30%', opacity: 0.55,
+          }}
+        />
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(135deg, rgba(26,18,9,0.92) 0%, rgba(26,18,9,0.5) 50%, rgba(26,18,9,0.3) 100%)',
+        }} />
+        <div style={{
+          position: 'absolute', inset: 0,
+          maxWidth: '1280px', margin: '0 auto',
+          padding: '0 64px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        }}>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            style={{ maxWidth: '560px' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+              <div style={{ width: '28px', height: '1px', background: G }} />
+              <span style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                Latest Collection
+              </span>
+            </div>
+            <h2 style={{
+              ...F, fontWeight: 800,
+              fontSize: 'clamp(44px, 6vw, 80px)',
+              color: W, lineHeight: 1.0,
+              letterSpacing: '-0.03em', margin: '0 0 20px',
+            }}>
+              Eden
+            </h2>
+            <p style={{
+              ...F, fontWeight: 300, fontSize: '15px',
+              lineHeight: 1.75, color: 'rgba(255,255,255,0.65)',
+              marginBottom: '32px', maxWidth: '420px',
+            }}>
+              Eden is where it all begins. Soft, feminine, and graceful —
+              but never without strength. Each piece carries a quiet kind of beauty,
+              one that feels natural, full of life, and deeply intentional.
+            </p>
+            <Link
+              to="/shop"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                background: G, color: W, padding: '14px 32px',
+                ...F, fontSize: '13px', fontWeight: 600,
+                letterSpacing: '0.04em', transition: 'background 0.25s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#9A7830' }}
+              onMouseLeave={e => { e.currentTarget.style.background = G }}>
+              Shop Eden →
+            </Link>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            style={{ textAlign: 'right' }}>
+            <p style={{ ...F, fontWeight: 800, fontSize: '80px', color: 'rgba(255,255,255,0.06)', lineHeight: 1, letterSpacing: '-0.04em' }}>
+              {edenPieces.length}
+            </p>
+            <p style={{ ...F, fontSize: '12px', fontWeight: 400, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+              Pieces
+            </p>
+          </motion.div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '56px 64px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '36px' }}>
+          <div>
+            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
+              Eden Collection
+            </p>
+            <h3 style={{ ...F, fontSize: '24px', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>
+              {edenPieces.length} Pieces — All priced in GH₵
+            </h3>
+          </div>
+          <Link
+            to="/shop"
+            style={{ ...F, fontSize: '13px', fontWeight: 500, color: DK, display: 'flex', alignItems: 'center', gap: '6px', borderBottom: `1px solid ${DK}`, paddingBottom: '1px', transition: 'color 0.2s, border-color 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderBottomColor = G }}
+            onMouseLeave={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = DK }}>
+            View All →
+          </Link>
+        </div>
+
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIdx}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35 }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px 16px' }}>
+            {visible.map((piece) => (
+              <div
+                key={piece.id}
+                onMouseEnter={() => setHovered(piece.id)}
+                onMouseLeave={() => setHovered(null)}>
+                <div style={{ position: 'relative', aspectRatio: '3/4', background: B2, overflow: 'hidden', marginBottom: '12px' }}>
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <span style={{ ...F, fontSize: '11px', color: FT }}>Eden</span>
+                  </div>
+                  <img
+                    src={piece.image}
+                    alt={piece.name}
+                    onError={e => { e.target.style.display = 'none' }}
+                    style={{
+                      position: 'absolute', inset: 0,
+                      width: '100%', height: '100%', objectFit: 'cover',
+                      transition: 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)',
+                      transform: hovered === piece.id ? 'scale(1.05)' : 'scale(1)',
+                    }}
+                  />
+                  <div style={{
+                    position: 'absolute', bottom: 0, left: 0, right: 0, background: BK,
+                    transform: hovered === piece.id ? 'translateY(0)' : 'translateY(100%)',
+                    transition: 'transform 0.3s',
+                  }}>
+                    <button
+                      onClick={() => addItem({ ...piece, category: 'Eden', badge: 'New' })}
+                      style={{
+                        width: '100%', padding: '12px', background: 'transparent',
+                        border: 'none', color: W, cursor: 'pointer',
+                        ...F, fontSize: '11px', fontWeight: 600,
+                        letterSpacing: '0.05em', textTransform: 'uppercase',
+                      }}>
+                      Add to Bag
+                    </button>
+                  </div>
+                  <span style={{
+                    position: 'absolute', top: 0, left: 0,
+                    background: G, color: W, padding: '4px 10px',
+                    ...F, fontSize: '9px', fontWeight: 700,
+                    letterSpacing: '0.06em', textTransform: 'uppercase',
+                  }}>
+                    New
+                  </span>
+                </div>
+                <p style={{ ...F, fontSize: '10px', fontWeight: 500, color: G, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '3px' }}>
+                  Eden
+                </p>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: DK }}>{piece.name}</p>
+                  <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: DK }}>GH₵{piece.price.toLocaleString()}</p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {totalPages > 1 && (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginTop: '40px' }}>
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveIdx(i)}
+                style={{
+                  width: i === activeIdx ? '28px' : '8px',
+                  height: '3px', padding: 0, border: 'none',
+                  borderRadius: '2px', cursor: 'pointer',
+                  background: i === activeIdx ? G : BR,
+                  transition: 'all 0.3s',
+                }} />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
 function PromoCards() {
   return (
     <section style={{ background: W, padding: '48px 64px' }}>
@@ -313,7 +513,7 @@ function PromoCards() {
           transition={{ duration: 0.5, delay: 0.1 }}
           style={{ position: 'relative', minHeight: '200px', overflow: 'hidden', background: '#E8E0D8' }}>
           <img
-            src="fashionlady3.jpg"
+            src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80&fit=crop"
             alt="Collection"
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
           />
@@ -341,11 +541,11 @@ function PromoCards() {
 
 function Categories({ active, setActive }) {
   const catImages = {
-    All:     'localdress.jpg',
+    All:     'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=300&q=80&fit=crop',
     Tops:    '/hoodie.jpg',
     Bottoms: '/cargopant.jpg',
-    Jackets: 'hoodie.jpg',
-    Coats:   'leathercoat.jpeg',
+    Jackets: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=300&q=80&fit=crop',
+    Coats:   'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&q=80&fit=crop',
   }
   return (
     <section style={{ background: OW, padding: '64px', borderTop: `1px solid ${BR}` }}>
@@ -546,7 +746,7 @@ function EditorialBanner() {
     <section style={{ borderTop: `1px solid ${BR}` }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }} style={{ position: 'relative', minHeight: '400px', overflow: 'hidden' }}>
-          <img src="/fashionlady6.jpg" alt="Collection" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          <img src="/mendress.jpg" alt="Collection" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(17,17,17,0.75) 0%, rgba(17,17,17,0.1) 55%)' }} />
           <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
             <span style={{ display: 'inline-block', background: G, color: W, padding: '4px 12px', ...F, fontSize: '10px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: '12px' }}>New Release</span>
@@ -555,7 +755,7 @@ function EditorialBanner() {
           </div>
         </motion.div>
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.15 }} style={{ position: 'relative', minHeight: '400px', overflow: 'hidden' }}>
-          <img src="/fashionlady5.jpg" alt="Coming Soon" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          <img src="/womendress.jpg" alt="Coming Soon" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(17,17,17,0.82) 0%, rgba(17,17,17,0.1) 55%)' }} />
           <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
             <span style={{ display: 'inline-block', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', color: W, padding: '4px 12px', ...F, fontSize: '10px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: '12px' }}>Coming Soon</span>
