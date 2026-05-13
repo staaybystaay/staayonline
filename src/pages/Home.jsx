@@ -573,7 +573,6 @@ export default function Home() {
       <Collections />
       <ProductsSection activeCategory="All" />
       <JustDropped />
-      <EditorialBanner />
     </main>
   )
 }
