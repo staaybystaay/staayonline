@@ -20,27 +20,27 @@ const F   = { fontFamily: "'Inter', sans-serif" }
 const heroSlides = [
   {
     id: 1,
-    image: '/ARI.jpg',
-    tag: 'Eden Collection — SS 2025',
+    image: '/Ari.jpg',
+    tag: 'Know Our Brand',
     headline: 'Where Beauty\nBegins.',
     sub: 'Soft, feminine, and graceful — but never without strength.',
-    cta: 'Explore Eden',
-    href: '/shop',
+    cta: 'Explore Our Journey',
+    href: '/brand',
     pos: 'center 20%',
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1800&q=90&fit=crop',
-    tag: 'New Season — SS 2025',
+    image: 'Ayla.jpeg',
+    tag: 'New Season — SS 2026',
     headline: 'Effortless Style\nFor Every Woman',
     sub: 'Pieces that move with you — from morning to night.',
-    cta: 'Shop Now',
+    cta: 'Explore Our Collections',
     href: '/shop',
     pos: 'center 25%',
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1800&q=90&fit=crop',
+    image: 'Eve',
     tag: 'The STAAY Edit',
     headline: 'Made in Accra.\nWorn Everywhere.',
     sub: 'Local craftsmanship meeting international standards.',
@@ -51,11 +51,11 @@ const heroSlides = [
 ]
 
 const drops = [
-  { id: 'f1', name: 'Air STAAY 01',   price: 320, image: '/airsneaker.jpg', tag: 'New'  },
-  { id: 'f2', name: 'Void Hoodie',    price: 195, image: '/hoodie.jpg',     tag: null   },
-  { id: 'f3', name: 'Cargo Pant 02',  price: 240, image: '/cargopant.jpg',  tag: 'New'  },
-  { id: 'f4', name: 'Phantom Jacket', price: 420, image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=400&q=80', tag: null },
-  { id: 'f5', name: 'STAAY Crocs',    price: 280, image: '/crocs.png',      tag: 'Sale' },
+  { id: 'f1', name: 'Air STAAY 01',   price: 320, image: '/Kaia.png', tag: 'New'  },
+  { id: 'f2', name: 'Void Hoodie',    price: 195, image: '/Dahlia.jpeg',     tag: null   },
+  { id: 'f3', name: 'Cargo Pant 02',  price: 240, image: '/Elara.jpeg',  tag: 'New'  },
+  { id: 'f4', name: 'Phantom Jacket', price: 420, image: 'Eve.png', tag: null },
+  { id: 'f5', name: 'STAAY Crocs',    price: 280, image: '/Vera.jpeg',      tag: 'Sale' },
 ]
 
 const edenPieces = [
@@ -65,8 +65,8 @@ const edenPieces = [
   { id: 'e4',  name: 'SOLENNE', price: 2600, image: '/Solenne.jpeg' },
   { id: 'e5',  name: 'AYLA',    price: 1900, image: '/Ayla.jpeg'    },
   { id: 'e6',  name: 'AURA',    price: 2900, image: '/Aura.jpeg'    },
-  { id: 'e7',  name: 'KAIA',    price: 2900, image: '/Kaia.jpeg'    },
-  { id: 'e8',  name: 'EVE',     price: 2400, image: '/Eve.jpeg'     },
+  { id: 'e7',  name: 'KAIA',    price: 2900, image: '/Kaia.png'    },
+  { id: 'e8',  name: 'EVE',     price: 2400, image: '/Eve.png'     },
   { id: 'e9',  name: 'ELARA',   price: 2400, image: '/Elara.jpeg'   },
   { id: 'e10', name: 'DAHLIA',  price: 2200, image: '/Dahlia.jpeg'  },
 ]
