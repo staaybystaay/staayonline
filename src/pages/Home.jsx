@@ -20,27 +20,27 @@ const F   = { fontFamily: "'Inter', sans-serif" }
 const heroSlides = [
   {
     id: 1,
-    image: '/Ari.jpeg',
-    tag: 'Know Our Brand',
+    image: '/ARI.jpg',
+    tag: 'Eden Collection — SS 2025',
     headline: 'Where Beauty\nBegins.',
     sub: 'Soft, feminine, and graceful — but never without strength.',
-    cta: 'Explore Our Journey',
-    href: '/brand',
+    cta: 'Explore Eden',
+    href: '/shop',
     pos: 'center 20%',
   },
   {
     id: 2,
-    image: 'Elara.jpeg',
-    tag: 'New Season — SS 2026',
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=1800&q=90&fit=crop',
+    tag: 'New Season — SS 2025',
     headline: 'Effortless Style\nFor Every Woman',
     sub: 'Pieces that move with you — from morning to night.',
-    cta: 'Explore Our Collections',
+    cta: 'Shop Now',
     href: '/shop',
     pos: 'center 25%',
   },
   {
     id: 3,
-    image: 'Mira.jpeg',
+    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1800&q=90&fit=crop',
     tag: 'The STAAY Edit',
     headline: 'Made in Accra.\nWorn Everywhere.',
     sub: 'Local craftsmanship meeting international standards.',
@@ -58,7 +58,18 @@ const drops = [
   { id: 'f5', name: 'STAAY Crocs',    price: 280, image: '/crocs.png',      tag: 'Sale' },
 ]
 
-const CATS = ['All', 'Tops', 'Bottoms', 'Jackets', 'Coats']
+const edenPieces = [
+  { id: 'e1',  name: 'ARI',     price: 1650, image: '/Ari.jpeg'     },
+  { id: 'e2',  name: 'MIRA',    price: 1950, image: '/Mira.jpeg'    },
+  { id: 'e3',  name: 'VERA',    price: 1700, image: '/Vera.jpeg'    },
+  { id: 'e4',  name: 'SOLENNE', price: 2600, image: '/Solenne.jpeg' },
+  { id: 'e5',  name: 'AYLA',    price: 1900, image: '/Ayla.jpeg'    },
+  { id: 'e6',  name: 'AURA',    price: 2900, image: '/Aura.jpeg'    },
+  { id: 'e7',  name: 'KAIA',    price: 2900, image: '/Kaia.jpeg'    },
+  { id: 'e8',  name: 'EVE',     price: 2400, image: '/Eve.jpeg'     },
+  { id: 'e9',  name: 'ELARA',   price: 2400, image: '/Elara.jpeg'   },
+  { id: 'e10', name: 'DAHLIA',  price: 2200, image: '/Dahlia.jpeg'  },
+]
 
 function PromoPopup() {
   const [open, setOpen] = useState(true)
@@ -329,61 +340,83 @@ function PromoCards() {
   )
 }
 
-function Categories({ active, setActive }) {
-  const catImages = {
-    All:     'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=300&q=80&fit=crop',
-    Tops:    '/hoodie.jpg',
-    Bottoms: '/cargopant.jpg',
-    Jackets: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=300&q=80&fit=crop',
-    Coats:   'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&q=80&fit=crop',
-  }
+function Collections() {
+  const [hovered, setHovered] = useState(null)
+  const addItem = useCartStore(s => s.addItem)
   return (
     <section style={{ background: OW, padding: '64px', borderTop: `1px solid ${BR}` }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '36px' }}>
           <div>
-            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>Browse by</p>
-            <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>Categories</h2>
+            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>Eden — SS 2025</p>
+            <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>Collections</h2>
           </div>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-            {CATS.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActive(cat)}
-                style={{
-                  padding: '8px 18px',
-                  background: active === cat ? BK : W,
-                  border: `1px solid ${active === cat ? BK : BR}`,
-                  color: active === cat ? W : DK,
-                  ...F, fontSize: '12px', fontWeight: active === cat ? 600 : 400,
-                  cursor: 'pointer', borderRadius: '100px', transition: 'all 0.2s',
-                }}>
-                {cat}
-              </button>
-            ))}
-          </div>
+          <Link
+            to="/shop"
+            style={{ ...F, fontSize: '13px', fontWeight: 500, color: DK, display: 'flex', alignItems: 'center', gap: '6px', borderBottom: `1px solid ${DK}`, paddingBottom: '1px', transition: 'color 0.2s, border-color 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderBottomColor = G }}
+            onMouseLeave={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = DK }}>
+            View All →
+          </Link>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '12px' }}>
-          {CATS.map((cat, i) => (
-            <motion.button
-              key={cat}
-              onClick={() => setActive(cat)}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px 16px' }}>
+          {edenPieces.map((piece, i) => (
+            <motion.div
+              key={piece.id}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.06 }}
-              style={{
-                position: 'relative', aspectRatio: '3/4',
-                overflow: 'hidden', border: 'none', cursor: 'pointer', padding: 0,
-                outline: active === cat ? `2px solid ${G}` : 'none',
-                outlineOffset: '2px',
-              }}>
-              <img src={catImages[cat]} alt={cat} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(17,17,17,0.65) 0%, transparent 55%)' }} />
-              <div style={{ position: 'absolute', bottom: '14px', left: '14px' }}>
-                <span style={{ ...F, fontSize: '13px', fontWeight: 600, color: W }}>{cat}</span>
+              onMouseEnter={() => setHovered(piece.id)}
+              onMouseLeave={() => setHovered(null)}>
+              <div style={{ position: 'relative', aspectRatio: '3/4', background: B2, overflow: 'hidden', marginBottom: '12px' }}>
+                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ ...F, fontSize: '11px', color: FT }}>Eden</span>
+                </div>
+                <img
+                  src={piece.image}
+                  alt={piece.name}
+                  onError={e => { e.target.style.display = 'none' }}
+                  style={{
+                    position: 'absolute', inset: 0,
+                    width: '100%', height: '100%', objectFit: 'cover',
+                    transition: 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)',
+                    transform: hovered === piece.id ? 'scale(1.05)' : 'scale(1)',
+                  }}
+                />
+                <span style={{
+                  position: 'absolute', top: 0, left: 0,
+                  background: G, color: W, padding: '4px 10px',
+                  ...F, fontSize: '9px', fontWeight: 700,
+                  letterSpacing: '0.06em', textTransform: 'uppercase',
+                }}>
+                  New
+                </span>
+                <div style={{
+                  position: 'absolute', bottom: 0, left: 0, right: 0, background: BK,
+                  transform: hovered === piece.id ? 'translateY(0)' : 'translateY(100%)',
+                  transition: 'transform 0.3s',
+                }}>
+                  <button
+                    onClick={() => addItem({ ...piece, category: 'Eden', badge: 'New' })}
+                    style={{
+                      width: '100%', padding: '12px', background: 'transparent',
+                      border: 'none', color: W, cursor: 'pointer',
+                      ...F, fontSize: '11px', fontWeight: 600,
+                      letterSpacing: '0.05em', textTransform: 'uppercase',
+                    }}>
+                    Add to Bag
+                  </button>
+                </div>
               </div>
-            </motion.button>
+              <p style={{ ...F, fontSize: '10px', fontWeight: 500, color: G, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '3px' }}>
+                Eden
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: DK }}>{piece.name}</p>
+                <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: DK }}>GH₵{piece.price.toLocaleString()}</p>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -566,14 +599,13 @@ function EditorialBanner() {
 }
 
 export default function Home() {
-  const [activeCategory, setActiveCategory] = useState('All')
   return (
     <main style={{ background: W }}>
       <PromoPopup />
       <Hero />
       <PromoCards />
-      <Categories active={activeCategory} setActive={setActiveCategory} />
-      <ProductsSection activeCategory={activeCategory} />
+      <Collections />
+      <ProductsSection activeCategory="All" />
       <JustDropped />
       <EditorialBanner />
     </main>
