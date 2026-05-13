@@ -30,7 +30,7 @@ const heroSlides = [
   },
   {
     id: 2,
-    image: 'fashionlady.jpg',
+    image: 'fashionlady4.jpg',
     tag: 'New Season — SS 2026',
     headline: 'Effortless Style\nFor Every Woman',
     sub: 'Pieces that move with you — from morning to night.',
@@ -40,7 +40,7 @@ const heroSlides = [
   },
   {
     id: 3,
-    image: 'fashionlady3.jpg',
+    image: 'fashionlady5.jpg',
     tag: 'The STAAY Edit',
     headline: 'Made in Accra.\nWorn Everywhere.',
     sub: 'Local craftsmanship meeting international standards.',
