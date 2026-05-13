@@ -24,7 +24,7 @@ const heroSlides = [
     tag: 'Know Our Brand',
     headline: 'Where Beauty\nBegins.',
     sub: 'Soft, feminine, and graceful — but never without strength.',
-    cta: 'Explore Our Journey,
+    cta: 'Explore Our Journey',
     href: '/brand',
     pos: 'center 20%',
   },
