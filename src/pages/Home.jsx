@@ -269,148 +269,8 @@ function Hero() {
   )
 }
 
-function PromoCards() {
-  return (
-    <section style={{ background: W, padding: '48px 64px' }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          style={{ background: GL, padding: '40px', minHeight: '200px', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div>
-            <p style={{ ...F, fontSize: '12px', fontWeight: 500, color: G, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '10px' }}>For Women</p>
-            <h3 style={{ ...F, fontSize: 'clamp(22px, 2.5vw, 30px)', fontWeight: 700, color: DK, lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: '8px' }}>
-              Where dreams<br />meet couture
-            </h3>
-            <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD }}>SS 2025 — New drops every week</p>
-          </div>
-          <Link
-            to="/shop"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: DK, color: W, padding: '11px 22px', marginTop: '24px', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em', width: 'fit-content', transition: 'background 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.background = G }}
-            onMouseLeave={e => { e.currentTarget.style.background = DK }}>
-            Shop Now →
-          </Link>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          style={{ position: 'relative', minHeight: '200px', overflow: 'hidden', background: '#E8E0D8' }}>
-          <img
-            src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80&fit=crop"
-            alt="Collection"
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
-          />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(17,17,17,0.65) 0%, rgba(17,17,17,0.1) 70%)' }} />
-          <div style={{ position: 'relative', padding: '40px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
-            <div>
-              <p style={{ ...F, fontSize: '12px', fontWeight: 500, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '10px' }}>The Edit</p>
-              <h3 style={{ ...F, fontSize: 'clamp(22px, 2.5vw, 30px)', fontWeight: 700, color: W, lineHeight: 1.15, letterSpacing: '-0.01em' }}>
-                Enchanting styles<br />for every woman
-              </h3>
-            </div>
-            <Link
-              to="/featured"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: W, color: DK, padding: '11px 22px', marginTop: '24px', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em', width: 'fit-content', transition: 'background 0.2s, color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.color = W }}
-              onMouseLeave={e => { e.currentTarget.style.background = W; e.currentTarget.style.color = DK }}>
-              Shop Now →
-            </Link>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
 
-function Collections() {
-  const [hovered, setHovered] = useState(null)
-  const addItem = useCartStore(s => s.addItem)
-  return (
-    <section style={{ background: OW, padding: '64px', borderTop: `1px solid ${BR}` }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '36px' }}>
-          <div>
-            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>Eden — SS 2025</p>
-            <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>Collections</h2>
-          </div>
-          <Link
-            to="/shop"
-            style={{ ...F, fontSize: '13px', fontWeight: 500, color: DK, display: 'flex', alignItems: 'center', gap: '6px', borderBottom: `1px solid ${DK}`, paddingBottom: '1px', transition: 'color 0.2s, border-color 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderBottomColor = G }}
-            onMouseLeave={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = DK }}>
-            View All →
-          </Link>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '20px 16px' }}>
-          {edenPieces.map((piece, i) => (
-            <motion.div
-              key={piece.id}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.06 }}
-              onMouseEnter={() => setHovered(piece.id)}
-              onMouseLeave={() => setHovered(null)}>
-              <div style={{ position: 'relative', aspectRatio: '3/4', background: B2, overflow: 'hidden', marginBottom: '12px' }}>
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <span style={{ ...F, fontSize: '11px', color: FT }}>Eden</span>
-                </div>
-                <img
-                  src={piece.image}
-                  alt={piece.name}
-                  onError={e => { e.target.style.display = 'none' }}
-                  style={{
-                    position: 'absolute', inset: 0,
-                    width: '100%', height: '100%', objectFit: 'cover',
-                    transition: 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)',
-                    transform: hovered === piece.id ? 'scale(1.05)' : 'scale(1)',
-                  }}
-                />
-                <span style={{
-                  position: 'absolute', top: 0, left: 0,
-                  background: G, color: W, padding: '4px 10px',
-                  ...F, fontSize: '9px', fontWeight: 700,
-                  letterSpacing: '0.06em', textTransform: 'uppercase',
-                }}>
-                  New
-                </span>
-                <div style={{
-                  position: 'absolute', bottom: 0, left: 0, right: 0, background: BK,
-                  transform: hovered === piece.id ? 'translateY(0)' : 'translateY(100%)',
-                  transition: 'transform 0.3s',
-                }}>
-                  <button
-                    onClick={() => addItem({ ...piece, category: 'Eden', badge: 'New' })}
-                    style={{
-                      width: '100%', padding: '12px', background: 'transparent',
-                      border: 'none', color: W, cursor: 'pointer',
-                      ...F, fontSize: '11px', fontWeight: 600,
-                      letterSpacing: '0.05em', textTransform: 'uppercase',
-                    }}>
-                    Add to Bag
-                  </button>
-                </div>
-              </div>
-              <p style={{ ...F, fontSize: '10px', fontWeight: 500, color: G, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '3px' }}>
-                Eden
-              </p>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: DK }}>{piece.name}</p>
-                <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: DK }}>GH₵{piece.price.toLocaleString()}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
 
 function ProductCard({ product, index }) {
   const [hovered, setHovered] = useState(false)
@@ -467,33 +327,6 @@ function ProductCard({ product, index }) {
     </motion.div>
   )
 }
-
-function ProductsSection({ activeCategory }) {
-  const filtered = activeCategory === 'All' ? products : products.filter(p => p.category === activeCategory)
-  return (
-    <section style={{ background: W, padding: '64px', borderTop: `1px solid ${BR}` }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
-          <div>
-            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>Our Products</p>
-            <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>Popular Products</h2>
-          </div>
-          <Link
-            to="/shop"
-            style={{ ...F, fontSize: '13px', fontWeight: 500, color: DK, display: 'flex', alignItems: 'center', gap: '6px', borderBottom: `1px solid ${DK}`, paddingBottom: '1px', transition: 'color 0.2s, border-color 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderBottomColor = G }}
-            onMouseLeave={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = DK }}>
-            View All →
-          </Link>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px 16px' }}>
-          {filtered.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 function JustDropped() {
   const [hovered, setHovered] = useState(null)
   const addItem = useCartStore(s => s.addItem)
@@ -557,9 +390,6 @@ export default function Home() {
     <main style={{ background: W }}>
       <PromoPopup />
       <Hero />
-      <PromoCards />
-      <Collections />
-      <ProductsSection activeCategory="All" />
       <JustDropped />
     </main>
   )
