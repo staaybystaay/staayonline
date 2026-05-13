@@ -20,7 +20,7 @@ const F   = { fontFamily: "'Inter', sans-serif" }
 const heroSlides = [
   {
     id: 1,
-    image: '/Ari.jpg',
+    image: '/Ari.jpeg',
     tag: 'Know Our Brand',
     headline: 'Where Beauty\nBegins.',
     sub: 'Soft, feminine, and graceful — but never without strength.',
@@ -40,7 +40,7 @@ const heroSlides = [
   },
   {
     id: 3,
-    image: 'Eve',
+    image: 'Eve.png',
     tag: 'The STAAY Edit',
     headline: 'Made in Accra.\nWorn Everywhere.',
     sub: 'Local craftsmanship meeting international standards.',
@@ -559,40 +559,6 @@ function JustDropped() {
             </motion.div>
           ))}
         </div>
-      </div>
-    </section>
-  )
-}
-
-function EditorialBanner() {
-  return (
-    <section style={{ borderTop: `1px solid ${BR}` }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }} style={{ position: 'relative', minHeight: '400px', overflow: 'hidden' }}>
-          <img src="/mendress.jpg" alt="Collection" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(17,17,17,0.75) 0%, rgba(17,17,17,0.1) 55%)' }} />
-          <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
-            <span style={{ display: 'inline-block', background: G, color: W, padding: '4px 12px', ...F, fontSize: '10px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: '12px' }}>New Release</span>
-            <h3 style={{ ...F, fontWeight: 700, fontSize: '28px', color: W, lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: '14px' }}>Void Series<br />Drop 01</h3>
-            <Link to="/shop" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: W, color: DK, padding: '10px 22px', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em', transition: 'background 0.2s, color 0.2s' }} onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.color = W }} onMouseLeave={e => { e.currentTarget.style.background = W; e.currentTarget.style.color = DK }}>Shop Now →</Link>
-          </div>
-        </motion.div>
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.7, delay: 0.15 }} style={{ position: 'relative', minHeight: '400px', overflow: 'hidden' }}>
-          <img src="/womendress.jpg" alt="Coming Soon" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(17,17,17,0.82) 0%, rgba(17,17,17,0.1) 55%)' }} />
-          <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
-            <span style={{ display: 'inline-block', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', color: W, padding: '4px 12px', ...F, fontSize: '10px', fontWeight: 600, letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: '12px' }}>Coming Soon</span>
-            <h3 style={{ ...F, fontWeight: 700, fontSize: '28px', color: W, lineHeight: 1.15, letterSpacing: '-0.01em', marginBottom: '20px' }}>Next Drop<br />Is Coming</h3>
-            <div style={{ display: 'flex', gap: '20px' }}>
-              {[{ v: '04', l: 'Days' }, { v: '16', l: 'Hours' }, { v: '38', l: 'Min' }].map((t, i) => (
-                <div key={i}>
-                  <p style={{ ...F, fontWeight: 700, fontSize: '32px', color: G, lineHeight: 1 }}>{t.v}</p>
-                  <p style={{ ...F, fontSize: '10px', fontWeight: 400, color: 'rgba(255,255,255,0.5)', marginTop: '3px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{t.l}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   )
