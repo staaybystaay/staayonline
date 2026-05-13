@@ -145,7 +145,7 @@ function Newsletter() {
         fontWeight: 800, color: DK,
         letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '10px',
       }}>
-        The Staay Woman Starts Here
+        The STAAY Woman Starts Here
       </h3>
       <p style={{
         ...F, fontSize: '14px', fontWeight: 300,
