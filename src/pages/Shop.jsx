@@ -257,7 +257,7 @@ export default function Shop() {
   const [wishlist,         setWishlist]         = useState([])
 
   const activeCol  = COLLECTIONS.find(c => c.id === activeCollection)
-  const hasProducts = activeCollection === 'all' || activeCollection === 'eden'
+  const hasProducts = activeCollection === 'all' || activeCollection === 'eden' || activeCollection === 'love'
 
   const toggleWishlist = id => setWishlist(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])
   const togglePrice    = label => setActivePrices(prev => prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label])
