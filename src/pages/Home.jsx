@@ -62,7 +62,7 @@ const brandCollections = [
   {
     id: 'eden',
     image: '/Solenne.jpeg',
-    label: 'SS 2025',
+    label: 'SS 2026',
     name: 'Eden Collection',
     sub: '10 pieces',
     href: '/shop',
