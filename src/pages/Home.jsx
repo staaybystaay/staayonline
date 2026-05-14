@@ -58,17 +58,31 @@ const drops = [
   { id: 'f5', name: 'STAAY Crocs',    price: 280, image: '/Vera.jpeg',     tag: 'Sale' },
 ]
 
-const edenPieces = [
-  { id: 'e1',  name: 'ARI',     price: 1650, image: '/Ari.jpeg'     },
-  { id: 'e2',  name: 'MIRA',    price: 1950, image: '/Mira.jpeg'    },
-  { id: 'e3',  name: 'VERA',    price: 1700, image: '/Vera.jpeg'    },
-  { id: 'e4',  name: 'SOLENNE', price: 2600, image: '/Solenne.jpeg' },
-  { id: 'e5',  name: 'AYLA',    price: 1900, image: '/Ayla.jpeg'    },
-  { id: 'e6',  name: 'AURA',    price: 2900, image: '/Aura.jpeg'    },
-  { id: 'e7',  name: 'KAIA',    price: 2900, image: '/Kaia.png'     },
-  { id: 'e8',  name: 'EVE',     price: 2400, image: '/Eve.png'      },
-  { id: 'e9',  name: 'ELARA',   price: 2400, image: '/Elara.jpeg'   },
-  { id: 'e10', name: 'DAHLIA',  price: 2200, image: '/Dahlia.jpeg'  },
+const brandCollections = [
+  {
+    id: 'eden',
+    image: '/Solenne.jpeg',
+    label: 'SS 2025',
+    name: 'Eden Collection',
+    sub: '10 pieces',
+    href: '/shop',
+  },
+  {
+    id: 'love',
+    image: '/Ayla.jpeg',
+    label: 'Coming Soon',
+    name: 'The Love Edit',
+    sub: 'New season',
+    href: '/shop',
+  },
+  {
+    id: 'bold',
+    image: '/Mira.jpeg',
+    label: 'Coming Soon',
+    name: 'Bold & Beautiful',
+    sub: 'New season',
+    href: '/shop',
+  },
 ]
 
 function PromoPopup() {
@@ -269,6 +283,153 @@ function Hero() {
   )
 }
 
+// ─── OUR BRAND COLLECTIONS ───────────────────
+function BrandCollections() {
+  const [hovered, setHovered] = useState(null)
+
+  return (
+    <section style={{ background: OW, padding: '72px 64px' }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+
+        {/* Header */}
+        <div style={{ marginBottom: '40px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
+            <div style={{ width: '28px', height: '1px', background: G }} />
+            <span style={{
+              ...F, fontSize: '11px', fontWeight: 600, color: G,
+              letterSpacing: '0.1em', textTransform: 'uppercase',
+            }}>
+              Our Collections
+            </span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+            <h2 style={{
+              ...F, fontSize: 'clamp(22px, 3vw, 36px)',
+              fontWeight: 700, color: DK, letterSpacing: '-0.02em',
+            }}>
+              Our Brand Collections
+            </h2>
+            <Link
+              to="/shop"
+              style={{
+                ...F, fontSize: '13px', fontWeight: 500, color: DK,
+                display: 'flex', alignItems: 'center', gap: '6px',
+                borderBottom: `1px solid ${DK}`, paddingBottom: '1px',
+                transition: 'color 0.2s, border-color 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderBottomColor = G }}
+              onMouseLeave={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = DK }}>
+              Shop All →
+            </Link>
+          </div>
+        </div>
+
+        {/* 3 cards with gap — clearly distinct */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr',
+          gap: '16px',
+        }}>
+          {brandCollections.map((col, i) => (
+            <motion.div
+              key={col.id}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              onMouseEnter={() => setHovered(col.id)}
+              onMouseLeave={() => setHovered(null)}
+              style={{ position: 'relative' }}>
+
+              <Link
+                to={col.href}
+                style={{
+                  display: 'block', textDecoration: 'none',
+                  position: 'relative', overflow: 'hidden',
+                  height: '540px',
+                  background: B2,
+                  // Gold bottom border reveals on hover
+                  boxShadow: hovered === col.id
+                    ? `0 0 0 2px ${G}`
+                    : '0 0 0 0px transparent',
+                  transition: 'box-shadow 0.3s',
+                }}>
+
+                <img
+                  src={col.image}
+                  alt={col.name}
+                  onError={e => { e.target.style.display = 'none' }}
+                  style={{
+                    width: '100%', height: '100%', objectFit: 'cover',
+                    display: 'block',
+                    transition: 'transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94)',
+                    transform: hovered === col.id ? 'scale(1.04)' : 'scale(1)',
+                  }}
+                />
+
+                {/* Gradient overlay */}
+                <div style={{
+                  position: 'absolute', inset: 0,
+                  background: 'linear-gradient(to top, rgba(17,17,17,0.78) 0%, rgba(17,17,17,0.08) 50%, transparent 100%)',
+                }} />
+
+                {/* Label pill top-left */}
+                <div style={{
+                  position: 'absolute', top: '16px', left: '16px',
+                  background: col.label === 'SS 2025' ? G : 'rgba(17,17,17,0.55)',
+                  backdropFilter: 'blur(4px)',
+                  padding: '4px 12px',
+                  ...F, fontSize: '10px', fontWeight: 600,
+                  letterSpacing: '0.06em', textTransform: 'uppercase',
+                  color: W,
+                }}>
+                  {col.label}
+                </div>
+
+                {/* Bottom text */}
+                <div style={{
+                  position: 'absolute', bottom: '0', left: '0', right: '0',
+                  padding: '24px',
+                  borderTop: `2px solid ${hovered === col.id ? G : 'transparent'}`,
+                  transition: 'border-top-color 0.3s',
+                }}>
+                  <p style={{
+                    ...F, fontSize: '11px', fontWeight: 400,
+                    color: 'rgba(255,255,255,0.5)',
+                    letterSpacing: '0.04em', marginBottom: '4px',
+                  }}>
+                    {col.sub}
+                  </p>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <p style={{
+                      ...F, fontSize: '18px', fontWeight: 700,
+                      color: W, letterSpacing: '-0.01em',
+                    }}>
+                      {col.name}
+                    </p>
+                    <span style={{
+                      width: '32px', height: '32px',
+                      border: `1px solid rgba(255,255,255,0.4)`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: W, fontSize: '16px',
+                      opacity: hovered === col.id ? 1 : 0,
+                      transition: 'opacity 0.3s',
+                    }}>
+                      →
+                    </span>
+                  </div>
+                </div>
+
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+  )
+}
+
 function ProductCard({ product, index }) {
   const [hovered, setHovered] = useState(false)
   const addItem = useCartStore(s => s.addItem)
@@ -329,7 +490,7 @@ function JustDropped() {
   const [hovered, setHovered] = useState(null)
   const addItem = useCartStore(s => s.addItem)
   return (
-    <section style={{ background: OW, padding: '64px', borderTop: `1px solid ${BR}` }}>
+    <section style={{ background: W, padding: '64px', borderTop: `1px solid ${BR}` }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
           <div>
@@ -383,103 +544,13 @@ function JustDropped() {
   )
 }
 
-// ─── OUR BRAND COLLECTIONS ───────────────────
-const brandCollections = [
-  {
-    id: 'eden',
-    image: '/Solenne.jpeg',
-    label: 'SS 2025',
-    name: 'Eden Collection',
-    href: '/shop',
-  },
-  {
-    id: 'love',
-    image: '/Ayla.jpeg',
-    label: 'Coming Soon',
-    name: 'The Love Edit',
-    href: '/shop',
-  },
-  {
-    id: 'bold',
-    image: '/Mira.jpeg',
-    label: 'Coming Soon',
-    name: 'Bold & Beautiful',
-    href: '/shop',
-  },
-]
-
-function BrandCollections() {
-  const [hovered, setHovered] = useState(null)
-
-  return (
-    <section style={{ background: W, padding: '64px 0 0' }}>
-
-      {/* Header — matches the reference image style */}
-      <div style={{ padding: '0 64px', maxWidth: '1280px', margin: '0 auto', marginBottom: '32px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
-          <div style={{ width: '28px', height: '1px', background: G }} />
-          <span style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-            Our Collections
-          </span>
-        </div>
-        <h2 style={{ ...F, fontSize: 'clamp(22px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>
-          Our Brand Collections
-        </h2>
-      </div>
-
-      {/* 3 full-height image cards — no gaps, edge to edge */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr' }}>
-        {brandCollections.map((col, i) => (
-          <Link
-            key={col.id}
-            to={col.href}
-            onMouseEnter={() => setHovered(col.id)}
-            onMouseLeave={() => setHovered(null)}
-            style={{ display: 'block', textDecoration: 'none', position: 'relative', height: '520px', overflow: 'hidden', background: B2 }}>
-
-            <img
-              src={col.image}
-              alt={col.name}
-              onError={e => { e.target.style.display = 'none' }}
-              style={{
-                position: 'absolute', inset: 0,
-                width: '100%', height: '100%', objectFit: 'cover',
-                transition: 'transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94)',
-                transform: hovered === col.id ? 'scale(1.04)' : 'scale(1)',
-              }}
-            />
-
-            {/* Gradient overlay at bottom */}
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: 'linear-gradient(to top, rgba(17,17,17,0.72) 0%, rgba(17,17,17,0.1) 55%, transparent 100%)',
-            }} />
-
-            {/* Caption — bottom left, exactly like reference */}
-            <div style={{ position: 'absolute', bottom: '24px', left: '24px', right: '24px' }}>
-              <p style={{ ...F, fontSize: '11px', fontWeight: 400, color: 'rgba(255,255,255,0.55)', letterSpacing: '0.04em', marginBottom: '4px' }}>
-                {col.label}
-              </p>
-              <p style={{ ...F, fontSize: '16px', fontWeight: 600, color: W, letterSpacing: '0.01em' }}>
-                {col.name}
-              </p>
-            </div>
-
-          </Link>
-        ))}
-      </div>
-
-    </section>
-  )
-}
-
 export default function Home() {
   return (
     <main style={{ background: W }}>
       <PromoPopup />
       <Hero />
-      <JustDropped />
       <BrandCollections />
+      <JustDropped />
     </main>
   )
 }
