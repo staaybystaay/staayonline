@@ -651,85 +651,6 @@ function Press() {
   )
 }
 
-// ─────────────────────────────────────────────
-// BEHIND THE SCENES
-// ─────────────────────────────────────────────
-function BehindScenes() {
-  const [hovered, setHovered] = useState(null)
-
-  return (
-    <section style={{
-      borderBottom: '1px solid var(--border)',
-      padding: '72px 0',
-    }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
-        <FadeUp>
-          <SectionLabel number="04" label="Behind the Scenes" />
-        </FadeUp>
-
-        <FadeUp delay={0.1} style={{ marginBottom: '40px' }}>
-          <h2 style={{
-            fontFamily: "'Bebas Neue', sans-serif",
-            fontSize: 'clamp(36px, 5vw, 64px)',
-            color: 'var(--text)', lineHeight: 0.9, letterSpacing: '0.01em',
-          }}>
-            BEHIND<br />
-            <span style={{ color: 'var(--accent)' }}>THE BRAND</span>
-          </h2>
-        </FadeUp>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          gap: '0',
-          border: '1px solid var(--border)',
-        }}>
-          {behindScenes.map((item, i) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              onMouseEnter={() => setHovered(item.id)}
-              onMouseLeave={() => setHovered(null)}
-              style={{
-                position: 'relative',
-                borderRight: i < 2 ? '1px solid var(--border)' : 'none',
-                overflow: 'hidden', cursor: 'pointer',
-                aspectRatio: '4/5',
-              }}>
-              <img
-                src={item.image}
-                alt={item.caption}
-                style={{
-                  width: '100%', height: '100%', objectFit: 'cover',
-                  display: 'block',
-                  transition: 'transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94)',
-                  transform: hovered === item.id ? 'scale(1.04)' : 'scale(1)',
-                }}
-              />
-              <div style={{
-                position: 'absolute', inset: 0,
-                background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%)',
-                opacity: hovered === item.id ? 1 : 0.5,
-                transition: 'opacity 0.3s',
-              }} />
-              <p style={{
-                position: 'absolute', bottom: '16px', left: '16px', right: '16px',
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '11px', letterSpacing: '0.1em',
-                color: 'rgba(255,255,255,0.7)', fontWeight: 300,
-              }}>
-                {item.caption}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
 
 // ─────────────────────────────────────────────
 // CTA BAND
@@ -819,7 +740,6 @@ export default function Featured() {
       <RunwayShows />
       <Lookbook />
       <Press />
-      <BehindScenes />
       <CtaBand />
     </div>
   )
