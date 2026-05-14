@@ -72,17 +72,11 @@ const stats = [
   { value: '98%',    label: 'Customer Satisfaction'   },
 ]
 
-const editorialImages = [
-  { src: '/brand1.jpg', label: 'SS 2025 Campaign' },
-  { src: '/brand2.jpg', label: 'Void Series Runway' },
-  { src: '/brand3.jpg',    label: 'Accra 2024' },
-]
-
 const contactItems = [
-  { label: 'Email',     value: 'info@staayonline.com', href: 'mailto:info@staayonline.com'              },
-  { label: 'WhatsApp',  value: '+233 50 397 7985',      href: 'https://wa.me/233503977985'              },
-  { label: 'Instagram', value: '@staaybystaay',          href: 'https://instagram.com/staaybystaay'      },
-  { label: 'TikTok',    value: '@staaybystaay',          href: 'https://tiktok.com/@staaybystaay'        },
+  { label: 'Email',     value: 'info@staayonline.com', href: 'mailto:info@staayonline.com'         },
+  { label: 'WhatsApp',  value: '+233 50 397 7985',      href: 'https://wa.me/233503977985'         },
+  { label: 'Instagram', value: '@staaybystaay',          href: 'https://instagram.com/staaybystaay' },
+  { label: 'TikTok',    value: '@staaybystaay',          href: 'https://tiktok.com/@staaybystaay'   },
 ]
 
 function FadeUp({ children, delay = 0, style = {} }) {
@@ -388,39 +382,6 @@ function Values() {
   )
 }
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
-        {editorialImages.map((img, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: i * 0.1 }}
-            style={{
-              position: 'relative', aspectRatio: '4/5',
-              borderRight: i < 2 ? `1px solid ${BR}` : 'none',
-              overflow: 'hidden',
-            }}>
-            <img
-              src={img.src} alt={img.label}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-            <div style={{
-              position: 'absolute', bottom: 0, left: 0, right: 0,
-              background: 'linear-gradient(to top, rgba(17,17,17,0.75) 0%, transparent 60%)',
-              padding: '20px 24px',
-            }}>
-              <p style={{ ...F, fontSize: '12px', fontWeight: 500, color: W, letterSpacing: '0.04em' }}>
-                {img.label}
-              </p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  )
-}
-
 // ─── CTA ─────────────────────────────────────
 function BrandCta() {
   return (
@@ -454,11 +415,13 @@ function BrandCta() {
               </p>
               <Link
                 to="/shop"
+                onClick={() => window.scrollTo(0, 0)}
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: '8px',
                   background: BK, color: W, padding: '14px 32px',
                   ...F, fontSize: '13px', fontWeight: 600,
                   letterSpacing: '0.04em', transition: 'background 0.2s',
+                  textDecoration: 'none',
                 }}
                 onMouseEnter={e => { e.currentTarget.style.background = G }}
                 onMouseLeave={e => { e.currentTarget.style.background = BK }}>
@@ -492,6 +455,7 @@ function BrandCta() {
                     style={{
                       ...F, fontSize: '13px', fontWeight: 500, color: DK,
                       transition: 'color 0.2s',
+                      textDecoration: 'none',
                     }}
                     onMouseEnter={e => { e.currentTarget.style.color = G }}
                     onMouseLeave={e => { e.currentTarget.style.color = DK }}>
