@@ -42,7 +42,20 @@ const loveProducts = [
   { id: 'l3', name: 'ODO',   price: 2200, image: '/Odo.jpeg',   collection: 'love', badge: 'New' },
 ]
 
-const allProducts = [...edenProducts, ...loveProducts]
+const boldProducts = [
+  { id: 'b1',  name: 'ZURI',  price: 3500, image: '/Zuri.jpeg',  collection: 'bold', badge: 'New' },
+  { id: 'b2',  name: 'NYAH',  price: 2600, image: '/Nyah.jpeg',  collection: 'bold', badge: 'New' },
+  { id: 'b3',  name: 'ZAYA',  price: 1900, image: '/Zaya.jpeg',  collection: 'bold', badge: 'New' },
+  { id: 'b4',  name: 'LOIS',  price: 1450, image: '/Lois.jpeg',  collection: 'bold', badge: 'New' },
+  { id: 'b5',  name: 'ZARA',  price: 2200, image: '/Zara.jpeg',  collection: 'bold', badge: 'New' },
+  { id: 'b6',  name: 'ARIA',  price: 2400, image: '/Aria.jpeg',  collection: 'bold', badge: 'New' },
+  { id: 'b7',  name: 'NOVA',  price: 2900, image: '/Nova.jpeg',  collection: 'bold', badge: 'New' },
+  { id: 'b8',  name: 'AMARA', price: 2200, image: '/Amara.jpeg', collection: 'bold', badge: 'New' },
+  { id: 'b9',  name: 'ESME',  price: 2700, image: '/Esme.jpeg',  collection: 'bold', badge: 'New' },
+  { id: 'b10', name: 'SADE',  price: 1900, image: '/Sade.jpeg',  collection: 'bold', badge: 'New' },
+]
+
+const allProducts = [...edenProducts, ...loveProducts, ...boldProducts]
 
 const SORT_OPTIONS = [
   { label: 'Newest',      value: 'newest'     },
@@ -257,7 +270,7 @@ export default function Shop() {
   const [wishlist,         setWishlist]         = useState([])
 
   const activeCol  = COLLECTIONS.find(c => c.id === activeCollection)
-  const hasProducts = activeCollection === 'all' || activeCollection === 'eden' || activeCollection === 'love'
+  const hasProducts = activeCollection === 'all' || activeCollection === 'eden' || activeCollection === 'love' || activeCollection === 'bold'
 
   const toggleWishlist = id => setWishlist(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])
   const togglePrice    = label => setActivePrices(prev => prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label])
