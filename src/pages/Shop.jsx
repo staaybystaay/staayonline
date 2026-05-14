@@ -36,7 +36,13 @@ const edenProducts = [
   { id: 'e10', name: 'DAHLIA',  price: 2200, image: '/Dahlia.jpeg',  collection: 'eden', badge: 'New' },
 ]
 
-const allProducts = [...edenProducts]
+const loveProducts = [
+  { id: 'l1', name: 'AMOR',  price: 2900, image: '/Amor.jpeg',  collection: 'love', badge: 'New' },
+  { id: 'l2', name: 'LIEBE', price: 1900, image: '/Liebe.jpeg', collection: 'love', badge: 'New' },
+  { id: 'l3', name: 'ODO',   price: 2200, image: '/Odo.jpeg',   collection: 'love', badge: 'New' },
+]
+
+const allProducts = [...edenProducts, ...loveProducts]
 
 const SORT_OPTIONS = [
   { label: 'Newest',      value: 'newest'     },
