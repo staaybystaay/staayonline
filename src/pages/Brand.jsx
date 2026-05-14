@@ -388,28 +388,6 @@ function Values() {
   )
 }
 
-// ─── EDITORIAL STRIP ─────────────────────────
-function EditorialStrip() {
-  return (
-    <section style={{ borderBottom: `1px solid ${BR}` }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 64px 32px' }}>
-        <FadeUp style={{ marginBottom: '28px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-            <div style={{ width: '28px', height: '2px', background: G }} />
-            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-              In the World
-            </p>
-          </div>
-          <h2 style={{
-            ...F, fontWeight: 800,
-            fontSize: 'clamp(24px, 3vw, 40px)',
-            color: DK, letterSpacing: '-0.025em',
-          }}>
-            Behind the Brand
-          </h2>
-        </FadeUp>
-      </div>
-
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
         {editorialImages.map((img, i) => (
           <motion.div
@@ -538,7 +516,6 @@ export default function Brand() {
       <Manifesto />
       <Timeline />
       <Values />
-      <EditorialStrip />
       <BrandCta />
     </div>
   )
