@@ -70,7 +70,7 @@ const brandCollections = [
   {
     id: 'love',
     image: '/Ayla.jpeg',
-    label: 'Coming Soon',
+    label: 'SS 2026',
     name: 'The Love Edit',
     sub: 'New season',
     href: '/shop',
@@ -78,7 +78,7 @@ const brandCollections = [
   {
     id: 'bold',
     image: '/Mira.jpeg',
-    label: 'Coming Soon',
+    label: 'SS 2026',
     name: 'Bold & Beautiful',
     sub: 'New season',
     href: '/shop',
