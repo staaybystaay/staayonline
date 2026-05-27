@@ -155,6 +155,8 @@ function PromoPopup() {
 function Hero() {
   const [idx, setIdx] = useState(0)
   const [paused, setPaused] = useState(false)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
   const s = heroSlides[idx]
 
   useEffect(() => {
@@ -163,10 +165,34 @@ function Hero() {
     return () => clearInterval(t)
   }, [idx, paused])
 
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 50) {
+      // Swipe left - next slide
+      setIdx(i => (i + 1) % heroSlides.length)
+    }
+    if (touchStart - touchEnd < -50) {
+      // Swipe right - previous slide
+      setIdx(i => (i - 1 + heroSlides.length) % heroSlides.length)
+    }
+    setTouchStart(0)
+    setTouchEnd(0)
+  }
+
   return (
     <section
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       style={{ position: 'relative', height: '92vh', minHeight: '580px', overflow: 'hidden', background: BK }}>
       <AnimatePresence mode="crossfade">
         <motion.div
@@ -324,12 +350,8 @@ function BrandCollections() {
           </div>
         </div>
 
-        {/* 3 cards with gap — clearly distinct */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          gap: '16px',
-        }}>
+        {/* Responsive grid: 3 columns on desktop, 2 columns on mobile */}
+        <div className="brand-collections-grid">
           {brandCollections.map((col, i) => (
             <motion.div
               key={col.id}
@@ -343,15 +365,13 @@ function BrandCollections() {
 
               <Link
                 to={col.href}
+                className="brand-collection-link"
                 style={{
                   display: 'block', textDecoration: 'none',
                   position: 'relative', overflow: 'hidden',
                   height: '540px',
                   background: B2,
-                  // Gold bottom border reveals on hover
-                  boxShadow: hovered === col.id
-                    ? `0 0 0 2px ${G}`
-                    : '0 0 0 0px transparent',
+                  boxShadow: hovered === col.id ? `0 0 0 2px ${G}` : '0 0 0 0px transparent',
                   transition: 'box-shadow 0.3s',
                 }}>
 
@@ -359,6 +379,7 @@ function BrandCollections() {
                   src={col.image}
                   alt={col.name}
                   onError={e => { e.target.style.display = 'none' }}
+                  className="brand-collection-image"
                   style={{
                     width: '100%', height: '100%', objectFit: 'cover',
                     display: 'block',
@@ -387,7 +408,7 @@ function BrandCollections() {
                 </div>
 
                 {/* Bottom text */}
-                <div style={{
+                <div className="brand-collection-bottom" style={{
                   position: 'absolute', bottom: '0', left: '0', right: '0',
                   padding: '24px',
                   borderTop: `2px solid ${hovered === col.id ? G : 'transparent'}`,
@@ -401,13 +422,13 @@ function BrandCollections() {
                     {col.sub}
                   </p>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <p style={{
+                    <p className="brand-collection-name" style={{
                       ...F, fontSize: '18px', fontWeight: 700,
                       color: W, letterSpacing: '-0.01em',
                     }}>
                       {col.name}
                     </p>
-                    <span style={{
+                    <span className="brand-collection-arrow" style={{
                       width: '32px', height: '32px',
                       border: `1px solid rgba(255,255,255,0.4)`,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -426,6 +447,45 @@ function BrandCollections() {
         </div>
 
       </div>
+
+      <style>{`
+        .brand-collections-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+        }
+        
+        @media (max-width: 768px) {
+          .brand-collections-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+          }
+          
+          .brand-collection-link {
+            height: auto !important;
+            aspect-ratio: 3/4;
+          }
+          
+          .brand-collection-bottom {
+            padding: 16px !important;
+          }
+          
+          .brand-collection-name {
+            font-size: 14px !important;
+          }
+          
+          .brand-collection-arrow {
+            width: 28px !important;
+            height: 28px !important;
+            font-size: 14px !important;
+            opacity: 1 !important;
+          }
+          
+          section {
+            padding: 48px 20px !important;
+          }
+        }
+      `}</style>
     </section>
   )
 }
@@ -505,7 +565,7 @@ function JustDropped() {
             View All →
           </Link>
         </div>
-        <div className="hide-scroll" style={{ display: 'flex', gap: '16px', overflowX: 'auto' }}>
+        <div className="just-dropped-scroll">
           {drops.map((item, i) => (
             <motion.div
               key={item.id}
@@ -515,7 +575,7 @@ function JustDropped() {
               transition={{ duration: 0.4, delay: i * 0.07 }}
               onMouseEnter={() => setHovered(item.id)}
               onMouseLeave={() => setHovered(null)}
-              style={{ flexShrink: 0, width: '210px' }}>
+              className="just-dropped-item">
               <div style={{ position: 'relative', height: '260px', background: B2, overflow: 'hidden', marginBottom: '12px' }}>
                 <img
                   src={item.image} alt={item.name}
@@ -540,6 +600,45 @@ function JustDropped() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        .just-dropped-scroll {
+          display: flex;
+          gap: 16px;
+          overflow-x: auto;
+          scrollbar-width: thin;
+          -webkit-overflow-scrolling: touch;
+        }
+        
+        .just-dropped-item {
+          flex-shrink: 0;
+          width: 210px;
+        }
+        
+        @media (max-width: 768px) {
+          .just-dropped-scroll {
+            width: 100vw;
+            margin-left: -20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            gap: 12px;
+            scroll-snap-type: x mandatory;
+          }
+          
+          .just-dropped-item {
+            width: 280px;
+            scroll-snap-align: start;
+          }
+          
+          .just-dropped-item > div:first-child {
+            height: 340px !important;
+          }
+          
+          section {
+            padding: 48px 0 48px 0 !important;
+          }
+        }
+      `}</style>
     </section>
   )
 }
