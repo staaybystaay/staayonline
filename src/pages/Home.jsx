@@ -54,7 +54,7 @@ const drops = [
   { id: 'f1', name: 'Air STAAY 01',   price: 320, image: '/Kaia.png',      tag: 'New'  },
   { id: 'f2', name: 'Void Hoodie',    price: 195, image: '/Dahlia.jpeg',   tag: null   },
   { id: 'f3', name: 'Cargo Pant 02',  price: 240, image: '/Elara.jpeg',    tag: 'New'  },
-  { id: 'f4', name: 'Phantom Jacket', price: 420, image: 'Eve.png',        tag: null   },
+  { id: 'f4', name: 'Phantom Jacket', price: 420, image: '/phantom.jpg',   tag: null   },
   { id: 'f5', name: 'STAAY Crocs',    price: 280, image: '/Vera.jpeg',     tag: 'Sale' },
 ]
 
