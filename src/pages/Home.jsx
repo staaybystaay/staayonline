@@ -333,7 +333,7 @@ function BrandCollections() {
               ...F, fontSize: 'clamp(22px, 3vw, 36px)',
               fontWeight: 700, color: DK, letterSpacing: '-0.02em',
             }}>
-              Our Brand Collections
+               Our Brand Collections
             </h2>
             <Link
               to="/shop"
