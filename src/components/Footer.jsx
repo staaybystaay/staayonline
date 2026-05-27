@@ -1,43 +1,42 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const G   = '#B8903A'
-const GL  = '#F5ECD8'
-const W   = '#FFFFFF'
-const OW  = '#F8F7F4'
-const BK  = '#111111'
-const DK  = '#222222'
-const MD  = '#666666'
-const FT  = '#999999'
-const BR  = '#E4E0D8'
-const F   = { fontFamily: "'Inter', sans-serif" }
+const G   = '#B8903A';
+const GL  = '#F5ECD8';
+const W   = '#FFFFFF';
+const OW  = '#F8F7F4';
+const BK  = '#111111';
+const DK  = '#222222';
+const MD  = '#666666';
+const FT  = '#999999';
+const BR  = '#E4E0D8';
+const F   = { fontFamily: "'Inter', sans-serif" };
 
 const shopLinks = [
   { label: 'New Arrivals',  path: '/shop'     },
   { label: 'Tops',          path: '/shop'     },
   { label: 'Bottoms',       path: '/shop'     },
   { label: 'Coats',         path: '/shop'     },
-  
-]
+];
 
 const companyLinks = [
   { label: 'Our Brand',     path: '/brand'    },
   { label: 'FAQ',           path: '/'         },
   { label: 'Size Guide',    path: '/'         },
-]
+];
 
 const supportLinks = [
   { label: 'Track My Order',      path: '/' },
   { label: 'Returns & Exchanges', path: '/terms' },
   { label: 'Contact Support',     path: '/contact' },
-]
+];
 
 const legalLinks = [
   { label: 'Terms of Service',    path: '/terms'  },
   { label: 'Privacy Policy', path: '/privacy' },
   { label: 'Shipping Information', path: '/terms'      },
   { label: 'Cookie Policy',       path: '/'       },
-]
+];
 
 const socialLinks = [
   {
@@ -51,7 +50,6 @@ const socialLinks = [
       </svg>
     ),
   },
- 
   {
     label: 'TikTok',
     href: 'https://tiktok.com/@staaybystaay',
@@ -70,9 +68,9 @@ const socialLinks = [
       </svg>
     ),
   },
-]
+];
 
-const scrollTop = () => window.scrollTo(0, 0)
+const scrollTop = () => window.scrollTo(0, 0);
 
 function LinkColumn({ heading, links }) {
   return (
@@ -103,153 +101,383 @@ function LinkColumn({ heading, links }) {
         ))}
       </ul>
     </div>
-  )
+  );
 }
 
-function Newsletter() {
-  const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
-  const [focused, setFocused] = useState(false)
+// Brand Column Component (formerly part of the original code)
+function BrandColumn() {
+  return (
+    <div>
+      <Link to="/" onClick={scrollTop} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+        <img
+          src="/stayonlinelogo.jpeg"
+          alt="Staay"
+          style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '50%' }}
+        />
+        <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+          <span style={{ ...F, fontSize: '18px', fontWeight: 800, color: DK, letterSpacing: '-0.01em' }}>
+            STAAY
+          </span>
+          <span style={{ ...F, fontSize: '8px', fontWeight: 500, color: G, letterSpacing: '0.25em', textTransform: 'uppercase', marginTop: '2px' }}>
+            ONLINE
+          </span>
+        </div>
+      </Link>
+
+      <p style={{
+        ...F, fontSize: '13px', fontWeight: 300,
+        lineHeight: 1.7, color: MD, marginBottom: '20px',
+        maxWidth: '220px',
+      }}>
+        Designed for women who live beyond limits. Effortless. Intentional. Always in season.
+      </p>
+
+      {/* SSL badge */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '20px' }}>
+        <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: G, flexShrink: 0 }} />
+        <span style={{ ...F, fontSize: '11px', fontWeight: 400, color: FT }}>
+          SSL secured checkout
+        </span>
+      </div>
+
+      {/* Social icons */}
+      <div style={{ display: 'flex', gap: '8px' }}>
+        {socialLinks.map(social => (
+          <a
+            key={social.label}
+            href={social.href}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={social.label}
+            style={{
+              width: '36px', height: '36px',
+              border: `1px solid ${BR}`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: MD, transition: 'all 0.2s', background: W,
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = G; e.currentTarget.style.color = G }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = BR; e.currentTarget.style.color = MD }}>
+            {social.icon}
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Popup Subscription Form Component
+function SubscriptionPopup({ isOpen, onClose }) {
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [focused, setFocused] = useState(false);
 
   function handleSubmit() {
-    if (!email || !email.includes('@')) return
-    setSubmitted(true)
-    setEmail('')
-    setTimeout(() => setSubmitted(false), 4000)
+    if (!email || !email.includes('@')) return;
+    setSubmitted(true);
+    setEmail('');
+    setTimeout(() => {
+      setSubmitted(false);
+      onClose();
+    }, 3000);
   }
+
+  if (!isOpen) return null;
 
   if (submitted) {
     return (
       <div style={{
-        maxWidth: '440px', padding: '14px 20px',
-        border: `1px solid ${G}`, background: GL,
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        maxWidth: '480px',
+        background: W,
+        boxShadow: '-4px 0 30px rgba(0,0,0,0.1)',
+        zIndex: 1000,
+        padding: '32px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        animation: 'slideIn 0.3s ease-out',
       }}>
-        <span style={{ ...F, fontSize: '13px', fontWeight: 500, color: G }}>
-          You're in. Welcome to Staay.
-        </span>
+        <button
+          onClick={onClose}
+          style={{
+            position: 'absolute',
+            top: '20px',
+            right: '20px',
+            background: 'transparent',
+            border: 'none',
+            fontSize: '24px',
+            cursor: 'pointer',
+            color: MD,
+          }}
+        >
+          ×
+        </button>
+        <div style={{
+          border: `1px solid ${G}`,
+          background: GL,
+          padding: '20px',
+          textAlign: 'center',
+        }}>
+          <span style={{ ...F, fontSize: '16px', fontWeight: 500, color: G }}>
+            You're in. Welcome to Staay.
+          </span>
+        </div>
       </div>
-    )
+    );
   }
 
   return (
-    <div style={{ maxWidth: '440px' }}>
-      <p style={{
-        ...F, fontSize: '11px', fontWeight: 600,
-        letterSpacing: '0.08em', textTransform: 'uppercase',
-        color: G, marginBottom: '10px',
+    <>
+      <div
+        onClick={onClose}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0,0,0,0.5)',
+          zIndex: 999,
+          animation: 'fadeIn 0.2s ease-out',
+        }}
+      />
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        maxWidth: '480px',
+        background: W,
+        boxShadow: '-4px 0 30px rgba(0,0,0,0.1)',
+        zIndex: 1000,
+        padding: '40px 32px',
+        display: 'flex',
+        flexDirection: 'column',
+        animation: 'slideIn 0.3s ease-out',
+        overflowY: 'auto',
       }}>
-        Stay in the loop
-      </p>
-      <h3 style={{
-        ...F, fontSize: 'clamp(22px, 2.5vw, 30px)',
-        fontWeight: 800, color: DK,
-        letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '10px',
-      }}>
-        The STAAY Woman Starts Here
-      </h3>
-      <p style={{
-        ...F, fontSize: '14px', fontWeight: 300,
-        lineHeight: 1.65, color: MD, marginBottom: '24px',
-      }}>
-        Early access to new pieces, thoughtful releases, and everything we're creating for you.
-      </p>
-      <div style={{ display: 'flex' }}>
-        <input
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
-          onKeyDown={e => { if (e.key === 'Enter') handleSubmit() }}
-          placeholder="your@email.com"
-          style={{
-            flex: 1, background: W,
-            border: `1px solid ${focused ? BK : BR}`,
-            borderRight: 'none', padding: '13px 16px',
-            ...F, fontSize: '13px', color: DK,
-            outline: 'none', transition: 'border-color 0.2s',
-          }}
-        />
         <button
-          onClick={handleSubmit}
+          onClick={onClose}
           style={{
-            background: BK, border: `1px solid ${BK}`,
-            color: W, padding: '13px 22px',
-            ...F, fontSize: '12px', fontWeight: 600,
-            letterSpacing: '0.06em', textTransform: 'uppercase',
-            cursor: 'pointer', whiteSpace: 'nowrap',
-            transition: 'background 0.2s',
+            position: 'absolute',
+            top: '20px',
+            right: '20px',
+            background: 'transparent',
+            border: 'none',
+            fontSize: '28px',
+            cursor: 'pointer',
+            color: MD,
+            transition: 'color 0.2s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.borderColor = G }}
-          onMouseLeave={e => { e.currentTarget.style.background = BK; e.currentTarget.style.borderColor = BK }}>
-          Subscribe
+          onMouseEnter={e => { e.currentTarget.style.color = BK }}
+          onMouseLeave={e => { e.currentTarget.style.color = MD }}
+        >
+          ×
         </button>
+
+        <div style={{ marginTop: '20px' }}>
+          <p style={{
+            ...F, fontSize: '11px', fontWeight: 600,
+            letterSpacing: '0.08em', textTransform: 'uppercase',
+            color: G, marginBottom: '12px',
+          }}>
+            Stay in the loop
+          </p>
+          <h3 style={{
+            ...F, fontSize: 'clamp(24px, 4vw, 32px)',
+            fontWeight: 800, color: DK,
+            letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: '16px',
+          }}>
+            The STAAY Woman Starts Here
+          </h3>
+          <p style={{
+            ...F, fontSize: '15px', fontWeight: 300,
+            lineHeight: 1.65, color: MD, marginBottom: '32px',
+          }}>
+            Early access to new pieces, thoughtful releases, and everything we're creating for you.
+          </p>
+          <div style={{ display: 'flex', marginBottom: '16px' }}>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              onKeyDown={e => { if (e.key === 'Enter') handleSubmit() }}
+              placeholder="your@email.com"
+              style={{
+                flex: 1, background: W,
+                border: `1px solid ${focused ? BK : BR}`,
+                borderRight: 'none', padding: '14px 16px',
+                ...F, fontSize: '14px', color: DK,
+                outline: 'none', transition: 'border-color 0.2s',
+              }}
+            />
+            <button
+              onClick={handleSubmit}
+              style={{
+                background: BK, border: `1px solid ${BK}`,
+                color: W, padding: '14px 28px',
+                ...F, fontSize: '13px', fontWeight: 600,
+                letterSpacing: '0.06em', textTransform: 'uppercase',
+                cursor: 'pointer', whiteSpace: 'nowrap',
+                transition: 'background 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.borderColor = G }}
+              onMouseLeave={e => { e.currentTarget.style.background = BK; e.currentTarget.style.borderColor = BK }}>
+              Subscribe
+            </button>
+          </div>
+          <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: FT, marginTop: '8px' }}>
+            No spam. Unsubscribe anytime.
+          </p>
+        </div>
       </div>
-      <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: FT, marginTop: '8px' }}>
-        No spam. Unsubscribe anytime.
-      </p>
-    </div>
-  )
+      <style>{`
+        @keyframes slideIn {
+          from {
+            transform: translateX(100%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+      `}</style>
+    </>
+  );
+}
+
+// Popup Button Component
+function PopupButton({ onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        position: 'fixed',
+        bottom: '24px',
+        right: '24px',
+        background: G,
+        color: W,
+        border: 'none',
+        borderRadius: '50%',
+        width: '56px',
+        height: '56px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        transition: 'transform 0.2s, background 0.2s',
+        zIndex: 998,
+      }}
+      onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.background = BK }}
+      onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.background = G }}
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+        <polyline points="22,6 12,13 2,6" />
+      </svg>
+    </button>
+  );
 }
 
 export default function Footer() {
-  const year = new Date().getFullYear()
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const year = new Date().getFullYear();
+
+  // Auto-popup when scrolling to the end of the home screen
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const pageHeight = document.documentElement.scrollHeight;
+      // When user scrolls to bottom (with 50px threshold)
+      if (scrollPosition >= pageHeight - 50) {
+        // Only show if not already open and hasn't been shown too many times
+        const popupShown = sessionStorage.getItem('subscriptionPopupShown');
+        if (!popupShown && !isPopupOpen) {
+          setIsPopupOpen(true);
+          sessionStorage.setItem('subscriptionPopupShown', 'true');
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isPopupOpen]);
 
   return (
-    <footer style={{ background: OW, borderTop: `1px solid ${BR}` }}>
-      <div style={{ height: '3px', background: G }} />
+    <>
+      <footer style={{ background: OW, borderTop: `1px solid ${BR}` }}>
+        <div style={{ height: '3px', background: G }} />
 
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '64px 64px 40px' }}>
-
-        {/* ── MAIN GRID ── */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
-          gap: '45px',
-          marginBottom: '56px',
+          maxWidth: '1280px',
+          margin: '0 auto',
+          padding: '64px 24px 40px',
+          '@media (minWidth: 768px)': { padding: '64px 40px 40px' },
+          '@media (minWidth: 1024px)': { padding: '64px 64px 40px' },
         }}>
 
-          <LinkColumn heading="Shop"    links={shopLinks}    />
-          <LinkColumn heading="Company" links={companyLinks} />
-          <LinkColumn heading="Support" links={supportLinks} />
-          <LinkColumn heading="Legal"   links={legalLinks}   />
+          {/* ── MAIN GRID with Brand Column ── */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+            gap: '40px',
+            marginBottom: '56px',
+          }}>
+            <BrandColumn />
+            <LinkColumn heading="Shop"    links={shopLinks}    />
+            <LinkColumn heading="Company" links={companyLinks} />
+            <LinkColumn heading="Support" links={supportLinks} />
+            <LinkColumn heading="Legal"   links={legalLinks}   />
+          </div>
 
+          {/* ── BOTTOM BAR ── */}
+          <div style={{
+            borderTop: `1px solid ${BR}`,
+            paddingTop: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '12px',
+          }}>
+            <span style={{ ...F, fontSize: '12px', fontWeight: 300, color: FT }}>
+              © {year} STAAY. All rights reserved.
+            </span>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '6px',
+                background: 'transparent', border: 'none',
+                ...F, fontSize: '11px', fontWeight: 500,
+                letterSpacing: '0.06em', textTransform: 'uppercase',
+                color: MD, cursor: 'pointer', transition: 'color 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.color = G }}
+              onMouseLeave={e => { e.currentTarget.style.color = MD }}>
+              Back to top ↑
+            </button>
+          </div>
         </div>
+      </footer>
 
-        {/* ── NEWSLETTER ── */}
-        <div style={{
-          borderTop: `1px solid ${BR}`,
-          paddingTop: '48px', marginBottom: '48px',
-        }}>
-          <Newsletter />
-        </div>
-
-        {/* ── BOTTOM BAR ── */}
-        <div style={{
-          borderTop: `1px solid ${BR}`,
-          paddingTop: '20px',
-          display: 'flex', alignItems: 'center',
-          justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px',
-        }}>
-          <span style={{ ...F, fontSize: '12px', fontWeight: 300, color: FT }}>
-            © {year} STAAY. All rights reserved.
-          </span>
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            style={{
-              display: 'flex', alignItems: 'center', gap: '6px',
-              background: 'transparent', border: 'none',
-              ...F, fontSize: '11px', fontWeight: 500,
-              letterSpacing: '0.06em', textTransform: 'uppercase',
-              color: MD, cursor: 'pointer', transition: 'color 0.2s',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.color = G }}
-            onMouseLeave={e => { e.currentTarget.style.color = MD }}>
-            Back to top ↑
-          </button>
-        </div>
-
-      </div>
-    </footer>
-  )
+      {/* Popup Button and Subscription Popup */}
+      <PopupButton onClick={() => setIsPopupOpen(true)} />
+      <SubscriptionPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+    </>
+  );
 }
