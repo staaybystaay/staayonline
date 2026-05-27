@@ -209,63 +209,6 @@ export default function Footer() {
           marginBottom: '56px',
         }}>
 
-          {/* Brand column */}
-          <div>
-            <Link to="/" onClick={scrollTop} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-              <img
-                src="/stayonlinelogo.jpeg"
-                alt="Staay"
-                style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '50%' }}
-              />
-              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
-                <span style={{ ...F, fontSize: '18px', fontWeight: 800, color: DK, letterSpacing: '-0.01em' }}>
-                  STAAY
-                </span>
-                <span style={{ ...F, fontSize: '8px', fontWeight: 500, color: G, letterSpacing: '0.25em', textTransform: 'uppercase', marginTop: '2px' }}>
-                  ONLINE
-                </span>
-              </div>
-            </Link>
-
-            <p style={{
-              ...F, fontSize: '13px', fontWeight: 300,
-              lineHeight: 1.7, color: MD, marginBottom: '20px',
-              maxWidth: '220px',
-            }}>
-              Designed for women who live beyond limits. Effortless. Intentional. Always in season.
-            </p>
-
-            {/* SSL badge */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '20px' }}>
-              <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: G, flexShrink: 0 }} />
-              <span style={{ ...F, fontSize: '11px', fontWeight: 400, color: FT }}>
-                SSL secured checkout
-              </span>
-            </div>
-
-            {/* Social icons */}
-            <div style={{ display: 'flex', gap: '8px' }}>
-              {socialLinks.map(social => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={social.label}
-                  style={{
-                    width: '36px', height: '36px',
-                    border: `1px solid ${BR}`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    color: MD, transition: 'all 0.2s', background: W,
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = G; e.currentTarget.style.color = G }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = BR; e.currentTarget.style.color = MD }}>
-                  {social.icon}
-                </a>
-              ))}
-            </div>
-          </div>
-
           <LinkColumn heading="Shop"    links={shopLinks}    />
           <LinkColumn heading="Company" links={companyLinks} />
           <LinkColumn heading="Support" links={supportLinks} />
