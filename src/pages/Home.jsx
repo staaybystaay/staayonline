@@ -155,6 +155,8 @@ function PromoPopup() {
 function Hero() {
   const [idx, setIdx] = useState(0)
   const [paused, setPaused] = useState(false)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
   const s = heroSlides[idx]
 
   useEffect(() => {
@@ -163,10 +165,35 @@ function Hero() {
     return () => clearInterval(t)
   }, [idx, paused])
 
+  // Handle swipe for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 50) {
+      // Swipe left -> next slide
+      setIdx(i => (i + 1) % heroSlides.length)
+    }
+    if (touchStart - touchEnd < -50) {
+      // Swipe right -> previous slide
+      setIdx(i => (i - 1 + heroSlides.length) % heroSlides.length)
+    }
+    setTouchStart(0)
+    setTouchEnd(0)
+  }
+
   return (
     <section
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       style={{ position: 'relative', height: '92vh', minHeight: '580px', overflow: 'hidden', background: BK }}>
       <AnimatePresence mode="crossfade">
         <motion.div
@@ -189,6 +216,9 @@ function Hero() {
         position: 'absolute', inset: 0, zIndex: 2,
         maxWidth: '1280px', width: '100%', margin: '0 auto',
         padding: '0 64px', display: 'flex', alignItems: 'center',
+        '@media (max-width: 768px)': {
+          padding: '0 24px',
+        }
       }}>
         <AnimatePresence mode="wait">
           <motion.div
@@ -244,6 +274,10 @@ function Hero() {
       <div style={{
         position: 'absolute', bottom: '36px', left: '64px',
         zIndex: 3, display: 'flex', alignItems: 'center', gap: '8px',
+        '@media (max-width: 768px)': {
+          left: '24px',
+          bottom: '20px',
+        }
       }}>
         {heroSlides.map((sl, i) => (
           <button
@@ -260,6 +294,10 @@ function Hero() {
       <div style={{
         position: 'absolute', bottom: '24px', right: '64px',
         zIndex: 3, display: 'flex', gap: '8px',
+        '@media (max-width: 768px)': {
+          right: '24px',
+          bottom: '16px',
+        }
       }}>
         {[-1, 1].map(d => (
           <button
@@ -288,7 +326,7 @@ function BrandCollections() {
   const [hovered, setHovered] = useState(null)
 
   return (
-    <section style={{ background: OW, padding: '72px 64px' }}>
+    <section style={{ background: OW, padding: '72px 64px', '@media (max-width: 768px)': { padding: '48px 20px' } }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
 
         {/* Header */}
@@ -324,11 +362,15 @@ function BrandCollections() {
           </div>
         </div>
 
-        {/* 3 cards with gap — clearly distinct */}
+        {/* 3 cards on desktop, 2 on mobile */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr 1fr',
           gap: '16px',
+          '@media (max-width: 768px)': {
+            gridTemplateColumns: '1fr 1fr',
+            gap: '12px',
+          }
         }}>
           {brandCollections.map((col, i) => (
             <motion.div
@@ -353,6 +395,10 @@ function BrandCollections() {
                     ? `0 0 0 2px ${G}`
                     : '0 0 0 0px transparent',
                   transition: 'box-shadow 0.3s',
+                  '@media (max-width: 768px)': {
+                    height: 'auto',
+                    aspectRatio: '3/4',
+                  }
                 }}>
 
                 <img
@@ -392,6 +438,9 @@ function BrandCollections() {
                   padding: '24px',
                   borderTop: `2px solid ${hovered === col.id ? G : 'transparent'}`,
                   transition: 'border-top-color 0.3s',
+                  '@media (max-width: 768px)': {
+                    padding: '16px',
+                  }
                 }}>
                   <p style={{
                     ...F, fontSize: '11px', fontWeight: 400,
@@ -404,6 +453,9 @@ function BrandCollections() {
                     <p style={{
                       ...F, fontSize: '18px', fontWeight: 700,
                       color: W, letterSpacing: '-0.01em',
+                      '@media (max-width: 768px)': {
+                        fontSize: '14px',
+                      }
                     }}>
                       {col.name}
                     </p>
@@ -414,6 +466,12 @@ function BrandCollections() {
                       color: W, fontSize: '16px',
                       opacity: hovered === col.id ? 1 : 0,
                       transition: 'opacity 0.3s',
+                      '@media (max-width: 768px)': {
+                        width: '28px',
+                        height: '28px',
+                        fontSize: '14px',
+                        opacity: 1,
+                      }
                     }}>
                       →
                     </span>
@@ -490,9 +548,9 @@ function JustDropped() {
   const [hovered, setHovered] = useState(null)
   const addItem = useCartStore(s => s.addItem)
   return (
-    <section style={{ background: W, padding: '64px', borderTop: `1px solid ${BR}` }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
+    <section style={{ background: W, padding: '64px', borderTop: `1px solid ${BR}`, '@media (max-width: 768px)': { padding: '48px 0 48px 20px' } }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', '@media (max-width: 768px)': { maxWidth: '100%' } }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px', paddingRight: '20px', '@media (max-width: 768px)': { paddingRight: '20px' } }}>
           <div>
             <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>Just In</p>
             <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>New Arrivals</h2>
@@ -505,7 +563,18 @@ function JustDropped() {
             View All →
           </Link>
         </div>
-        <div className="hide-scroll" style={{ display: 'flex', gap: '16px', overflowX: 'auto' }}>
+        <div className="hide-scroll" style={{
+          display: 'flex',
+          gap: '16px',
+          overflowX: 'auto',
+          scrollbarWidth: 'thin',
+          WebkitOverflowScrolling: 'touch',
+          '@media (max-width: 768px)': {
+            width: '100%',
+            gap: '12px',
+            scrollSnapType: 'x mandatory',
+          }
+        }}>
           {drops.map((item, i) => (
             <motion.div
               key={item.id}
@@ -515,8 +584,15 @@ function JustDropped() {
               transition={{ duration: 0.4, delay: i * 0.07 }}
               onMouseEnter={() => setHovered(item.id)}
               onMouseLeave={() => setHovered(null)}
-              style={{ flexShrink: 0, width: '210px' }}>
-              <div style={{ position: 'relative', height: '260px', background: B2, overflow: 'hidden', marginBottom: '12px' }}>
+              style={{
+                flexShrink: 0,
+                width: '210px',
+                '@media (max-width: 768px)': {
+                  width: '280px',
+                  scrollSnapAlign: 'start',
+                }
+              }}>
+              <div style={{ position: 'relative', height: '260px', background: B2, overflow: 'hidden', marginBottom: '12px', '@media (max-width: 768px)': { height: '340px' } }}>
                 <img
                   src={item.image} alt={item.name}
                   style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.65s', transform: hovered === item.id ? 'scale(1.05)' : 'scale(1)' }}
