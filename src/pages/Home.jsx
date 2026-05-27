@@ -165,7 +165,6 @@ function Hero() {
     return () => clearInterval(t)
   }, [idx, paused])
 
-  // Handle swipe for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX)
   }
@@ -176,11 +175,9 @@ function Hero() {
 
   const handleTouchEnd = () => {
     if (touchStart - touchEnd > 50) {
-      // Swipe left -> next slide
       setIdx(i => (i + 1) % heroSlides.length)
     }
     if (touchStart - touchEnd < -50) {
-      // Swipe right -> previous slide
       setIdx(i => (i - 1 + heroSlides.length) % heroSlides.length)
     }
     setTouchStart(0)
@@ -216,9 +213,6 @@ function Hero() {
         position: 'absolute', inset: 0, zIndex: 2,
         maxWidth: '1280px', width: '100%', margin: '0 auto',
         padding: '0 64px', display: 'flex', alignItems: 'center',
-        '@media (max-width: 768px)': {
-          padding: '0 24px',
-        }
       }}>
         <AnimatePresence mode="wait">
           <motion.div
@@ -274,10 +268,6 @@ function Hero() {
       <div style={{
         position: 'absolute', bottom: '36px', left: '64px',
         zIndex: 3, display: 'flex', alignItems: 'center', gap: '8px',
-        '@media (max-width: 768px)': {
-          left: '24px',
-          bottom: '20px',
-        }
       }}>
         {heroSlides.map((sl, i) => (
           <button
@@ -294,10 +284,6 @@ function Hero() {
       <div style={{
         position: 'absolute', bottom: '24px', right: '64px',
         zIndex: 3, display: 'flex', gap: '8px',
-        '@media (max-width: 768px)': {
-          right: '24px',
-          bottom: '16px',
-        }
       }}>
         {[-1, 1].map(d => (
           <button
@@ -321,15 +307,12 @@ function Hero() {
   )
 }
 
-// ─── OUR BRAND COLLECTIONS ───────────────────
 function BrandCollections() {
   const [hovered, setHovered] = useState(null)
 
   return (
-    <section style={{ background: OW, padding: '72px 64px', '@media (max-width: 768px)': { padding: '48px 20px' } }}>
+    <section style={{ background: OW, padding: '72px 64px' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-
-        {/* Header */}
         <div style={{ marginBottom: '40px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '10px' }}>
             <div style={{ width: '28px', height: '1px', background: G }} />
@@ -362,16 +345,7 @@ function BrandCollections() {
           </div>
         </div>
 
-        {/* 3 cards on desktop, 2 on mobile */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr 1fr',
-          gap: '16px',
-          '@media (max-width: 768px)': {
-            gridTemplateColumns: '1fr 1fr',
-            gap: '12px',
-          }
-        }}>
+        <div className="brand-collections-grid">
           {brandCollections.map((col, i) => (
             <motion.div
               key={col.id}
@@ -385,26 +359,21 @@ function BrandCollections() {
 
               <Link
                 to={col.href}
+                className="brand-collection-link"
                 style={{
                   display: 'block', textDecoration: 'none',
                   position: 'relative', overflow: 'hidden',
                   height: '540px',
                   background: B2,
-                  // Gold bottom border reveals on hover
-                  boxShadow: hovered === col.id
-                    ? `0 0 0 2px ${G}`
-                    : '0 0 0 0px transparent',
+                  boxShadow: hovered === col.id ? `0 0 0 2px ${G}` : '0 0 0 0px transparent',
                   transition: 'box-shadow 0.3s',
-                  '@media (max-width: 768px)': {
-                    height: 'auto',
-                    aspectRatio: '3/4',
-                  }
                 }}>
 
                 <img
                   src={col.image}
                   alt={col.name}
                   onError={e => { e.target.style.display = 'none' }}
+                  className="brand-collection-image"
                   style={{
                     width: '100%', height: '100%', objectFit: 'cover',
                     display: 'block',
@@ -413,13 +382,11 @@ function BrandCollections() {
                   }}
                 />
 
-                {/* Gradient overlay */}
                 <div style={{
                   position: 'absolute', inset: 0,
                   background: 'linear-gradient(to top, rgba(17,17,17,0.78) 0%, rgba(17,17,17,0.08) 50%, transparent 100%)',
                 }} />
 
-                {/* Label pill top-left */}
                 <div style={{
                   position: 'absolute', top: '16px', left: '16px',
                   background: col.label === 'SS 2025' ? G : 'rgba(17,17,17,0.55)',
@@ -432,15 +399,11 @@ function BrandCollections() {
                   {col.label}
                 </div>
 
-                {/* Bottom text */}
-                <div style={{
+                <div className="brand-collection-bottom" style={{
                   position: 'absolute', bottom: '0', left: '0', right: '0',
                   padding: '24px',
                   borderTop: `2px solid ${hovered === col.id ? G : 'transparent'}`,
                   transition: 'border-top-color 0.3s',
-                  '@media (max-width: 768px)': {
-                    padding: '16px',
-                  }
                 }}>
                   <p style={{
                     ...F, fontSize: '11px', fontWeight: 400,
@@ -453,25 +416,16 @@ function BrandCollections() {
                     <p style={{
                       ...F, fontSize: '18px', fontWeight: 700,
                       color: W, letterSpacing: '-0.01em',
-                      '@media (max-width: 768px)': {
-                        fontSize: '14px',
-                      }
                     }}>
                       {col.name}
                     </p>
-                    <span style={{
+                    <span className="brand-collection-arrow" style={{
                       width: '32px', height: '32px',
                       border: `1px solid rgba(255,255,255,0.4)`,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       color: W, fontSize: '16px',
                       opacity: hovered === col.id ? 1 : 0,
                       transition: 'opacity 0.3s',
-                      '@media (max-width: 768px)': {
-                        width: '28px',
-                        height: '28px',
-                        fontSize: '14px',
-                        opacity: 1,
-                      }
                     }}>
                       →
                     </span>
@@ -482,8 +436,66 @@ function BrandCollections() {
             </motion.div>
           ))}
         </div>
-
       </div>
+
+      <style>{`
+        .brand-collections-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 16px;
+        }
+        
+        @media (max-width: 768px) {
+          .brand-collections-grid {
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+          }
+          
+          .brand-collection-link {
+            height: auto !important;
+            aspect-ratio: 3/4;
+          }
+          
+          .brand-collection-bottom {
+            padding: 16px !important;
+          }
+          
+          .brand-collection-bottom p:first-of-type {
+            font-size: 10px !important;
+          }
+          
+          .brand-collection-bottom p:last-of-type {
+            font-size: 14px !important;
+          }
+          
+          .brand-collection-arrow {
+            width: 28px !important;
+            height: 28px !important;
+            font-size: 14px !important;
+            opacity: 1 !important;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          section {
+            padding: 48px 20px !important;
+          }
+          
+          .hero-content {
+            padding: 0 24px !important;
+          }
+          
+          .hero-dots {
+            left: 24px !important;
+            bottom: 20px !important;
+          }
+          
+          .hero-nav {
+            right: 24px !important;
+            bottom: 16px !important;
+          }
+        }
+      `}</style>
     </section>
   )
 }
@@ -548,9 +560,9 @@ function JustDropped() {
   const [hovered, setHovered] = useState(null)
   const addItem = useCartStore(s => s.addItem)
   return (
-    <section style={{ background: W, padding: '64px', borderTop: `1px solid ${BR}`, '@media (max-width: 768px)': { padding: '48px 0 48px 20px' } }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto', '@media (max-width: 768px)': { maxWidth: '100%' } }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px', paddingRight: '20px', '@media (max-width: 768px)': { paddingRight: '20px' } }}>
+    <section style={{ background: W, padding: '64px', borderTop: `1px solid ${BR}` }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
           <div>
             <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>Just In</p>
             <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>New Arrivals</h2>
@@ -563,18 +575,7 @@ function JustDropped() {
             View All →
           </Link>
         </div>
-        <div className="hide-scroll" style={{
-          display: 'flex',
-          gap: '16px',
-          overflowX: 'auto',
-          scrollbarWidth: 'thin',
-          WebkitOverflowScrolling: 'touch',
-          '@media (max-width: 768px)': {
-            width: '100%',
-            gap: '12px',
-            scrollSnapType: 'x mandatory',
-          }
-        }}>
+        <div className="just-dropped-scroll">
           {drops.map((item, i) => (
             <motion.div
               key={item.id}
@@ -584,15 +585,8 @@ function JustDropped() {
               transition={{ duration: 0.4, delay: i * 0.07 }}
               onMouseEnter={() => setHovered(item.id)}
               onMouseLeave={() => setHovered(null)}
-              style={{
-                flexShrink: 0,
-                width: '210px',
-                '@media (max-width: 768px)': {
-                  width: '280px',
-                  scrollSnapAlign: 'start',
-                }
-              }}>
-              <div style={{ position: 'relative', height: '260px', background: B2, overflow: 'hidden', marginBottom: '12px', '@media (max-width: 768px)': { height: '340px' } }}>
+              className="just-dropped-item">
+              <div style={{ position: 'relative', height: '260px', background: B2, overflow: 'hidden', marginBottom: '12px' }}>
                 <img
                   src={item.image} alt={item.name}
                   style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.65s', transform: hovered === item.id ? 'scale(1.05)' : 'scale(1)' }}
@@ -616,6 +610,46 @@ function JustDropped() {
           ))}
         </div>
       </div>
+
+      <style>{`
+        .just-dropped-scroll {
+          display: flex;
+          gap: 16px;
+          overflow-x: auto;
+          scrollbar-width: thin;
+          -webkit-overflow-scrolling: touch;
+        }
+        
+        .just-dropped-item {
+          flex-shrink: 0;
+          width: 210px;
+        }
+        
+        @media (max-width: 768px) {
+          .just-dropped-scroll {
+            width: 100%;
+            gap: 12px;
+            scroll-snap-type: x mandatory;
+          }
+          
+          .just-dropped-item {
+            width: 280px;
+            scroll-snap-align: start;
+          }
+          
+          .just-dropped-item > div:first-child {
+            height: 340px !important;
+          }
+          
+          section {
+            padding: 48px 0 48px 20px !important;
+          }
+          
+          .just-dropped-scroll {
+            padding-right: 20px;
+          }
+        }
+      `}</style>
     </section>
   )
 }
