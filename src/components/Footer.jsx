@@ -204,8 +204,8 @@ export default function Footer() {
         {/* ── MAIN GRID ── */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1.4fr 1fr 1fr 1fr 1fr',
-          gap: '48px',
+          gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
+          gap: '45px',
           marginBottom: '56px',
         }}>
 
