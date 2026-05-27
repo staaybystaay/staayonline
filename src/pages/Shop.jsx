@@ -31,7 +31,7 @@ const edenProducts = [
   { id: 'e5',  name: 'AYLA',    price: 1900, image: '/Ayla.jpeg',    collection: 'eden', badge: 'New' },
   { id: 'e6',  name: 'AURA',    price: 2900, image: '/Aura.jpeg',    collection: 'eden', badge: 'New' },
   { id: 'e7',  name: 'KAIA',    price: 2900, image: '/Kaia.png',     collection: 'eden', badge: 'New' },
-  { id: 'e8',  name: 'EVE',     price: 2400, image: '/phantom.jpg',  collection: 'eden', badge: 'New' },
+  { id: 'e8',  name: 'EVE',     price: 2400, image: '/Eve.png',      collection: 'eden', badge: 'New' },
   { id: 'e9',  name: 'ELARA',   price: 2400, image: '/Elara.jpeg',   collection: 'eden', badge: 'New' },
   { id: 'e10', name: 'DAHLIA',  price: 2200, image: '/Dahlia.jpeg',  collection: 'eden', badge: 'New' },
 ]
