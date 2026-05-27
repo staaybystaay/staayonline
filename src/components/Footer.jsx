@@ -104,10 +104,10 @@ function LinkColumn({ heading, links }) {
   );
 }
 
-// Brand Column Component (formerly part of the original code)
+// Brand Column Component - This will span full width on mobile
 function BrandColumn() {
   return (
-    <div>
+    <div style={{ gridColumn: '1 / -1' }}>
       <Link to="/" onClick={scrollTop} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
         <img
           src="/stayonlinelogo.jpeg"
@@ -127,7 +127,7 @@ function BrandColumn() {
       <p style={{
         ...F, fontSize: '13px', fontWeight: 300,
         lineHeight: 1.7, color: MD, marginBottom: '20px',
-        maxWidth: '220px',
+        maxWidth: '100%',
       }}>
         Designed for women who live beyond limits. Effortless. Intentional. Always in season.
       </p>
@@ -140,8 +140,8 @@ function BrandColumn() {
         </span>
       </div>
 
-      {/* Social icons */}
-      <div style={{ display: 'flex', gap: '8px' }}>
+      {/* Social icons - horizontal row */}
+      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
         {socialLinks.map(social => (
           <a
             key={social.label}
@@ -150,7 +150,7 @@ function BrandColumn() {
             rel="noreferrer"
             aria-label={social.label}
             style={{
-              width: '36px', height: '36px',
+              width: '40px', height: '40px',
               border: `1px solid ${BR}`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               color: MD, transition: 'all 0.2s', background: W,
@@ -431,14 +431,19 @@ export default function Footer() {
           '@media (minWidth: 1024px)': { padding: '64px 64px 40px' },
         }}>
 
-          {/* ── MAIN GRID with Brand Column ── */}
+          {/* ── MAIN GRID: Brand column full width, others 2 columns on mobile ── */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+            gridTemplateColumns: '1fr 1fr',
             gap: '40px',
             marginBottom: '56px',
           }}>
-            <BrandColumn />
+            {/* Brand column spans full width on mobile */}
+            <div style={{ gridColumn: '1 / -1' }}>
+              <BrandColumn />
+            </div>
+            
+            {/* Link columns - arranged in 2 columns on mobile */}
             <LinkColumn heading="Shop"    links={shopLinks}    />
             <LinkColumn heading="Company" links={companyLinks} />
             <LinkColumn heading="Support" links={supportLinks} />
