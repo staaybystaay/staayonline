@@ -53,14 +53,14 @@ const pressFeatures = [
 
 const giftCardAmounts = ['Ghc 2,000', 'Ghc 5,000', 'Ghc 7,500', 'Ghc 10,000', 'Ghc 20,000']
 
-function FadeUp({ children, delay = 0, style = {} }) {
+function FadeUp({ children, delay = 0, className = '' }) {
   return (
     <motion.div
+      className={className}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay }}
-      style={style}>
+      transition={{ duration: 0.6, delay }}>
       {children}
     </motion.div>
   )
@@ -68,194 +68,48 @@ function FadeUp({ children, delay = 0, style = {} }) {
 
 function SectionLabel({ number, label }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '40px' }}>
-      <span style={{
-        fontFamily: "'Bebas Neue', sans-serif",
-        fontSize: '11px',
-        color: 'var(--accent)',
-        letterSpacing: '0.14em',
-      }}>
-        {number}
-      </span>
-      <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
-      <span style={{
-        fontFamily: "'Outfit', sans-serif",
-        fontSize: '10px',
-        letterSpacing: '0.32em',
-        textTransform: 'uppercase',
-        color: 'var(--text-faint)',
-        fontWeight: 300,
-      }}>
-        {label}
-      </span>
+    <div className="section-label">
+      <span>{number}</span>
+      <div />
+      <p>{label}</p>
     </div>
   )
 }
 
 function FeaturedHero() {
   return (
-    <div style={{ borderBottom: '2px solid var(--text)' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
-        <div style={{
-          borderBottom: '1px solid var(--border)',
-          padding: '16px 0',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Link to="/" style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '10px',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: 'var(--text-faint)',
-              fontWeight: 300,
-            }}>
-              Home
-            </Link>
-            <span style={{ color: 'var(--text-faint)', fontSize: '10px' }}>/</span>
-            <span style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '10px',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: 'var(--accent)',
-            }}>
-              Featured
-            </span>
+    <header className="hero">
+      <div className="container">
+        <div className="topbar">
+          <div>
+            <Link to="/">Home</Link>
+            <span>/</span>
+            <p>Featured</p>
           </div>
-          <span style={{
-            fontFamily: "'Outfit', sans-serif",
-            fontSize: '10px',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'var(--text-faint)',
-            fontWeight: 300,
-          }}>
-            SS 2025
-          </span>
+          <p>SS 2025</p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: '520px' }}>
-          <div style={{
-            borderRight: '1px solid var(--border)',
-            padding: '52px 52px 52px 0',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}>
+        <div className="hero-grid">
+          <div className="hero-copy">
             <div>
-              <motion.p
-                initial={{ opacity: 0, x: -16 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6 }}
-                style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '10px',
-                  letterSpacing: '0.32em',
-                  textTransform: 'uppercase',
-                  color: 'var(--accent)',
-                  marginBottom: '20px',
-                  fontWeight: 400,
-                }}>
-                {heroFeature.label}
-              </motion.p>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                style={{
-                  fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: 'clamp(52px, 7vw, 96px)',
-                  color: 'var(--text)',
-                  lineHeight: 0.9,
-                  letterSpacing: '0.01em',
-                  margin: '0 0 28px',
-                }}>
-                {heroFeature.title}
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                style={{
-                  fontFamily: "'Fraunces', serif",
-                  fontStyle: 'italic',
-                  fontWeight: 300,
-                  fontSize: '16px',
-                  lineHeight: 1.7,
-                  color: 'var(--text-muted)',
-                  maxWidth: '360px',
-                }}>
-                {heroFeature.sub}
-              </motion.p>
+              <motion.p className="eyebrow">{heroFeature.label}</motion.p>
+              <motion.h1>{heroFeature.title}</motion.h1>
+              <motion.p className="hero-sub">{heroFeature.sub}</motion.p>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{
-                padding: '10px 18px',
-                border: '1px solid var(--border)',
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '10px',
-                letterSpacing: '0.22em',
-                textTransform: 'uppercase',
-                color: 'var(--text-faint)',
-                fontWeight: 300,
-              }}>
-                {heroFeature.date}
-              </div>
-              <div style={{
-                padding: '10px 18px',
-                border: '1px solid var(--border)',
-                borderLeft: 'none',
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: '16px',
-                color: 'var(--text)',
-                letterSpacing: '0.08em',
-              }}>
-                24 Looks
-              </div>
-              <Link to="/shop" style={{
-                padding: '10px 24px',
-                background: 'var(--accent)',
-                color: '#0C0B09',
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '10px',
-                letterSpacing: '0.22em',
-                textTransform: 'uppercase',
-                fontWeight: 600,
-              }}>
-                Shop the Look
-              </Link>
-            </motion.div>
+            <div className="hero-actions">
+              <span>{heroFeature.date}</span>
+              <span>24 Looks</span>
+              <Link to="/shop">Shop the Look</Link>
+            </div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.9, delay: 0.15 }}
-            style={{ position: 'relative', overflow: 'hidden' }}>
-            <img
-              src={heroFeature.image}
-              alt={heroFeature.title}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%)',
-            }} />
+          <motion.div className="hero-image">
+            <img src={heroFeature.image} alt={heroFeature.title} />
           </motion.div>
         </div>
       </div>
-    </div>
+    </header>
   )
 }
 
@@ -263,120 +117,37 @@ function RunwayShows() {
   const [hovered, setHovered] = useState(null)
 
   return (
-    <section style={{ borderBottom: '1px solid var(--border)', padding: '72px 0' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
+    <section className="section">
+      <div className="container">
         <FadeUp>
           <SectionLabel number="01" label="Runway Shows" />
         </FadeUp>
 
-        <FadeUp delay={0.1} style={{ marginBottom: '40px' }}>
-          <h2 style={{
-            fontFamily: "'Bebas Neue', sans-serif",
-            fontSize: 'clamp(36px, 5vw, 64px)',
-            color: 'var(--text)',
-            lineHeight: 0.9,
-            letterSpacing: '0.01em',
-          }}>
-            FROM THE RUNWAY
-          </h2>
+        <FadeUp>
+          <h2 className="section-title">FROM THE RUNWAY</h2>
         </FadeUp>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '2fr 1fr 1fr',
-          border: '1px solid var(--border)',
-        }}>
+        <div className="runway-grid">
           {runways.map((show, i) => (
-            <motion.div
+            <motion.article
               key={show.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className={`runway-card ${i === 0 ? 'featured-runway' : ''}`}
               onMouseEnter={() => setHovered(show.id)}
-              onMouseLeave={() => setHovered(null)}
-              style={{
-                position: 'relative',
-                overflow: 'hidden',
-                borderRight: i < 2 ? '1px solid var(--border)' : 'none',
-                cursor: 'pointer',
-                minHeight: i === 0 ? '480px' : '360px',
-              }}>
+              onMouseLeave={() => setHovered(null)}>
               <img
                 src={show.image}
                 alt={show.title}
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  transition: 'transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94)',
-                  transform: hovered === show.id ? 'scale(1.04)' : 'scale(1)',
-                }}
+                style={{ transform: hovered === show.id ? 'scale(1.04)' : 'scale(1)' }}
               />
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.2) 55%, transparent 100%)',
-              }} />
+              <div className="overlay" />
+              <span className="season-tag">{show.season}</span>
 
-              <div style={{
-                position: 'absolute',
-                top: '16px',
-                left: '16px',
-                background: 'var(--accent)',
-                color: '#0C0B09',
-                padding: '4px 10px',
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '9px',
-                fontWeight: 700,
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-              }}>
-                {show.season}
+              <div className="runway-info">
+                <p>{show.date}</p>
+                <h3>{show.title}</h3>
+                <span>{show.looks} looks</span>
               </div>
-
-              <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                padding: '20px',
-                borderTop: `2px solid ${hovered === show.id ? 'var(--accent)' : 'transparent'}`,
-                transition: 'border-color 0.3s',
-              }}>
-                <p style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '9px',
-                  letterSpacing: '0.2em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.45)',
-                  marginBottom: '6px',
-                  fontWeight: 300,
-                }}>
-                  {show.date}
-                </p>
-                <h3 style={{
-                  fontFamily: "'Bebas Neue', sans-serif",
-                  fontSize: i === 0 ? '32px' : '22px',
-                  color: '#fff',
-                  letterSpacing: '0.04em',
-                  lineHeight: 1,
-                  marginBottom: '8px',
-                }}>
-                  {show.title}
-                </h3>
-                <p style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '11px',
-                  color: 'rgba(255,255,255,0.5)',
-                  letterSpacing: '0.06em',
-                }}>
-                  {show.looks} looks
-                </p>
-              </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>
@@ -385,127 +156,35 @@ function RunwayShows() {
 }
 
 function Lookbook() {
-  const [hovered, setHovered] = useState(null)
-
   return (
-    <section style={{ borderBottom: '1px solid var(--border)', padding: '72px 0' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
+    <section className="section">
+      <div className="container">
         <FadeUp>
           <SectionLabel number="02" label="Lookbook" />
         </FadeUp>
 
-        <div style={{
-          display: 'flex',
-          alignItems: 'flex-end',
-          justifyContent: 'space-between',
-          marginBottom: '40px',
-        }}>
-          <FadeUp>
-            <h2 style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(36px, 5vw, 64px)',
-              color: 'var(--text)',
-              lineHeight: 0.9,
-              letterSpacing: '0.01em',
-            }}>
-              SS 2025<br />
-              <span style={{ color: 'var(--accent)' }}>THE LOOKS</span>
-            </h2>
-          </FadeUp>
-
-          <FadeUp delay={0.1}>
-            <Link to="/shop" style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '10px',
-              letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-              color: 'var(--text-muted)',
-              borderBottom: '1px solid var(--border)',
-              paddingBottom: '3px',
-            }}>
-              Shop All Pieces
-            </Link>
-          </FadeUp>
+        <div className="section-head">
+          <h2 className="section-title">
+            SS 2025<br />
+            <span>THE LOOKS</span>
+          </h2>
+          <Link to="/shop">Shop All Pieces</Link>
         </div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          border: '1px solid var(--border)',
-          borderBottom: 'none',
-        }}>
-          {lookbook.map((look, i) => (
-            <motion.div
-              key={look.id}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.06 }}
-              onMouseEnter={() => setHovered(look.id)}
-              onMouseLeave={() => setHovered(null)}
-              style={{
-                borderRight: i % 3 !== 2 ? '1px solid var(--border)' : 'none',
-                borderBottom: '1px solid var(--border)',
-                cursor: 'pointer',
-              }}>
-              <div style={{
-                position: 'relative',
-                aspectRatio: '3/4',
-                overflow: 'hidden',
-                borderBottom: `2px solid ${hovered === look.id ? 'var(--accent)' : 'transparent'}`,
-                transition: 'border-color 0.3s',
-              }}>
-                <img
-                  src={look.image}
-                  alt={look.title}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    display: 'block',
-                    transition: 'transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94)',
-                    transform: hovered === look.id ? 'scale(1.04)' : 'scale(1)',
-                  }}
-                />
+        <div className="lookbook-grid">
+          {lookbook.map((look) => (
+            <motion.article key={look.id} className="look-card">
+              <div className="look-image">
+                <img src={look.image} alt={look.title} />
               </div>
-
-              <div style={{
-                padding: '14px 16px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-                <div>
-                  <span style={{
-                    fontFamily: "'Bebas Neue', sans-serif",
-                    fontSize: '11px',
-                    color: 'var(--accent)',
-                    letterSpacing: '0.12em',
-                    marginRight: '10px',
-                  }}>
-                    {look.look}
-                  </span>
-                  <span style={{
-                    fontFamily: "'Outfit', sans-serif",
-                    fontSize: '11px',
-                    color: 'var(--text-muted)',
-                    letterSpacing: '0.06em',
-                    fontWeight: 300,
-                  }}>
-                    {look.title}
-                  </span>
-                </div>
-                <Link to="/shop" style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '9px',
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: 'var(--text-faint)',
-                }}>
-                  Shop
-                </Link>
+              <div className="look-info">
+                <p>
+                  <span>{look.look}</span>
+                  {look.title}
+                </p>
+                <Link to="/shop">Shop</Link>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>
@@ -515,202 +194,48 @@ function Lookbook() {
 
 function GiftCardSection() {
   return (
-    <section style={{
-      borderBottom: '1px solid var(--border)',
-      padding: '88px 0',
-      background: 'linear-gradient(135deg, var(--bg) 0%, var(--bg-surface) 100%)',
-    }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
+    <section className="gift-section">
+      <div className="container">
         <FadeUp>
           <SectionLabel number="03" label="Gift Card" />
         </FadeUp>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: '0.95fr 1.05fr',
-          gap: '0',
-          border: '2px solid var(--text)',
-          background: 'var(--bg)',
-        }}>
-          <FadeUp style={{
-            position: 'relative',
-            minHeight: '520px',
-            overflow: 'hidden',
-            borderRight: '1px solid var(--border)',
-          }}>
-            <img
-              src="/giftcard.jpeg"
-              alt="STAAY Gift Card"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                display: 'block',
-              }}
-            />
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 60%)',
-            }} />
-            <div style={{
-              position: 'absolute',
-              left: '28px',
-              bottom: '28px',
-              color: '#fff',
-            }}>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '10px',
-                letterSpacing: '0.32em',
-                textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.72)',
-                marginBottom: '8px',
-              }}>
-                STAAY Gifting
-              </p>
-              <h3 style={{
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: '46px',
-                lineHeight: 0.9,
-                letterSpacing: '0.04em',
-                margin: 0,
-              }}>
-                Gift With Style
-              </h3>
-            </div>
-          </FadeUp>
+        <div className="gift-card">
+          <div className="gift-image">
+            <img src="/giftcard.jpeg" alt="STAAY Gift Card" />
+          </div>
 
-          <FadeUp delay={0.1} style={{ padding: '56px' }}>
-            <p style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '10px',
-              letterSpacing: '0.32em',
-              textTransform: 'uppercase',
-              color: 'var(--accent)',
-              marginBottom: '18px',
-              fontWeight: 500,
-            }}>
-              Now Available
-            </p>
-
-            <h2 style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(42px, 6vw, 78px)',
-              color: 'var(--text)',
-              lineHeight: 0.9,
-              letterSpacing: '0.01em',
-              margin: '0 0 24px',
-            }}>
+          <div className="gift-copy">
+            <p className="eyebrow">Now Available</p>
+            <h2>
               STAAY<br />
-              <span style={{ color: 'var(--accent)' }}>GIFT CARD</span>
+              <span>GIFT CARD</span>
             </h2>
 
-            <p style={{
-              fontFamily: "'Fraunces', serif",
-              fontStyle: 'italic',
-              fontWeight: 300,
-              fontSize: '17px',
-              lineHeight: 1.8,
-              color: 'var(--text-muted)',
-              maxWidth: '520px',
-              marginBottom: '34px',
-            }}>
-              A refined way to gift choice, confidence, and timeless style. Perfect for birthdays,
-              celebrations, wardrobe upgrades, or anyone who deserves the STAAY experience.
+            <p className="gift-text">
+              A classy way to give someone the freedom to choose their own STAAY piece.
+              Perfect for birthdays, celebrations, wardrobe upgrades, and special moments.
             </p>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(5, 1fr)',
-              border: '1px solid var(--border)',
-              marginBottom: '34px',
-            }}>
-              {giftCardAmounts.map((amount, index) => (
-                <div
-                  key={amount}
-                  style={{
-                    padding: '18px 10px',
-                    textAlign: 'center',
-                    borderRight: index < giftCardAmounts.length - 1 ? '1px solid var(--border)' : 'none',
-                  }}>
-                  <span style={{
-                    fontFamily: "'Bebas Neue', sans-serif",
-                    fontSize: '22px',
-                    color: 'var(--text)',
-                    letterSpacing: '0.06em',
-                  }}>
-                    {amount}
-                  </span>
-                </div>
+            <div className="gift-amounts">
+              {giftCardAmounts.map((amount) => (
+                <span key={amount}>{amount}</span>
               ))}
             </div>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '18px',
-              marginBottom: '34px',
-            }}>
-              <div style={{ borderTop: '1px solid var(--border)', paddingTop: '16px' }}>
-                <p style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '10px',
-                  letterSpacing: '0.22em',
-                  textTransform: 'uppercase',
-                  color: 'var(--accent)',
-                  marginBottom: '8px',
-                }}>
-                  Flexible Value
-                </p>
-                <p style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '13px',
-                  lineHeight: 1.7,
-                  color: 'var(--text-muted)',
-                  fontWeight: 300,
-                }}>
-                  Choose from premium gift card amounts starting at Ghc 2,000.
-                </p>
+            <div className="gift-notes">
+              <div>
+                <h4>Flexible Value</h4>
+                <p>Available from Ghc 2,000 to Ghc 20,000.</p>
               </div>
-
-              <div style={{ borderTop: '1px solid var(--border)', paddingTop: '16px' }}>
-                <p style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '10px',
-                  letterSpacing: '0.22em',
-                  textTransform: 'uppercase',
-                  color: 'var(--accent)',
-                  marginBottom: '8px',
-                }}>
-                  Easy To Gift
-                </p>
-                <p style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontSize: '13px',
-                  lineHeight: 1.7,
-                  color: 'var(--text-muted)',
-                  fontWeight: 300,
-                }}>
-                  A simple, elegant option for anyone who wants to let them choose their look.
-                </p>
+              <div>
+                <h4>Simple Gifting</h4>
+                <p>Elegant, useful, and easy to present to anyone with style.</p>
               </div>
             </div>
 
-            <Link to="/shop" style={{
-              display: 'inline-block',
-              background: 'var(--text)',
-              color: 'var(--bg)',
-              padding: '15px 38px',
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '10px',
-              letterSpacing: '0.24em',
-              textTransform: 'uppercase',
-              fontWeight: 600,
-            }}>
-              Get Gift Card
-            </Link>
-          </FadeUp>
+            <Link to="/shop" className="dark-btn">Get Gift Card</Link>
+          </div>
         </div>
       </div>
     </section>
@@ -719,76 +244,21 @@ function GiftCardSection() {
 
 function Press() {
   return (
-    <section style={{
-      borderBottom: '1px solid var(--border)',
-      padding: '72px 0',
-      background: 'var(--bg-surface)',
-    }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
+    <section className="section surface">
+      <div className="container">
         <FadeUp>
           <SectionLabel number="04" label="Press" />
         </FadeUp>
 
-        <FadeUp delay={0.1} style={{ marginBottom: '52px' }}>
-          <h2 style={{
-            fontFamily: "'Bebas Neue', sans-serif",
-            fontSize: 'clamp(36px, 5vw, 64px)',
-            color: 'var(--text)',
-            lineHeight: 0.9,
-            letterSpacing: '0.01em',
-          }}>
-            AS SEEN IN
-          </h2>
-        </FadeUp>
+        <h2 className="section-title">AS SEEN IN</h2>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          borderTop: '2px solid var(--text)',
-        }}>
-          {pressFeatures.map((item, i) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
-              style={{
-                padding: '36px 36px 36px 0',
-                borderRight: i < 2 ? '1px solid var(--border)' : 'none',
-                paddingLeft: i > 0 ? '36px' : '0',
-              }}>
-              <p style={{
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: '13px',
-                color: 'var(--accent)',
-                letterSpacing: '0.16em',
-                marginBottom: '16px',
-              }}>
-                {item.outlet}
-              </p>
-              <blockquote style={{
-                fontFamily: "'Fraunces', serif",
-                fontStyle: 'italic',
-                fontWeight: 300,
-                fontSize: '18px',
-                lineHeight: 1.65,
-                color: 'var(--text)',
-                margin: '0 0 20px',
-              }}>
-                "{item.quote}"
-              </blockquote>
-              <p style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontSize: '10px',
-                letterSpacing: '0.18em',
-                textTransform: 'uppercase',
-                color: 'var(--text-faint)',
-                fontWeight: 300,
-              }}>
-                {item.date}
-              </p>
-            </motion.div>
+        <div className="press-grid">
+          {pressFeatures.map((item) => (
+            <article key={item.id}>
+              <h3>{item.outlet}</h3>
+              <blockquote>"{item.quote}"</blockquote>
+              <p>{item.date}</p>
+            </article>
           ))}
         </div>
       </div>
@@ -798,70 +268,21 @@ function Press() {
 
 function CtaBand() {
   return (
-    <section style={{ padding: '96px 0' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
-        <div style={{
-          border: '2px solid var(--text)',
-          padding: '64px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '40px',
-          flexWrap: 'wrap',
-        }}>
+    <section className="cta-section">
+      <div className="container">
+        <div className="cta-box">
           <div>
-            <p style={{
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '10px',
-              letterSpacing: '0.32em',
-              textTransform: 'uppercase',
-              color: 'var(--accent)',
-              marginBottom: '12px',
-              fontWeight: 400,
-            }}>
-              Now available
-            </p>
-            <h2 style={{
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: 'clamp(36px, 5vw, 72px)',
-              color: 'var(--text)',
-              lineHeight: 0.9,
-              letterSpacing: '0.01em',
-              margin: 0,
-            }}>
+            <p className="eyebrow">Now Available</p>
+            <h2>
               SHOP THE<br />
-              <span style={{ color: 'var(--accent)' }}>SS 2025</span><br />
+              <span>SS 2025</span><br />
               COLLECTION
             </h2>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <Link to="/shop" style={{
-              display: 'block',
-              textAlign: 'center',
-              background: 'var(--text)',
-              color: 'var(--bg)',
-              padding: '16px 48px',
-              fontFamily: "'Bebas Neue', sans-serif",
-              fontSize: '18px',
-              letterSpacing: '0.1em',
-            }}>
-              Shop Now
-            </Link>
-            <Link to="/shop" style={{
-              display: 'block',
-              textAlign: 'center',
-              background: 'transparent',
-              color: 'var(--accent)',
-              border: '1px solid var(--accent)',
-              padding: '15px 48px',
-              fontFamily: "'Outfit', sans-serif",
-              fontSize: '11px',
-              letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-            }}>
-              View Lookbook
-            </Link>
+          <div className="cta-actions">
+            <Link to="/shop" className="dark-btn">Shop Now</Link>
+            <Link to="/shop" className="outline-btn">View Lookbook</Link>
           </div>
         </div>
       </div>
@@ -871,7 +292,8 @@ function CtaBand() {
 
 export default function Featured() {
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
+    <div className="featured-page">
+      <StyleBlock />
       <FeaturedHero />
       <RunwayShows />
       <Lookbook />
@@ -879,5 +301,751 @@ export default function Featured() {
       <Press />
       <CtaBand />
     </div>
+  )
+}
+
+function StyleBlock() {
+  return (
+    <style>{`
+      .featured-page {
+        background: var(--bg);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      .container {
+        width: min(1200px, calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .eyebrow {
+        font-family: 'Outfit', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin: 0 0 18px;
+        font-weight: 500;
+      }
+
+      .section {
+        padding: 72px 0;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .surface {
+        background: var(--bg-surface);
+      }
+
+      .section-label {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 40px;
+      }
+
+      .section-label span {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 11px;
+        color: var(--accent);
+        letter-spacing: 0.14em;
+        flex: 0 0 auto;
+      }
+
+      .section-label div {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      .section-label p {
+        font-family: 'Outfit', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+        font-weight: 300;
+        margin: 0;
+        white-space: nowrap;
+      }
+
+      .section-title {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: clamp(38px, 6vw, 68px);
+        color: var(--text);
+        line-height: 0.9;
+        letter-spacing: 0.01em;
+        margin: 0 0 40px;
+      }
+
+      .section-title span,
+      .gift-copy h2 span,
+      .cta-box h2 span {
+        color: var(--accent);
+      }
+
+      .topbar {
+        border-bottom: 1px solid var(--border);
+        padding: 16px 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .topbar div {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+      }
+
+      .topbar a,
+      .topbar p,
+      .topbar span {
+        font-family: 'Outfit', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+        font-weight: 300;
+        margin: 0;
+      }
+
+      .topbar div p {
+        color: var(--accent);
+      }
+
+      .hero {
+        border-bottom: 2px solid var(--text);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 520px;
+      }
+
+      .hero-copy {
+        border-right: 1px solid var(--border);
+        padding: 52px 52px 52px 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 40px;
+      }
+
+      .hero-copy h1 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: clamp(56px, 8vw, 100px);
+        color: var(--text);
+        line-height: 0.9;
+        letter-spacing: 0.01em;
+        margin: 0 0 28px;
+      }
+
+      .hero-sub {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 1.7;
+        color: var(--text-muted);
+        max-width: 380px;
+        margin: 0;
+      }
+
+      .hero-actions {
+        display: flex;
+        align-items: stretch;
+        flex-wrap: wrap;
+      }
+
+      .hero-actions span,
+      .hero-actions a {
+        padding: 11px 18px;
+        border: 1px solid var(--border);
+        font-family: 'Outfit', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+      }
+
+      .hero-actions span {
+        color: var(--text-faint);
+      }
+
+      .hero-actions a {
+        background: var(--accent);
+        color: #0C0B09;
+        border-color: var(--accent);
+        font-weight: 700;
+      }
+
+      .hero-image {
+        position: relative;
+        overflow: hidden;
+        min-height: 520px;
+      }
+
+      .hero-image img,
+      .runway-card img,
+      .look-image img,
+      .gift-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .hero-image::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.5), transparent 55%);
+      }
+
+      .runway-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        border: 1px solid var(--border);
+      }
+
+      .runway-card {
+        position: relative;
+        min-height: 390px;
+        overflow: hidden;
+        border-right: 1px solid var(--border);
+      }
+
+      .runway-card:last-child {
+        border-right: 0;
+      }
+
+      .featured-runway {
+        min-height: 500px;
+      }
+
+      .runway-card img {
+        position: absolute;
+        inset: 0;
+        transition: transform 0.7s ease;
+      }
+
+      .overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.92), rgba(0,0,0,0.15), transparent);
+      }
+
+      .season-tag {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        background: var(--accent);
+        color: #0C0B09;
+        padding: 5px 10px;
+        font-family: 'Outfit', sans-serif;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .runway-info {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 22px;
+      }
+
+      .runway-info p,
+      .runway-info span {
+        font-family: 'Outfit', sans-serif;
+        font-size: 10px;
+        color: rgba(255,255,255,0.55);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        margin: 0;
+      }
+
+      .runway-info h3 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 30px;
+        color: #fff;
+        line-height: 1;
+        letter-spacing: 0.04em;
+        margin: 8px 0;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 40px;
+      }
+
+      .section-head .section-title {
+        margin-bottom: 0;
+      }
+
+      .section-head a {
+        font-family: 'Outfit', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 4px;
+        white-space: nowrap;
+      }
+
+      .lookbook-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border: 1px solid var(--border);
+        border-bottom: 0;
+      }
+
+      .look-card {
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        min-width: 0;
+      }
+
+      .look-card:nth-child(3n) {
+        border-right: 0;
+      }
+
+      .look-image {
+        aspect-ratio: 3 / 4;
+        overflow: hidden;
+      }
+
+      .look-image img {
+        transition: transform 0.6s ease;
+      }
+
+      .look-card:hover .look-image img {
+        transform: scale(1.04);
+      }
+
+      .look-info {
+        padding: 15px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .look-info p {
+        font-family: 'Outfit', sans-serif;
+        font-size: 11px;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+        font-weight: 300;
+        margin: 0;
+        min-width: 0;
+      }
+
+      .look-info span {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 12px;
+        color: var(--accent);
+        letter-spacing: 0.12em;
+        margin-right: 10px;
+      }
+
+      .look-info a {
+        font-family: 'Outfit', sans-serif;
+        font-size: 9px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+        flex: 0 0 auto;
+      }
+
+      .gift-section {
+        padding: 88px 0;
+        border-bottom: 1px solid var(--border);
+        background: linear-gradient(135deg, var(--bg), var(--bg-surface));
+      }
+
+      .gift-card {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        border: 2px solid var(--text);
+        background: var(--bg);
+      }
+
+      .gift-image {
+        aspect-ratio: 16 / 9;
+        min-height: 420px;
+        overflow: hidden;
+        border-right: 1px solid var(--border);
+        align-self: stretch;
+      }
+
+      .gift-image img {
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .gift-copy {
+        padding: clamp(32px, 5vw, 58px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0;
+      }
+
+      .gift-copy h2,
+      .cta-box h2 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: clamp(44px, 6vw, 78px);
+        color: var(--text);
+        line-height: 0.9;
+        letter-spacing: 0.01em;
+        margin: 0 0 24px;
+      }
+
+      .gift-text {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-weight: 300;
+        font-size: 16px;
+        line-height: 1.8;
+        color: var(--text-muted);
+        margin: 0 0 30px;
+      }
+
+      .gift-amounts {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        border: 1px solid var(--border);
+        margin-bottom: 30px;
+      }
+
+      .gift-amounts span {
+        padding: 16px 8px;
+        text-align: center;
+        border-right: 1px solid var(--border);
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 21px;
+        color: var(--text);
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+      }
+
+      .gift-amounts span:last-child {
+        border-right: 0;
+      }
+
+      .gift-notes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin-bottom: 30px;
+      }
+
+      .gift-notes div {
+        border-top: 1px solid var(--border);
+        padding-top: 16px;
+      }
+
+      .gift-notes h4 {
+        font-family: 'Outfit', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin: 0 0 8px;
+      }
+
+      .gift-notes p {
+        font-family: 'Outfit', sans-serif;
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--text-muted);
+        font-weight: 300;
+        margin: 0;
+      }
+
+      .dark-btn,
+      .outline-btn {
+        display: inline-block;
+        text-align: center;
+        padding: 15px 38px;
+        font-family: 'Outfit', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .dark-btn {
+        background: var(--text);
+        color: var(--bg);
+      }
+
+      .outline-btn {
+        border: 1px solid var(--accent);
+        color: var(--accent);
+      }
+
+      .press-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 2px solid var(--text);
+      }
+
+      .press-grid article {
+        padding: 34px;
+        border-right: 1px solid var(--border);
+      }
+
+      .press-grid article:first-child {
+        padding-left: 0;
+      }
+
+      .press-grid article:last-child {
+        border-right: 0;
+      }
+
+      .press-grid h3 {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 14px;
+        color: var(--accent);
+        letter-spacing: 0.16em;
+        margin: 0 0 16px;
+      }
+
+      .press-grid blockquote {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        font-size: 18px;
+        line-height: 1.65;
+        color: var(--text);
+        margin: 0 0 20px;
+      }
+
+      .press-grid p {
+        font-family: 'Outfit', sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+        margin: 0;
+      }
+
+      .cta-section {
+        padding: 96px 0;
+      }
+
+      .cta-box {
+        border: 2px solid var(--text);
+        padding: clamp(34px, 6vw, 64px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 40px;
+      }
+
+      .cta-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-width: 220px;
+      }
+
+      @media (max-width: 980px) {
+        .hero-grid,
+        .gift-card {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-copy {
+          border-right: 0;
+          padding: 44px 0;
+        }
+
+        .hero-image {
+          min-height: 420px;
+          border-top: 1px solid var(--border);
+        }
+
+        .runway-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .featured-runway {
+          grid-column: 1 / -1;
+        }
+
+        .lookbook-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .look-card,
+        .look-card:nth-child(3n) {
+          border-right: 1px solid var(--border);
+        }
+
+        .look-card:nth-child(2n) {
+          border-right: 0;
+        }
+
+        .gift-image {
+          min-height: auto;
+          border-right: 0;
+          border-bottom: 1px solid var(--border);
+          aspect-ratio: 16 / 9;
+        }
+
+        .press-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .press-grid article,
+        .press-grid article:first-child {
+          padding: 28px 0;
+          border-right: 0;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .press-grid article:last-child {
+          border-bottom: 0;
+        }
+
+        .cta-box {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .cta-actions {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          width: min(100% - 28px, 1200px);
+        }
+
+        .section,
+        .gift-section {
+          padding: 56px 0;
+        }
+
+        .section-label {
+          gap: 10px;
+          margin-bottom: 28px;
+        }
+
+        .section-label p {
+          font-size: 9px;
+          letter-spacing: 0.2em;
+        }
+
+        .topbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .hero-copy h1 {
+          font-size: clamp(52px, 18vw, 76px);
+        }
+
+        .hero-actions {
+          flex-direction: column;
+          width: 100%;
+        }
+
+        .hero-actions span,
+        .hero-actions a {
+          width: 100%;
+          box-sizing: border-box;
+          text-align: center;
+        }
+
+        .hero-image {
+          min-height: 360px;
+        }
+
+        .runway-grid,
+        .lookbook-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .runway-card,
+        .runway-card:last-child,
+        .look-card,
+        .look-card:nth-child(2n),
+        .look-card:nth-child(3n) {
+          border-right: 0;
+        }
+
+        .runway-card,
+        .featured-runway {
+          min-height: 390px;
+        }
+
+        .section-head {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .look-info {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .gift-copy {
+          padding: 30px 20px;
+        }
+
+        .gift-copy h2,
+        .cta-box h2 {
+          font-size: clamp(48px, 16vw, 68px);
+        }
+
+        .gift-amounts {
+          grid-template-columns: 1fr;
+        }
+
+        .gift-amounts span {
+          border-right: 0;
+          border-bottom: 1px solid var(--border);
+        }
+
+        .gift-amounts span:last-child {
+          border-bottom: 0;
+        }
+
+        .gift-notes {
+          grid-template-columns: 1fr;
+        }
+
+        .dark-btn,
+        .outline-btn {
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        .cta-section {
+          padding: 64px 0;
+        }
+
+        .cta-box {
+          padding: 28px 20px;
+        }
+      }
+    `}</style>
   )
 }
