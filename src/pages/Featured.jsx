@@ -92,9 +92,9 @@ function FeaturedHero() {
         <div className="hero-grid">
           <div className="hero-copy">
             <div>
-              <motion.p className="eyebrow">{heroFeature.label}</motion.p>
-              <motion.h1>{heroFeature.title}</motion.h1>
-              <motion.p className="hero-sub">{heroFeature.sub}</motion.p>
+              <p className="eyebrow">{heroFeature.label}</p>
+              <h1>{heroFeature.title}</h1>
+              <p className="hero-sub">{heroFeature.sub}</p>
             </div>
 
             <div className="hero-actions">
@@ -104,9 +104,9 @@ function FeaturedHero() {
             </div>
           </div>
 
-          <motion.div className="hero-image">
+          <div className="hero-image">
             <img src={heroFeature.image} alt={heroFeature.title} />
-          </motion.div>
+          </div>
         </div>
       </div>
     </header>
@@ -129,7 +129,7 @@ function RunwayShows() {
 
         <div className="runway-grid">
           {runways.map((show, i) => (
-            <motion.article
+            <article
               key={show.id}
               className={`runway-card ${i === 0 ? 'featured-runway' : ''}`}
               onMouseEnter={() => setHovered(show.id)}
@@ -147,7 +147,7 @@ function RunwayShows() {
                 <h3>{show.title}</h3>
                 <span>{show.looks} looks</span>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
       </div>
@@ -173,10 +173,11 @@ function Lookbook() {
 
         <div className="lookbook-grid">
           {lookbook.map((look) => (
-            <motion.article key={look.id} className="look-card">
+            <article key={look.id} className="look-card">
               <div className="look-image">
                 <img src={look.image} alt={look.title} />
               </div>
+
               <div className="look-info">
                 <p>
                   <span>{look.look}</span>
@@ -184,7 +185,7 @@ function Lookbook() {
                 </p>
                 <Link to="/shop">Shop</Link>
               </div>
-            </motion.article>
+            </article>
           ))}
         </div>
       </div>
@@ -200,21 +201,22 @@ function GiftCardSection() {
           <SectionLabel number="03" label="Gift Card" />
         </FadeUp>
 
-        <div className="gift-card">
-          <div className="gift-image">
+        <div className="gift-layout">
+          <div className="gift-image-wrap">
             <img src="/giftcard.jpeg" alt="STAAY Gift Card" />
           </div>
 
-          <div className="gift-copy">
+          <div className="gift-content">
             <p className="eyebrow">Now Available</p>
+
             <h2>
               STAAY<br />
               <span>GIFT CARD</span>
             </h2>
 
             <p className="gift-text">
-              A classy way to give someone the freedom to choose their own STAAY piece.
-              Perfect for birthdays, celebrations, wardrobe upgrades, and special moments.
+              A refined way to gift choice, confidence, and timeless style. Perfect for birthdays,
+              celebrations, wardrobe upgrades, and special moments.
             </p>
 
             <div className="gift-amounts">
@@ -226,11 +228,12 @@ function GiftCardSection() {
             <div className="gift-notes">
               <div>
                 <h4>Flexible Value</h4>
-                <p>Available from Ghc 2,000 to Ghc 20,000.</p>
+                <p>Choose from premium gift card amounts starting at Ghc 2,000.</p>
               </div>
+
               <div>
-                <h4>Simple Gifting</h4>
-                <p>Elegant, useful, and easy to present to anyone with style.</p>
+                <h4>Easy To Gift</h4>
+                <p>A classy option for anyone who wants to let them choose their look.</p>
               </div>
             </div>
 
@@ -383,7 +386,7 @@ function StyleBlock() {
       }
 
       .section-title span,
-      .gift-copy h2 span,
+      .gift-content h2 span,
       .cta-box h2 span {
         color: var(--accent);
       }
@@ -495,7 +498,7 @@ function StyleBlock() {
       .hero-image img,
       .runway-card img,
       .look-image img,
-      .gift-image img {
+      .gift-image-wrap img {
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -677,35 +680,38 @@ function StyleBlock() {
         background: linear-gradient(135deg, var(--bg), var(--bg-surface));
       }
 
-      .gift-card {
+      .gift-layout {
         display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
+        grid-template-columns: minmax(0, 1.1fr) minmax(420px, 0.9fr);
+        align-items: stretch;
         border: 2px solid var(--text);
         background: var(--bg);
       }
 
-      .gift-image {
+      .gift-image-wrap {
+        width: 100%;
+        min-height: 100%;
         aspect-ratio: 16 / 9;
-        min-height: 420px;
-        overflow: hidden;
         border-right: 1px solid var(--border);
-        align-self: stretch;
+        overflow: hidden;
       }
 
-      .gift-image img {
+      .gift-image-wrap img {
         object-fit: cover;
         object-position: center;
       }
 
-      .gift-copy {
-        padding: clamp(32px, 5vw, 58px);
+      .gift-content {
+        padding: clamp(38px, 5vw, 60px);
         display: flex;
         flex-direction: column;
         justify-content: center;
         min-width: 0;
+        position: relative;
+        z-index: 2;
       }
 
-      .gift-copy h2,
+      .gift-content h2,
       .cta-box h2 {
         font-family: 'Bebas Neue', sans-serif;
         font-size: clamp(44px, 6vw, 78px);
@@ -864,9 +870,20 @@ function StyleBlock() {
         min-width: 220px;
       }
 
+      @media (max-width: 1100px) {
+        .gift-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .gift-image-wrap {
+          border-right: 0;
+          border-bottom: 1px solid var(--border);
+          min-height: auto;
+        }
+      }
+
       @media (max-width: 980px) {
-        .hero-grid,
-        .gift-card {
+        .hero-grid {
           grid-template-columns: 1fr;
         }
 
@@ -886,26 +903,6 @@ function StyleBlock() {
 
         .featured-runway {
           grid-column: 1 / -1;
-        }
-
-        .lookbook-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-
-        .look-card,
-        .look-card:nth-child(3n) {
-          border-right: 1px solid var(--border);
-        }
-
-        .look-card:nth-child(2n) {
-          border-right: 0;
-        }
-
-        .gift-image {
-          min-height: auto;
-          border-right: 0;
-          border-bottom: 1px solid var(--border);
-          aspect-ratio: 16 / 9;
         }
 
         .press-grid {
@@ -978,16 +975,25 @@ function StyleBlock() {
           min-height: 360px;
         }
 
-        .runway-grid,
-        .lookbook-grid {
+        .runway-grid {
           grid-template-columns: 1fr;
         }
 
-        .runway-card,
-        .runway-card:last-child,
+        .lookbook-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
         .look-card,
-        .look-card:nth-child(2n),
         .look-card:nth-child(3n) {
+          border-right: 1px solid var(--border);
+        }
+
+        .look-card:nth-child(2n) {
+          border-right: 0;
+        }
+
+        .runway-card,
+        .runway-card:last-child {
           border-right: 0;
         }
 
@@ -1002,15 +1008,22 @@ function StyleBlock() {
         }
 
         .look-info {
+          padding: 12px 10px;
           align-items: flex-start;
           flex-direction: column;
+          gap: 8px;
         }
 
-        .gift-copy {
+        .look-info p {
+          font-size: 10px;
+          line-height: 1.4;
+        }
+
+        .gift-content {
           padding: 30px 20px;
         }
 
-        .gift-copy h2,
+        .gift-content h2,
         .cta-box h2 {
           font-size: clamp(48px, 16vw, 68px);
         }
