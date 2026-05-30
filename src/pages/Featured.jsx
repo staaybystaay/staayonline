@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const heroFeature = {
   label: 'Runway — SS 2025',
@@ -356,7 +356,6 @@ function StyleBlock() {
         font-size: 11px;
         color: var(--accent);
         letter-spacing: 0.14em;
-        flex: 0 0 auto;
       }
 
       .section-label div {
@@ -404,7 +403,6 @@ function StyleBlock() {
         display: flex;
         align-items: center;
         gap: 8px;
-        min-width: 0;
       }
 
       .topbar a,
@@ -454,7 +452,6 @@ function StyleBlock() {
       .hero-sub {
         font-family: 'Fraunces', serif;
         font-style: italic;
-        font-weight: 300;
         font-size: 16px;
         line-height: 1.7;
         color: var(--text-muted);
@@ -464,7 +461,6 @@ function StyleBlock() {
 
       .hero-actions {
         display: flex;
-        align-items: stretch;
         flex-wrap: wrap;
       }
 
@@ -631,18 +627,9 @@ function StyleBlock() {
         overflow: hidden;
       }
 
-      .look-image img {
-        transition: transform 0.6s ease;
-      }
-
-      .look-card:hover .look-image img {
-        transform: scale(1.04);
-      }
-
       .look-info {
         padding: 15px 16px;
         display: flex;
-        align-items: center;
         justify-content: space-between;
         gap: 14px;
       }
@@ -654,14 +641,12 @@ function StyleBlock() {
         letter-spacing: 0.05em;
         font-weight: 300;
         margin: 0;
-        min-width: 0;
       }
 
       .look-info span {
         font-family: 'Bebas Neue', sans-serif;
         font-size: 12px;
         color: var(--accent);
-        letter-spacing: 0.12em;
         margin-right: 10px;
       }
 
@@ -671,7 +656,6 @@ function StyleBlock() {
         letter-spacing: 0.16em;
         text-transform: uppercase;
         color: var(--text-faint);
-        flex: 0 0 auto;
       }
 
       .gift-section {
@@ -682,39 +666,31 @@ function StyleBlock() {
 
       .gift-layout {
         display: grid;
-        grid-template-columns: minmax(0, 1.1fr) minmax(420px, 0.9fr);
-        align-items: stretch;
+        grid-template-columns: minmax(0, 1.05fr) minmax(390px, 0.95fr);
         border: 2px solid var(--text);
         background: var(--bg);
+        overflow: hidden;
       }
 
       .gift-image-wrap {
-        width: 100%;
-        min-height: 100%;
         aspect-ratio: 16 / 9;
+        min-height: 100%;
         border-right: 1px solid var(--border);
         overflow: hidden;
       }
 
-      .gift-image-wrap img {
-        object-fit: cover;
-        object-position: center;
-      }
-
       .gift-content {
-        padding: clamp(38px, 5vw, 60px);
+        padding: clamp(34px, 4.5vw, 54px);
         display: flex;
         flex-direction: column;
         justify-content: center;
         min-width: 0;
-        position: relative;
-        z-index: 2;
       }
 
       .gift-content h2,
       .cta-box h2 {
         font-family: 'Bebas Neue', sans-serif;
-        font-size: clamp(44px, 6vw, 78px);
+        font-size: clamp(44px, 5.6vw, 76px);
         color: var(--text);
         line-height: 0.9;
         letter-spacing: 0.01em;
@@ -724,40 +700,44 @@ function StyleBlock() {
       .gift-text {
         font-family: 'Fraunces', serif;
         font-style: italic;
-        font-weight: 300;
         font-size: 16px;
-        line-height: 1.8;
+        line-height: 1.75;
         color: var(--text-muted);
-        margin: 0 0 30px;
+        margin: 0 0 28px;
       }
 
       .gift-amounts {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         border: 1px solid var(--border);
-        margin-bottom: 30px;
+        margin-bottom: 28px;
       }
 
       .gift-amounts span {
-        padding: 16px 8px;
+        padding: 14px 8px;
         text-align: center;
         border-right: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
         font-family: 'Bebas Neue', sans-serif;
-        font-size: 21px;
+        font-size: clamp(17px, 1.5vw, 21px);
         color: var(--text);
-        letter-spacing: 0.05em;
+        letter-spacing: 0.04em;
         white-space: nowrap;
       }
 
-      .gift-amounts span:last-child {
+      .gift-amounts span:nth-child(3n) {
         border-right: 0;
+      }
+
+      .gift-amounts span:nth-last-child(-n + 2) {
+        border-bottom: 0;
       }
 
       .gift-notes {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 18px;
-        margin-bottom: 30px;
+        margin-bottom: 28px;
       }
 
       .gift-notes div {
@@ -1009,7 +989,6 @@ function StyleBlock() {
 
         .look-info {
           padding: 12px 10px;
-          align-items: flex-start;
           flex-direction: column;
           gap: 8px;
         }
@@ -1019,20 +998,39 @@ function StyleBlock() {
           line-height: 1.4;
         }
 
+        .gift-layout {
+          position: relative;
+          background: var(--bg);
+        }
+
+        .gift-image-wrap {
+          border-bottom: 0;
+        }
+
         .gift-content {
-          padding: 30px 20px;
+          margin-top: -34px;
+          padding: 56px 20px 30px;
+          position: relative;
+          background: linear-gradient(
+            to bottom,
+            rgba(12, 11, 9, 0) 0%,
+            var(--bg) 18%,
+            var(--bg) 100%
+          );
         }
 
         .gift-content h2,
         .cta-box h2 {
-          font-size: clamp(48px, 16vw, 68px);
+          font-size: clamp(42px, 13vw, 58px);
         }
 
         .gift-amounts {
           grid-template-columns: 1fr;
         }
 
-        .gift-amounts span {
+        .gift-amounts span,
+        .gift-amounts span:nth-child(3n),
+        .gift-amounts span:nth-last-child(-n + 2) {
           border-right: 0;
           border-bottom: 1px solid var(--border);
         }
@@ -1056,7 +1054,22 @@ function StyleBlock() {
         }
 
         .cta-box {
-          padding: 28px 20px;
+          padding: 26px 18px;
+          gap: 28px;
+        }
+
+        .cta-box .eyebrow {
+          font-size: 9px;
+          letter-spacing: 0.24em;
+        }
+
+        .cta-box h2 {
+          font-size: clamp(34px, 11vw, 48px);
+          line-height: 0.95;
+        }
+
+        .cta-actions {
+          min-width: 0;
         }
       }
     `}</style>
