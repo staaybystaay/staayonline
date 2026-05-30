@@ -37,21 +37,18 @@ const contacts = [
   { k: 'WhatsApp', v: '+233 50 397 7985', h: 'https://wa.me/233503977985' },
   { k: 'Instagram', v: '@staaybystaay', h: 'https://instagram.com/staaybystaay' },
   { k: 'TikTok', v: '@staaybystaay', h: 'https://tiktok.com/@staaybystaay' },
+  { k: 'Address', v: 'Nii Osabu Nsuta Lk. Street, Dzen Ayor Area, Adentan District, GD-137-2393, Ghana' },
 ]
 
 function FontLoader() {
   useEffect(() => {
     if (document.getElementById('staay-fonts')) return
-
     const l = document.createElement('link')
     l.id = 'staay-fonts'
     l.rel = 'stylesheet'
-    l.href =
-      'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap'
-
+    l.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap'
     document.head.appendChild(l)
   }, [])
-
   return null
 }
 
@@ -61,10 +58,8 @@ function useIsMobile(bp = 780) {
   useEffect(() => {
     const mq = window.matchMedia(`(max-width: ${bp}px)`)
     setMobile(mq.matches)
-
     const h = e => setMobile(e.matches)
     mq.addEventListener('change', h)
-
     return () => mq.removeEventListener('change', h)
   }, [bp])
 
@@ -79,18 +74,14 @@ function FadeUp({ children, delay = 0, style = {} }) {
     const el = ref.current
     if (!el) return
 
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setOn(true)
-          obs.unobserve(el)
-        }
-      },
-      { threshold: 0.1 }
-    )
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setOn(true)
+        obs.unobserve(el)
+      }
+    }, { threshold: 0.1 })
 
     obs.observe(el)
-
     return () => obs.disconnect()
   }, [])
 
@@ -140,17 +131,10 @@ function Nav() {
       top: 0,
       zIndex: 100,
     }}>
-      <span style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, letterSpacing: '.12em', color: T.ink }} />
+      <span />
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: T.mid, fontFamily: SANS }}>
-        <a
-          href="/"
-          style={{ color: T.mid, transition: 'color .2s' }}
-          onMouseEnter={e => { e.currentTarget.style.color = T.gold }}
-          onMouseLeave={e => { e.currentTarget.style.color = T.mid }}
-        >
-          Home
-        </a>
+        <a href="/" style={{ color: T.mid }}>Home</a>
         <span style={{ color: T.faint }}>/</span>
         <strong style={{ fontWeight: 500, color: T.ink }}>Our Brand</strong>
       </div>
@@ -188,14 +172,12 @@ function Hero() {
             objectFit: mobile ? 'cover' : 'contain',
             objectPosition: 'top center',
             display: 'block',
-            ...(mobile
-              ? {}
-              : {
-                  position: 'absolute',
-                  inset: 0,
-                  padding: 20,
-                  boxSizing: 'border-box',
-                }),
+            ...(mobile ? {} : {
+              position: 'absolute',
+              inset: 0,
+              padding: 20,
+              boxSizing: 'border-box',
+            }),
           }}
           onError={e => {
             e.currentTarget.style.display = 'none'
@@ -220,15 +202,7 @@ function Hero() {
           Founded 2009
         </span>
 
-        <div style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 3,
-          background: T.gold,
-          zIndex: 2,
-        }} />
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: T.gold, zIndex: 2 }} />
       </div>
 
       <div style={{
@@ -272,12 +246,8 @@ function Hero() {
           </div>
 
           <div>
-            <p style={{ fontFamily: SANS, fontSize: 14, fontWeight: 500, color: T.ink }}>
-              Stacey Sefah
-            </p>
-            <p style={{ fontFamily: SANS, fontSize: 11, color: T.faint, letterSpacing: '.04em', marginTop: 2 }}>
-              Founder & Creative Director
-            </p>
+            <p style={{ fontFamily: SANS, fontSize: 14, fontWeight: 500, color: T.ink }}>Stacey Sefah</p>
+            <p style={{ fontFamily: SANS, fontSize: 11, color: T.faint, letterSpacing: '.04em', marginTop: 2 }}>Founder & Creative Director</p>
           </div>
         </div>
       </div>
@@ -326,11 +296,11 @@ function Story() {
         <FadeUp delay={0.1}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: T.mid }}>
-              Founded by <strong style={{ fontWeight: 500, color: T.ink }}>Stacey Sefah</strong>, STAAY began long before the first collection was released. From a young age, fashion became Stacey's way of expressing herself in seasons where words often fell short. While studying law and navigating the expectations of life, she found comfort in creating pieces that made women feel seen, beautiful, confident, and unforgettable.
+              Founded by <strong style={{ fontWeight: 500, color: T.ink }}>Stacey Sefah</strong>, STAAY began long before the first collection was released. From a young age, fashion became Stacey's way of expressing herself in seasons where words often fell short.
             </p>
 
             <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: T.mid }}>
-              For years, Stacey often hid behind black clothing, believing simplicity meant shrinking herself. Like many women, she struggled with insecurities, self-doubt, and the pressure to fit into spaces that often demanded less softness, less colour, and less individuality. But somewhere along the journey, she realised confidence was never about blending in — it was about embracing who God created her to be.
+              Today, STAAY is a Ghanaian womenswear brand rooted in intention, craftsmanship, and grace. Every piece is thoughtfully designed for women who want to feel effortlessly put together.
             </p>
 
             <div style={{ borderLeft: `2px solid ${T.gold}`, paddingLeft: 20, margin: '4px 0' }}>
@@ -340,26 +310,13 @@ function Story() {
             </div>
 
             <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: T.mid }}>
-              What started as designing a few custom pieces for friends and family quickly became something bigger. Women connected deeply with the feeling behind the designs — elegant pieces that felt intentional, feminine, expressive, and timeless. STAAY became more than clothing; it became a reminder that women do not have to choose between softness and strength, simplicity and statement, elegance and confidence.
-            </p>
-
-            <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: T.mid }}>
-              Today, STAAY is a Ghanaian womenswear brand rooted in intention, craftsmanship, and grace. Every piece is thoughtfully designed for women who want to feel effortlessly put together — women who are evolving, growing, leading, celebrating, healing, building, and showing up fully as themselves.
-            </p>
-
-            <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: T.mid }}>
-              Our designs embrace movement, colour, structure, and individuality. From dramatic occasion wear to refined everyday elegance, STAAY creates pieces that are meant to move with you through every season of life. We believe true style is not about trends; it is about how a garment makes you feel.
-            </p>
-
-            <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: T.mid }}>
-              At the heart of STAAY is a commitment to creating with meaning. We work closely with local artisans and makers, valuing quality craftsmanship, attention to detail, and the beauty of intentional production. Every stitch, silhouette, and finish reflects our belief that fashion should feel personal, empowering, and enduring.
+              STAAY creates pieces that are meant to move with you through every season of life. We believe true style is not about trends; it is about how a garment makes you feel.
             </p>
 
             <div style={{ background: T.goldPale, border: `1px solid ${T.bone}`, padding: 'clamp(20px,3vw,32px)', marginTop: 8 }}>
               {[
                 'But beyond the fabric, STAAY is a love letter to women becoming.',
                 'Women learning to take up space.',
-                'Women rediscovering themselves.',
                 'Women embracing elegance without apology.',
                 'Women choosing confidence, grace, and authenticity every single day.',
               ].map((line, i, arr) => (
@@ -399,21 +356,13 @@ function Values() {
                   background: hov === v.n ? T.warm : 'transparent',
                   transition: 'all .22s',
                   borderRight: !smallMobile && i % 2 === 0 ? `1px solid ${T.line}` : 'none',
-                  borderBottom: smallMobile
-                    ? i < values.length - 1 ? `1px solid ${T.line}` : 'none'
-                    : i < 2 ? `1px solid ${T.line}` : 'none',
+                  borderBottom: smallMobile ? i < values.length - 1 ? `1px solid ${T.line}` : 'none' : i < 2 ? `1px solid ${T.line}` : 'none',
                   height: '100%',
                 }}
               >
-                <p style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 700, color: T.gold, opacity: .22, lineHeight: 1, marginBottom: 14, letterSpacing: '-.02em' }}>
-                  {v.n}
-                </p>
-                <h3 style={{ fontFamily: SANS, fontSize: 16, fontWeight: 600, color: T.ink, marginBottom: 10, letterSpacing: '-.01em' }}>
-                  {v.title}
-                </h3>
-                <p style={{ fontFamily: SANS, fontSize: 14, fontWeight: 300, color: T.mid, lineHeight: 1.7 }}>
-                  {v.body}
-                </p>
+                <p style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 700, color: T.gold, opacity: .22, lineHeight: 1, marginBottom: 14 }}>{v.n}</p>
+                <h3 style={{ fontFamily: SANS, fontSize: 16, fontWeight: 600, color: T.ink, marginBottom: 10 }}>{v.title}</h3>
+                <p style={{ fontFamily: SANS, fontSize: 14, fontWeight: 300, color: T.mid, lineHeight: 1.7 }}>{v.body}</p>
               </div>
             </FadeUp>
           ))}
@@ -436,29 +385,17 @@ function Stats() {
           gridTemplateColumns: smallMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)',
           border: '1px solid rgba(255,255,255,.08)',
         }}>
-          {stats.map((s, i) => {
-            const isRight = smallMobile ? i % 2 !== 1 : i < stats.length - 1
-            const isTop = smallMobile && i >= 2
-
-            return (
-              <div
-                key={s.l}
-                style={{
-                  padding: 'clamp(24px,3.5vw,40px)',
-                  borderRight: isRight ? '1px solid rgba(255,255,255,.08)' : 'none',
-                  borderTop: isTop ? '1px solid rgba(255,255,255,.08)' : 'none',
-                  textAlign: 'center',
-                }}
-              >
-                <p style={{ fontFamily: SERIF, fontSize: 'clamp(34px,3.8vw,52px)', fontWeight: 600, color: T.gold, lineHeight: 1, marginBottom: 8, letterSpacing: '-.02em' }}>
-                  {s.v}
-                </p>
-                <p style={{ fontFamily: SANS, fontSize: 11, fontWeight: 400, color: 'rgba(255,255,255,.4)', letterSpacing: '.06em', textTransform: 'uppercase' }}>
-                  {s.l}
-                </p>
-              </div>
-            )
-          })}
+          {stats.map((s, i) => (
+            <div key={s.l} style={{
+              padding: 'clamp(24px,3.5vw,40px)',
+              borderRight: smallMobile ? i % 2 === 0 ? '1px solid rgba(255,255,255,.08)' : 'none' : i < stats.length - 1 ? '1px solid rgba(255,255,255,.08)' : 'none',
+              borderTop: smallMobile && i >= 2 ? '1px solid rgba(255,255,255,.08)' : 'none',
+              textAlign: 'center',
+            }}>
+              <p style={{ fontFamily: SERIF, fontSize: 'clamp(34px,3.8vw,52px)', fontWeight: 600, color: T.gold, lineHeight: 1, marginBottom: 8 }}>{s.v}</p>
+              <p style={{ fontFamily: SANS, fontSize: 11, fontWeight: 400, color: 'rgba(255,255,255,.4)', letterSpacing: '.06em', textTransform: 'uppercase' }}>{s.l}</p>
+            </div>
+          ))}
         </div>
       </FadeUp>
     </section>
@@ -479,41 +416,36 @@ function Contact() {
       }}>
         <FadeUp style={{ padding: 'clamp(32px,4vw,56px)', borderBottom: mobile ? `1px solid ${T.line}` : 'none', borderRight: !mobile ? `1px solid ${T.line}` : 'none' }}>
           <SectionLabel tag="Ready to wear STAAY?" />
-          <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(26px,3.2vw,42px)', fontWeight: 600, color: T.ink, lineHeight: 1.1, margin: '12px 0 16px', letterSpacing: '-.01em' }}>
+          <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(26px,3.2vw,42px)', fontWeight: 600, color: T.ink, lineHeight: 1.1, margin: '12px 0 16px' }}>
             Shop the Collection
           </h2>
           <p style={{ fontFamily: SANS, fontSize: 14, fontWeight: 300, color: T.mid, lineHeight: 1.7, marginBottom: 32, maxWidth: 300 }}>
             Every piece in the SS 2025 collection is available now. Designed for the woman ready to show up fully as herself.
           </p>
-          <a
-            href="/shop"
-            onClick={() => window.scrollTo(0, 0)}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: T.ink, color: '#fff', padding: '14px 32px', fontFamily: SANS, fontSize: 13, fontWeight: 500, letterSpacing: '.05em', textTransform: 'uppercase', transition: 'background .2s', textDecoration: 'none' }}
-            onMouseEnter={e => { e.currentTarget.style.background = T.gold }}
-            onMouseLeave={e => { e.currentTarget.style.background = T.ink }}
-          >
+          <a href="/shop" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: T.ink, color: '#fff', padding: '14px 32px', fontFamily: SANS, fontSize: 13, fontWeight: 500, letterSpacing: '.05em', textTransform: 'uppercase', textDecoration: 'none' }}>
             Shop Now →
           </a>
         </FadeUp>
 
         <FadeUp delay={0.1} style={{ padding: 'clamp(32px,4vw,56px)' }}>
           <SectionLabel tag="Get in Touch" />
+
           <div style={{ marginTop: 12 }}>
             {contacts.map(c => (
-              <div key={c.k} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', borderBottom: `1px solid ${T.line}` }}>
-                <span style={{ fontFamily: SANS, fontSize: 11, fontWeight: 500, color: T.faint, letterSpacing: '.06em', textTransform: 'uppercase' }}>
+              <div key={c.k} style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20, padding: '16px 0', borderBottom: `1px solid ${T.line}` }}>
+                <span style={{ fontFamily: SANS, fontSize: 11, fontWeight: 500, color: T.faint, letterSpacing: '.06em', textTransform: 'uppercase', flexShrink: 0 }}>
                   {c.k}
                 </span>
-                <a
-                  href={c.h}
-                  target={c.h.startsWith('http') ? '_blank' : undefined}
-                  rel="noreferrer"
-                  style={{ fontFamily: SANS, fontSize: 14, fontWeight: 400, color: T.ink, textDecoration: 'none', transition: 'color .2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.color = T.gold }}
-                  onMouseLeave={e => { e.currentTarget.style.color = T.ink }}
-                >
-                  {c.v}
-                </a>
+
+                {c.h ? (
+                  <a href={c.h} target={c.h.startsWith('http') ? '_blank' : undefined} rel="noreferrer" style={{ fontFamily: SANS, fontSize: 14, fontWeight: 400, color: T.ink, textDecoration: 'none', textAlign: 'right', lineHeight: 1.5 }}>
+                    {c.v}
+                  </a>
+                ) : (
+                  <span style={{ fontFamily: SANS, fontSize: 14, fontWeight: 400, color: T.ink, textAlign: 'right', lineHeight: 1.5, maxWidth: 320 }}>
+                    {c.v}
+                  </span>
+                )}
               </div>
             ))}
           </div>
@@ -525,21 +457,9 @@ function Contact() {
 
 function Footer() {
   return (
-    <div style={{
-      background: T.charcoal,
-      padding: '20px clamp(20px,5vw,72px)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      flexWrap: 'wrap',
-      gap: 8,
-    }}>
-      <p style={{ fontFamily: SANS, fontSize: 12, color: 'rgba(255,255,255,.28)' }}>
-        © 2025 STAAY by Stacey Sefah. All rights reserved.
-      </p>
-      <p style={{ fontFamily: SANS, fontSize: 12, color: 'rgba(255,255,255,.28)' }}>
-        Accra, Ghana — Designed with intention.
-      </p>
+    <div style={{ background: T.charcoal, padding: '20px clamp(20px,5vw,72px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
+      <p style={{ fontFamily: SANS, fontSize: 12, color: 'rgba(255,255,255,.28)' }}>© 2025 STAAY by Stacey Sefah. All rights reserved.</p>
+      <p style={{ fontFamily: SANS, fontSize: 12, color: 'rgba(255,255,255,.28)' }}>Accra, Ghana — Designed with intention.</p>
     </div>
   )
 }
