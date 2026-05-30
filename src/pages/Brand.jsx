@@ -20,8 +20,8 @@ const SANS = "'Outfit', sans-serif"
 
 const values = [
   { n: '01', title: 'Intentional Design', body: 'Every seam, silhouette, and fabric choice is deliberate. We do not make filler pieces. Everything earns its place in your wardrobe and in your life.' },
-  { n: '02', title: 'Made for African Women', body: 'Not adapted, not translated — designed from scratch for the bodies, lifestyles, and boldness of African women. You are not an afterthought.' },
-  { n: '03', title: 'Softness is Strength', body: 'We build pieces that honour femininity in all its forms. You never have to choose between elegance and confidence — STAAY holds both.' },
+  { n: '02', title: 'Made for African Women', body: 'Not adapted, not translated, designed from scratch for the bodies, lifestyles, and boldness of African women. You are not an afterthought.' },
+  { n: '03', title: 'Softness is Strength', body: 'We build pieces that honour femininity in all its forms. You never have to choose between elegance and confidence - STAAY holds both.' },
   { n: '04', title: 'Community First', body: 'Our customers are not buyers. They are the first people we think about when we sketch, cut, and finish. STAAY is built by community, for community.' },
 ]
 
@@ -223,7 +223,7 @@ function Hero() {
           </h1>
 
           <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.75, color: T.mid, maxWidth: 340 }}>
-            A Ghanaian womenswear brand rooted in intention, craftsmanship, and grace — built by a woman who understands what it means to come into your own.
+            A Ghanaian womenswear brand rooted in intention, craftsmanship, and grace built by a woman who understands what it means to come into your own.
           </p>
         </div>
 
