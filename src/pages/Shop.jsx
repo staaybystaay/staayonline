@@ -95,7 +95,7 @@ function ProductCard({ product, wishlisted, onWishlist }) {
       <div className="product-image">
         <img src={product.image} alt={product.name} onError={e => { e.currentTarget.style.display = 'none' }} />
         <span className="badge">{product.badge}</span>
-        <button className={`wish ${wishlisted ? 'active' : ''}`} onClick={() => onWishlist(product.id)} aria-label="Wishlist">
+        <button className={`wish ${wishlisted ? 'active' : ''}`} onClick={() => onWishlist(product.id)}>
           {wishlisted ? '♥' : '♡'}
         </button>
         <button
@@ -122,6 +122,7 @@ function GiftCardFeature({ onShopGiftCards }) {
       <div className="gift-media">
         <img src="/giftcard.jpeg" alt="STAAY Gift Card" />
       </div>
+
       <div className="gift-copy">
         <p className="eyebrow">STAAY Gifting</p>
         <h2>Give the Gift of Choice</h2>
@@ -129,11 +130,13 @@ function GiftCardFeature({ onShopGiftCards }) {
           A polished way to celebrate birthdays, milestones, wardrobe refreshes, and special moments.
           Available from GH₵2,000 to GH₵20,000.
         </p>
+
         <div className="gift-values">
           {giftCardProducts.map(card => (
             <span key={card.id}>{money(card.price)}</span>
           ))}
         </div>
+
         <button onClick={onShopGiftCards}>Shop Gift Cards</button>
       </div>
     </section>
@@ -236,8 +239,6 @@ export default function Shop() {
         </aside>
 
         <div className="shop-main">
-          <GiftCardFeature onShopGiftCards={() => setActiveCollection('giftcard')} />
-
           <div className="desktop-toolbar">
             <div>
               <strong>{products.length}</strong>
@@ -284,6 +285,8 @@ export default function Shop() {
               <button onClick={clearFilters}>Clear Filters</button>
             </div>
           )}
+
+          <GiftCardFeature onShopGiftCards={() => setActiveCollection('giftcard')} />
         </div>
       </section>
 
@@ -291,6 +294,7 @@ export default function Shop() {
         {mobileFiltersOpen && (
           <motion.div className="mobile-drawer" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <button className="drawer-bg" onClick={() => setMobileFiltersOpen(false)} />
+
             <motion.div
               className="drawer-panel"
               initial={{ y: '100%' }}
@@ -599,89 +603,6 @@ function StyleBlock() {
         min-width: 0;
       }
 
-      .gift-feature {
-        display: grid;
-        grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
-        background: var(--black);
-        color: var(--white);
-        margin-bottom: 34px;
-        overflow: hidden;
-      }
-
-      .gift-media {
-        aspect-ratio: 16 / 9;
-        min-height: 360px;
-        background: #080808;
-      }
-
-      .gift-media img {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: cover;
-        object-position: center;
-      }
-
-      .gift-copy {
-        padding: clamp(28px, 4vw, 52px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .gift-copy h2 {
-        margin: 0 0 16px;
-        color: var(--white);
-        font-size: clamp(30px, 4vw, 48px);
-        line-height: 1;
-        letter-spacing: -0.04em;
-      }
-
-      .gift-copy p:not(.eyebrow) {
-        margin: 0 0 22px;
-        color: rgba(255,255,255,0.72);
-        font-size: 14px;
-        line-height: 1.75;
-      }
-
-      .gift-values {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        border: 1px solid rgba(255,255,255,0.18);
-        margin-bottom: 22px;
-      }
-
-      .gift-values span {
-        padding: 12px 8px;
-        border-right: 1px solid rgba(255,255,255,0.18);
-        border-bottom: 1px solid rgba(255,255,255,0.18);
-        color: var(--white);
-        text-align: center;
-        font-size: 13px;
-        font-weight: 800;
-        white-space: nowrap;
-      }
-
-      .gift-values span:nth-child(3n) {
-        border-right: 0;
-      }
-
-      .gift-values span:nth-last-child(-n + 2) {
-        border-bottom: 0;
-      }
-
-      .gift-copy button {
-        width: fit-content;
-        background: var(--gold);
-        color: var(--black);
-        border: 0;
-        padding: 13px 24px;
-        font-size: 12px;
-        font-weight: 850;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
       .desktop-toolbar {
         display: flex;
         align-items: center;
@@ -849,6 +770,89 @@ function StyleBlock() {
         font-size: 14px;
         font-weight: 850;
         white-space: nowrap;
+      }
+
+      .gift-feature {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(360px, 0.95fr);
+        background: var(--black);
+        color: var(--white);
+        margin-top: 70px;
+        overflow: hidden;
+      }
+
+      .gift-media {
+        aspect-ratio: 16 / 9;
+        min-height: 360px;
+        background: #080808;
+      }
+
+      .gift-media img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      .gift-copy {
+        padding: clamp(28px, 4vw, 52px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .gift-copy h2 {
+        margin: 0 0 16px;
+        color: var(--white);
+        font-size: clamp(30px, 4vw, 48px);
+        line-height: 1;
+        letter-spacing: -0.04em;
+      }
+
+      .gift-copy p:not(.eyebrow) {
+        margin: 0 0 22px;
+        color: rgba(255,255,255,0.72);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .gift-values {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border: 1px solid rgba(255,255,255,0.18);
+        margin-bottom: 22px;
+      }
+
+      .gift-values span {
+        padding: 12px 8px;
+        border-right: 1px solid rgba(255,255,255,0.18);
+        border-bottom: 1px solid rgba(255,255,255,0.18);
+        color: var(--white);
+        text-align: center;
+        font-size: 13px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .gift-values span:nth-child(3n) {
+        border-right: 0;
+      }
+
+      .gift-values span:nth-last-child(-n + 2) {
+        border-bottom: 0;
+      }
+
+      .gift-copy button {
+        width: fit-content;
+        background: var(--gold);
+        color: var(--black);
+        border: 0;
+        padding: 13px 24px;
+        font-size: 12px;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
 
       .empty {
@@ -1027,58 +1031,6 @@ function StyleBlock() {
           display: none;
         }
 
-        .gift-feature {
-          margin-bottom: 28px;
-          border-radius: 0;
-        }
-
-        .gift-media {
-          aspect-ratio: 16 / 10;
-        }
-
-        .gift-copy {
-          padding: 28px 18px;
-          background:
-            linear-gradient(to bottom, rgba(17,17,17,0), var(--black) 20%),
-            var(--black);
-          margin-top: -24px;
-          position: relative;
-          z-index: 2;
-        }
-
-        .gift-copy h2 {
-          font-size: clamp(28px, 9vw, 40px);
-        }
-
-        .gift-copy p:not(.eyebrow) {
-          font-size: 13px;
-        }
-
-        .gift-values {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-
-        .gift-values span,
-        .gift-values span:nth-child(3n),
-        .gift-values span:nth-last-child(-n + 2) {
-          border-right: 1px solid rgba(255,255,255,0.18);
-          border-bottom: 1px solid rgba(255,255,255,0.18);
-        }
-
-        .gift-values span:nth-child(2n) {
-          border-right: 0;
-        }
-
-        .gift-values span:last-child {
-          grid-column: 1 / -1;
-          border-right: 0;
-          border-bottom: 0;
-        }
-
-        .gift-copy button {
-          width: 100%;
-        }
-
         .active-filters {
           margin-bottom: 18px;
         }
@@ -1128,6 +1080,57 @@ function StyleBlock() {
         .product-info h3,
         .product-info strong {
           font-size: 12px;
+        }
+
+        .gift-feature {
+          margin-top: 52px;
+        }
+
+        .gift-media {
+          aspect-ratio: 16 / 10;
+        }
+
+        .gift-copy {
+          padding: 28px 18px;
+          background:
+            linear-gradient(to bottom, rgba(17,17,17,0), var(--black) 20%),
+            var(--black);
+          margin-top: -24px;
+          position: relative;
+          z-index: 2;
+        }
+
+        .gift-copy h2 {
+          font-size: clamp(28px, 9vw, 40px);
+        }
+
+        .gift-copy p:not(.eyebrow) {
+          font-size: 13px;
+        }
+
+        .gift-values {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .gift-values span,
+        .gift-values span:nth-child(3n),
+        .gift-values span:nth-last-child(-n + 2) {
+          border-right: 1px solid rgba(255,255,255,0.18);
+          border-bottom: 1px solid rgba(255,255,255,0.18);
+        }
+
+        .gift-values span:nth-child(2n) {
+          border-right: 0;
+        }
+
+        .gift-values span:last-child {
+          grid-column: 1 / -1;
+          border-right: 0;
+          border-bottom: 0;
+        }
+
+        .gift-copy button {
+          width: 100%;
         }
       }
 
