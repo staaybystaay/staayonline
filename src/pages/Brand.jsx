@@ -85,7 +85,7 @@ function Nav() {
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       height: '64px', position: 'sticky', top: 0, zIndex: 100,
     }}>
-      <span style={{ fontFamily: SERIF, fontSize: '22px', fontWeight: 700, letterSpacing: '0.12em', color: T.ink }}>STAAY</span>
+      <span style={{ fontFamily: SERIF, fontSize: '22px', fontWeight: 700, letterSpacing: '0.12em', color: T.ink }}></span>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: T.mid }}>
         <a href="/" style={{ color: T.mid, textDecoration: 'none', transition: 'color 0.2s' }}
           onMouseEnter={e => e.currentTarget.style.color = T.gold}
