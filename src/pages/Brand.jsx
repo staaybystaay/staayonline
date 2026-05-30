@@ -109,7 +109,7 @@ function Hero() {
       {/* Image */}
       <div style={{ position: 'relative', overflow: 'hidden', minHeight: '400px' }}>
         <img
-          src="/sefah.jpg"
+          src="/sefah.png"
           alt="Stacey Sefah, Founder of STAAY"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top center', display: 'block' }}
           onError={e => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement.style.background = 'linear-gradient(160deg,#2a2016 0%,#1a1409 100%)' }}
