@@ -104,7 +104,7 @@ function Nav() {
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       height: 64, position: 'sticky', top: 0, zIndex: 100,
     }}>
-      <span style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, letterSpacing: '.12em', color: T.ink }}></span>
+      <span style={{ fontFamily: SERIF, fontSize: 22, fontWeight: 700, letterSpacing: '.12em', color: T.ink }}>STAAY</span>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: T.mid, fontFamily: SANS }}>
         <a href="/" style={{ color: T.mid, transition: 'color .2s' }}
           onMouseEnter={e => e.currentTarget.style.color = T.gold}
@@ -118,59 +118,97 @@ function Nav() {
 }
 
 /* ══════════════════════════════════════════
-   HERO  — strict 50/50 desktop, stacked mobile
+   HERO
+   Desktop: 50/50 grid. Image column is
+   position:relative with NO fixed height —
+   the img renders at full natural height
+   (width:100%, height:auto) so nothing is
+   cropped. The text column stretches to match
+   via align-items:stretch on the grid.
+   Mobile: single column, image 420px tall
+   with object-fit:cover (unchanged).
 ══════════════════════════════════════════ */
 function Hero() {
   const mobile = useIsMobile(780)
+
   return (
     <section style={{
       display: 'grid',
       gridTemplateColumns: mobile ? '1fr' : '1fr 1fr',
+      alignItems: 'stretch',
       borderBottom: `1px solid ${T.line}`,
     }}>
-      {/* Image column */}
-      <div style={{ position: 'relative', overflow: 'hidden', minHeight: mobile ? 'auto' : 560 }}>
+
+      {/* ── Image column ── */}
+      <div style={{ position: 'relative', overflow: 'hidden' }}>
         <img
           src="/sefah.png"
           alt="Stacey Sefah, Founder of STAAY"
-          style={{
+          style={mobile ? {
+            /* Mobile: fixed height, cover crop */
             width: '100%',
-            height: mobile ? '420px' : '100%',
+            height: '420px',
             objectFit: 'cover',
             objectPosition: 'top center',
             display: 'block',
-            ...(mobile ? {} : { position: 'absolute', inset: 0 }),
+          } : {
+            /* Desktop: full image, no crop */
+            width: '100%',
+            height: 'auto',
+            display: 'block',
           }}
-          onError={e => { e.currentTarget.style.display = 'none'; e.currentTarget.parentElement.style.background = 'linear-gradient(160deg,#3a2a10,#1a1409)' }}
+          onError={e => {
+            e.currentTarget.style.display = 'none'
+            e.currentTarget.parentElement.style.background = 'linear-gradient(160deg,#3a2a10,#1a1409)'
+            e.currentTarget.parentElement.style.minHeight = '560px'
+          }}
         />
         <span style={{
           position: 'absolute', top: 24, left: 24,
           background: T.gold, color: '#fff',
-          fontFamily: SANS, fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase',
+          fontFamily: SANS, fontSize: 10, fontWeight: 600,
+          letterSpacing: '.1em', textTransform: 'uppercase',
           padding: '6px 16px',
         }}>Founded 2009</span>
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: T.gold }} />
       </div>
 
-      {/* Text column */}
+      {/* ── Text column ── */}
       <div style={{
         background: T.off,
         padding: 'clamp(32px,4vw,56px)',
-        display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-        minHeight: mobile ? 'auto' : 560,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        /* On mobile give it a sensible min-height; on desktop it
+           stretches to match the image column automatically. */
+        minHeight: mobile ? 'auto' : 0,
       }}>
         <div>
-          <p style={{ fontFamily: SANS, fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: T.gold, marginBottom: 14 }}>Who We Are</p>
-          <h1 style={{ fontFamily: SERIF, fontSize: 'clamp(36px,4.5vw,62px)', fontWeight: 600, lineHeight: 1.06, letterSpacing: '-.01em', color: T.ink, margin: '0 0 20px' }}>
+          <p style={{ fontFamily: SANS, fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: T.gold, marginBottom: 14 }}>
+            Who We Are
+          </p>
+          <h1 style={{
+            fontFamily: SERIF,
+            fontSize: 'clamp(36px,4.5vw,62px)',
+            fontWeight: 600, lineHeight: 1.06,
+            letterSpacing: '-.01em', color: T.ink,
+            margin: '0 0 20px',
+          }}>
             Designed for Women<br />Who Bloom
           </h1>
           <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.75, color: T.mid, maxWidth: 340 }}>
             A Ghanaian womenswear brand rooted in intention, craftsmanship, and grace — built by a woman who understands what it means to come into your own.
           </p>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14, paddingTop: 20, borderTop: `1px solid ${T.line}`, marginTop: 32 }}>
+
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 14,
+          paddingTop: 20, borderTop: `1px solid ${T.line}`, marginTop: 32,
+        }}>
           <div style={{
-            width: 44, height: 44, borderRadius: '50%', background: T.gold, flexShrink: 0,
+            width: 44, height: 44, borderRadius: '50%',
+            background: T.gold, flexShrink: 0,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontFamily: SERIF, fontSize: 18, fontWeight: 600, color: '#fff',
           }}>SS</div>
@@ -218,13 +256,11 @@ function Story() {
         gap: mobile ? 32 : 72,
         alignItems: 'start',
       }}>
-        {/* Sticky aside */}
         <FadeUp style={mobile ? {} : { position: 'sticky', top: 88 }}>
           <SectionLabel tag="Our Story" />
           <SH2>Born from a Belief.<br />Built with Grace.</SH2>
         </FadeUp>
 
-        {/* Story body */}
         <FadeUp delay={0.1}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             {[
@@ -324,8 +360,8 @@ function Stats() {
             return (
               <div key={s.l} style={{
                 padding: 'clamp(24px,3.5vw,40px)',
-                borderRight:  isRight ? '1px solid rgba(255,255,255,.08)' : 'none',
-                borderTop:    isTop   ? '1px solid rgba(255,255,255,.08)' : 'none',
+                borderRight: isRight ? '1px solid rgba(255,255,255,.08)' : 'none',
+                borderTop:   isTop   ? '1px solid rgba(255,255,255,.08)' : 'none',
                 textAlign: 'center',
               }}>
                 <p style={{ fontFamily: SERIF, fontSize: 'clamp(34px,3.8vw,52px)', fontWeight: 600, color: T.gold, lineHeight: 1, marginBottom: 8, letterSpacing: '-.02em' }}>{s.v}</p>
@@ -352,7 +388,6 @@ function Contact() {
         gridTemplateColumns: mobile ? '1fr' : '1fr 1fr',
         border: `1px solid ${T.line}`,
       }}>
-        {/* Shop */}
         <FadeUp style={{ padding: 'clamp(32px,4vw,56px)', borderBottom: mobile ? `1px solid ${T.line}` : 'none', borderRight: !mobile ? `1px solid ${T.line}` : 'none' }}>
           <SectionLabel tag="Ready to wear STAAY?" />
           <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(26px,3.2vw,42px)', fontWeight: 600, color: T.ink, lineHeight: 1.1, margin: '12px 0 16px', letterSpacing: '-.01em' }}>Shop the Collection</h2>
@@ -368,7 +403,6 @@ function Contact() {
           </a>
         </FadeUp>
 
-        {/* Contact */}
         <FadeUp delay={0.1} style={{ padding: 'clamp(32px,4vw,56px)' }}>
           <SectionLabel tag="Get in Touch" />
           <div style={{ marginTop: 12 }}>
