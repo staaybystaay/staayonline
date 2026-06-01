@@ -22,31 +22,28 @@ const heroSlides = [
     id: 1,
     image: '/Ari.jpeg',
     tag: 'Eden Collection — SS 2026',
-    headline: 'Where Beauty\nBegins.',
-    sub: 'Soft, feminine, and graceful — but never without strength.',
-    cta: 'Shop Eden Collection',
+    headline: 'Where Beauty Begins.',
+    sub: 'Soft, feminine, and graceful.',
+    cta: 'Shop Eden',
     href: '/shop',
-    bg: '#F5ECD8',
   },
   {
     id: 2,
     image: '/Ayla.jpeg',
     tag: 'New Season — SS 2026',
-    headline: 'Effortless Style\nFor Every Woman',
-    sub: 'Pieces that move with you — from morning to night.',
-    cta: 'Explore Collections',
+    headline: 'Effortless Style For Every Woman',
+    sub: 'Pieces that move with you.',
+    cta: 'Shop Now',
     href: '/shop',
-    bg: '#EDE8DF',
   },
   {
     id: 3,
     image: '/Eve.png',
     tag: 'The STAAY Edit',
-    headline: 'Made in Accra.\nWorn Everywhere.',
-    sub: 'Local craftsmanship meeting international standards.',
+    headline: 'Made in Accra. Worn Everywhere.',
+    sub: 'Local craftsmanship, international standard.',
     cta: 'View the Edit',
     href: '/featured',
-    bg: '#E8E0D4',
   },
 ]
 
@@ -132,15 +129,17 @@ function PromoPopup() {
   )
 }
 
-// ─── HERO — split layout ──────────────────────
+// ─── HERO ─────────────────────────────────────
+// Full bleed, model fully visible, text at bottom
+// like a clean magazine cover
 function Hero() {
-  const [idx, setIdx]     = useState(0)
+  const [idx, setIdx]       = useState(0)
   const [paused, setPaused] = useState(false)
   const s = heroSlides[idx]
 
   useEffect(() => {
     if (paused) return
-    const t = setInterval(() => setIdx(i => (i + 1) % heroSlides.length), 5500)
+    const t = setInterval(() => setIdx(i => (i + 1) % heroSlides.length), 6000)
     return () => clearInterval(t)
   }, [idx, paused])
 
@@ -150,213 +149,183 @@ function Hero() {
       onMouseLeave={() => setPaused(false)}
       style={{
         position: 'relative',
+        height: '90vh',
+        minHeight: '560px',
         overflow: 'hidden',
-        minHeight: '580px',
-        height: '88vh',
+        background: DK,
       }}>
 
-      {/* Animated background colour */}
-      <AnimatePresence mode="wait">
+      {/* Background image — full visibility, only bottom gradient */}
+      <AnimatePresence mode="crossfade">
         <motion.div
-          key={'bg-' + s.id}
+          key={s.id}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 0.9 }}
           style={{
             position: 'absolute', inset: 0,
-            background: s.bg,
+            backgroundImage: `url(${s.image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center top',
           }}
         />
       </AnimatePresence>
 
-      {/* Gold bottom stripe */}
+      {/* Light gradient ONLY at bottom — model stays fully visible */}
       <div style={{
-        position: 'absolute', bottom: 0, left: 0, right: 0,
-        height: '4px', background: G, zIndex: 4,
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to top, rgba(17,17,17,0.88) 0%, rgba(17,17,17,0.35) 35%, rgba(17,17,17,0.0) 60%)',
+        zIndex: 1,
       }} />
 
-      {/* Content grid */}
+      {/* Gold top stripe */}
       <div style={{
-        position: 'relative', zIndex: 2,
+        position: 'absolute', top: 0, left: 0, right: 0,
+        height: '3px', background: G, zIndex: 3,
+      }} />
+
+      {/* Season badge — top right */}
+      <motion.div
+        key={'badge-' + s.id}
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.3 }}
+        style={{
+          position: 'absolute', top: '24px', right: '32px', zIndex: 3,
+          background: GL, color: G,
+          padding: '5px 14px',
+          ...F, fontSize: '11px', fontWeight: 600,
+          letterSpacing: '0.07em', textTransform: 'uppercase',
+        }}>
+        {s.tag}
+      </motion.div>
+
+      {/* Bottom content — text sits here where model is NOT */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0,
+        zIndex: 2,
         maxWidth: '1280px', margin: '0 auto',
-        padding: '0 64px',
-        height: '100%',
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        alignItems: 'center',
-        gap: '40px',
+        padding: '0 64px 48px',
+        display: 'flex',
+        alignItems: 'flex-end',
+        justifyContent: 'space-between',
       }}>
 
-        {/* ── LEFT — text ── */}
+        {/* Left — headline + CTA */}
         <AnimatePresence mode="wait">
           <motion.div
-            key={'text-' + s.id}
-            initial={{ opacity: 0, x: -24 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 24 }}
+            key={'copy-' + s.id}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.5 }}
-            style={{ paddingTop: '40px' }}>
+            style={{ maxWidth: '520px' }}>
 
-            {/* Tag */}
-            <div style={{
-              display: 'inline-flex', alignItems: 'center', gap: '8px',
-              background: W, border: `1px solid ${BR}`,
-              padding: '5px 14px', marginBottom: '24px',
-            }}>
-              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: G }} />
-              <span style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.07em', textTransform: 'uppercase' }}>
-                {s.tag}
-              </span>
-            </div>
-
-            {/* Headline */}
             <h1 style={{
               ...F, fontWeight: 800,
-              fontSize: 'clamp(36px, 5vw, 68px)',
-              lineHeight: 1.05,
-              letterSpacing: '-0.03em',
-              color: DK,
-              margin: '0 0 20px',
-              whiteSpace: 'pre-line',
+              fontSize: 'clamp(32px, 4.5vw, 60px)',
+              lineHeight: 1.1,
+              letterSpacing: '-0.025em',
+              color: W,
+              margin: '0 0 12px',
             }}>
               {s.headline}
             </h1>
 
-            {/* Sub */}
             <p style={{
               ...F, fontWeight: 300,
-              fontSize: '16px', lineHeight: 1.65,
-              color: MD, marginBottom: '36px',
-              maxWidth: '380px',
+              fontSize: '15px', lineHeight: 1.6,
+              color: 'rgba(255,255,255,0.65)',
+              marginBottom: '24px',
             }}>
               {s.sub}
             </p>
 
-            {/* CTAs */}
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-              <Link
-                to={s.href}
-                style={{
-                  background: G, color: W,
-                  padding: '15px 36px',
-                  ...F, fontSize: '13px', fontWeight: 700,
-                  letterSpacing: '0.04em',
-                  display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  transition: 'background 0.25s, transform 0.2s',
-                  boxShadow: '0 4px 16px rgba(184,144,58,0.35)',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = '#9A7830'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-                onMouseLeave={e => { e.currentTarget.style.background = G; e.currentTarget.style.transform = 'translateY(0)' }}>
-                {s.cta} →
-              </Link>
-              <Link
-                to="/shop"
-                style={{
-                  ...F, fontSize: '13px', fontWeight: 500,
-                  color: DK,
-                  borderBottom: `2px solid ${DK}`,
-                  paddingBottom: '2px',
-                  transition: 'color 0.2s, border-color 0.2s',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderBottomColor = G }}
-                onMouseLeave={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = DK }}>
-                View All
-              </Link>
-            </div>
-
-            {/* Slide dots */}
-            <div style={{ display: 'flex', gap: '8px', marginTop: '48px' }}>
-              {heroSlides.map((sl, i) => (
-                <button
-                  key={sl.id}
-                  onClick={() => setIdx(i)}
-                  style={{
-                    height: '4px', padding: 0, border: 'none',
-                    cursor: 'pointer', borderRadius: '2px',
-                    transition: 'all 0.35s',
-                    width: i === idx ? '32px' : '10px',
-                    background: i === idx ? G : BR,
-                  }} />
-              ))}
-            </div>
+            <Link
+              to={s.href}
+              style={{
+                background: G, color: W,
+                padding: '14px 36px',
+                ...F, fontSize: '13px', fontWeight: 700,
+                letterSpacing: '0.04em',
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                transition: 'background 0.25s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#9A7830' }}
+              onMouseLeave={e => { e.currentTarget.style.background = G }}>
+              {s.cta} →
+            </Link>
 
           </motion.div>
         </AnimatePresence>
 
-        {/* ── RIGHT — model image ── */}
+        {/* Right — slide controls */}
         <div style={{
-          position: 'relative',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'flex-end',
-          justifyContent: 'center',
-          overflow: 'hidden',
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'flex-end', gap: '16px',
         }}>
-          {/* Large faint collection name behind image */}
-          <div style={{
-            position: 'absolute',
-            bottom: '10%',
-            right: '-10px',
-            ...F, fontSize: 'clamp(60px, 8vw, 110px)',
-            fontWeight: 900,
-            color: 'rgba(17,17,17,0.05)',
-            letterSpacing: '-0.04em',
-            userSelect: 'none',
-            whiteSpace: 'nowrap',
-            zIndex: 0,
-          }}>
-            STAAY
-          </div>
-
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={'img-' + s.id}
-              src={s.image}
-              alt={s.tag}
-              initial={{ opacity: 0, scale: 1.04, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.65 }}
-              style={{
-                position: 'relative', zIndex: 1,
-                height: '90%',
-                maxHeight: '520px',
-                width: '100%',
-                objectFit: 'cover',
-                objectPosition: 'center top',
-                display: 'block',
-              }}
-            />
-          </AnimatePresence>
-
-          {/* Prev / Next arrows */}
-          <div style={{
-            position: 'absolute', bottom: '20px', right: '0',
-            zIndex: 3, display: 'flex', gap: '8px',
-          }}>
+          {/* Arrows */}
+          <div style={{ display: 'flex', gap: '8px' }}>
             {[-1, 1].map(d => (
               <button
                 key={d}
                 onClick={() => setIdx(i => (i + d + heroSlides.length) % heroSlides.length)}
                 style={{
-                  width: '40px', height: '40px',
-                  background: W,
-                  border: `1px solid ${BR}`,
-                  color: DK, cursor: 'pointer', fontSize: '16px',
+                  width: '44px', height: '44px',
+                  background: 'rgba(255,255,255,0.12)',
+                  border: '1px solid rgba(255,255,255,0.3)',
+                  backdropFilter: 'blur(6px)',
+                  color: W, cursor: 'pointer', fontSize: '16px',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   transition: 'all 0.22s',
-                  boxShadow: '0 2px 8px rgba(17,17,17,0.08)',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.borderColor = G; e.currentTarget.style.color = W }}
-                onMouseLeave={e => { e.currentTarget.style.background = W; e.currentTarget.style.borderColor = BR; e.currentTarget.style.color = DK }}>
+                onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.borderColor = G }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)' }}>
                 {d === -1 ? '←' : '→'}
               </button>
             ))}
           </div>
+
+          {/* Dots + counter */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ ...F, fontSize: '11px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.1em' }}>
+              {String(idx + 1).padStart(2, '0')} / {String(heroSlides.length).padStart(2, '0')}
+            </span>
+            <div style={{ display: 'flex', gap: '6px' }}>
+              {heroSlides.map((sl, i) => (
+                <button
+                  key={sl.id}
+                  onClick={() => setIdx(i)}
+                  style={{
+                    height: '3px', padding: 0, border: 'none',
+                    cursor: 'pointer', borderRadius: '2px',
+                    transition: 'all 0.35s',
+                    width: i === idx ? '28px' : '8px',
+                    background: i === idx ? G : 'rgba(255,255,255,0.3)',
+                  }} />
+              ))}
+            </div>
+          </div>
         </div>
 
       </div>
+
+      {/* Progress bar */}
+      {!paused && (
+        <motion.div
+          key={'bar-' + s.id}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 6, ease: 'linear' }}
+          style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            height: '3px', background: G,
+            transformOrigin: 'left', zIndex: 3,
+          }}
+        />
+      )}
+
     </section>
   )
 }
