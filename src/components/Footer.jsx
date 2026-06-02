@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import useCartStore from '../../store/useCartStore'
+
 
 const G   = '#B8903A'
 const GL  = '#F5ECD8'
