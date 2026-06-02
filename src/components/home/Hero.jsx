@@ -64,8 +64,8 @@ export default function Hero() {
       {/* Right thumbnails */}
       <div style={{ position: 'absolute', bottom: '40px', right: '36px', zIndex: 3, display: 'flex', gap: '8px' }}>
         {[
-          { src: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=240&q=75&fit=crop', name: 'AYLA', price: 'GH₵1,900' },
-          { src: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=240&q=75&fit=crop', name: 'ELARA', price: 'GH₵2,400' },
+          { src: '/newhero1.jpeg', name: 'AYLA', price: 'GH₵1,900' },
+          { src: 'newhero2.jpeg', name: 'ELARA', price: 'GH₵2,400' },
         ].map((t, i) => (
           <Link key={i} to="/shop" style={{ display: 'block', textDecoration: 'none', width: '100px', background: W, overflow: 'hidden' }}>
             <img src={t.src} alt={t.name} style={{ width: '100%', height: '128px', objectFit: 'cover', display: 'block' }} />
