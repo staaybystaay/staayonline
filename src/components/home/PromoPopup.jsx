@@ -45,7 +45,7 @@ export default function PromoPopup() {
           onMouseLeave={e => { e.currentTarget.style.background = 'rgba(17,17,17,0.08)'; e.currentTarget.style.color = DK }}>
           ✕
         </button>
-        <img src="/heroflyer.jpg" alt="Promo" style={{ width: '100%', display: 'block' }} />
+        <img src="/giftcard1.jpeg" alt="Promo" style={{ width: '100%', display: 'block' }} />
         <div style={{ display: 'flex', gap: '10px', padding: '14px 16px', borderTop: `1px solid ${BR}` }}>
           <Link
             to="/shop"
