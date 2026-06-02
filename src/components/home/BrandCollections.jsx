@@ -12,8 +12,8 @@ const F   = { fontFamily: "'Inter', sans-serif" }
 
 const collections = [
   { id: 'eden', image: '/Solenne-new.jpg', label: 'SS 2026', name: 'Eden Collection',  sub: '10 pieces',  href: '/shop' },
-  { id: 'love', image: '/Ayla.jpeg',   label: 'SS 2026', name: 'The Love Edit',    sub: 'New season', href: '/shop' },
-  { id: 'bold', image: '/Mira.jpeg',   label: 'SS 2026', name: 'Bold & Beautiful', sub: 'New season', href: '/shop' },
+  { id: 'love', image: '/Ayla-new.jpg',   label: 'SS 2026', name: 'The Love Edit',    sub: 'New season', href: '/shop' },
+  { id: 'bold', image: '/Mira-new.jpg',   label: 'SS 2026', name: 'Bold & Beautiful', sub: 'New season', href: '/shop' },
 ]
 
 export default function BrandCollections() {
