@@ -38,7 +38,7 @@ export default function Hero() {
       {/* Model — centered */}
       <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', height: '100%', width: '36%', maxWidth: '460px', zIndex: 2 }}>
         <img
-          src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=900&q=85&fit=crop&crop=top"
+          src="/newhero.jpeg"
           alt="STAAY Collection"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
         />
