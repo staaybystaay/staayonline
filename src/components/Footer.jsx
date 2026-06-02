@@ -17,16 +17,16 @@ const F   = { fontFamily: "'Inter', sans-serif" }
 
 // Using actual Eden collection pieces — consistent, on-brand
 const drops = [
-  { id: 'e1',  name: 'ARI',     price: 1650, image: '/Ari.jpeg',     collection: 'Eden Collection' },
-  { id: 'e6',  name: 'AURA',    price: 2900, image: '/Aura.jpeg',    collection: 'Eden Collection' },
-  { id: 'e7',  name: 'KAIA',    price: 2900, image: '/Kaia.png',     collection: 'Eden Collection' },
-  { id: 'e8',  name: 'EVE',     price: 2400, image: '/Eve.png',      collection: 'Eden Collection' },
-  { id: 'e10', name: 'DAHLIA',  price: 2200, image: '/Dahlia.jpeg',  collection: 'Eden Collection' },
+  { id: 'e1',  name: 'ARI',     price: 1650, image: '/Ari-new.jpg',     collection: 'Eden Collection' },
+  { id: 'e6',  name: 'AURA',    price: 2900, image: '/Aura-new.jpg',    collection: 'Eden Collection' },
+  { id: 'e7',  name: 'KAIA',    price: 2900, image: '/Kaia-new.jpg',     collection: 'Eden Collection' },
+  { id: 'e8',  name: 'EVE',     price: 2400, image: '/Eve-new.jpg',      collection: 'Eden Collection' },
+  { id: 'e10', name: 'DAHLIA',  price: 2200, image: '/Dahlia-new.jpg',  collection: 'Eden Collection' },
 ]
 
 export default function JustDropped() {
   const [hovered, setHovered] = useState(null)
-  const addItem = useCartStore(s => s.addItem)
+  
 
   return (
     <section style={{ background: W, padding: '80px 64px', borderTop: `1px solid ${BR}` }}>
