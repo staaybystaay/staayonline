@@ -1,226 +1,265 @@
-import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 const G  = '#B8903A'
 const GL = '#F5ECD8'
 const W  = '#FFFFFF'
 const BK = '#111111'
+const DK = '#1A1612'
+const MD = '#666666'
 const F  = { fontFamily: "'Inter', sans-serif" }
 
-// ─────────────────────────────────────────────────────
-//  Swap this for your own campaign photo when ready.
-//  Needs to be a tall editorial fashion shot (portrait
-//  or landscape both work). Model should be well-lit,
-//  on a clean or natural background.
-// ─────────────────────────────────────────────────────
-const IMAGE = 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1800&q=90&fit=crop&crop=top'
+// Two small thumbnails bottom right — use any two Eden pieces
+const thumbs = [
+  { image: '/Ayla-new.jpg',  name: 'AYLA',  price: 'GH₵1,900' },
+  { image: '/Elara-new.jpg', name: 'ELARA', price: 'GH₵2,400' },
+]
+
+const MARQUEE_TEXT = 'WEAR YOUR BEAUTY  ✦  EDEN COLLECTION  ✦  SS 2026  ✦  MADE IN ACCRA  ✦  '
 
 export default function Hero() {
   return (
     <section style={{
       position: 'relative',
       width: '100%',
-      height: '95vh',
-      minHeight: '600px',
+      height: '92vh',
+      minHeight: '580px',
       overflow: 'hidden',
-      background: BK,
     }}>
 
-      {/* ── FULL BLEED IMAGE — the star ── */}
-      <motion.img
-        src={IMAGE}
-        alt="Staay Collection"
-        initial={{ scale: 1.04, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          objectPosition: 'center top',
-          display: 'block',
-        }}
-      />
+      {/* ── SPLIT BACKGROUND ── */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+      }}>
+        <div style={{ background: '#F0EAE0' }} />
+        <div style={{ background: '#E4E8EF' }} />
+      </div>
 
-      {/* ── GRADIENT — only bottom third, keeps model visible ── */}
+      {/* ── MARQUEE TEXT — sits in the middle, model goes on top ── */}
       <div style={{
         position: 'absolute',
-        inset: 0,
-        background: 'linear-gradient(to top, rgba(10,8,6,0.92) 0%, rgba(10,8,6,0.5) 28%, rgba(10,8,6,0.0) 55%)',
-      }} />
-
-      {/* ── TOP LEFT — brand mark ── */}
-      <motion.div
-        initial={{ opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.4 }}
-        style={{
-          position: 'absolute',
-          top: '28px',
-          left: '40px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          zIndex: 2,
-        }}>
-        <div style={{
-          background: GL,
-          padding: '4px 12px',
-          ...F,
-          fontSize: '10px',
-          fontWeight: 700,
-          color: G,
-          letterSpacing: '0.12em',
-          textTransform: 'uppercase',
-        }}>
-          Eden Collection
-        </div>
-        <div style={{
-          background: 'rgba(255,255,255,0.12)',
-          backdropFilter: 'blur(6px)',
-          border: '1px solid rgba(255,255,255,0.2)',
-          padding: '4px 12px',
-          ...F,
-          fontSize: '10px',
-          fontWeight: 500,
-          color: W,
-          letterSpacing: '0.08em',
-          textTransform: 'uppercase',
-        }}>
-          SS 2026
-        </div>
-      </motion.div>
-
-      {/* ── BOTTOM TEXT — minimal, confident ── */}
-      <div style={{
-        position: 'absolute',
-        bottom: 0,
+        top: '50%',
         left: 0,
         right: 0,
+        transform: 'translateY(-50%)',
+        overflow: 'hidden',
+        zIndex: 1,
+        pointerEvents: 'none',
+      }}>
+        <div style={{ display: 'flex', whiteSpace: 'nowrap' }}>
+          <motion.div
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ duration: 22, ease: 'linear', repeat: Infinity }}
+            style={{ display: 'flex', whiteSpace: 'nowrap' }}>
+            {[...Array(4)].map((_, i) => (
+              <span key={i} style={{
+                ...F,
+                fontWeight: 900,
+                fontSize: 'clamp(52px, 7vw, 96px)',
+                letterSpacing: '-0.02em',
+                color: 'rgba(26,22,18,0.07)',
+                textTransform: 'uppercase',
+                paddingRight: '0',
+                userSelect: 'none',
+                lineHeight: 1,
+              }}>
+                {MARQUEE_TEXT}
+              </span>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+
+      {/* ── CENTERED MODEL IMAGE ── */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        height: '100%',
+        width: '40%',
+        maxWidth: '500px',
         zIndex: 2,
-        padding: '0 56px 52px',
+      }}>
+        <img
+          src="/Solenne.jpeg"
+          alt="Eden Collection"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center top',
+            display: 'block',
+          }}
+        />
+      </div>
+
+      {/* ── LEFT CONTENT ── */}
+      <div style={{
+        position: 'absolute',
+        top: 0, left: 0, bottom: 0,
+        width: '45%',
+        zIndex: 3,
         display: 'flex',
-        alignItems: 'flex-end',
-        justifyContent: 'space-between',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        padding: '0 56px 56px 56px',
       }}>
 
-        {/* Left — headline */}
+        {/* Season tag */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          style={{ maxWidth: '560px' }}>
-
-          <h1 style={{
-            ...F,
-            fontWeight: 800,
-            fontSize: 'clamp(38px, 5vw, 72px)',
-            lineHeight: 1.0,
-            letterSpacing: '-0.03em',
-            color: W,
-            margin: '0 0 20px',
+          transition={{ duration: 0.5, delay: 0.2 }}
+          style={{
+            display: 'inline-flex', alignItems: 'center', gap: '8px',
+            marginBottom: '16px',
+            width: 'fit-content',
           }}>
-            Where Beauty<br />
-            <span style={{ color: G }}>Begins.</span>
-          </h1>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <Link
-              to="/shop"
-              style={{
-                background: W,
-                color: BK,
-                padding: '14px 36px',
-                ...F,
-                fontSize: '12px',
-                fontWeight: 700,
-                letterSpacing: '0.07em',
-                textTransform: 'uppercase',
-                display: 'inline-block',
-                transition: 'background 0.25s, color 0.25s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.color = W }}
-              onMouseLeave={e => { e.currentTarget.style.background = W; e.currentTarget.style.color = BK }}>
-              Shop the Collection
-            </Link>
-            <Link
-              to="/brand"
-              style={{
-                ...F,
-                fontSize: '12px',
-                fontWeight: 500,
-                color: 'rgba(255,255,255,0.6)',
-                letterSpacing: '0.04em',
-                borderBottom: '1px solid rgba(255,255,255,0.3)',
-                paddingBottom: '2px',
-                transition: 'color 0.2s, border-color 0.2s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.color = W; e.currentTarget.style.borderBottomColor = W }}
-              onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.6)'; e.currentTarget.style.borderBottomColor = 'rgba(255,255,255,0.3)' }}>
-              Our Story →
-            </Link>
-          </div>
-
+          <div style={{ width: '20px', height: '1px', background: G }} />
+          <span style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+            New Season — SS 2026
+          </span>
         </motion.div>
 
-        {/* Right — collection info card */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
+        {/* Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
           style={{
-            background: 'rgba(255,255,255,0.08)',
-            backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255,255,255,0.15)',
-            padding: '20px 24px',
-            minWidth: '200px',
+            ...F, fontWeight: 400,
+            fontSize: '15px', lineHeight: 1.7,
+            color: '#4A4035',
+            marginBottom: '28px',
+            maxWidth: '320px',
           }}>
-          <p style={{ ...F, fontSize: '10px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '10px' }}>
-            Now Available
-          </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {[
-              { label: 'Collection', value: 'Eden SS 2026' },
-              { label: 'Pieces',     value: '10 styles'   },
-              { label: 'From',       value: 'GH₵ 1,450'   },
-            ].map(row => (
-              <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '24px' }}>
-                <span style={{ ...F, fontSize: '11px', fontWeight: 300, color: 'rgba(255,255,255,0.45)' }}>{row.label}</span>
-                <span style={{ ...F, fontSize: '12px', fontWeight: 600, color: W }}>{row.value}</span>
+          Discover a curated collection of intentional designs crafted for the modern Ghanaian woman. Soft, graceful, and always in season.
+        </motion.p>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          style={{ marginBottom: '40px' }}>
+          <Link
+            to="/shop"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '12px',
+              background: BK, color: W,
+              padding: '14px 28px',
+              ...F, fontSize: '13px', fontWeight: 600,
+              letterSpacing: '0.04em',
+              transition: 'background 0.25s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = G }}
+            onMouseLeave={e => { e.currentTarget.style.background = BK }}>
+            Shop Now
+            <span style={{
+              width: '26px', height: '26px',
+              background: G, borderRadius: '50%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: '13px', transition: 'background 0.25s',
+            }}>
+              →
+            </span>
+          </Link>
+        </motion.div>
+
+        {/* Social proof */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          style={{
+            background: W,
+            padding: '14px 18px',
+            display: 'inline-flex', alignItems: 'center', gap: '12px',
+            width: 'fit-content',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+          }}>
+          {/* Avatar stack */}
+          <div style={{ display: 'flex' }}>
+            {['/Ari.jpeg', '/Mira.jpeg', '/Vera.jpeg'].map((src, i) => (
+              <div key={i} style={{
+                width: '28px', height: '28px', borderRadius: '50%',
+                border: '2px solid white',
+                marginLeft: i === 0 ? 0 : '-8px',
+                overflow: 'hidden',
+                background: '#E8DDD0',
+              }}>
+                <img src={src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
             ))}
+          </div>
+          <div>
+            <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: DK, lineHeight: 1 }}>
+              3 Collections
+            </p>
+            <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: MD, marginTop: '2px' }}>
+              23 pieces available now
+            </p>
           </div>
         </motion.div>
 
       </div>
 
-      {/* ── SCROLL HINT ── */}
+      {/* ── RIGHT THUMBNAILS — bottom right ── */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 1.2 }}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.5 }}
         style={{
           position: 'absolute',
-          bottom: '52px',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          bottom: '40px',
+          right: '40px',
+          zIndex: 3,
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '6px',
-          zIndex: 2,
+          gap: '10px',
         }}>
-        <span style={{ ...F, fontSize: '9px', fontWeight: 500, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ width: '1px', height: '32px', background: 'rgba(255,255,255,0.2)' }}
-        />
+        {thumbs.map((t, i) => (
+          <Link key={i} to="/shop" style={{ textDecoration: 'none' }}>
+            <div style={{
+              width: '110px',
+              background: W,
+              overflow: 'hidden',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+              transition: 'transform 0.3s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)' }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)' }}>
+              <div style={{ height: '140px', overflow: 'hidden' }}>
+                <img
+                  src={t.image}
+                  alt={t.name}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+              </div>
+              <div style={{ padding: '8px 10px' }}>
+                <p style={{ ...F, fontSize: '10px', fontWeight: 700, color: DK, letterSpacing: '0.04em' }}>{t.name}</p>
+                <p style={{ ...F, fontSize: '10px', fontWeight: 500, color: G, marginTop: '2px' }}>{t.price}</p>
+              </div>
+            </div>
+          </Link>
+        ))}
       </motion.div>
+
+      {/* ── TOP RIGHT — season badge ── */}
+      <div style={{
+        position: 'absolute',
+        top: '24px', right: '24px',
+        zIndex: 3,
+        background: GL,
+        border: `1px solid ${G}`,
+        padding: '5px 14px',
+        ...F, fontSize: '10px', fontWeight: 600,
+        color: G, letterSpacing: '0.1em', textTransform: 'uppercase',
+      }}>
+        SS 2026
+      </div>
 
     </section>
   )
