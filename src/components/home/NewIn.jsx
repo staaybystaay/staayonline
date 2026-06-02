@@ -13,10 +13,10 @@ const B2 = '#F4F1ED'
 const F  = { fontFamily: "'Inter', sans-serif" }
 
 const items = [
-  { id: 'e1', name: 'ARI',     price: 1650, label: 'Eden Collection', image: 'https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=500&q=80&fit=crop' },
-  { id: 'e4', name: 'SOLENNE', price: 2600, label: 'Eden Collection', image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&q=80&fit=crop' },
-  { id: 'e6', name: 'AURA',    price: 2900, label: 'Eden Collection', image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=500&q=80&fit=crop' },
-  { id: 'e8', name: 'EVE',     price: 2400, label: 'Eden Collection', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&q=80&fit=crop' },
+  { id: 'e1', name: 'ARI',     price: 1650, label: 'Eden Collection', image: '/prod1.jpeg' },
+  { id: 'e4', name: 'SOLENNE', price: 2600, label: 'Eden Collection', image: '/prod2.jpeg' },
+  { id: 'e6', name: 'AURA',    price: 2900, label: 'Eden Collection', image: '/prod3.jpeg' },
+  { id: 'e8', name: 'EVE',     price: 2400, label: 'Eden Collection', image: '/prod4.jpeg' },
 ]
 
 export default function NewIn() {
