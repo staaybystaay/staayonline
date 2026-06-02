@@ -4,21 +4,24 @@ import { Link } from 'react-router-dom'
 import useCartStore from '../../store/useCartStore'
 
 const G   = '#B8903A'
+const GL  = '#F5ECD8'
 const W   = '#FFFFFF'
 const OW  = '#F8F7F4'
 const B2  = '#F2EFE9'
 const BK  = '#111111'
 const DK  = '#222222'
-const RD  = '#B91C1C'
+const MD  = '#666666'
+const FT  = '#999999'
 const BR  = '#E4E0D8'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
+// Using actual Eden collection pieces — consistent, on-brand
 const drops = [
-  { id: 'f1', name: 'Air STAAY 01',   price: 320, image: '/Kaia-new.jpg',    tag: 'New'  },
-  { id: 'f2', name: 'Void Hoodie',    price: 195, image: '/hoodie.jpg',  tag: null   },
-  { id: 'f3', name: 'Cargo Pant 02',  price: 240, image: '/Elara-new.jpg',  tag: 'New'  },
-  { id: 'f4', name: 'Phantom Jacket', price: 420, image: '/phantom.jpg', tag: null   },
-  { id: 'f5', name: 'STAAY Crocs',    price: 280, image: '/Vera.new.jpg',   tag: 'Sale' },
+  { id: 'e1',  name: 'ARI',     price: 1650, image: '/Ari.jpeg',     collection: 'Eden Collection' },
+  { id: 'e6',  name: 'AURA',    price: 2900, image: '/Aura.jpeg',    collection: 'Eden Collection' },
+  { id: 'e7',  name: 'KAIA',    price: 2900, image: '/Kaia.png',     collection: 'Eden Collection' },
+  { id: 'e8',  name: 'EVE',     price: 2400, image: '/Eve.png',      collection: 'Eden Collection' },
+  { id: 'e10', name: 'DAHLIA',  price: 2200, image: '/Dahlia.jpeg',  collection: 'Eden Collection' },
 ]
 
 export default function JustDropped() {
@@ -26,58 +29,110 @@ export default function JustDropped() {
   const addItem = useCartStore(s => s.addItem)
 
   return (
-    <section style={{ background: W, padding: '64px', borderTop: `1px solid ${BR}` }}>
+    <section style={{ background: W, padding: '80px 64px', borderTop: `1px solid ${BR}` }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '32px' }}>
+        {/* Header */}
+        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: '40px' }}>
           <div>
-            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
-              Just In
-            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
+              <div style={{ width: '24px', height: '1px', background: G }} />
+              <span style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                Just In
+              </span>
+            </div>
             <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>
               New Arrivals
             </h2>
           </div>
           <Link
             to="/shop"
-            style={{ ...F, fontSize: '13px', fontWeight: 500, color: DK, display: 'flex', alignItems: 'center', gap: '6px', borderBottom: `1px solid ${DK}`, paddingBottom: '1px', transition: 'color 0.2s, border-color 0.2s' }}
+            style={{
+              ...F, fontSize: '13px', fontWeight: 500, color: DK,
+              display: 'flex', alignItems: 'center', gap: '6px',
+              borderBottom: `1px solid ${DK}`, paddingBottom: '1px',
+              transition: 'color 0.2s, border-color 0.2s',
+            }}
             onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderBottomColor = G }}
             onMouseLeave={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = DK }}>
             View All →
           </Link>
         </div>
 
-        <div className="hide-scroll" style={{ display: 'flex', gap: '16px', overflowX: 'auto' }}>
+        {/* Grid — 5 cards, uniform */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '16px' }}>
           {drops.map((item, i) => (
             <motion.div
               key={item.id}
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.07 }}
+              transition={{ duration: 0.4, delay: i * 0.06 }}
               onMouseEnter={() => setHovered(item.id)}
-              onMouseLeave={() => setHovered(null)}
-              style={{ flexShrink: 0, width: '210px' }}>
-              <div style={{ position: 'relative', height: '260px', background: B2, overflow: 'hidden', marginBottom: '12px' }}>
+              onMouseLeave={() => setHovered(null)}>
+
+              {/* Image */}
+              <div style={{
+                position: 'relative',
+                aspectRatio: '3/4',
+                background: B2,
+                overflow: 'hidden',
+                marginBottom: '12px',
+              }}>
                 <img
-                  src={item.image} alt={item.name}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.65s', transform: hovered === item.id ? 'scale(1.05)' : 'scale(1)' }}
+                  src={item.image}
+                  alt={item.name}
+                  onError={e => { e.target.style.display = 'none' }}
+                  style={{
+                    position: 'absolute', inset: 0,
+                    width: '100%', height: '100%',
+                    objectFit: 'cover',
+                    transition: 'transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94)',
+                    transform: hovered === item.id ? 'scale(1.05)' : 'scale(1)',
+                  }}
                 />
-                {item.tag && (
-                  <span style={{ position: 'absolute', top: '10px', left: '10px', background: item.tag === 'Sale' ? RD : BK, color: W, padding: '4px 10px', ...F, fontSize: '10px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
-                    {item.tag}
-                  </span>
-                )}
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: BK, transform: hovered === item.id ? 'translateY(0)' : 'translateY(100%)', transition: 'transform 0.3s' }}>
+
+                {/* New badge */}
+                <div style={{
+                  position: 'absolute', top: 0, left: 0,
+                  background: G, color: W,
+                  padding: '4px 10px',
+                  ...F, fontSize: '9px', fontWeight: 700,
+                  letterSpacing: '0.06em', textTransform: 'uppercase',
+                }}>
+                  New
+                </div>
+
+                {/* Add to bag — slide up on hover */}
+                <div style={{
+                  position: 'absolute', bottom: 0, left: 0, right: 0,
+                  background: BK,
+                  transform: hovered === item.id ? 'translateY(0)' : 'translateY(100%)',
+                  transition: 'transform 0.3s',
+                }}>
                   <button
-                    onClick={() => addItem({ ...item, badge: item.tag })}
-                    style={{ width: '100%', padding: '12px', background: 'transparent', border: 'none', color: W, cursor: 'pointer', ...F, fontSize: '11px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                    onClick={() => addItem({ ...item, badge: 'New', category: 'Eden Collection' })}
+                    style={{
+                      width: '100%', padding: '13px',
+                      background: 'transparent', border: 'none',
+                      color: W, cursor: 'pointer',
+                      ...F, fontSize: '11px', fontWeight: 600,
+                      letterSpacing: '0.06em', textTransform: 'uppercase',
+                    }}>
                     Add to Bag
                   </button>
                 </div>
               </div>
-              <p style={{ ...F, fontSize: '13px', fontWeight: 500, color: DK, marginBottom: '3px' }}>{item.name}</p>
-              <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: G }}>GH₵{item.price}</p>
+
+              {/* Info */}
+              <p style={{ ...F, fontSize: '10px', fontWeight: 500, color: G, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '3px' }}>
+                Eden Collection
+              </p>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: DK }}>{item.name}</p>
+                <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: DK }}>GH₵{item.price.toLocaleString()}</p>
+              </div>
+
             </motion.div>
           ))}
         </div>
