@@ -1,19 +1,19 @@
-import PromoPopup    from '../components/home/PromoPopup'
-import Hero          from '../components/home/Hero'
-import NewIn         from '../components/home/NewIn'
-import Collections   from '../components/home/Collections'
-import Mission       from '../components/home/Mission'
-import LatestProducts from '../components/home/LatestProducts'
+import PromoPopup       from '../components/home/PromoPopup'
+import Hero             from '../components/home/Hero'
+import FindYourFit      from '../components/home/FindYourFit'
+import EditorialBanner  from '../components/home/EditorialBanner'
+import DiscoverProducts from '../components/home/DiscoverProducts'
+import CollectionGrid   from '../components/home/CollectionGrid'
 
 export default function Home() {
   return (
-    <main>
+    <main style={{ background: '#fff' }}>
       <PromoPopup />
       <Hero />
-      <NewIn />
-      <Collections />
-      <Mission />
-      <LatestProducts />
+      <FindYourFit />
+      <EditorialBanner />
+      <DiscoverProducts />
+      <CollectionGrid />
     </main>
   )
 }
