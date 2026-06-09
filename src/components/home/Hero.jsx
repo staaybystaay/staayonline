@@ -1,86 +1,196 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { imgHero } from '../lib/images'
 
 const G  = '#B8903A'
-const GL = '#F5ECD8'
 const W  = '#FFFFFF'
-const BK = '#111111'
-const DK = '#1A1612'
-const MD = '#888'
 const F  = { fontFamily: "'Inter', sans-serif" }
 
-const MARQUEE = 'NEW SEASON SS 2026  —  EDEN COLLECTION  —  THE LOVE EDIT  —  BOLD & BEAUTIFUL  —  MADE IN ACCRA  —  '
+const slides = [
+  {
+    id: 1,
+    image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1800&q=85&fit=crop&crop=top',
+    headline: 'WHERE BEAUTY\nBEGINS TODAY',
+    sub: 'Soft, feminine, intentional.',
+    cta: 'Shop Eden Collection',
+    href: '/shop?col=eden',
+    align: 'left',
+  },
+  {
+    id: 2,
+    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=1800&q=85&fit=crop',
+    headline: 'DRESS THE WAY\nYOU FEEL TODAY',
+    sub: 'Styles that match every version of you.',
+    cta: 'Shop All Collections',
+    href: '/shop',
+    align: 'right',
+  },
+  {
+    id: 3,
+    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1800&q=85&fit=crop',
+    headline: 'MADE IN ACCRA.\nWORN EVERYWHERE.',
+    sub: 'Local craftsmanship. International standard.',
+    cta: 'Explore the Brand',
+    href: '/brand',
+    align: 'left',
+  },
+]
 
 export default function Hero() {
+  const [idx,    setIdx]    = useState(0)
+  const [paused, setPaused] = useState(false)
+  const s = slides[idx]
+
+  useEffect(() => {
+    if (paused) return
+    const t = setInterval(() => setIdx(i => (i + 1) % slides.length), 6000)
+    return () => clearInterval(t)
+  }, [idx, paused])
+
+  function prev() { setIdx(i => (i - 1 + slides.length) % slides.length) }
+  function next() { setIdx(i => (i + 1) % slides.length) }
+
   return (
-    <section style={{ position: 'relative', width: '100%', height: '92vh', minHeight: '580px', overflow: 'hidden' }}>
+    <section
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      style={{ position: 'relative', width: '100%', height: '88vh', minHeight: '520px', overflow: 'hidden', background: '#1A1612' }}>
 
-      {/* Split bg */}
-      <div style={{ position: 'absolute', inset: 0, display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
-        <div style={{ background: '#EDE8E1' }} />
-        <div style={{ background: '#E2E6EC' }} />
-      </div>
-
-      {/* Marquee */}
-      <div style={{ position: 'absolute', top: '50%', left: 0, right: 0, transform: 'translateY(-50%)', overflow: 'hidden', zIndex: 1, pointerEvents: 'none' }}>
+      {/* Background image */}
+      <AnimatePresence mode="crossfade">
         <motion.div
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: 30, ease: 'linear', repeat: Infinity }}
-          style={{ display: 'flex', whiteSpace: 'nowrap' }}>
-          {[...Array(4)].map((_, i) => (
-            <span key={i} style={{ ...F, fontWeight: 900, fontSize: 'clamp(56px, 8vw, 104px)', letterSpacing: '-0.02em', color: 'rgba(26,22,18,0.055)', textTransform: 'uppercase', userSelect: 'none', lineHeight: 1, flexShrink: 0 }}>
-              {MARQUEE}
-            </span>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* Model — centered */}
-      <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', height: '100%', width: '36%', maxWidth: '460px', zIndex: 2 }}>
-        <img
-          src="/newhero.jpeg"
-          alt="STAAY Collection"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }}
+          key={s.id}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.9 }}
+          style={{
+            position: 'absolute', inset: 0,
+            backgroundImage: `url(${s.image})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center top',
+          }}
         />
+      </AnimatePresence>
+
+      {/* Subtle overlay — keep model visible */}
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.28)' }} />
+
+      {/* ── HUGE TEXT — Damsyn style ── */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 2,
+        display: 'flex', flexDirection: 'column',
+        justifyContent: 'flex-end',
+        padding: '0 60px 60px',
+      }}>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={s.id}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.55 }}
+            style={{ maxWidth: s.align === 'right' ? '100%' : '720px', marginLeft: s.align === 'right' ? 'auto' : '0', textAlign: s.align === 'right' ? 'right' : 'left' }}>
+
+            {/* MASSIVE headline — Damsyn style */}
+            <h1 style={{
+              ...F, fontWeight: 900,
+              fontSize: 'clamp(48px, 7vw, 96px)',
+              lineHeight: 1.0,
+              letterSpacing: '-0.02em',
+              color: W,
+              margin: '0 0 16px',
+              whiteSpace: 'pre-line',
+              textTransform: 'uppercase',
+              textShadow: '0 2px 20px rgba(0,0,0,0.3)',
+            }}>
+              {s.headline}
+            </h1>
+
+            <p style={{
+              ...F, fontWeight: 400,
+              fontSize: 'clamp(14px, 1.8vw, 18px)',
+              color: 'rgba(255,255,255,0.85)',
+              marginBottom: '28px',
+              letterSpacing: '0.04em',
+              fontStyle: 'italic',
+            }}>
+              {s.sub}
+            </p>
+
+            <Link
+              to={s.href}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '10px',
+                background: G, color: W,
+                padding: '14px 36px',
+                ...F, fontSize: '13px', fontWeight: 700,
+                letterSpacing: '0.06em', textTransform: 'uppercase',
+                transition: 'background 0.25s, transform 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#9A7830'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.background = G; e.currentTarget.style.transform = 'translateY(0)' }}>
+              {s.cta}
+            </Link>
+
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* Left */}
-      <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: '44%', zIndex: 3, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '0 52px 52px' }}>
-        <p style={{ ...F, fontSize: '11px', fontWeight: 500, color: G, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '14px' }}>
-          New Season — SS 2026
-        </p>
-        <p style={{ ...F, fontSize: '15px', fontWeight: 300, color: '#5A5048', lineHeight: 1.75, marginBottom: '28px', maxWidth: '300px' }}>
-          Intentional designs for the modern woman. Soft, graceful, always in season.
-        </p>
-        <Link
-          to="/shop"
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', background: BK, color: W, padding: '13px 28px', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase', transition: 'background 0.2s', width: 'fit-content' }}
-          onMouseEnter={e => { e.currentTarget.style.background = G }}
-          onMouseLeave={e => { e.currentTarget.style.background = BK }}>
-          Shop Now
-        </Link>
-      </div>
+      {/* ── PREV / NEXT arrows — Damsyn style ── */}
+      {[
+        { dir: -1, pos: 'left: 20px', fn: prev, label: '‹' },
+        { dir:  1, pos: 'right: 20px', fn: next, label: '›' },
+      ].map(({ pos, fn, label }) => (
+        <button
+          key={pos}
+          onClick={fn}
+          style={{
+            position: 'absolute', top: '50%', transform: 'translateY(-50%)',
+            ...Object.fromEntries(pos.split(': ').map((v, i, a) => i % 2 === 0 ? [v, a[i + 1]] : []).filter(Boolean)),
+            zIndex: 3,
+            width: '44px', height: '44px',
+            background: 'rgba(255,255,255,0.15)',
+            backdropFilter: 'blur(6px)',
+            border: '1px solid rgba(255,255,255,0.3)',
+            color: W, cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: '26px', lineHeight: 1,
+            transition: 'background 0.2s',
+            borderRadius: '50%',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.borderColor = G }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.15)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)' }}>
+          {label}
+        </button>
+      ))}
 
-      {/* Right thumbnails */}
-      <div style={{ position: 'absolute', bottom: '40px', right: '36px', zIndex: 3, display: 'flex', gap: '8px' }}>
-        {[
-          { src: '/newhero1.jpeg', name: 'AYLA', price: 'GH₵1,900' },
-          { src: 'newhero2.jpeg', name: 'ELARA', price: 'GH₵2,400' },
-        ].map((t, i) => (
-          <Link key={i} to="/shop" style={{ display: 'block', textDecoration: 'none', width: '100px', background: W, overflow: 'hidden' }}>
-            <img src={t.src} alt={t.name} style={{ width: '100%', height: '128px', objectFit: 'cover', display: 'block' }} />
-            <div style={{ padding: '7px 8px' }}>
-              <p style={{ ...F, fontSize: '10px', fontWeight: 600, color: DK, letterSpacing: '0.04em' }}>{t.name}</p>
-              <p style={{ ...F, fontSize: '10px', fontWeight: 400, color: G, marginTop: '1px' }}>{t.price}</p>
-            </div>
-          </Link>
+      {/* ── Dots ── */}
+      <div style={{ position: 'absolute', bottom: '28px', left: '50%', transform: 'translateX(-50%)', zIndex: 3, display: 'flex', gap: '6px' }}>
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIdx(i)}
+            style={{
+              width: i === idx ? '28px' : '8px', height: '8px',
+              borderRadius: '4px', border: 'none', padding: 0, cursor: 'pointer',
+              background: i === idx ? G : 'rgba(255,255,255,0.5)',
+              transition: 'all 0.3s',
+            }} />
         ))}
       </div>
 
-      {/* SS 2026 badge */}
-      <div style={{ position: 'absolute', top: '22px', right: '22px', zIndex: 3, background: GL, border: `1px solid ${G}`, padding: '4px 12px', ...F, fontSize: '10px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-        SS 2026
-      </div>
+      {/* Progress bar */}
+      {!paused && (
+        <motion.div
+          key={`bar-${s.id}`}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 6, ease: 'linear' }}
+          style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '3px', background: G, transformOrigin: 'left', zIndex: 4 }}
+        />
+      )}
 
     </section>
   )
