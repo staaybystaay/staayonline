@@ -14,21 +14,17 @@ const LG = '#F5F5F5'
 const BR = '#E8E4DF'
 const F  = { fontFamily: "'Inter', sans-serif" }
 
-// ─── Icons ───────────────────────────────────
 const SearchIcon = () => (
   <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
     <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" strokeWidth="1.4"/>
     <path d="M11.5 11.5L15 15" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
   </svg>
 )
-
 const HeartIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-    <path d="M10 17S3 12.5 3 7.5A4 4 0 0 1 10 5a4 4 0 0 1 7 2.5c0 5-7 9.5-7 9.5z"
-      stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
+    <path d="M10 17S3 12.5 3 7.5A4 4 0 0 1 10 5a4 4 0 0 1 7 2.5c0 5-7 9.5-7 9.5z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
   </svg>
 )
-
 const CartIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
     <path d="M2 2h2.5l2 9h9l2-6H6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
@@ -36,45 +32,44 @@ const CartIcon = () => (
     <circle cx="14" cy="15.5" r="1.2" fill="currentColor"/>
   </svg>
 )
-
 const UserIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
     <circle cx="10" cy="7" r="3.5" stroke="currentColor" strokeWidth="1.4"/>
     <path d="M3 17c0-3.3 3.1-6 7-6s7 2.7 7 6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
   </svg>
 )
-
 const MenuIcon = () => (
   <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
     <path d="M1 1h18M1 7h12M1 13h18" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
   </svg>
 )
-
 const CloseIcon = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
     <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
   </svg>
 )
 
-// ─── Nav + collection data ────────────────────
 const navLinks = [
   { label: 'Home',      path: '/'         },
   { label: 'Shop',      path: '/shop'     },
+  { label: 'Women',     path: '/shop'     },
+  { label: 'Children',  path: '/shop'     },
   { label: 'Our Brand', path: '/brand'    },
   { label: 'Featured',  path: '/featured' },
 ]
 
-const collections = [
-  { label: 'All Collections', path: '/shop',              slug: 'all'  },
-  { label: 'Eden Collection', path: '/shop?col=eden',     slug: 'eden' },
-  { label: 'The Love Edit',   path: '/shop?col=love-edit',slug: 'love' },
-  { label: 'Bold & Beautiful',path: '/shop?col=bold',     slug: 'bold' },
-  { label: 'New In',          path: '/shop',              slug: 'new'  },
-  { label: 'Sale',            path: '/shop',              slug: 'sale' },
+const secondaryLinks = [
+  { label: 'All Collections', path: '/shop',               slug: 'all'  },
+  { label: 'Eden Collection', path: '/shop?col=eden',      slug: 'eden' },
+  { label: 'The Love Edit',   path: '/shop?col=love-edit', slug: 'love' },
+  { label: 'Bold & Beautiful',path: '/shop?col=bold',      slug: 'bold' },
+  { label: 'Women',           path: '/shop',               slug: 'women'},
+  { label: 'Children',        path: '/shop',               slug: 'kids' },
+  { label: 'New In',          path: '/shop',               slug: 'new'  },
+  { label: 'Sale',            path: '/shop',               slug: 'sale' },
 ]
 
-// ─── Mobile Drawer ────────────────────────────
-function MobileDrawer({ open, onClose, user, onLogout, cartCount }) {
+function MobileDrawer({ open, onClose, user, onLogout }) {
   return (
     <AnimatePresence>
       {open && (
@@ -90,10 +85,10 @@ function MobileDrawer({ open, onClose, user, onLogout, cartCount }) {
               <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
               <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: DK }}><CloseIcon /></button>
             </div>
-            <div style={{ flex: 1, overflowY: 'auto', padding: '16px 0' }}>
+            <div style={{ flex: 1, overflowY: 'auto', padding: '8px 0' }}>
               {navLinks.map(link => (
                 <Link key={link.label} to={link.path} onClick={onClose}
-                  style={{ display: 'block', padding: '14px 24px', ...F, fontSize: '15px', fontWeight: 500, color: DK, borderBottom: `1px solid ${BR}`, transition: 'color 0.2s' }}
+                  style={{ display: 'block', padding: '13px 24px', ...F, fontSize: '14px', fontWeight: 500, color: DK, borderBottom: `1px solid ${BR}`, transition: 'color 0.2s' }}
                   onMouseEnter={e => { e.currentTarget.style.color = G }}
                   onMouseLeave={e => { e.currentTarget.style.color = DK }}>
                   {link.label}
@@ -101,9 +96,9 @@ function MobileDrawer({ open, onClose, user, onLogout, cartCount }) {
               ))}
               <div style={{ padding: '16px 24px 8px' }}>
                 <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: MD, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '10px' }}>Collections</p>
-                {collections.map(col => (
+                {secondaryLinks.map(col => (
                   <Link key={col.slug} to={col.path} onClick={onClose}
-                    style={{ display: 'block', padding: '10px 0', ...F, fontSize: '14px', fontWeight: 400, color: MD, borderBottom: `1px solid ${BR}`, transition: 'color 0.2s' }}
+                    style={{ display: 'block', padding: '10px 0', ...F, fontSize: '13px', fontWeight: 400, color: MD, borderBottom: `1px solid ${BR}`, transition: 'color 0.2s' }}
                     onMouseEnter={e => { e.currentTarget.style.color = G }}
                     onMouseLeave={e => { e.currentTarget.style.color = MD }}>
                     {col.label}
@@ -115,7 +110,7 @@ function MobileDrawer({ open, onClose, user, onLogout, cartCount }) {
               {user ? (
                 <>
                   <Link to="/account" onClick={onClose} style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>My Account</Link>
-                  <button onClick={() => { onLogout(); onClose() }} style={{ background: 'none', border: 'none', ...F, fontSize: '13px', fontWeight: 400, color: MD, cursor: 'pointer', textAlign: 'left', padding: 0 }}>Sign Out</button>
+                  <button onClick={() => { onLogout(); onClose() }} style={{ background: 'none', border: 'none', ...F, fontSize: '13px', color: MD, cursor: 'pointer', textAlign: 'left', padding: 0 }}>Sign Out</button>
                 </>
               ) : (
                 <Link to="/login" onClick={onClose} style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>Sign In / Register</Link>
@@ -128,15 +123,14 @@ function MobileDrawer({ open, onClose, user, onLogout, cartCount }) {
   )
 }
 
-// ─── Main Navbar ──────────────────────────────
 export default function Navbar() {
   const [searchFocused, setSearchFocused] = useState(false)
   const [searchVal,     setSearchVal]     = useState('')
   const [mobileOpen,    setMobileOpen]    = useState(false)
   const [scrolled,      setScrolled]      = useState(false)
-  const location = useLocation()
-  const navigate = useNavigate()
-  const items    = useCartStore(s => s.items)
+  const location  = useLocation()
+  const navigate  = useNavigate()
+  const items     = useCartStore(s => s.items)
   const cartCount = items.reduce((n, i) => n + i.qty, 0)
   const { user, logout } = useAuth()
   const searchRef = useRef()
@@ -149,56 +143,44 @@ export default function Navbar() {
 
   useEffect(() => { setMobileOpen(false) }, [location])
 
-  async function handleLogout() {
-    await logout()
-    navigate('/')
-  }
+  async function handleLogout() { await logout(); navigate('/') }
 
   function handleSearch(e) {
     e.preventDefault()
-    if (searchVal.trim()) {
-      navigate(`/shop?q=${encodeURIComponent(searchVal.trim())}`)
-      setSearchVal('')
-      searchRef.current?.blur()
-    }
+    if (searchVal.trim()) { navigate(`/shop?q=${encodeURIComponent(searchVal.trim())}`); setSearchVal(''); searchRef.current?.blur() }
   }
 
-  const activeCollection = new URLSearchParams(location.search).get('col')
+  const activeCol = new URLSearchParams(location.search).get('col')
 
   return (
     <>
-      {/* ── MAIN NAV ── */}
-      <header style={{
-        position: 'sticky', top: 0, zIndex: 100,
-        background: W,
-        boxShadow: scrolled ? '0 1px 12px rgba(0,0,0,0.08)' : 'none',
-        borderBottom: `1px solid ${BR}`,
-        transition: 'box-shadow 0.3s',
-      }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px', height: '70px', display: 'flex', alignItems: 'center', gap: '32px' }}>
+      <header style={{ position: 'sticky', top: 0, zIndex: 100, background: W, boxShadow: scrolled ? '0 1px 12px rgba(0,0,0,0.08)' : 'none', borderBottom: `1px solid ${BR}`, transition: 'box-shadow 0.3s' }}>
 
-          {/* Mobile menu */}
+        {/* ── MAIN NAV ── */}
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px', height: '68px', display: 'flex', alignItems: 'center', gap: '24px' }}>
+
+          {/* Mobile menu btn */}
           <button onClick={() => setMobileOpen(true)} className="mobile-only"
-            style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', color: DK, padding: '4px' }}>
+            style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', color: DK, padding: '4px', flexShrink: 0 }}>
             <MenuIcon />
           </button>
 
           {/* Logo */}
           <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
-            <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '42px', height: '42px', borderRadius: '50%', objectFit: 'cover' }} />
+            <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
             <div style={{ lineHeight: 1 }}>
-              <span style={{ ...F, fontSize: '18px', fontWeight: 800, color: DK, letterSpacing: '-0.02em', display: 'block' }}>STAAY</span>
+              <span style={{ ...F, fontSize: '17px', fontWeight: 800, color: DK, letterSpacing: '-0.02em', display: 'block' }}>STAAY</span>
               <span style={{ ...F, fontSize: '8px', fontWeight: 600, color: G, letterSpacing: '0.22em', textTransform: 'uppercase' }}>ONLINE</span>
             </div>
           </Link>
 
-          {/* Nav links — desktop */}
-          <nav className="desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
+          {/* Nav links */}
+          <nav className="desktop-only" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             {navLinks.map(link => {
-              const active = location.pathname === link.path
+              const active = location.pathname === link.path && link.path !== '/shop'
               return (
                 <Link key={link.label} to={link.path}
-                  style={{ ...F, fontSize: '13px', fontWeight: active ? 600 : 400, color: active ? DK : MD, letterSpacing: '0.01em', paddingBottom: '3px', borderBottom: `2px solid ${active ? G : 'transparent'}`, transition: 'all 0.2s' }}
+                  style={{ ...F, fontSize: '13px', fontWeight: active ? 600 : 400, color: active ? DK : MD, paddingBottom: '2px', borderBottom: `2px solid ${active ? G : 'transparent'}`, transition: 'all 0.2s', whiteSpace: 'nowrap' }}
                   onMouseEnter={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = G }}
                   onMouseLeave={e => { e.currentTarget.style.color = active ? DK : MD; e.currentTarget.style.borderBottomColor = active ? G : 'transparent' }}>
                   {link.label}
@@ -208,13 +190,8 @@ export default function Navbar() {
           </nav>
 
           {/* Search bar */}
-          <form onSubmit={handleSearch} style={{ flex: 1, maxWidth: '380px', marginLeft: 'auto', position: 'relative' }}>
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: '8px',
-              background: LG, border: `1.5px solid ${searchFocused ? G : 'transparent'}`,
-              borderRadius: '8px', padding: '9px 14px',
-              transition: 'border-color 0.2s',
-            }}>
+          <form onSubmit={handleSearch} style={{ flex: 1, maxWidth: '360px', marginLeft: 'auto' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: LG, border: `1.5px solid ${searchFocused ? G : 'transparent'}`, borderRadius: '8px', padding: '9px 14px', transition: 'border-color 0.2s' }}>
               <span style={{ color: MD, flexShrink: 0, display: 'flex' }}><SearchIcon /></span>
               <input
                 ref={searchRef}
@@ -228,20 +205,16 @@ export default function Navbar() {
             </div>
           </form>
 
-          {/* Right icons */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-
-            {/* Heart / Favourites */}
+          {/* Icons */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
             <Link to="/favorites"
-              style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s', borderRadius: '8px' }}
+              style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.color = G }}
               onMouseLeave={e => { e.currentTarget.style.color = MD }}>
               <HeartIcon />
             </Link>
-
-            {/* Cart */}
             <Link to="/cart"
-              style={{ position: 'relative', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s', borderRadius: '8px' }}
+              style={{ position: 'relative', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.color = G }}
               onMouseLeave={e => { e.currentTarget.style.color = MD }}>
               <CartIcon />
@@ -254,35 +227,24 @@ export default function Navbar() {
                 )}
               </AnimatePresence>
             </Link>
-
-            {/* Account */}
             <Link to={user ? '/account' : '/login'}
-              style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: user ? G : MD, transition: 'color 0.2s', borderRadius: '8px' }}
+              style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: user ? G : MD, transition: 'color 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.color = G }}
               onMouseLeave={e => { e.currentTarget.style.color = user ? G : MD }}>
               <UserIcon />
             </Link>
-
           </div>
         </div>
 
-        {/* ── SECONDARY BAR — collections ── */}
-        <div style={{ borderTop: `1px solid ${BR}`, background: W }}>
+        {/* ── SECONDARY BAR ── */}
+        <div style={{ borderTop: `1px solid ${BR}` }}>
           <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px' }}>
-            <div className="hide-scroll" style={{ display: 'flex', alignItems: 'center', gap: '0', overflowX: 'auto' }}>
-              {collections.map(col => {
-                const active = activeCollection === col.slug || (!activeCollection && col.slug === 'all' && location.pathname === '/shop')
+            <div className="hide-scroll" style={{ display: 'flex', alignItems: 'center', overflowX: 'auto' }}>
+              {secondaryLinks.map(col => {
+                const active = activeCol === col.slug || (!activeCol && col.slug === 'all' && location.pathname === '/shop')
                 return (
                   <Link key={col.slug} to={col.path}
-                    style={{
-                      ...F, fontSize: '12px', fontWeight: active ? 600 : 400,
-                      color: active ? G : MD,
-                      padding: '12px 20px',
-                      borderBottom: `2px solid ${active ? G : 'transparent'}`,
-                      whiteSpace: 'nowrap',
-                      transition: 'all 0.2s',
-                      display: 'block',
-                    }}
+                    style={{ ...F, fontSize: '12px', fontWeight: active ? 600 : 400, color: active ? G : MD, padding: '11px 18px', borderBottom: `2px solid ${active ? G : 'transparent'}`, whiteSpace: 'nowrap', transition: 'all 0.2s', display: 'block' }}
                     onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderBottomColor = G }}
                     onMouseLeave={e => { e.currentTarget.style.color = active ? G : MD; e.currentTarget.style.borderBottomColor = active ? G : 'transparent' }}>
                     {col.label}
@@ -295,13 +257,7 @@ export default function Navbar() {
 
       </header>
 
-      <MobileDrawer
-        open={mobileOpen}
-        onClose={() => setMobileOpen(false)}
-        user={user}
-        onLogout={handleLogout}
-        cartCount={cartCount}
-      />
+      <MobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} user={user} onLogout={handleLogout} />
     </>
   )
 }
