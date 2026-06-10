@@ -10,7 +10,7 @@ const F  = { fontFamily: "'Inter', sans-serif" }
 const slides = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1800&q=85&fit=crop&crop=top',
+    image: './staaybanner1.jpg',
     headline: 'WHERE BEAUTY\nBEGINS TODAY',
     sub: 'Soft, feminine, intentional.',
     cta: 'Shop Eden Collection',
