@@ -19,7 +19,7 @@ const slides = [
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=1800&q=85&fit=crop',
+    image: './staaybanner2.jpg',
     headline: 'DRESS THE WAY\nYOU FEEL TODAY',
     sub: 'Styles that match every version of you.',
     cta: 'Shop All Collections',
