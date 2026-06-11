@@ -11,7 +11,7 @@ export default function EditorialBanner() {
 
       {/* Background image */}
       <img
-        src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=1800&q=85&fit=crop"
+        src="./storybanner.jpg"
         alt="STAAY"
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block', opacity: 0.55 }}
       />
