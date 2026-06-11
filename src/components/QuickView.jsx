@@ -8,8 +8,9 @@ const GL  = '#F5ECD8'
 const W   = '#FFFFFF'
 const BK  = '#111111'
 const DK  = '#1A1612'
-const MD  = '#666'
-const LG  = '#F5F5F5'
+const MD  = '#888'
+const FT  = '#BBB'
+const LG  = '#F7F6F4'
 const BR  = '#E8E4DF'
 const RD  = '#E53E3E'
 const GR  = '#16A34A'
@@ -22,16 +23,23 @@ const COLORS = [
   { name: 'Nude',  hex: '#C8A882' },
 ]
 
-function Stars() {
+function StarRow({ score = 0, count = 0 }) {
   return (
-    <div style={{ display: 'flex', gap: '2px' }}>
-      {[1,2,3,4,5].map(i => (
-        <svg key={i} width="13" height="13" viewBox="0 0 13 13" fill="#EEE" stroke="#DDD" strokeWidth="0.8">
-          <path d="M6.5 1l1.3 4H12L8.6 7.8l1.3 4L6.5 9.5 3.1 11.8l1.3-4L1 5h4.2z"/>
-        </svg>
-      ))}
+    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+      <div style={{ display: 'flex', gap: '2px' }}>
+        {[1,2,3,4,5].map(i => (
+          <svg key={i} width="13" height="13" viewBox="0 0 13 13" fill={i <= score ? G : '#E8E4DF'} stroke={i <= score ? G : '#D4CFC9'} strokeWidth="0.5">
+            <path d="M6.5 1l1.3 4H12L8.6 7.8l1.3 4L6.5 9.5 3.1 11.8l1.3-4L1 5h4.2z"/>
+          </svg>
+        ))}
+      </div>
+      <span style={{ ...F, fontSize: '12px', color: MD }}>{score.toFixed(1)} ({count})</span>
     </div>
   )
+}
+
+function Divider() {
+  return <div style={{ height: '1px', background: BR, margin: '4px 0' }} />
 }
 
 export default function QuickView({ product, onClose }) {
@@ -54,7 +62,7 @@ export default function QuickView({ product, onClose }) {
   function handleAddToCart() {
     addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY', badge: product.badge, qty })
     setAddedToBag(true)
-    setTimeout(() => setAddedToBag(false), 2000)
+    setTimeout(() => setAddedToBag(false), 2500)
   }
 
   return (
@@ -65,38 +73,44 @@ export default function QuickView({ product, onClose }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
         onClick={onClose}
-        style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.5)' }}
+        style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.55)' }}
       />
 
-      {/* Full-height right drawer */}
+      {/* Drawer */}
       <motion.div
         key="drawer"
         initial={{ x: '100%' }}
         animate={{ x: 0 }}
         exit={{ x: '100%' }}
-        transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: 'fixed',
           top: 0, right: 0, bottom: 0,
-          width: '580px',
-          maxWidth: '100vw',
+          width: '760px',
+          maxWidth: '96vw',
           zIndex: 301,
           background: W,
           display: 'flex',
           flexDirection: 'column',
-          boxShadow: '-8px 0 40px rgba(0,0,0,0.2)',
+          boxShadow: '-12px 0 60px rgba(0,0,0,0.18)',
         }}>
 
         {/* ── HEADER ── */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 24px', borderBottom: `1px solid ${BR}`, flexShrink: 0 }}>
-          <div>
-            <p style={{ ...F, fontSize: '10px', fontWeight: 600, color: MD, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '2px' }}>Quick View</p>
-            <h2 style={{ ...F, fontSize: '18px', fontWeight: 700, color: DK, letterSpacing: '-0.01em' }}>{product.name}</h2>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', borderBottom: `1px solid ${BR}`, flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ width: '3px', height: '20px', background: G }} />
+            <div>
+              <p style={{ ...F, fontSize: '10px', fontWeight: 600, color: MD, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Quick View</p>
+              <h2 style={{ ...F, fontSize: '18px', fontWeight: 700, color: DK, letterSpacing: '-0.01em', marginTop: '1px' }}>{product.name}</h2>
+            </div>
           </div>
-          <button onClick={onClose} style={{ width: '36px', height: '36px', border: `1px solid ${BR}`, background: W, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '18px', color: MD, flexShrink: 0, transition: 'all 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = DK; e.currentTarget.style.color = DK }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = BR; e.currentTarget.style.color = MD }}>
+          <button
+            onClick={onClose}
+            style={{ width: '38px', height: '38px', border: `1px solid ${BR}`, background: W, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '16px', color: MD, transition: 'all 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.background = DK; e.currentTarget.style.color = W; e.currentTarget.style.borderColor = DK }}
+            onMouseLeave={e => { e.currentTarget.style.background = W; e.currentTarget.style.color = MD; e.currentTarget.style.borderColor = BR }}>
             ✕
           </button>
         </div>
@@ -104,184 +118,177 @@ export default function QuickView({ product, onClose }) {
         {/* ── SCROLLABLE BODY ── */}
         <div style={{ flex: 1, overflowY: 'auto' }}>
 
-          {/* IMAGE SECTION */}
-          <div style={{ display: 'flex', gap: '0', height: '420px', borderBottom: `1px solid ${BR}` }}>
+          {/* IMAGE + DETAILS ROW */}
+          <div style={{ display: 'grid', gridTemplateColumns: '72px 1fr 1fr', height: '480px', borderBottom: `1px solid ${BR}` }}>
 
-            {/* Thumbnails — left */}
-            <div style={{ width: '72px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '6px', padding: '12px 8px', borderRight: `1px solid ${BR}`, background: LG }}>
+            {/* Thumbnails */}
+            <div style={{ background: LG, borderRight: `1px solid ${BR}`, display: 'flex', flexDirection: 'column', gap: '6px', padding: '12px 8px', overflowY: 'auto' }}>
               {images.map((img, i) => (
                 <div key={i} onClick={() => setActiveImg(i)}
-                  style={{ width: '54px', height: '68px', overflow: 'hidden', cursor: 'pointer', border: `2px solid ${activeImg === i ? G : 'transparent'}`, transition: 'border-color 0.2s', flexShrink: 0 }}>
+                  style={{ width: '54px', height: '68px', overflow: 'hidden', cursor: 'pointer', border: `2px solid ${activeImg === i ? G : 'transparent'}`, flexShrink: 0, transition: 'border-color 0.2s' }}>
                   <img src={img} alt="" onError={e => { e.target.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 </div>
               ))}
             </div>
 
             {/* Main image */}
-            <div style={{ flex: 1, overflow: 'hidden', background: LG }}>
-              <img
-                src={images[activeImg]}
-                alt={product.name}
+            <div style={{ overflow: 'hidden', background: LG }}>
+              <img src={images[activeImg]} alt={product.name}
                 onError={e => { e.target.src = 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80&fit=crop' }}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+
+            {/* Product details panel */}
+            <div style={{ padding: '24px 28px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '18px', borderLeft: `1px solid ${BR}` }}>
+
+              {/* Rating */}
+              <StarRow score={0} count={0} />
+
+              {/* Price */}
+              <div>
+                <p style={{ ...F, fontSize: '28px', fontWeight: 800, color: G, letterSpacing: '-0.02em', lineHeight: 1 }}>
+                  GH₵{Number(product.price).toLocaleString()}
+                </p>
+                <p style={{ ...F, fontSize: '11px', fontWeight: 400, color: MD, marginTop: '4px' }}>
+                  {product.collection?.name || 'STAAY Collection'}
+                </p>
+              </div>
+
+              {/* Stock */}
+              <div style={{ background: '#FFFBEB', border: '1px solid #FDE68A', padding: '8px 14px', ...F, fontSize: '12px', fontWeight: 600, color: '#92400E' }}>
+                Only {Math.floor(Math.random() * 4) + 1} left in stock
+              </div>
+
+              <Divider />
+
+              {/* Color */}
+              <div>
+                <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                  Colour — <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0, color: MD }}>{COLORS[selectedColor].name}</span>
+                </p>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  {COLORS.map((c, i) => (
+                    <button key={i} onClick={() => setSelectedColor(i)}
+                      style={{ width: '28px', height: '28px', borderRadius: '50%', background: c.hex, border: `3px solid ${W}`, cursor: 'pointer', padding: 0, outline: `2px solid ${selectedColor === i ? G : 'transparent'}`, outlineOffset: '2px', transition: 'outline-color 0.2s' }} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Size */}
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+                  <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Size</p>
+                  <button style={{ background: 'none', border: 'none', ...F, fontSize: '11px', color: G, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: '2px', padding: 0 }}>Size Guide</button>
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                  {SIZES.map(s => (
+                    <button key={s} onClick={() => setSelectedSize(s)}
+                      style={{ padding: '7px 14px', border: `1.5px solid ${selectedSize === s ? G : BR}`, background: selectedSize === s ? GL : W, ...F, fontSize: '12px', fontWeight: selectedSize === s ? 700 : 400, color: selectedSize === s ? G : DK, cursor: 'pointer', transition: 'all 0.15s', minWidth: '46px', textAlign: 'center' }}>
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Quantity */}
+              <div>
+                <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '10px' }}>
+                  Quantity <span style={{ fontWeight: 300, textTransform: 'none', letterSpacing: 0, color: MD }}>(Max 5)</span>
+                </p>
+                <div style={{ display: 'inline-flex', alignItems: 'center', border: `1px solid ${BR}` }}>
+                  <button onClick={() => setQty(q => Math.max(1, q - 1))}
+                    style={{ width: '40px', height: '40px', background: LG, border: 'none', borderRight: `1px solid ${BR}`, cursor: 'pointer', ...F, fontSize: '20px', color: DK, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>−</button>
+                  <span style={{ width: '50px', textAlign: 'center', ...F, fontSize: '15px', fontWeight: 600, color: DK }}>{qty}</span>
+                  <button onClick={() => setQty(q => Math.min(5, q + 1))}
+                    style={{ width: '40px', height: '40px', background: LG, border: 'none', borderLeft: `1px solid ${BR}`, cursor: 'pointer', ...F, fontSize: '20px', color: DK, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>+</button>
+                </div>
+              </div>
+
+              {/* Add to Cart + Wishlist */}
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button onClick={handleAddToCart}
+                  style={{ flex: 1, padding: '13px', background: addedToBag ? GR : BK, color: W, border: 'none', cursor: 'pointer', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', transition: 'background 0.2s' }}
+                  onMouseEnter={e => { if (!addedToBag) e.currentTarget.style.background = G }}
+                  onMouseLeave={e => { if (!addedToBag) e.currentTarget.style.background = addedToBag ? GR : BK }}>
+                  {addedToBag ? '✓ Added to Cart' : 'Add to Cart'}
+                </button>
+                <button onClick={() => toggle({ ...product, category: product.collection?.name })}
+                  style={{ width: '46px', height: '46px', border: `1px solid ${faved ? RD : BR}`, background: faved ? '#FEF2F2' : W, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', color: faved ? RD : FT, transition: 'all 0.2s', flexShrink: 0 }}>
+                  {faved ? '♥' : '♡'}
+                </button>
+              </div>
+
             </div>
           </div>
 
-          {/* DETAILS SECTION */}
-          <div style={{ padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-
-            {/* Stars + share */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Stars />
-              <button style={{ background: 'none', border: 'none', ...F, fontSize: '12px', color: MD, cursor: 'pointer' }}>Share</button>
-            </div>
-
-            {/* Price */}
-            <p style={{ ...F, fontSize: '26px', fontWeight: 800, color: G, letterSpacing: '-0.01em' }}>
-              GH₵{Number(product.price).toLocaleString()}
-            </p>
-
-            {/* Stock */}
-            <div style={{ background: '#FFFBEB', border: '1px solid #FDE68A', borderRadius: '6px', padding: '10px 14px', ...F, fontSize: '13px', fontWeight: 600, color: '#92400E' }}>
-              Only {Math.floor(Math.random() * 5) + 1} left in stock
-            </div>
-
-            {/* Color */}
-            <div>
-              <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '10px' }}>
-                Color: <span style={{ fontWeight: 400, color: MD }}>{COLORS[selectedColor].name}</span>
-              </p>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                {COLORS.map((c, i) => (
-                  <button key={i} onClick={() => setSelectedColor(i)}
-                    style={{ width: '26px', height: '26px', borderRadius: '50%', background: c.hex, border: `3px solid ${W}`, cursor: 'pointer', padding: 0, outline: `2px solid ${selectedColor === i ? G : 'transparent'}`, outlineOffset: '2px', transition: 'outline 0.2s' }} />
-                ))}
+          {/* ── SHIPPING INFO — no emojis ── */}
+          <div style={{ padding: '20px 28px', borderBottom: `1px solid ${BR}`, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
+            {[
+              { title: 'Free Shipping',    sub: 'On all orders within Accra'    },
+              { title: 'Fast Delivery',    sub: '2–3 business days'             },
+              { title: 'Easy Returns',     sub: 'Free returns within 7 days'    },
+            ].map(item => (
+              <div key={item.title} style={{ padding: '12px 16px', background: LG, borderLeft: `2px solid ${G}` }}>
+                <p style={{ ...F, fontSize: '12px', fontWeight: 700, color: DK, marginBottom: '3px' }}>{item.title}</p>
+                <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: MD }}>{item.sub}</p>
               </div>
-            </div>
+            ))}
+          </div>
 
-            {/* Size */}
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>Size</p>
-                <button style={{ background: 'none', border: 'none', ...F, fontSize: '12px', color: G, cursor: 'pointer', textDecoration: 'underline', padding: 0 }}>
-                  View Size Guide
-                </button>
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {SIZES.map(s => (
-                  <button key={s} onClick={() => setSelectedSize(s)}
-                    style={{ padding: '8px 16px', border: `1.5px solid ${selectedSize === s ? G : BR}`, background: selectedSize === s ? GL : W, ...F, fontSize: '13px', fontWeight: selectedSize === s ? 600 : 400, color: selectedSize === s ? G : DK, cursor: 'pointer', transition: 'all 0.15s', minWidth: '52px' }}>
-                    {s}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Quantity */}
-            <div>
-              <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '10px' }}>Quantity (Max: 5)</p>
-              <div style={{ display: 'flex', alignItems: 'center', border: `1px solid ${BR}`, width: 'fit-content' }}>
-                <button onClick={() => setQty(q => Math.max(1, q - 1))}
-                  style={{ width: '40px', height: '40px', background: LG, border: 'none', cursor: 'pointer', ...F, fontSize: '20px', color: DK, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRight: `1px solid ${BR}` }}>
-                  −
-                </button>
-                <span style={{ width: '48px', textAlign: 'center', ...F, fontSize: '15px', fontWeight: 600, color: DK }}>{qty}</span>
-                <button onClick={() => setQty(q => Math.min(5, q + 1))}
-                  style={{ width: '40px', height: '40px', background: LG, border: 'none', cursor: 'pointer', ...F, fontSize: '20px', color: DK, display: 'flex', alignItems: 'center', justifyContent: 'center', borderLeft: `1px solid ${BR}` }}>
-                  +
-                </button>
-              </div>
-            </div>
-
-            {/* Add to Cart + Heart */}
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <button
-                onClick={handleAddToCart}
-                style={{ flex: 1, padding: '14px', background: addedToBag ? GR : BK, color: W, border: 'none', cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 700, letterSpacing: '0.04em', transition: 'background 0.2s' }}
-                onMouseEnter={e => { if (!addedToBag) e.currentTarget.style.background = G }}
-                onMouseLeave={e => { if (!addedToBag) e.currentTarget.style.background = addedToBag ? GR : BK }}>
-                {addedToBag ? '✓ Added to Cart!' : 'Add to Cart'}
-              </button>
-              <button
-                onClick={() => toggle({ ...product, category: product.collection?.name })}
-                style={{ width: '50px', height: '50px', border: `1px solid ${faved ? RD : BR}`, background: faved ? '#FEF2F2' : W, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', color: faved ? RD : '#BBB', transition: 'all 0.2s', flexShrink: 0 }}>
-                {faved ? '♥' : '♡'}
-              </button>
-            </div>
-
-            {/* Shipping info */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', padding: '14px', background: LG }}>
-              {[
-                { icon: '🚚', text: 'Free Shipping within Accra' },
-                { icon: '📦', text: '2-3 Business Days delivery'  },
-                { icon: '↩️', text: 'Free returns within 7 days'  },
-              ].map(row => (
-                <div key={row.text} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <span style={{ fontSize: '14px' }}>{row.icon}</span>
-                  <span style={{ ...F, fontSize: '12px', fontWeight: 400, color: MD }}>{row.text}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Product Details toggle */}
-            <button
-              onClick={() => setDetailsOpen(o => !o)}
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', background: 'none', border: `1px solid ${BR}`, padding: '12px 16px', cursor: 'pointer', ...F, fontSize: '13px', fontWeight: 600, color: DK }}>
+          {/* ── PRODUCT DETAILS TOGGLE ── */}
+          <div style={{ borderBottom: `1px solid ${BR}` }}>
+            <button onClick={() => setDetailsOpen(o => !o)}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', background: 'none', border: 'none', padding: '16px 28px', cursor: 'pointer', ...F, fontSize: '13px', fontWeight: 600, color: DK }}>
               Product Details
-              <span style={{ transition: 'transform 0.2s', display: 'inline-block', transform: detailsOpen ? 'rotate(90deg)' : 'rotate(0)' }}>›</span>
+              <motion.span animate={{ rotate: detailsOpen ? 90 : 0 }} transition={{ duration: 0.2 }} style={{ display: 'inline-block', fontSize: '16px', color: MD }}>›</motion.span>
             </button>
             {detailsOpen && (
-              <div style={{ padding: '12px 16px', background: LG, borderLeft: `3px solid ${G}`, ...F, fontSize: '13px', fontWeight: 300, color: MD, lineHeight: 1.7 }}>
-                <p>Part of the {product.collection?.name || 'STAAY'} collection. Designed for the modern woman who moves through the world with grace and confidence. Soft, intentional, always in season.</p>
+              <div style={{ padding: '0 28px 20px', ...F, fontSize: '13px', fontWeight: 300, color: MD, lineHeight: 1.8 }}>
+                Part of the {product.collection?.name || 'STAAY'} collection. Designed for the modern woman who carries herself with grace and intention. Soft fabric, thoughtful cut, built to last.
               </div>
             )}
-
           </div>
 
-          {/* ── REVIEWS SECTION ── */}
-          <div style={{ borderTop: `2px solid ${BR}`, padding: '20px 24px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+          {/* ── REVIEWS ── */}
+          <div style={{ padding: '24px 28px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
               <h3 style={{ ...F, fontSize: '16px', fontWeight: 700, color: DK }}>Reviews & Ratings</h3>
-              <button style={{ background: G, border: 'none', color: W, padding: '8px 18px', ...F, fontSize: '12px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}>
-                Write Review
+              <button style={{ background: G, border: 'none', color: W, padding: '9px 20px', ...F, fontSize: '12px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}>
+                Write a Review
               </button>
             </div>
 
-            {/* Rating bars */}
-            <div style={{ display: 'flex', gap: '24px', alignItems: 'center', marginBottom: '24px' }}>
-              <div style={{ textAlign: 'center', flexShrink: 0 }}>
-                <p style={{ ...F, fontSize: '40px', fontWeight: 900, color: DK, lineHeight: 1 }}>0.0</p>
-                <Stars />
-                <p style={{ ...F, fontSize: '11px', color: MD, marginTop: '4px' }}>0 reviews</p>
+            <div style={{ display: 'flex', gap: '32px', alignItems: 'flex-start', marginBottom: '28px' }}>
+              <div style={{ textAlign: 'center', flexShrink: 0, paddingTop: '4px' }}>
+                <p style={{ ...F, fontSize: '48px', fontWeight: 900, color: DK, lineHeight: 1, letterSpacing: '-0.03em' }}>0.0</p>
+                <StarRow score={0} count={0} />
+                <p style={{ ...F, fontSize: '11px', color: MD, marginTop: '6px' }}>Based on 0 reviews</p>
               </div>
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <div style={{ flex: 1 }}>
                 {[5,4,3,2,1].map(star => (
-                  <div key={star} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ ...F, fontSize: '12px', color: MD, width: '10px', textAlign: 'right' }}>{star}</span>
-                    <div style={{ flex: 1, height: '8px', background: BR, borderRadius: '4px' }} />
-                    <span style={{ ...F, fontSize: '12px', color: MD, width: '10px' }}>0</span>
+                  <div key={star} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                    <span style={{ ...F, fontSize: '12px', color: MD, width: '12px', textAlign: 'right', flexShrink: 0 }}>{star}</span>
+                    <div style={{ flex: 1, height: '8px', background: BR, borderRadius: '4px', overflow: 'hidden' }}>
+                      <div style={{ width: '0%', height: '100%', background: G, borderRadius: '4px' }} />
+                    </div>
+                    <span style={{ ...F, fontSize: '12px', color: MD, width: '12px', flexShrink: 0 }}>0</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Empty reviews */}
-            <div style={{ textAlign: 'center', padding: '28px 0' }}>
-              <div style={{ fontSize: '36px', marginBottom: '10px' }}>☆</div>
-              <p style={{ ...F, fontSize: '15px', fontWeight: 700, color: DK, marginBottom: '6px' }}>No Customer Reviews</p>
-              <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD, marginBottom: '18px' }}>
-                Be the first to share your thoughts about this product
+            <div style={{ textAlign: 'center', padding: '32px 0', border: `1px dashed ${BR}` }}>
+              <p style={{ ...F, fontSize: '15px', fontWeight: 700, color: DK, marginBottom: '8px' }}>No Reviews Yet</p>
+              <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD, marginBottom: '20px' }}>
+                Be the first to review this product
               </p>
-              <button style={{ background: G, border: 'none', color: W, padding: '11px 32px', ...F, fontSize: '13px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}>
+              <button style={{ background: G, border: 'none', color: W, padding: '11px 36px', ...F, fontSize: '13px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}>
                 Write First Review
               </button>
             </div>
           </div>
 
         </div>
-        {/* ── END SCROLLABLE ── */}
-
       </motion.div>
     </AnimatePresence>
   )
