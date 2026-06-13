@@ -4,102 +4,116 @@ import { Link, useNavigate } from 'react-router-dom'
 import { signIn, signUp } from '../lib/api'
 
 const G   = '#B8903A'
+const GL  = '#F5ECD8'
 const W   = '#FFFFFF'
-const BK  = '#111111'
+const BK  = '#1A1612'
 const DK  = '#1A1612'
-const MD  = '#999'
-const FT  = '#CCC'
-const LG  = '#F8F7F5'
-const BR  = '#E8E4DF'
+const MD  = '#6B7280'
+const FT  = '#9CA3AF'
+const LG  = '#F9FAFB'
+const BR  = '#E5E7EB'
+const BL  = '#3B5BDB'
 const RD  = '#E53E3E'
-const GR  = '#22C55E'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
-// Background lifestyle photo — fashion editorial
-const BG_IMAGE = 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=90&fit=crop'
-
+// ─── Icons ───────────────────────────────────
 const MailIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <rect x="1" y="2.5" width="13" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.2"/>
-    <path d="M1 5l6.5 4.5L14 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <rect x="1.5" y="3" width="13" height="10" rx="1.5" stroke="#9CA3AF" strokeWidth="1.2"/>
+    <path d="M1.5 5.5l6.5 4 6.5-4" stroke="#9CA3AF" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 const LockIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <rect x="2.5" y="6.5" width="10" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.2"/>
-    <path d="M4.5 6.5V4.5a3 3 0 0 1 6 0v2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-    <circle cx="7.5" cy="10" r="1" fill="currentColor"/>
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <rect x="2.5" y="7" width="11" height="7.5" rx="1.5" stroke="#9CA3AF" strokeWidth="1.2"/>
+    <path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="#9CA3AF" strokeWidth="1.2" strokeLinecap="round"/>
+    <circle cx="8" cy="10.5" r="1" fill="#9CA3AF"/>
   </svg>
 )
 const UserIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <circle cx="7.5" cy="5" r="2.5" stroke="currentColor" strokeWidth="1.2"/>
-    <path d="M2 13c0-2.8 2.5-5 5.5-5s5.5 2.2 5.5 5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <circle cx="8" cy="5.5" r="2.5" stroke="#9CA3AF" strokeWidth="1.2"/>
+    <path d="M2.5 13.5c0-2.8 2.5-5 5.5-5s5.5 2.2 5.5 5" stroke="#9CA3AF" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 const PhoneIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <rect x="3" y="1" width="9" height="13" rx="1.5" stroke="currentColor" strokeWidth="1.2"/>
-    <circle cx="7.5" cy="11.5" r="0.6" fill="currentColor"/>
-    <path d="M5.5 3h4" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <rect x="3" y="1" width="10" height="14" rx="2" stroke="#9CA3AF" strokeWidth="1.2"/>
+    <circle cx="8" cy="12.5" r="0.6" fill="#9CA3AF"/>
+    <path d="M6 3h4" stroke="#9CA3AF" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
-const EyeIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <path d="M1 7.5s2.5-5 6.5-5 6.5 5 6.5 5-2.5 5-6.5 5-6.5-5-6.5-5z" stroke="currentColor" strokeWidth="1.2"/>
-    <circle cx="7.5" cy="7.5" r="1.8" stroke="currentColor" strokeWidth="1.2"/>
+const HeartIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M8 13S2 9.5 2 5.8A3.2 3.2 0 0 1 8 4a3.2 3.2 0 0 1 6 1.8C14 9.5 8 13 8 13z" stroke="#9CA3AF" strokeWidth="1.2" strokeLinejoin="round"/>
   </svg>
 )
-const EyeOffIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-    <path d="M2 2l11 11M6 6.2A1.8 1.8 0 0 0 8.8 9M4 4C2.2 5.2 1 7.5 1 7.5s2.5 5 6.5 5c1.3 0 2.5-.4 3.5-1M7 2.5c.2 0 .3 0 .5 0 4 0 6.5 5 6.5 5s-.7 1.5-2 2.8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+const EyeIcon = ({ show }) => show ? (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="#9CA3AF" strokeWidth="1.2"/>
+    <circle cx="8" cy="8" r="2" stroke="#9CA3AF" strokeWidth="1.2"/>
+  </svg>
+) : (
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <path d="M2 2l12 12M6.3 6.5A2 2 0 0 0 9.5 9.7M4.2 4.4C2.4 5.6 1 8 1 8s2.5 5 7 5c1.4 0 2.6-.4 3.7-1.1M7 3.1l.5-.1c4.5 0 7 5 7 5s-.7 1.5-2.1 2.9" stroke="#9CA3AF" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 
-function Input({ icon: Icon, type = 'text', placeholder, value, onChange, error, valid, showToggle, onToggle, showPass }) {
+// Google icon
+const GoogleIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 24 24">
+    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+  </svg>
+)
+
+// Apple icon
+const AppleIcon = () => (
+  <svg width="17" height="17" viewBox="0 0 814 1000">
+    <path fill="#000" d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76.5 0-103.7 40.8-165.9 40.8s-105-37.5-155.5-127.4C46.7 790.7 0 663 0 541.8c0-207.8 136-318.3 289.2-318.3 108.2 0 167.9 40.8 227.2 40.8 57.1 0 147.4-48.8 219.2-48.8zm-105.4-199.5c35.1-42.8 60.9-101.7 60.9-160.6 0-9-.6-18.1-1.9-26.5-57.5 2.2-125.6 38.5-166.7 87.8-32.7 37.8-61.5 99-61.5 159.4 0 9.6 1.3 19.3 2.6 22.4 3.9.6 10.3 1.3 16.7 1.3 51.3 0 114.2-34.5 149.9-83.8z"/>
+  </svg>
+)
+
+// ─── Shared Input ─────────────────────────────
+function Input({ icon: Icon, type = 'text', placeholder, value, onChange, showToggle, showPass, onToggle, prefix }) {
   const [focused, setFocused] = useState(false)
   return (
-    <div style={{
-      display: 'flex', alignItems: 'center',
-      background: W,
-      border: `1.5px solid ${error ? RD : focused ? G : '#DDD'}`,
-      borderRadius: '8px',
-      padding: '0 14px',
-      height: '48px',
-      transition: 'border-color 0.2s',
-      boxShadow: focused ? `0 0 0 3px ${G}22` : 'none',
-    }}>
-      {Icon && <span style={{ color: error ? RD : focused ? G : FT, marginRight: '10px', display: 'flex', flexShrink: 0, transition: 'color 0.2s' }}><Icon /></span>}
+    <div style={{ display: 'flex', alignItems: 'center', border: `1.5px solid ${focused ? BL : BR}`, borderRadius: '8px', background: W, height: '44px', overflow: 'hidden', transition: 'border-color 0.2s' }}>
+      {prefix && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '0 10px', borderRight: `1px solid ${BR}`, height: '100%', ...F, fontSize: '13px', color: DK, flexShrink: 0, cursor: 'pointer', background: LG }}>
+          {prefix}
+          <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke={MD} strokeWidth="1.2" strokeLinecap="round"/></svg>
+        </div>
+      )}
+      {Icon && !prefix && (
+        <span style={{ padding: '0 10px', display: 'flex', flexShrink: 0, color: FT }}><Icon /></span>
+      )}
       <input
-        type={type === 'password' ? (showPass ? 'text' : 'password') : type}
+        type={showToggle ? (showPass ? 'text' : 'password') : type}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
-        style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', ...F, fontSize: '14px', color: DK }}
+        style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', ...F, fontSize: '14px', color: DK, padding: prefix ? '0 10px' : '0 10px 0 0' }}
       />
-      {valid && (
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <circle cx="8" cy="8" r="7" fill={GR}/>
-          <path d="M5 8l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      )}
       {showToggle && (
-        <button type="button" onClick={onToggle} style={{ background: 'none', border: 'none', cursor: 'pointer', color: FT, display: 'flex', padding: 0, marginLeft: '8px' }}>
-          {showPass ? <EyeIcon /> : <EyeOffIcon />}
+        <button type="button" onClick={onToggle} style={{ background: 'none', border: 'none', padding: '0 12px', cursor: 'pointer', display: 'flex', color: FT }}>
+          <EyeIcon show={showPass} />
         </button>
       )}
     </div>
   )
 }
 
-function LoginForm({ onSwitch }) {
+// ─── SIGN IN CARD ─────────────────────────────
+function SignIn({ onSwitch }) {
   const navigate = useNavigate()
   const [email,    setEmail]    = useState('')
   const [password, setPassword] = useState('')
   const [showPass, setShowPass] = useState(false)
-  const [remember, setRemember] = useState(false)
   const [loading,  setLoading]  = useState(false)
   const [error,    setError]    = useState('')
 
@@ -107,88 +121,81 @@ function LoginForm({ onSwitch }) {
     e.preventDefault()
     if (!email || !password) { setError('Please fill in all fields.'); return }
     setLoading(true); setError('')
-    try {
-      await signIn({ email, password })
-      navigate('/')
-    } catch (err) {
-      setError('Invalid email or password. Please try again.')
-    } finally {
-      setLoading(false)
-    }
+    try { await signIn({ email, password }); navigate('/') }
+    catch { setError('Invalid email or password.') }
+    finally { setLoading(false) }
   }
 
   return (
-    <motion.div key="login" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
+    <div style={{ minHeight: '100vh', background: '#F3F4F6', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}
+        style={{ background: W, borderRadius: '16px', padding: '36px 32px', width: '100%', maxWidth: '360px', boxShadow: '0 4px 32px rgba(0,0,0,0.1)' }}>
 
-      <h1 style={{ ...F, fontSize: '30px', fontWeight: 800, color: DK, marginBottom: '8px', letterSpacing: '-0.025em' }}>Login</h1>
-      <p style={{ ...F, fontSize: '13px', color: MD, lineHeight: 1.65, marginBottom: '28px' }}>
-        Don't have an account?{' '}
-        <button onClick={onSwitch} style={{ background: 'none', border: 'none', ...F, fontSize: '13px', fontWeight: 600, color: G, cursor: 'pointer', padding: 0 }}>
-          Create your account
-        </button>
-        , it takes less than a minute.
-      </p>
+        {/* Logo */}
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', marginBottom: '24px', justifyContent: 'center' }}>
+          <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
+          <span style={{ ...F, fontSize: '16px', fontWeight: 800, color: DK, letterSpacing: '-0.01em' }}>STAAY <span style={{ color: G }}>ONLINE</span></span>
+        </Link>
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-        <Input icon={MailIcon} type="email" placeholder="yourmail@company.com" value={email} onChange={e => { setEmail(e.target.value); setError('') }}
-          valid={email.includes('@') && email.includes('.')} />
+        <h2 style={{ ...F, fontSize: '24px', fontWeight: 800, color: DK, textAlign: 'center', marginBottom: '24px', letterSpacing: '-0.02em' }}>Sign In</h2>
 
-        <Input icon={LockIcon} type="password" placeholder="Password" value={password} onChange={e => { setPassword(e.target.value); setError('') }}
-          showToggle showPass={showPass} onToggle={() => setShowPass(v => !v)} />
-
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '7px', cursor: 'pointer' }}>
-            <input type="checkbox" checked={remember} onChange={e => setRemember(e.target.checked)} style={{ width: '14px', height: '14px', accentColor: G }} />
-            <span style={{ ...F, fontSize: '12px', color: MD }}>Remember me</span>
-          </label>
-          <button type="button" style={{ background: 'none', border: 'none', ...F, fontSize: '12px', color: G, cursor: 'pointer', padding: 0 }}>
-            Forgot password?
+        {/* Social buttons */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
+          <button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = '#4285F4' }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = BR }}>
+            <GoogleIcon /> Continue with Google
+          </button>
+          <button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = '#000' }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = BR }}>
+            <AppleIcon /> Continue with Apple
           </button>
         </div>
 
-        {error && <p style={{ ...F, fontSize: '12px', color: RD, background: '#FEF2F2', padding: '8px 12px', borderRadius: '6px' }}>{error}</p>}
+        {/* Divider */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+          <div style={{ flex: 1, height: '1px', background: BR }} />
+          <span style={{ ...F, fontSize: '12px', color: FT, whiteSpace: 'nowrap' }}>Or continue with email</span>
+          <div style={{ flex: 1, height: '1px', background: BR }} />
+        </div>
 
-        <button type="submit" disabled={loading} style={{
-          height: '48px', background: loading ? '#CCC' : G, color: W, border: 'none',
-          borderRadius: '8px', cursor: loading ? 'not-allowed' : 'pointer',
-          ...F, fontSize: '15px', fontWeight: 700, letterSpacing: '0.03em',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-          transition: 'background 0.2s', marginTop: '4px',
-          boxShadow: loading ? 'none' : `0 4px 14px ${G}55`,
-        }}
-        onMouseEnter={e => { if (!loading) e.currentTarget.style.background = BK }}
-        onMouseLeave={e => { if (!loading) e.currentTarget.style.background = G }}>
-          <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
-            <path d="M7 3H3.5A1.5 1.5 0 0 0 2 4.5v8A1.5 1.5 0 0 0 3.5 14H7M11 11.5l3.5-3.5L11 4.5M14.5 8H6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-          {loading ? 'Signing in...' : 'Login'}
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <Input icon={MailIcon} type="email" placeholder="Email address" value={email} onChange={e => setEmail(e.target.value)} />
+          <Input icon={LockIcon} type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} showToggle showPass={showPass} onToggle={() => setShowPass(v => !v)} />
 
-      {/* Social */}
-      <p style={{ ...F, fontSize: '12px', color: MD, textAlign: 'center', margin: '20px 0 14px' }}>Login with</p>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '12px' }}>
-        {[
-          { bg: '#1877F2', label: 'f' },
-          { bg: '#DB4437', label: 'G' },
-          { bg: '#1DA1F2', label: '✦' },
-        ].map((s, i) => (
-          <button key={i} type="button" style={{ width: '44px', height: '44px', borderRadius: '50%', background: s.bg, border: 'none', color: W, cursor: 'pointer', ...F, fontSize: '16px', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'opacity 0.2s', boxShadow: '0 2px 8px rgba(0,0,0,0.15)' }}
-            onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
-            onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}>
-            {s.label}
+          {error && <p style={{ ...F, fontSize: '12px', color: RD, textAlign: 'center' }}>{error}</p>}
+
+          <button type="submit" disabled={loading} style={{ padding: '13px', background: loading ? FT : G, color: W, border: 'none', borderRadius: '8px', ...F, fontSize: '15px', fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', transition: 'background 0.2s', marginTop: '4px' }}
+            onMouseEnter={e => { if (!loading) e.currentTarget.style.background = BK }}
+            onMouseLeave={e => { if (!loading) e.currentTarget.style.background = G }}>
+            {loading ? 'Signing in...' : 'Sign In'}
           </button>
-        ))}
-      </div>
+        </form>
 
-    </motion.div>
+        <div style={{ textAlign: 'center', marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <p style={{ ...F, fontSize: '13px', color: MD }}>
+            Don't have an account?{' '}
+            <button onClick={onSwitch} style={{ background: 'none', border: 'none', ...F, fontSize: '13px', fontWeight: 600, color: G, cursor: 'pointer', padding: 0 }}>Sign up</button>
+          </p>
+          <button style={{ background: 'none', border: 'none', ...F, fontSize: '13px', color: G, cursor: 'pointer', fontWeight: 500 }}>
+            Forgot your password?
+          </button>
+        </div>
+
+      </motion.div>
+    </div>
   )
 }
 
-function RegisterForm({ onSwitch }) {
-  const [form,    setForm]    = useState({ firstName: '', lastName: '', email: '', phone: '', password: '', confirm: '' })
+// ─── 3-COLUMN REGISTER ────────────────────────
+function Register({ onSwitch }) {
+  const [form,    setForm]    = useState({ firstName: '', lastName: '', gender: '', interests: '', email: '', phone: '', password: '', confirm: '' })
   const [showP,   setShowP]   = useState(false)
   const [showC,   setShowC]   = useState(false)
+  const [emailUp, setEmailUp] = useState(true)
+  const [smsUp,   setSmsUp]   = useState(false)
+  const [terms,   setTerms]   = useState(false)
   const [loading, setLoading] = useState(false)
   const [error,   setError]   = useState('')
   const [done,    setDone]    = useState(false)
@@ -200,122 +207,243 @@ function RegisterForm({ onSwitch }) {
     if (!form.firstName || !form.email || !form.password) { setError('Please fill in all required fields.'); return }
     if (form.password !== form.confirm) { setError('Passwords do not match.'); return }
     if (form.password.length < 6) { setError('Password must be at least 6 characters.'); return }
+    if (!terms) { setError('Please agree to the Terms of Service.'); return }
     setLoading(true); setError('')
     try {
       await signUp({ email: form.email, password: form.password, firstName: form.firstName, lastName: form.lastName, phone: form.phone })
       setDone(true)
-    } catch (err) {
-      setError(err.message || 'Something went wrong.')
-    } finally {
-      setLoading(false)
-    }
+    } catch (err) { setError(err.message || 'Something went wrong.') }
+    finally { setLoading(false) }
   }
 
+  const Toggle = ({ on, onToggle }) => (
+    <button type="button" onClick={onToggle}
+      style={{ width: '44px', height: '24px', borderRadius: '12px', background: on ? BL : '#D1D5DB', border: 'none', cursor: 'pointer', position: 'relative', flexShrink: 0, transition: 'background 0.2s' }}>
+      <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: W, position: 'absolute', top: '3px', left: on ? '23px' : '3px', transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+    </button>
+  )
+
+  const Label = ({ children, required }) => (
+    <p style={{ ...F, fontSize: '13px', fontWeight: 500, color: DK, marginBottom: '6px' }}>
+      {children}{required && <span style={{ color: RD }}> *</span>}
+    </p>
+  )
+
+  const Select = ({ placeholder, value, onChange, options }) => (
+    <div style={{ position: 'relative' }}>
+      <div style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: FT, pointerEvents: 'none' }}>
+        {placeholder === 'Select Gender' ? <UserIcon /> : <HeartIcon />}
+      </div>
+      <select value={value} onChange={onChange}
+        style={{ width: '100%', height: '44px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, ...F, fontSize: '14px', color: value ? DK : FT, outline: 'none', cursor: 'pointer', paddingLeft: '38px', paddingRight: '12px', appearance: 'none' }}>
+        <option value="">{placeholder} (Optional)</option>
+        {options.map(o => <option key={o} value={o}>{o}</option>)}
+      </select>
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
+        <path d="M1 1l4 4 4-4" stroke={FT} strokeWidth="1.2" strokeLinecap="round"/>
+      </svg>
+    </div>
+  )
+
   if (done) return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ textAlign: 'center', padding: '16px 0' }}>
-      <div style={{ width: '60px', height: '60px', background: '#F0FDF4', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px', margin: '0 auto 16px' }}>✓</div>
-      <h3 style={{ ...F, fontSize: '20px', fontWeight: 700, color: DK, marginBottom: '8px' }}>Check your email</h3>
-      <p style={{ ...F, fontSize: '13px', color: MD, lineHeight: 1.65, marginBottom: '20px' }}>We sent a confirmation to <strong>{form.email}</strong>. Click the link to activate your account.</p>
-      <button onClick={onSwitch} style={{ background: G, border: 'none', color: W, padding: '12px 32px', borderRadius: '8px', ...F, fontSize: '14px', fontWeight: 700, cursor: 'pointer' }}>Back to Login</button>
-    </motion.div>
+    <div style={{ minHeight: '100vh', background: '#F3F4F6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} style={{ background: W, borderRadius: '16px', padding: '48px 40px', textAlign: 'center', maxWidth: '400px', boxShadow: '0 4px 32px rgba(0,0,0,0.1)' }}>
+        <div style={{ width: '64px', height: '64px', background: '#F0FDF4', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', margin: '0 auto 20px' }}>✓</div>
+        <h3 style={{ ...F, fontSize: '22px', fontWeight: 800, color: DK, marginBottom: '10px' }}>Account Created!</h3>
+        <p style={{ ...F, fontSize: '14px', color: MD, lineHeight: 1.7, marginBottom: '24px' }}>Check your email <strong>{form.email}</strong> for a confirmation link.</p>
+        <button onClick={onSwitch} style={{ background: G, border: 'none', color: W, padding: '13px 40px', borderRadius: '8px', ...F, fontSize: '14px', fontWeight: 700, cursor: 'pointer' }}>Sign In</button>
+      </motion.div>
+    </div>
   )
 
   return (
-    <motion.div key="register" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-      <h1 style={{ ...F, fontSize: '30px', fontWeight: 800, color: DK, marginBottom: '8px', letterSpacing: '-0.025em' }}>Create account</h1>
-      <p style={{ ...F, fontSize: '13px', color: MD, marginBottom: '24px' }}>
-        Already have an account?{' '}
-        <button onClick={onSwitch} style={{ background: 'none', border: 'none', ...F, fontSize: '13px', fontWeight: 600, color: G, cursor: 'pointer', padding: 0 }}>Sign in</button>
-      </p>
+    <div style={{ minHeight: '100vh', background: '#F3F4F6', padding: '32px 20px' }}>
+      <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}
+        style={{ maxWidth: '1100px', margin: '0 auto' }}>
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-          <Input icon={UserIcon} placeholder="First name" value={form.firstName} onChange={e => set('firstName', e.target.value)} />
-          <Input placeholder="Last name" value={form.lastName} onChange={e => set('lastName', e.target.value)} />
+        {/* Header */}
+        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+          <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none', marginBottom: '16px' }}>
+            <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover' }} />
+            <span style={{ ...F, fontSize: '18px', fontWeight: 800, color: DK }}>STAAY <span style={{ color: G }}>ONLINE</span></span>
+          </Link>
+          <h1 style={{ ...F, fontSize: '28px', fontWeight: 800, color: DK, letterSpacing: '-0.025em' }}>Create Your Account</h1>
         </div>
-        <Input icon={MailIcon} type="email" placeholder="yourmail@example.com" value={form.email} onChange={e => set('email', e.target.value)} valid={form.email.includes('@')} />
-        <Input icon={PhoneIcon} type="tel" placeholder="+233 XX XXX XXXX" value={form.phone} onChange={e => set('phone', e.target.value)} />
-        <Input icon={LockIcon} type="password" placeholder="Password (min. 6 chars)" value={form.password} onChange={e => set('password', e.target.value)} showToggle showPass={showP} onToggle={() => setShowP(v => !v)} />
-        <Input icon={LockIcon} type="password" placeholder="Confirm password" value={form.confirm} onChange={e => set('confirm', e.target.value)} showToggle showPass={showC} onToggle={() => setShowC(v => !v)} valid={form.confirm && form.confirm === form.password} />
 
-        {error && <p style={{ ...F, fontSize: '12px', color: RD, background: '#FEF2F2', padding: '8px 12px', borderRadius: '6px' }}>{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px', alignItems: 'start' }}>
 
-        <button type="submit" disabled={loading} style={{
-          height: '48px', background: loading ? '#CCC' : G, color: W, border: 'none', borderRadius: '8px',
-          cursor: loading ? 'not-allowed' : 'pointer', ...F, fontSize: '15px', fontWeight: 700, letterSpacing: '0.03em',
-          transition: 'background 0.2s', marginTop: '4px', boxShadow: loading ? 'none' : `0 4px 14px ${G}55`,
-        }}
-        onMouseEnter={e => { if (!loading) e.currentTarget.style.background = BK }}
-        onMouseLeave={e => { if (!loading) e.currentTarget.style.background = G }}>
-          {loading ? 'Creating...' : 'Create Account'}
-        </button>
+            {/* ── COLUMN 1: Personal Information ── */}
+            <div style={{ background: W, borderRadius: '16px', padding: '28px 24px', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
+              <h3 style={{ ...F, fontSize: '17px', fontWeight: 700, color: DK, textAlign: 'center', marginBottom: '4px' }}>Personal Information</h3>
+              <p style={{ ...F, fontSize: '12px', color: FT, textAlign: 'center', marginBottom: '24px' }}>Tell us about yourself</p>
 
-        <p style={{ ...F, fontSize: '11px', color: MD, textAlign: 'center' }}>
-          By registering you agree to our <Link to="/terms" style={{ color: G }}>Terms</Link> & <Link to="/privacy" style={{ color: G }}>Privacy Policy</Link>
-        </p>
-      </form>
-    </motion.div>
+              {/* Avatar */}
+              <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: '#EEF2FF', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px', position: 'relative', cursor: 'pointer' }}>
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="11" r="5" stroke={BL} strokeWidth="1.8"/>
+                    <path d="M5 27c0-6 4.9-10.5 11-10.5S27 21 27 27" stroke={BL} strokeWidth="1.8" strokeLinecap="round"/>
+                  </svg>
+                  <div style={{ position: 'absolute', bottom: 0, right: 0, width: '22px', height: '22px', borderRadius: '50%', background: BL, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid white' }}>
+                    <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                      <path d="M5.5 2v7M2 5.5h7" stroke="white" strokeWidth="1.4" strokeLinecap="round"/>
+                    </svg>
+                  </div>
+                </div>
+                <p style={{ ...F, fontSize: '12px', color: MD }}>Add profile picture</p>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div>
+                  <Label required>First Name</Label>
+                  <Input icon={UserIcon} placeholder="Enter your first name" value={form.firstName} onChange={e => set('firstName', e.target.value)} />
+                </div>
+                <div>
+                  <Label required>Last Name</Label>
+                  <Input icon={UserIcon} placeholder="Enter your last name" value={form.lastName} onChange={e => set('lastName', e.target.value)} />
+                </div>
+                <div>
+                  <Label>Gender</Label>
+                  <Select placeholder="Select Gender" value={form.gender} onChange={e => set('gender', e.target.value)} options={['Female', 'Male', 'Non-binary', 'Prefer not to say']} />
+                </div>
+                <div>
+                  <Label>Shopping Interests <span style={{ ...F, fontSize: '11px', color: FT, fontWeight: 400 }}>(Optional)</span></Label>
+                  <Select placeholder="Choose your interests" value={form.interests} onChange={e => set('interests', e.target.value)} options={['Eden Collection', 'The Love Edit', 'Bold & Beautiful', 'All Collections']} />
+                </div>
+              </div>
+            </div>
+
+            {/* ── COLUMN 2: Account Details ── */}
+            <div style={{ background: W, borderRadius: '16px', padding: '28px 24px', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
+              <h3 style={{ ...F, fontSize: '17px', fontWeight: 700, color: DK, textAlign: 'center', marginBottom: '4px' }}>Account Details</h3>
+              <p style={{ ...F, fontSize: '12px', color: FT, textAlign: 'center', marginBottom: '24px' }}>Secure your account</p>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div>
+                  <Label required>Email Address</Label>
+                  <Input icon={MailIcon} type="email" placeholder="Enter your email address" value={form.email} onChange={e => set('email', e.target.value)} />
+                </div>
+
+                <div>
+                  <Label required>Phone Number</Label>
+                  <Input icon={PhoneIcon} type="tel" placeholder="Enter phone number" value={form.phone} onChange={e => set('phone', e.target.value)} prefix="+233 ▾" />
+                  <p style={{ ...F, fontSize: '11px', color: FT, marginTop: '4px' }}>Format: +233 XXX XXX XXX (9-10 digits)</p>
+                </div>
+
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                    <Label required>Password</Label>
+                    <button type="button" style={{ background: 'none', border: 'none', ...F, fontSize: '12px', color: G, cursor: 'pointer', padding: 0, fontWeight: 500 }}>✦ Generate</button>
+                  </div>
+                  <Input icon={LockIcon} type="password" placeholder="Create a strong password" value={form.password} onChange={e => set('password', e.target.value)} showToggle showPass={showP} onToggle={() => setShowP(v => !v)} />
+                </div>
+
+                <div>
+                  <Label required>Confirm Password</Label>
+                  <Input icon={LockIcon} type="password" placeholder="Confirm your password" value={form.confirm} onChange={e => set('confirm', e.target.value)} showToggle showPass={showC} onToggle={() => setShowC(v => !v)} />
+                </div>
+
+                {/* Divider */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '4px 0' }}>
+                  <div style={{ flex: 1, height: '1px', background: BR }} />
+                  <span style={{ ...F, fontSize: '11px', color: FT }}>Or continue with</span>
+                  <div style={{ flex: 1, height: '1px', background: BR }} />
+                </div>
+
+                <button type="button" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#4285F4' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = BR }}>
+                  <GoogleIcon /> Continue with Google
+                </button>
+
+                <button type="button" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#000' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = BR }}>
+                  <AppleIcon /> Continue with Apple
+                </button>
+              </div>
+            </div>
+
+            {/* ── COLUMN 3: Preferences ── */}
+            <div style={{ background: W, borderRadius: '16px', padding: '28px 24px', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
+              <h3 style={{ ...F, fontSize: '17px', fontWeight: 700, color: DK, textAlign: 'center', marginBottom: '4px' }}>Preferences</h3>
+              <p style={{ ...F, fontSize: '12px', color: FT, textAlign: 'center', marginBottom: '24px' }}>Customise your experience</p>
+
+              {/* Email updates toggle */}
+              <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: '10px', padding: '14px 16px', marginBottom: '12px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px' }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                      <span style={{ fontSize: '14px' }}>✉️</span>
+                      <p style={{ ...F, fontSize: '13px', fontWeight: 700, color: DK }}>EMAIL UPDATES</p>
+                    </div>
+                    <p style={{ ...F, fontSize: '11px', color: MD, lineHeight: 1.5 }}>Get exclusive deals, trends, and personalised recommendations</p>
+                  </div>
+                  <Toggle on={emailUp} onToggle={() => setEmailUp(v => !v)} />
+                </div>
+              </div>
+
+              {/* SMS alerts toggle */}
+              <div style={{ background: '#EFF6FF', border: '1px solid #BFDBFE', borderRadius: '10px', padding: '14px 16px', marginBottom: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px' }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                      <span style={{ fontSize: '14px' }}>📱</span>
+                      <p style={{ ...F, fontSize: '13px', fontWeight: 700, color: DK }}>SMS ALERTS</p>
+                    </div>
+                    <p style={{ ...F, fontSize: '11px', color: MD, lineHeight: 1.5 }}>Get instant notifications about flash sales and limited offers</p>
+                  </div>
+                  <Toggle on={smsUp} onToggle={() => setSmsUp(v => !v)} />
+                </div>
+              </div>
+
+              {/* Terms */}
+              <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer', marginBottom: '20px' }}>
+                <input type="checkbox" checked={terms} onChange={e => setTerms(e.target.checked)} style={{ width: '16px', height: '16px', accentColor: BL, marginTop: '2px', flexShrink: 0 }} />
+                <span style={{ ...F, fontSize: '12px', color: MD, lineHeight: 1.55 }}>
+                  I agree to the{' '}
+                  <Link to="/terms" style={{ color: BL, fontWeight: 600 }}>Terms of Service</Link>
+                  {' '}and{' '}
+                  <Link to="/privacy" style={{ color: BL, fontWeight: 600 }}>Privacy Policy</Link>
+                  <span style={{ color: RD }}> *</span>
+                </span>
+              </label>
+
+              {error && <p style={{ ...F, fontSize: '12px', color: RD, background: '#FEF2F2', padding: '8px 12px', borderRadius: '6px', marginBottom: '12px' }}>{error}</p>}
+
+              {/* Submit */}
+              <button type="submit" disabled={loading}
+                style={{ width: '100%', padding: '14px', background: loading ? FT : BL, color: W, border: 'none', borderRadius: '10px', ...F, fontSize: '15px', fontWeight: 700, cursor: loading ? 'not-allowed' : 'pointer', transition: 'background 0.2s', marginBottom: '14px' }}
+                onMouseEnter={e => { if (!loading) e.currentTarget.style.background = '#2F4ABF' }}
+                onMouseLeave={e => { if (!loading) e.currentTarget.style.background = BL }}>
+                {loading ? 'Creating...' : 'Create Your Account'}
+              </button>
+
+              <p style={{ ...F, fontSize: '13px', color: MD, textAlign: 'center' }}>
+                Already part of our community?{' '}
+                <button type="button" onClick={onSwitch} style={{ background: 'none', border: 'none', ...F, fontSize: '13px', fontWeight: 600, color: BL, cursor: 'pointer', padding: 0 }}>
+                  Sign in here →
+                </button>
+              </p>
+
+            </div>
+          </div>
+        </form>
+      </motion.div>
+    </div>
   )
 }
 
 // ─── MAIN ─────────────────────────────────────
 export default function Auth() {
   const [mode, setMode] = useState('login')
-
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', position: 'relative', overflow: 'hidden' }}>
-
-      {/* ── LEFT — white form panel ── */}
-      <div style={{ width: '480px', flexShrink: 0, background: W, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '48px 52px', position: 'relative', zIndex: 2, boxShadow: '4px 0 40px rgba(0,0,0,0.08)' }}>
-
-        {/* Logo */}
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', marginBottom: '40px' }}>
-          <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover' }} />
-          <div>
-            <p style={{ ...F, fontSize: '20px', fontWeight: 900, color: DK, letterSpacing: '-0.02em', lineHeight: 1 }}>STAAY</p>
-            <p style={{ ...F, fontSize: '8px', fontWeight: 600, color: G, letterSpacing: '0.22em', textTransform: 'uppercase' }}>ONLINE</p>
-          </div>
-        </Link>
-
-        {/* Tab switcher */}
-        <div style={{ display: 'flex', background: LG, borderRadius: '8px', padding: '3px', marginBottom: '28px', border: `1px solid ${BR}` }}>
-          {[{ key: 'login', label: 'Sign In' }, { key: 'register', label: 'Register' }].map(tab => (
-            <button key={tab.key} onClick={() => setMode(tab.key)}
-              style={{ flex: 1, padding: '8px 0', borderRadius: '6px', background: mode === tab.key ? W : 'transparent', border: 'none', ...F, fontSize: '13px', fontWeight: 600, color: mode === tab.key ? DK : MD, cursor: 'pointer', transition: 'all 0.2s', boxShadow: mode === tab.key ? '0 1px 4px rgba(0,0,0,0.1)' : 'none' }}>
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        <AnimatePresence mode="wait">
-          {mode === 'login'
-            ? <LoginForm    key="login"    onSwitch={() => setMode('register')} />
-            : <RegisterForm key="register" onSwitch={() => setMode('login')}    />
-          }
-        </AnimatePresence>
-
-        {/* Footer */}
-        <p style={{ ...F, fontSize: '11px', color: FT, marginTop: '32px', lineHeight: 1.6 }}>
-          © {new Date().getFullYear()} STAAY Online · Made in Accra, Ghana
-        </p>
-      </div>
-
-      {/* ── RIGHT — full photo background ── */}
-      <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-        <img src={BG_IMAGE} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }} />
-        {/* Subtle overlay */}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(26,22,18,0.3) 0%, rgba(26,22,18,0.1) 100%)' }} />
-        {/* Brand quote */}
-        <div style={{ position: 'absolute', bottom: '48px', left: '48px', right: '48px' }}>
-          <p style={{ ...F, fontSize: 'clamp(22px, 3vw, 36px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', lineHeight: 1.1, textShadow: '0 2px 16px rgba(0,0,0,0.4)', marginBottom: '10px' }}>
-            Effortless.<br />Intentional.<br />Always in season.
-          </p>
-          <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: 'rgba(255,255,255,0.75)', letterSpacing: '0.04em' }}>
-            Eden Collection — SS 2026
-          </p>
-        </div>
-      </div>
-
-    </div>
+    <AnimatePresence mode="wait">
+      {mode === 'login'
+        ? <motion.div key="signin" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}><SignIn    onSwitch={() => setMode('register')} /></motion.div>
+        : <motion.div key="reg"    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}><Register onSwitch={() => setMode('login')}    /></motion.div>
+      }
+    </AnimatePresence>
   )
 }
