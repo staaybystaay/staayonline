@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
-import { signIn, signUp, signOut, getCustomerProfile } from '../lib/api'
+import { signIn, signUp, signOut, signInWithGoogle, signInWithApple, resetPassword, updatePassword, getCustomerProfile, uploadAvatar } from '../lib/api'
 
 export function useAuth() {
   const [user,    setUser]    = useState(null)
@@ -10,24 +10,22 @@ export function useAuth() {
   useEffect(() => {
     // Get initial session
     supabase.auth.getSession().then(({ data }) => {
-      setUser(data.session?.user ?? null)
-      setLoading(false)
+      const u = data.session?.user ?? null
+      setUser(u)
+      if (u) loadProfile(u.id)
+      else setLoading(false)
     })
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      async (event, session) => {
         const u = session?.user ?? null
         setUser(u)
         if (u) {
-          try {
-            const p = await getCustomerProfile(u.id)
-            setProfile(p)
-          } catch {
-            setProfile(null)
-          }
+          await loadProfile(u.id)
         } else {
           setProfile(null)
+          setLoading(false)
         }
       }
     )
@@ -35,19 +33,63 @@ export function useAuth() {
     return () => subscription.unsubscribe()
   }, [])
 
-  async function login(email, password) {
-    const data = await signIn({ email, password })
-    return data
+  async function loadProfile(userId) {
+    try {
+      const p = await getCustomerProfile(userId)
+      setProfile(p)
+    } catch {
+      setProfile(null)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  async function register(details) {
-    const data = await signUp(details)
-    return data
-  }
+  return {
+    user,
+    profile,
+    loading,
+    isLoggedIn: !!user,
 
-  async function logout() {
-    await signOut()
-  }
+    async login(email, password) {
+      return await signIn({ email, password })
+    },
 
-  return { user, profile, loading, login, register, logout }
+    async register(details) {
+      return await signUp(details)
+    },
+
+    async logout() {
+      await signOut()
+      setUser(null)
+      setProfile(null)
+    },
+
+    async loginWithGoogle() {
+      return await signInWithGoogle()
+    },
+
+    async loginWithApple() {
+      return await signInWithApple()
+    },
+
+    async sendPasswordReset(email) {
+      return await resetPassword(email)
+    },
+
+    async changePassword(newPassword) {
+      return await updatePassword(newPassword)
+    },
+
+    async updateAvatar(file) {
+      if (!user) throw new Error('Not logged in')
+      const url = await uploadAvatar(user.id, file)
+      await supabase.from('customers').update({ avatar_url: url }).eq('id', user.id)
+      setProfile(p => ({ ...p, avatar_url: url }))
+      return url
+    },
+
+    async refreshProfile() {
+      if (user) await loadProfile(user.id)
+    },
+  }
 }
