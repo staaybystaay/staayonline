@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
-import { signIn, signUp } from '../lib/api'
+import { signIn, signUp, signInWithGoogle, signInWithApple, resetPassword, uploadAvatar } from '../lib/api'
 
 const G   = '#B8903A'
 const GL  = '#F5ECD8'
@@ -108,6 +108,58 @@ function Input({ icon: Icon, type = 'text', placeholder, value, onChange, showTo
   )
 }
 
+// ─── FORGOT PASSWORD INLINE ───────────────────
+function ForgotPassword() {
+  const [open,    setOpen]    = useState(false)
+  const [email,   setEmail]   = useState('')
+  const [loading, setLoading] = useState(false)
+  const [sent,    setSent]    = useState(false)
+  const [error,   setError]   = useState('')
+
+  async function handleReset(e) {
+    e.preventDefault()
+    if (!email) { setError('Enter your email address.'); return }
+    setLoading(true); setError('')
+    try { await resetPassword(email); setSent(true) }
+    catch { setError('Could not send reset email. Check your email address.') }
+    finally { setLoading(false) }
+  }
+
+  if (!open) return (
+    <button onClick={() => setOpen(true)} style={{ background: 'none', border: 'none', ...F, fontSize: '13px', color: G, cursor: 'pointer', fontWeight: 500 }}>
+      Forgot your password?
+    </button>
+  )
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+      style={{ background: '#F0F9FF', border: '1px solid #BAE6FD', borderRadius: '10px', padding: '16px' }}>
+      {sent ? (
+        <p style={{ ...F, fontSize: '13px', color: '#0369A1', textAlign: 'center', fontWeight: 500 }}>
+          ✓ Reset link sent to <strong>{email}</strong>
+        </p>
+      ) : (
+        <form onSubmit={handleReset} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: '#0369A1' }}>Reset your password</p>
+          <input type="email" placeholder="Your email address" value={email} onChange={e => setEmail(e.target.value)}
+            style={{ height: '40px', border: '1.5px solid #BAE6FD', borderRadius: '6px', padding: '0 12px', ...F, fontSize: '13px', color: DK, outline: 'none', background: W }} />
+          {error && <p style={{ ...F, fontSize: '11px', color: RD }}>{error}</p>}
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <button type="submit" disabled={loading}
+              style={{ flex: 1, padding: '9px', background: '#0369A1', color: W, border: 'none', borderRadius: '6px', ...F, fontSize: '12px', fontWeight: 600, cursor: 'pointer' }}>
+              {loading ? 'Sending...' : 'Send Reset Link'}
+            </button>
+            <button type="button" onClick={() => setOpen(false)}
+              style={{ padding: '9px 14px', background: 'transparent', border: '1px solid #BAE6FD', borderRadius: '6px', ...F, fontSize: '12px', color: MD, cursor: 'pointer' }}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      )}
+    </motion.div>
+  )
+}
+
 // ─── SIGN IN CARD ─────────────────────────────
 function SignIn({ onSwitch }) {
   const navigate = useNavigate()
@@ -141,12 +193,12 @@ function SignIn({ onSwitch }) {
 
         {/* Social buttons */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
-          <button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
+          <button onClick={async () => { try { await signInWithGoogle() } catch(e) { setError('Google sign in failed.') } }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = '#4285F4' }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = BR }}>
             <GoogleIcon /> Continue with Google
           </button>
-          <button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
+          <button onClick={async () => { try { await signInWithApple() } catch(e) { setError('Apple sign in failed.') } }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = '#000' }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = BR }}>
             <AppleIcon /> Continue with Apple
@@ -178,9 +230,7 @@ function SignIn({ onSwitch }) {
             Don't have an account?{' '}
             <button onClick={onSwitch} style={{ background: 'none', border: 'none', ...F, fontSize: '13px', fontWeight: 600, color: G, cursor: 'pointer', padding: 0 }}>Sign up</button>
           </p>
-          <button style={{ background: 'none', border: 'none', ...F, fontSize: '13px', color: G, cursor: 'pointer', fontWeight: 500 }}>
-            Forgot your password?
-          </button>
+          <ForgotPassword />
         </div>
 
       </motion.div>
@@ -191,6 +241,8 @@ function SignIn({ onSwitch }) {
 // ─── 3-COLUMN REGISTER ────────────────────────
 function Register({ onSwitch }) {
   const [form,    setForm]    = useState({ firstName: '', lastName: '', gender: '', interests: '', email: '', phone: '', password: '', confirm: '' })
+  const [avatarFile, setAvatarFile] = useState(null)
+  const [avatarPreview, setAvatarPreview] = useState(null)
   const [showP,   setShowP]   = useState(false)
   const [showC,   setShowC]   = useState(false)
   const [emailUp, setEmailUp] = useState(true)
@@ -210,7 +262,20 @@ function Register({ onSwitch }) {
     if (!terms) { setError('Please agree to the Terms of Service.'); return }
     setLoading(true); setError('')
     try {
-      await signUp({ email: form.email, password: form.password, firstName: form.firstName, lastName: form.lastName, phone: form.phone })
+      let avatarUrl = null
+      if (avatarFile) {
+        try { avatarUrl = await uploadAvatar('temp-' + Date.now(), avatarFile) } catch {}
+      }
+      await signUp({
+        email:     form.email,
+        password:  form.password,
+        firstName: form.firstName,
+        lastName:  form.lastName,
+        phone:     form.phone,
+        gender:    form.gender    || null,
+        interests: form.interests || null,
+        avatarUrl,
+      })
       setDone(true)
     } catch (err) { setError(err.message || 'Something went wrong.') }
     finally { setLoading(false) }
@@ -280,18 +345,28 @@ function Register({ onSwitch }) {
 
               {/* Avatar */}
               <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-                <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: '#EEF2FF', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px', position: 'relative', cursor: 'pointer' }}>
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                    <circle cx="16" cy="11" r="5" stroke={BL} strokeWidth="1.8"/>
-                    <path d="M5 27c0-6 4.9-10.5 11-10.5S27 21 27 27" stroke={BL} strokeWidth="1.8" strokeLinecap="round"/>
-                  </svg>
-                  <div style={{ position: 'absolute', bottom: 0, right: 0, width: '22px', height: '22px', borderRadius: '50%', background: BL, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid white' }}>
-                    <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
-                      <path d="M5.5 2v7M2 5.5h7" stroke="white" strokeWidth="1.4" strokeLinecap="round"/>
-                    </svg>
+                <label style={{ cursor: 'pointer' }}>
+                  <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: avatarPreview ? 'transparent' : '#EEF2FF', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 8px', position: 'relative', overflow: 'hidden' }}>
+                    {avatarPreview ? (
+                      <img src={avatarPreview} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <circle cx="16" cy="11" r="5" stroke={BL} strokeWidth="1.8"/>
+                        <path d="M5 27c0-6 4.9-10.5 11-10.5S27 21 27 27" stroke={BL} strokeWidth="1.8" strokeLinecap="round"/>
+                      </svg>
+                    )}
+                    <div style={{ position: 'absolute', bottom: 0, right: 0, width: '22px', height: '22px', borderRadius: '50%', background: BL, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid white' }}>
+                      <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                        <path d="M5.5 2v7M2 5.5h7" stroke="white" strokeWidth="1.4" strokeLinecap="round"/>
+                      </svg>
+                    </div>
                   </div>
-                </div>
-                <p style={{ ...F, fontSize: '12px', color: MD }}>Add profile picture</p>
+                  <input type="file" accept="image/*" style={{ display: 'none' }} onChange={e => {
+                    const f = e.target.files[0]
+                    if (f) { setAvatarFile(f); const r = new FileReader(); r.onload = ev => setAvatarPreview(ev.target.result); r.readAsDataURL(f) }
+                  }} />
+                  <p style={{ ...F, fontSize: '12px', color: MD }}>Add profile picture</p>
+                </label>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
