@@ -85,6 +85,7 @@ export default function QuickView({ product, onClose }) {
         animate={{ x: 0 }}
         exit={{ x: '100%' }}
         transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+        className="qv-drawer"
         style={{
           position: 'fixed',
           top: 0, right: 0, bottom: 0,
@@ -119,7 +120,7 @@ export default function QuickView({ product, onClose }) {
         <div style={{ flex: 1, overflowY: 'auto' }}>
 
           {/* IMAGE + DETAILS ROW */}
-          <div style={{ display: 'grid', gridTemplateColumns: '72px 1fr 1fr', height: '480px', borderBottom: `1px solid ${BR}` }}>
+          <div className="qv-image-grid" style={{ display: 'grid', gridTemplateColumns: '72px 1fr 1fr', height: '480px', borderBottom: `1px solid ${BR}` }}>
 
             {/* Thumbnails */}
             <div style={{ background: LG, borderRight: `1px solid ${BR}`, display: 'flex', flexDirection: 'column', gap: '6px', padding: '12px 8px', overflowY: 'auto' }}>
@@ -222,7 +223,7 @@ export default function QuickView({ product, onClose }) {
           </div>
 
           {/* ── SHIPPING INFO — no emojis ── */}
-          <div style={{ padding: '20px 28px', borderBottom: `1px solid ${BR}`, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
+          <div className="qv-shipping-grid" style={{ padding: '20px 28px', borderBottom: `1px solid ${BR}`, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
             {[
               { title: 'Free Shipping',    sub: 'On all orders within Accra'    },
               { title: 'Fast Delivery',    sub: '2–3 business days'             },
