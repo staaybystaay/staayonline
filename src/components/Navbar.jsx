@@ -62,7 +62,7 @@ const secondaryLinks = [
   { label: 'The Love Edit',   path: '/shop?col=love-edit', slug: 'love' },
   { label: 'Bold & Beautiful',path: '/shop?col=bold',      slug: 'bold' },
   { label: 'New In',          path: '/shop',               slug: 'new'  },
-  { label: 'Sale',            path: '/shop',               slug: 'sale' },
+  { label: 'Sale',            path: '/sale',               slug: 'sale' },
 ]
 
 function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch }) {
@@ -272,7 +272,7 @@ export default function Navbar() {
           <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px' }}>
             <div className="hide-scroll" style={{ display: 'flex', alignItems: 'center', overflowX: 'auto' }}>
               {secondaryLinks.map(col => {
-                const active = activeCol === col.slug || (!activeCol && col.slug === 'all' && location.pathname === '/shop')
+                const active = col.path === location.pathname || (activeCol === col.slug && location.pathname === '/shop') || (!activeCol && col.slug === 'all' && location.pathname === '/shop')
                 return (
                   <Link key={col.slug} to={col.path}
                     style={{ ...F, fontSize: '12px', fontWeight: active ? 600 : 400, color: active ? G : MD, padding: '11px 18px', borderBottom: `2px solid ${active ? G : 'transparent'}`, whiteSpace: 'nowrap', transition: 'all 0.2s', display: 'block' }}
