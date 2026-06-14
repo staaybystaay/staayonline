@@ -52,8 +52,6 @@ const CloseIcon = () => (
 const navLinks = [
   { label: 'Home',      path: '/'         },
   { label: 'Shop',      path: '/shop'     },
-  { label: 'Women',     path: '/shop'     },
-  { label: 'Children',  path: '/shop'     },
   { label: 'Our Brand', path: '/brand'    },
   { label: 'Featured',  path: '/featured' },
 ]
@@ -63,8 +61,6 @@ const secondaryLinks = [
   { label: 'Eden Collection', path: '/shop?col=eden',      slug: 'eden' },
   { label: 'The Love Edit',   path: '/shop?col=love-edit', slug: 'love' },
   { label: 'Bold & Beautiful',path: '/shop?col=bold',      slug: 'bold' },
-  { label: 'Women',           path: '/shop',               slug: 'women'},
-  { label: 'Children',        path: '/shop',               slug: 'kids' },
   { label: 'New In',          path: '/shop',               slug: 'new'  },
   { label: 'Sale',            path: '/shop',               slug: 'sale' },
 ]
@@ -132,7 +128,7 @@ export default function Navbar() {
   const navigate  = useNavigate()
   const items     = useCartStore(s => s.items)
   const cartCount = items.reduce((n, i) => n + i.qty, 0)
-  const { user, logout } = useAuth()
+  const { user, profile, logout } = useAuth()
   const searchRef = useRef()
 
   useEffect(() => {
@@ -227,6 +223,14 @@ export default function Navbar() {
                 )}
               </AnimatePresence>
             </Link>
+            {user && (
+              <Link to="/account" className="desktop-only"
+                style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, textDecoration: 'none', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.color = G }}
+                onMouseLeave={e => { e.currentTarget.style.color = DK }}>
+                Hi, {profile?.first_name || user.email.split('@')[0]}
+              </Link>
+            )}
             <Link to={user ? '/account' : '/login'}
               style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: user ? G : MD, transition: 'color 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.color = G }}
