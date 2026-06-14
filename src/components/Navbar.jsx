@@ -65,7 +65,8 @@ const secondaryLinks = [
   { label: 'Sale',            path: '/shop',               slug: 'sale' },
 ]
 
-function MobileDrawer({ open, onClose, user, onLogout }) {
+function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch }) {
+  const [drawerSearch, setDrawerSearch] = useState('')
   return (
     <AnimatePresence>
       {open && (
@@ -81,6 +82,32 @@ function MobileDrawer({ open, onClose, user, onLogout }) {
               <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
               <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: DK }}><CloseIcon /></button>
             </div>
+
+            {/* Search */}
+            <form onSubmit={e => { e.preventDefault(); onSearch?.(drawerSearch); onClose() }} style={{ padding: '16px 24px 4px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: LG, borderRadius: '8px', padding: '10px 14px' }}>
+                <span style={{ color: MD, flexShrink: 0, display: 'flex' }}><SearchIcon /></span>
+                <input
+                  value={drawerSearch}
+                  onChange={e => setDrawerSearch(e.target.value)}
+                  placeholder="Search collections..."
+                  style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', ...F, fontSize: '13px', color: DK }}
+                />
+              </div>
+            </form>
+
+            {/* User greeting */}
+            {user && (
+              <Link to="/account" onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 24px', textDecoration: 'none' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: GL, display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '13px', fontWeight: 700, color: G, flexShrink: 0, overflow: 'hidden' }}>
+                  {profile?.avatar_url ? <img src={profile.avatar_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : (profile?.first_name?.[0]?.toUpperCase() || user.email[0].toUpperCase())}
+                </div>
+                <span style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>
+                  Hi, {profile?.first_name || user.email.split('@')[0]}
+                </span>
+              </Link>
+            )}
+
             <div style={{ flex: 1, overflowY: 'auto', padding: '8px 0' }}>
               {navLinks.map(link => (
                 <Link key={link.label} to={link.path} onClick={onClose}
@@ -153,7 +180,7 @@ export default function Navbar() {
       <header style={{ position: 'sticky', top: 0, zIndex: 100, background: W, boxShadow: scrolled ? '0 1px 12px rgba(0,0,0,0.08)' : 'none', borderBottom: `1px solid ${BR}`, transition: 'box-shadow 0.3s' }}>
 
         {/* ── MAIN NAV ── */}
-        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px', height: '68px', display: 'flex', alignItems: 'center', gap: '24px' }}>
+        <div className="page-padding" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px', height: '68px', display: 'flex', alignItems: 'center', gap: '24px' }}>
 
           {/* Mobile menu btn */}
           <button onClick={() => setMobileOpen(true)} className="mobile-only"
@@ -186,7 +213,7 @@ export default function Navbar() {
           </nav>
 
           {/* Search bar */}
-          <form onSubmit={handleSearch} style={{ flex: 1, maxWidth: '360px', marginLeft: 'auto' }}>
+          <form onSubmit={handleSearch} className="desktop-only" style={{ flex: 1, maxWidth: '360px', marginLeft: 'auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: LG, border: `1.5px solid ${searchFocused ? G : 'transparent'}`, borderRadius: '8px', padding: '9px 14px', transition: 'border-color 0.2s' }}>
               <span style={{ color: MD, flexShrink: 0, display: 'flex' }}><SearchIcon /></span>
               <input
@@ -202,7 +229,7 @@ export default function Navbar() {
           </form>
 
           {/* Icons */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginLeft: 'auto' }}>
             <Link to="/favorites"
               style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.color = G }}
@@ -261,7 +288,8 @@ export default function Navbar() {
 
       </header>
 
-      <MobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} user={user} onLogout={handleLogout} />
+      <MobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} user={user} profile={profile} onLogout={handleLogout}
+        onSearch={(val) => { if (val.trim()) navigate(`/shop?q=${encodeURIComponent(val.trim())}`) }} />
     </>
   )
 }
