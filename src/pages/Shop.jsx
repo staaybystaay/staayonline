@@ -56,6 +56,11 @@ const ListIcon = () => (
     <rect x="1" y="7" width="4" height="4" rx="0.5" stroke="currentColor" strokeWidth="1.2"/>
   </svg>
 )
+const FilterIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+  </svg>
+)
 const ChevronIcon = ({ open }) => (
   <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
     <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
@@ -248,6 +253,91 @@ function ProductCard({ product, index, viewMode, onQuickView }) {
 }
 
 // ─── MAIN SHOP ────────────────────────────────
+// ─── Reusable Filter Panel (desktop sidebar + mobile drawer) ──
+function FilterPanel({ sortedLength, collectionPills, activeCol, setActiveCol, sortBy, setSortBy, priceRange, setPriceRange, selSizes, setSelSizes, selColors, setSelColors, showClear, onClear }) {
+  return (
+    <>
+      <p style={{ ...F, fontSize: '14px', fontWeight: 800, color: DK, marginBottom: '4px', letterSpacing: '0.02em' }}>Refine By</p>
+      <p style={{ ...F, fontSize: '12px', color: MD, marginBottom: '20px' }}>{sortedLength} products</p>
+
+      {/* Collections */}
+      <Section title="Collections">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+          {collectionPills.map(col => (
+            <button key={col.slug} onClick={() => setActiveCol(col.slug)}
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '9px 10px', background: activeCol === col.slug ? GL : 'transparent', border: 'none', borderLeft: `3px solid ${activeCol === col.slug ? G : 'transparent'}`, cursor: 'pointer', textAlign: 'left', transition: 'all 0.18s', width: '100%' }}
+              onMouseEnter={e => { if (activeCol !== col.slug) e.currentTarget.style.background = LG }}
+              onMouseLeave={e => { if (activeCol !== col.slug) e.currentTarget.style.background = 'transparent' }}>
+              <span style={{ ...F, fontSize: '13px', fontWeight: activeCol === col.slug ? 600 : 400, color: activeCol === col.slug ? G : DK }}>{col.name}</span>
+              {col.subtitle && <span style={{ ...F, fontSize: '11px', fontWeight: 300, color: activeCol === col.slug ? G : FT, marginTop: '1px' }}>{col.subtitle}</span>}
+            </button>
+          ))}
+        </div>
+      </Section>
+
+      {/* Sort by (mobile) */}
+      <Section title="Sort By">
+        <select value={sortBy} onChange={e => setSortBy(e.target.value)}
+          style={{ width: '100%', padding: '9px 12px', border: `1px solid ${BR}`, background: W, ...F, fontSize: '13px', color: DK, cursor: 'pointer', outline: 'none' }}>
+          {SORT_OPTIONS.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
+        </select>
+      </Section>
+
+      {/* Price Range */}
+      <Section title="Price Range">
+        <div style={{ padding: '4px 0' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', ...F, fontSize: '12px', color: MD, marginBottom: '12px' }}>
+            <span>GH₵0</span><span>GH₵5,000</span>
+          </div>
+          <PriceSlider min={0} max={5000} value={priceRange} onChange={setPriceRange} />
+        </div>
+      </Section>
+
+      {/* Size */}
+      <Section title="Size" defaultOpen={false}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+          {SIZES.map(s => {
+            const sel = selSizes.includes(s)
+            return (
+              <button key={s} onClick={() => setSelSizes(prev => sel ? prev.filter(x => x !== s) : [...prev, s])}
+                style={{ padding: '6px 12px', border: `1px solid ${sel ? G : BR}`, background: sel ? GL : W, ...F, fontSize: '12px', fontWeight: sel ? 700 : 400, color: sel ? G : DK, cursor: 'pointer', transition: 'all 0.15s' }}>
+                {s}
+              </button>
+            )
+          })}
+        </div>
+      </Section>
+
+      {/* Colors */}
+      <Section title="Colors" defaultOpen={false}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+          {COLORS_FILTER.map(c => {
+            const sel = selColors.includes(c.name)
+            return (
+              <button key={c.name} onClick={() => setSelColors(prev => sel ? prev.filter(x => x !== c.name) : [...prev, c.name])}
+                title={c.name}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', background: 'none', border: 'none', cursor: 'pointer', padding: '2px' }}>
+                <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: c.hex, border: `2px solid ${sel ? G : '#ddd'}`, outline: sel ? `2px solid ${G}` : 'none', outlineOffset: '2px', transition: 'all 0.2s' }} />
+                <span style={{ ...F, fontSize: '9px', color: sel ? G : MD, fontWeight: sel ? 600 : 300 }}>{c.name}</span>
+              </button>
+            )
+          })}
+        </div>
+      </Section>
+
+      {/* Clear */}
+      {showClear && (
+        <button onClick={onClear}
+          style={{ width: '100%', padding: '10px', background: 'transparent', border: `1px solid ${BR}`, ...F, fontSize: '12px', fontWeight: 500, color: MD, cursor: 'pointer', transition: 'all 0.2s' }}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = DK; e.currentTarget.style.color = DK }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = BR; e.currentTarget.style.color = MD }}>
+          Clear All Filters
+        </button>
+      )}
+    </>
+  )
+}
+
 export default function Shop() {
   const location = useLocation()
   const [products,    setProducts]    = useState([])
@@ -261,6 +351,7 @@ export default function Shop() {
   const [selColors,   setSelColors]   = useState([])
   const [sortOpen,    setSortOpen]    = useState(false)
   const [qvProduct,   setQvProduct]   = useState(null)
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
   // Read collection from URL param
   useEffect(() => {
@@ -307,7 +398,7 @@ export default function Shop() {
     <div style={{ background: W, minHeight: '100vh' }}>
 
       {/* ── PAGE HEADER ── */}
-      <div style={{ background: LG, borderBottom: `1px solid ${BR}`, padding: '28px 40px' }}>
+      <div className="page-padding" style={{ background: LG, borderBottom: `1px solid ${BR}`, padding: '28px 40px' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '12px' }}>
             <Link to="/" style={{ ...F, fontSize: '12px', color: MD, transition: 'color 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = G }} onMouseLeave={e => { e.currentTarget.style.color = MD }}>Home</Link>
@@ -328,7 +419,7 @@ export default function Shop() {
       </div>
 
       {/* ── TOOLBAR ── */}
-      <div style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '0 40px', position: 'sticky', top: 0, zIndex: 40 }}>
+      <div className="page-padding" style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '0 40px', position: 'sticky', top: 0, zIndex: 40 }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'center', height: '52px', gap: '0' }}>
 
           {/* Collection pills */}
@@ -370,6 +461,12 @@ export default function Shop() {
             </AnimatePresence>
           </div>
 
+          {/* Filters button — mobile only */}
+          <button onClick={() => setMobileFiltersOpen(true)} className="mobile-only"
+            style={{ display: 'none', alignItems: 'center', gap: '6px', padding: '0 14px', height: '52px', background: 'transparent', border: 'none', borderRight: `1px solid ${BR}`, ...F, fontSize: '12px', fontWeight: 600, color: DK, cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>
+            <FilterIcon /> Filters
+          </button>
+
           {/* View mode */}
           <div style={{ display: 'flex' }}>
             {[{ mode: 'grid', Icon: GridIcon }, { mode: 'list', Icon: ListIcon }].map(({ mode, Icon }) => (
@@ -383,93 +480,27 @@ export default function Shop() {
       </div>
 
       {/* ── BODY ── */}
-      <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '32px 40px 96px', display: 'flex', gap: '32px' }}>
+      <div className="page-padding" style={{ maxWidth: '1400px', margin: '0 auto', padding: '32px 40px 96px', display: 'flex', gap: '32px' }}>
 
         {/* ── SIDEBAR ── */}
-        <aside style={{ width: '220px', flexShrink: 0, position: 'sticky', top: '64px', alignSelf: 'flex-start' }}>
-          <p style={{ ...F, fontSize: '14px', fontWeight: 800, color: DK, marginBottom: '4px', letterSpacing: '0.02em' }}>Refine By</p>
-          <p style={{ ...F, fontSize: '12px', color: MD, marginBottom: '20px' }}>{sorted.length} products</p>
-
-          {/* Collections */}
-          <Section title="Collections">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-              {collectionPills.map(col => (
-                <button key={col.slug} onClick={() => setActiveCol(col.slug)}
-                  style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '9px 10px', background: activeCol === col.slug ? GL : 'transparent', border: 'none', borderLeft: `3px solid ${activeCol === col.slug ? G : 'transparent'}`, cursor: 'pointer', textAlign: 'left', transition: 'all 0.18s', width: '100%' }}
-                  onMouseEnter={e => { if (activeCol !== col.slug) e.currentTarget.style.background = LG }}
-                  onMouseLeave={e => { if (activeCol !== col.slug) e.currentTarget.style.background = 'transparent' }}>
-                  <span style={{ ...F, fontSize: '13px', fontWeight: activeCol === col.slug ? 600 : 400, color: activeCol === col.slug ? G : DK }}>{col.name}</span>
-                  {col.subtitle && <span style={{ ...F, fontSize: '11px', fontWeight: 300, color: activeCol === col.slug ? G : FT, marginTop: '1px' }}>{col.subtitle}</span>}
-                </button>
-              ))}
-            </div>
-          </Section>
-
-          {/* Sort by (mobile) */}
-          <Section title="Sort By">
-            <select value={sortBy} onChange={e => setSortBy(e.target.value)}
-              style={{ width: '100%', padding: '9px 12px', border: `1px solid ${BR}`, background: W, ...F, fontSize: '13px', color: DK, cursor: 'pointer', outline: 'none' }}>
-              {SORT_OPTIONS.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
-            </select>
-          </Section>
-
-          {/* Price Range */}
-          <Section title="Price Range">
-            <div style={{ padding: '4px 0' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', ...F, fontSize: '12px', color: MD, marginBottom: '12px' }}>
-                <span>GH₵0</span><span>GH₵5,000</span>
-              </div>
-              <PriceSlider min={0} max={5000} value={priceRange} onChange={setPriceRange} />
-            </div>
-          </Section>
-
-          {/* Size */}
-          <Section title="Size" defaultOpen={false}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-              {SIZES.map(s => {
-                const sel = selSizes.includes(s)
-                return (
-                  <button key={s} onClick={() => setSelSizes(prev => sel ? prev.filter(x => x !== s) : [...prev, s])}
-                    style={{ padding: '6px 12px', border: `1px solid ${sel ? G : BR}`, background: sel ? GL : W, ...F, fontSize: '12px', fontWeight: sel ? 700 : 400, color: sel ? G : DK, cursor: 'pointer', transition: 'all 0.15s' }}>
-                    {s}
-                  </button>
-                )
-              })}
-            </div>
-          </Section>
-
-          {/* Colors */}
-          <Section title="Colors" defaultOpen={false}>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-              {COLORS_FILTER.map(c => {
-                const sel = selColors.includes(c.name)
-                return (
-                  <button key={c.name} onClick={() => setSelColors(prev => sel ? prev.filter(x => x !== c.name) : [...prev, c.name])}
-                    title={c.name}
-                    style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', background: 'none', border: 'none', cursor: 'pointer', padding: '2px' }}>
-                    <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: c.hex, border: `2px solid ${sel ? G : '#ddd'}`, outline: sel ? `2px solid ${G}` : 'none', outlineOffset: '2px', transition: 'all 0.2s' }} />
-                    <span style={{ ...F, fontSize: '9px', color: sel ? G : MD, fontWeight: sel ? 600 : 300 }}>{c.name}</span>
-                  </button>
-                )
-              })}
-            </div>
-          </Section>
-
-          {/* Clear */}
-          {(activeCol !== 'all' || priceRange[0] > 0 || priceRange[1] < 5000 || selSizes.length > 0 || selColors.length > 0) && (
-            <button onClick={() => { setActiveCol('all'); setPriceRange([0, 5000]); setSelSizes([]); setSelColors([]) }}
-              style={{ width: '100%', padding: '10px', background: 'transparent', border: `1px solid ${BR}`, ...F, fontSize: '12px', fontWeight: 500, color: MD, cursor: 'pointer', transition: 'all 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = DK; e.currentTarget.style.color = DK }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = BR; e.currentTarget.style.color = MD }}>
-              Clear All Filters
-            </button>
-          )}
+        <aside className="desktop-only" style={{ width: '220px', flexShrink: 0, position: 'sticky', top: '64px', alignSelf: 'flex-start', display: 'block' }}>
+          <FilterPanel
+            sortedLength={sorted.length}
+            collectionPills={collectionPills}
+            activeCol={activeCol} setActiveCol={setActiveCol}
+            sortBy={sortBy} setSortBy={setSortBy}
+            priceRange={priceRange} setPriceRange={setPriceRange}
+            selSizes={selSizes} setSelSizes={setSelSizes}
+            selColors={selColors} setSelColors={setSelColors}
+            showClear={activeCol !== 'all' || priceRange[0] > 0 || priceRange[1] < 5000 || selSizes.length > 0 || selColors.length > 0}
+            onClear={() => { setActiveCol('all'); setPriceRange([0, 5000]); setSelSizes([]); setSelColors([]) }}
+          />
         </aside>
 
         {/* ── PRODUCTS ── */}
         <div style={{ flex: 1, minWidth: 0 }}>
           {loading ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+            <div className="grid-4-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
               {Array.from({ length: 8 }).map((_, i) => (
                 <div key={i}>
                   <div style={{ aspectRatio: '3/4', background: LG, animation: 'pulse 1.5s ease-in-out infinite' }} />
@@ -485,7 +516,7 @@ export default function Shop() {
               <p style={{ ...F, fontSize: '14px', color: MD }}>Try adjusting your filters.</p>
             </div>
           ) : viewMode === 'grid' ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px 14px' }}>
+            <div className="grid-4-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px 14px' }}>
               {sorted.map((p, i) => <ProductCard key={p.id} product={p} index={i} viewMode="grid" onQuickView={setQvProduct} />)}
             </div>
           ) : (
@@ -499,6 +530,51 @@ export default function Shop() {
       {/* Quick View */}
       <AnimatePresence>
         {qvProduct && <QuickView product={qvProduct} onClose={() => setQvProduct(null)} />}
+      </AnimatePresence>
+
+      {/* ── MOBILE FILTERS DRAWER ── */}
+      <AnimatePresence>
+        {mobileFiltersOpen && (
+          <>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onClick={() => setMobileFiltersOpen(false)}
+              style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.5)' }} />
+            <motion.div
+              initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
+              transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+              style={{ position: 'fixed', top: 0, left: 0, bottom: 0, width: '300px', maxWidth: '88vw', zIndex: 301, background: W, display: 'flex', flexDirection: 'column' }}>
+
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 20px', borderBottom: `1px solid ${BR}`, flexShrink: 0 }}>
+                <h3 style={{ ...F, fontSize: '15px', fontWeight: 800, color: DK, letterSpacing: '0.02em' }}>Filters</h3>
+                <button onClick={() => setMobileFiltersOpen(false)}
+                  style={{ width: '32px', height: '32px', border: `1px solid ${BR}`, background: W, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '14px', color: MD }}>
+                  ✕
+                </button>
+              </div>
+
+              <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
+                <FilterPanel
+                  sortedLength={sorted.length}
+                  collectionPills={collectionPills}
+                  activeCol={activeCol} setActiveCol={(c) => { setActiveCol(c); }}
+                  sortBy={sortBy} setSortBy={setSortBy}
+                  priceRange={priceRange} setPriceRange={setPriceRange}
+                  selSizes={selSizes} setSelSizes={setSelSizes}
+                  selColors={selColors} setSelColors={setSelColors}
+                  showClear={activeCol !== 'all' || priceRange[0] > 0 || priceRange[1] < 5000 || selSizes.length > 0 || selColors.length > 0}
+                  onClear={() => { setActiveCol('all'); setPriceRange([0, 5000]); setSelSizes([]); setSelColors([]) }}
+                />
+              </div>
+
+              <div style={{ padding: '16px 20px', borderTop: `1px solid ${BR}`, flexShrink: 0 }}>
+                <button onClick={() => setMobileFiltersOpen(false)}
+                  style={{ width: '100%', padding: '13px', background: BK, color: W, border: 'none', cursor: 'pointer', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em' }}>
+                  Show {sorted.length} {sorted.length === 1 ? 'Result' : 'Results'}
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
       </AnimatePresence>
 
     </div>
