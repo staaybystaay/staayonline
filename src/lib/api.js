@@ -31,6 +31,7 @@ export async function signUp({
         phone,
         gender,
         interests,
+        avatar_url: avatarUrl,
       },
       emailRedirectTo: `${window.location.origin}/auth/callback`,
     },
@@ -185,6 +186,17 @@ export async function getAllProducts() {
     .select('*, collection:collections(id, slug, name)')
     .eq('active', true)
     .order('sort_order', { ascending: true })
+  if (error) throw error
+  return data
+}
+
+export async function getSaleProducts() {
+  const { data, error } = await supabase
+    .from('products')
+    .select('*, collection:collections(id, slug, name)')
+    .eq('active', true)
+    .gt('discount_percent', 0)
+    .order('discount_percent', { ascending: false })
   if (error) throw error
   return data
 }
