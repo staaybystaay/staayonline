@@ -18,7 +18,7 @@ const slides = [
   },
   {
     id: 2,
-    image: '/staayhero1.png',
+    image: '/staayhero.png',
     headline: 'DRESS THE WAY\nYOU FEEL TODAY',
     sub: 'Styles that match every version of you.',
     cta: 'Shop All Collections',
@@ -27,7 +27,7 @@ const slides = [
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1800&q=85&fit=crop',
+    image: '/staayhero1.png',
     headline: 'MADE IN ACCRA.\nWORN EVERYWHERE.',
     sub: 'Local craftsmanship. International standard.',
     cta: 'Explore the Brand',
