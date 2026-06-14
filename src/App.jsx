@@ -13,6 +13,7 @@ import Terms from './pages/Terms'
 import Privacy from './pages/Privacy'
 import AuthCallback  from './pages/AuthCallback'
 import ResetPassword from './pages/ResetPassword'
+import Account from './pages/Account'
 
 
 // import ContactSupport from './pages/ContactSupport'
@@ -35,6 +36,7 @@ export default function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/auth/callback"       element={<AuthCallback />}  />
           <Route path="/auth/reset-password" element={<ResetPassword />} />
+          <Route path="/account" element={<Account />} />
           {/* <Route path="/contact" element={<ContactSupport />} /> */}
         </Routes>
         <Footer />
