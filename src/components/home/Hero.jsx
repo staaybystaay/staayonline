@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { imgHero } from '../lib/images'
 
 const G  = '#B8903A'
 const W  = '#FFFFFF'
