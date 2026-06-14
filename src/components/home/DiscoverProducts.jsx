@@ -56,14 +56,12 @@ function ProductCard({ product, index, discount, onQuickView }) {
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)', transform: hovered ? 'scale(1.05)' : 'scale(1)' }}
         />
 
-        {/* Discount badge */}
         {discount && (
           <div style={{ position: 'absolute', top: '10px', left: '10px', background: RD, color: W, padding: '4px 10px', borderRadius: '4px', ...F, fontSize: '12px', fontWeight: 700 }}>
             {discount}%
           </div>
         )}
 
-        {/* Heart */}
         <button
           onClick={e => { e.stopPropagation(); toggle({ ...product, category: product.collection?.name }) }}
           style={{ position: 'absolute', top: '10px', right: '10px', width: '36px', height: '36px', borderRadius: '50%', background: W, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 8px rgba(0,0,0,0.15)', fontSize: '17px', color: faved ? RD : '#CCC', transition: 'color 0.2s, transform 0.2s' }}
@@ -72,7 +70,6 @@ function ProductCard({ product, index, discount, onQuickView }) {
           {faved ? '♥' : '♡'}
         </button>
 
-        {/* Quick View + Add to Cart hover buttons */}
         <AnimatePresence>
           {hovered && (
             <motion.div
@@ -80,6 +77,7 @@ function ProductCard({ product, index, discount, onQuickView }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 8 }}
               transition={{ duration: 0.18 }}
+              className="desktop-only"
               style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', gap: '6px' }}>
               <button
                 onClick={() => onQuickView(product)}
@@ -121,6 +119,20 @@ function ProductCard({ product, index, discount, onQuickView }) {
         <div style={{ display: 'inline-block', background: '#FFF9C4', border: '1px solid #F6E05E', padding: '3px 10px', borderRadius: '4px', ...F, fontSize: '11px', fontWeight: 500, color: '#744210' }}>
           In Stock
         </div>
+
+        {/* Mobile-only quick actions */}
+        <div className="mobile-only" style={{ display: 'none', gap: '6px', marginTop: '10px' }}>
+          <button
+            onClick={() => onQuickView(product)}
+            style={{ flex: 1, background: LG, border: `1px solid ${BR}`, padding: '8px 6px', ...F, fontSize: '11px', fontWeight: 600, color: DK, cursor: 'pointer' }}>
+            Quick View
+          </button>
+          <button
+            onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY', badge: product.badge })}
+            style={{ flex: 1, background: DK, border: 'none', padding: '8px 6px', ...F, fontSize: '11px', fontWeight: 600, color: W, cursor: 'pointer' }}>
+            Add to Cart
+          </button>
+        </div>
       </div>
     </motion.div>
   )
@@ -154,7 +166,7 @@ export default function DiscoverProducts() {
   }, [])
 
   return (
-    <section style={{ background: W, padding: '48px 40px 56px' }}>
+    <section className="page-padding" style={{ background: W, padding: '48px 40px 56px' }}>
       <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
 
         <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '28px' }}>
@@ -173,7 +185,7 @@ export default function DiscoverProducts() {
         )}
 
         {loading && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+          <div className="grid-4-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} style={{ border: `1px solid ${BR}` }}>
                 <div style={{ aspectRatio: '3/4', background: LG, animation: 'pulse 1.5s ease-in-out infinite' }} />
@@ -188,7 +200,7 @@ export default function DiscoverProducts() {
         )}
 
         {!loading && !error && products.length > 0 && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+          <div className="grid-4-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
             {products.map((p, i) => (
               <ProductCard key={p.id} product={p} index={i} discount={DISCOUNTS[i] || null} onQuickView={setQuickViewProduct} />
             ))}
