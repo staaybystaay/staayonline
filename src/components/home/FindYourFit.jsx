@@ -1,79 +1,57 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
 
-const W = '#FFFFFF'
+const G  = '#B8903A'
+const W  = '#FFFFFF'
 const DK = '#1A1612'
-const F = { fontFamily: "'Inter', sans-serif" }
+const F  = { fontFamily: "'Inter', sans-serif" }
 
 const categories = [
-  { label: 'Women',           path: '/shop',             image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=300&q=75&fit=crop&crop=top' },
-  { label: 'Eden Collection', path: '/shop?col=eden',    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&q=75&fit=crop' },
-  { label: 'The Love Edit',   path: '/shop?col=love-edit',image: 'https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?w=300&q=75&fit=crop' },
-  { label: 'Bold & Beautiful',path: '/shop?col=bold',    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&q=75&fit=crop' },
-  { label: 'New In',          path: '/shop',             image: 'https://images.unsplash.com/photo-1583846717393-dc2412c95ed7?w=300&q=75&fit=crop' },
-  { label: 'Children',        path: '/shop',             image: 'https://images.unsplash.com/photo-1519457431-44ccd64a579b?w=300&q=75&fit=crop' },
-  { label: 'Accessories',     path: '/shop',             image: 'https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=300&q=75&fit=crop' },
-  { label: 'Featured',        path: '/featured',         image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=300&q=75&fit=crop' },
+  { label: 'Eden Collection',  path: '/shop?col=eden',      image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=300&q=80&fit=crop' },
+  { label: 'The Love Edit',    path: '/shop?col=love-edit', image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=300&q=80&fit=crop' },
+  { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=300&q=80&fit=crop' },
+  { label: 'New In',           path: '/shop',               image: 'https://images.unsplash.com/photo-1551232864-3f0890e580d9?w=300&q=80&fit=crop' },
+  { label: 'Accessories',      path: '/shop',               image: 'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=300&q=80&fit=crop' },
+  { label: 'Featured',         path: '/featured',           image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=300&q=80&fit=crop' },
+  { label: 'All Collections',  path: '/shop',               image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&q=80&fit=crop' },
+  { label: 'Sale',             path: '/shop',               image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&q=80&fit=crop' },
 ]
 
-// Duplicate for seamless infinite loop
 const doubled = [...categories, ...categories]
-
-function Circle({ cat }) {
-  return (
-    <Link
-      to={cat.path}
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', flexShrink: 0, textDecoration: 'none', width: '120px' }}>
-      <div
-        style={{
-          width: '110px', height: '110px', borderRadius: '50%',
-          overflow: 'hidden', position: 'relative',
-          border: '2px solid #E8E4DF',
-          transition: 'border-color 0.25s, transform 0.3s',
-          flexShrink: 0,
-        }}
-        onMouseEnter={e => { e.currentTarget.style.borderColor = '#B8903A'; e.currentTarget.style.transform = 'scale(1.08)' }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = '#E8E4DF'; e.currentTarget.style.transform = 'scale(1)' }}>
-        <img src={cat.image} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.32)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <span style={{ ...F, fontSize: '10px', fontWeight: 700, color: W, letterSpacing: '0.06em', textTransform: 'uppercase', textAlign: 'center', padding: '0 6px', lineHeight: 1.3 }}>
-            {cat.label}
-          </span>
-        </div>
-      </div>
-    </Link>
-  )
-}
 
 export default function FindYourFit() {
   return (
-    <section style={{ background: '#fff', padding: '40px 0 36px', overflow: 'hidden' }}>
-
-      {/* Header */}
-      <div style={{ padding: '0 40px', maxWidth: '1400px', margin: '0 auto 28px' }}>
-        <h2 style={{ ...F, fontSize: '20px', fontWeight: 700, color: DK, letterSpacing: '-0.01em', marginBottom: '6px' }}>
-          FIND YOUR FIT
-        </h2>
-        <div style={{ width: '40px', height: '3px', background: DK }} />
+    <section style={{ background: '#FBFAF8', padding: '40px 0', overflow: 'hidden' }}>
+      <div className="page-padding" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px', marginBottom: '24px' }}>
+        <h2 style={{ ...F, fontSize: '22px', fontWeight: 700, color: DK }}>Find Your Fit</h2>
+        <div style={{ width: '40px', height: '3px', background: G, marginTop: '8px' }} />
       </div>
 
-      {/* Auto-scrolling marquee — like Damsyn */}
-      <div style={{ overflow: 'hidden', position: 'relative' }}>
-        {/* Left fade */}
-        <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '80px', background: 'linear-gradient(to right, #fff, transparent)', zIndex: 2, pointerEvents: 'none' }} />
-        {/* Right fade */}
-        <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '80px', background: 'linear-gradient(to left, #fff, transparent)', zIndex: 2, pointerEvents: 'none' }} />
+      <div style={{ position: 'relative' }}>
+        {/* Fade edges */}
+        <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: '60px', background: 'linear-gradient(90deg, #FBFAF8, transparent)', zIndex: 2, pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: '60px', background: 'linear-gradient(270deg, #FBFAF8, transparent)', zIndex: 2, pointerEvents: 'none' }} />
 
-        <motion.div
-          animate={{ x: ['0%', '-50%'] }}
-          transition={{ duration: 28, ease: 'linear', repeat: Infinity }}
-          style={{ display: 'flex', gap: '28px', paddingLeft: '40px' }}>
+        <div className="marquee-track" style={{ display: 'flex', gap: '24px', animation: 'marquee 36s linear infinite', width: 'max-content', padding: '0 40px' }}>
           {doubled.map((cat, i) => (
-            <Circle key={`${cat.label}-${i}`} cat={cat} />
+            <Link key={i} to={cat.path} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
+              <div className="fit-circle" style={{ width: '108px', height: '108px', borderRadius: '50%', overflow: 'hidden', border: `2px solid ${W}`, boxShadow: '0 4px 16px rgba(0,0,0,0.08)', flexShrink: 0 }}>
+                <img src={cat.image} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              </div>
+              <span style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, textAlign: 'center', whiteSpace: 'nowrap' }}>{cat.label}</span>
+            </Link>
           ))}
-        </motion.div>
+        </div>
       </div>
 
+      <style>{`
+        @keyframes marquee {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+        .marquee-track:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
     </section>
   )
 }
