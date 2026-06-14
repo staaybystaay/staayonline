@@ -15,6 +15,7 @@ import AuthCallback  from './pages/AuthCallback'
 import ResetPassword from './pages/ResetPassword'
 import Account from './pages/Account'
 import Favorites from './pages/Favorites'
+import Sale from './pages/Sale'
 
 
 // import ContactSupport from './pages/ContactSupport'
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/auth/reset-password" element={<ResetPassword />} />
           <Route path="/account" element={<Account />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/sale" element={<Sale />} />
           {/* <Route path="/contact" element={<ContactSupport />} /> */}
         </Routes>
         <Footer />
