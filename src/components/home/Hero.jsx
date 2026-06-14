@@ -9,7 +9,7 @@ const F  = { fontFamily: "'Inter', sans-serif" }
 const slides = [
   {
     id: 1,
-    image: '/staayhero.png',
+    image: '/staaybanner.jpg',
     headline: 'WHERE BEAUTY\nBEGINS TODAY',
     sub: 'Soft, feminine, intentional.',
     cta: 'Shop Eden Collection',
