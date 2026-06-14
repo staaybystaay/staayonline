@@ -146,7 +146,7 @@ export default function Account() {
     <div style={{ background: LG, minHeight: '100vh' }}>
 
       {/* Header */}
-      <div style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '32px 40px' }}>
+      <div className="page-padding" style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '32px 40px' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '16px' }}>
             <Link to="/" style={{ ...F, fontSize: '12px', color: MD, transition: 'color 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = G }} onMouseLeave={e => { e.currentTarget.style.color = MD }}>Home</Link>
@@ -181,7 +181,7 @@ export default function Account() {
       </div>
 
       {/* Body */}
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 40px 96px', display: 'grid', gridTemplateColumns: '220px 1fr', gap: '32px', alignItems: 'start' }}>
+      <div className="layout-sidebar page-padding" style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 40px 96px', display: 'grid', gridTemplateColumns: '220px 1fr', gap: '32px', alignItems: 'start' }}>
 
         {/* Sidebar */}
         <aside style={{ position: 'sticky', top: '32px' }}>
