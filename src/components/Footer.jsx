@@ -1,238 +1,155 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const G  = '#B8903A'
-const W  = '#FFFFFF'
-const F  = { fontFamily: "'Inter', sans-serif" }
-const T1 = 'rgba(255,255,255,0.85)'
-const T2 = 'rgba(255,255,255,0.45)'
-const T3 = 'rgba(255,255,255,0.15)'
-const BG = '#0F0E0C'
+const G   = '#B8903A'
+const W   = '#FFFFFF'
+const DK  = '#0F0E0C'
+const MD  = '#A8A29B'
+const BR  = 'rgba(255,255,255,0.1)'
+const F   = { fontFamily: "'Inter', sans-serif" }
+
+const InstagramIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <rect x="1" y="1" width="16" height="16" rx="4" stroke="currentColor" strokeWidth="1.3"/>
+    <circle cx="9" cy="9" r="3.5" stroke="currentColor" strokeWidth="1.3"/>
+    <circle cx="13.2" cy="4.8" r="0.8" fill="currentColor"/>
+  </svg>
+)
+const TikTokIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <path d="M10 1.5v9.8a2.4 2.4 0 1 1-2.4-2.4c.3 0 .5 0 .8.1V6.6a4.8 4.8 0 1 0 4.1 4.7V5.2a4.6 4.6 0 0 0 3 1.1V3.9a3.1 3.1 0 0 1-2.1-1.1A3.1 3.1 0 0 1 12.6 1H10z" fill="currentColor"/>
+  </svg>
+)
+const WhatsAppIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <path d="M9 1a8 8 0 0 0-6.9 12L1 17l4.1-1.1A8 8 0 1 0 9 1z" stroke="currentColor" strokeWidth="1.3"/>
+    <path d="M6 6.2c.1-.5.6-.5.9-.5s.5.1.6.4c.2.4.5 1.1.5 1.3 0 .2-.1.3-.2.5l-.3.3c-.1.1-.2.2-.1.4.3.6 1.4 1.7 2 2 .2.1.3 0 .4-.1l.3-.3c.2-.2.3-.2.5-.1.3.1.9.4 1.3.6.3.1.4.3.4.6 0 .3 0 .8-.5.9-1.7.6-3.7-.5-4.7-1.5S5.4 7.9 6 6.2z" fill="currentColor"/>
+  </svg>
+)
 
 const shopLinks = [
-  { label: 'New Arrivals',     path: '/shop'    },
-  { label: 'Eden Collection',  path: '/shop'    },
-  { label: 'The Love Edit',    path: '/shop'    },
-  { label: 'Bold & Beautiful', path: '/shop'    },
-  { label: 'Sale',             path: '/shop'    },
+  { label: 'New Arrivals',    path: '/shop'              },
+  { label: 'Eden Collection', path: '/shop?col=eden'     },
+  { label: 'The Love Edit',   path: '/shop?col=love-edit'},
+  { label: 'Bold & Beautiful',path: '/shop?col=bold'     },
+  { label: 'Sale',            path: '/shop'              },
 ]
 const companyLinks = [
-  { label: 'Our Brand',  path: '/brand'    },
-  { label: 'Featured',   path: '/featured' },
-  { label: 'FAQ',        path: '/'         },
-  { label: 'Size Guide', path: '/'         },
+  { label: 'Our Brand', path: '/brand'    },
+  { label: 'Featured',  path: '/featured' },
 ]
 const supportLinks = [
-  { label: 'Track My Order',      path: '/' },
-  { label: 'Returns & Exchanges', path: '/' },
-  { label: 'Contact Support',     path: '/' },
+  { label: 'Track My Order',          path: '/account' },
+  { label: 'Returns & Exchanges',     path: '/terms'    },
+  { label: 'FAQ',                     path: '/terms'    },
+  { label: 'Contact Support',         path: '/terms'    },
+  { label: 'Size Guide',              path: '/shop'     },
 ]
 const legalLinks = [
   { label: 'Terms of Service', path: '/terms'   },
   { label: 'Privacy Policy',   path: '/privacy' },
   { label: 'Shipping Info',    path: '/terms'   },
-  { label: 'Cookie Policy',    path: '/'        },
+  { label: 'Cookie Policy',    path: '/privacy' },
 ]
 
-const socialLinks = [
-  {
-    label: 'Instagram',
-    href: 'https://instagram.com/staaybystaay',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" />
-        <circle cx="12" cy="12" r="4" />
-        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-      </svg>
-    ),
-  },
-  {
-    label: 'TikTok',
-    href: 'https://tiktok.com/@staaybystaay',
-    icon: (
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z" />
-      </svg>
-    ),
-  },
-  {
-    label: 'WhatsApp',
-    href: 'https://wa.me/233503977985',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
-      </svg>
-    ),
-  },
-]
-
-function FooterLink({ to, children }) {
-  const [hovered, setHovered] = useState(false)
+function FooterColumn({ title, links }) {
   return (
-    <li>
-      <Link
-        to={to}
-        style={{ ...F, fontSize: '13px', fontWeight: 300, color: hovered ? T1 : T2, transition: 'color 0.2s' }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}>
-        {children}
-      </Link>
-    </li>
-  )
-}
-
-function Newsletter() {
-  const [email, setEmail]     = useState('')
-  const [done, setDone]       = useState(false)
-  const [focused, setFocused] = useState(false)
-
-  function submit() {
-    if (!email.includes('@')) return
-    setDone(true)
-    setEmail('')
-  }
-
-  if (done) return (
-    <div style={{ padding: '12px 16px', border: `1px solid ${G}`, background: 'rgba(184,144,58,0.08)', ...F, fontSize: '13px', fontWeight: 500, color: G }}>
-      You're in. Welcome to STAAY. ✓
-    </div>
-  )
-
-  return (
-    <div style={{ display: 'flex' }}>
-      <input
-        type="email"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        onKeyDown={e => { if (e.key === 'Enter') submit() }}
-        placeholder="your@email.com"
-        style={{
-          flex: 1, background: 'rgba(255,255,255,0.05)',
-          border: `1px solid ${focused ? G : T3}`, borderRight: 'none',
-          padding: '12px 14px', ...F, fontSize: '13px', color: T1,
-          outline: 'none', transition: 'border-color 0.2s',
-        }}
-      />
-      <button
-        onClick={submit}
-        style={{
-          padding: '12px 20px', background: G, color: W, border: 'none',
-          cursor: 'pointer', ...F, fontSize: '11px', fontWeight: 700,
-          letterSpacing: '0.06em', textTransform: 'uppercase',
-          transition: 'opacity 0.2s', whiteSpace: 'nowrap',
-        }}
-        onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
-        onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}>
-        Subscribe
-      </button>
+    <div>
+      <h4 style={{ ...F, fontSize: '13px', fontWeight: 700, color: W, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '16px' }}>{title}</h4>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {links.map(link => (
+          <Link key={link.label} to={link.path}
+            style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD, textDecoration: 'none', transition: 'color 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.color = G }}
+            onMouseLeave={e => { e.currentTarget.style.color = MD }}>
+            {link.label}
+          </Link>
+        ))}
+      </div>
     </div>
   )
 }
 
 export default function Footer() {
-  const year = new Date().getFullYear()
-
   return (
-    <footer style={{ background: BG, borderTop: `1px solid ${T3}` }}>
+    <footer style={{ background: DK }}>
+      {/* Gold top stripe */}
+      <div style={{ height: '3px', background: `linear-gradient(90deg, ${G}, #E5C77E, ${G})` }} />
 
-      <div style={{ height: '3px', background: G }} />
+      <div className="page-padding" style={{ maxWidth: '1400px', margin: '0 auto', padding: '56px 40px 32px' }}>
 
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '72px 64px 48px' }}>
+        {/* Main grid */}
+        <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 1fr', gap: '32px', marginBottom: '40px' }}>
 
-        {/* ── MAIN GRID ── */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr 1fr 1fr', gap: '48px', marginBottom: '64px' }}>
-
-          {/* Brand */}
+          {/* Brand column */}
           <div>
-            <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
               <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
               <div>
-                <div style={{ ...F, fontSize: '17px', fontWeight: 800, color: W, letterSpacing: '-0.01em', lineHeight: 1 }}>STAAY</div>
-                <div style={{ ...F, fontSize: '8px', fontWeight: 600, color: G, letterSpacing: '0.22em', textTransform: 'uppercase', marginTop: '2px' }}>ONLINE</div>
+                <p style={{ ...F, fontSize: '16px', fontWeight: 800, color: W, letterSpacing: '-0.01em', lineHeight: 1 }}>STAAY</p>
+                <p style={{ ...F, fontSize: '8px', fontWeight: 600, color: G, letterSpacing: '0.22em', textTransform: 'uppercase' }}>ONLINE</p>
               </div>
-            </Link>
-
-            <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: T2, lineHeight: 1.75, marginBottom: '24px', maxWidth: '220px' }}>
+            </div>
+            <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD, lineHeight: 1.7, marginBottom: '18px', maxWidth: '240px' }}>
               Designed for women who live beyond limits. Effortless. Intentional. Always in season.
             </p>
-
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '24px' }}>
-              {socialLinks.map(s => (
-                <a key={s.label} href={s.href} target="_blank" rel="noreferrer" aria-label={s.label}
-                  style={{ width: '36px', height: '36px', border: `1px solid ${T3}`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: T2, transition: 'all 0.2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = G; e.currentTarget.style.color = G }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = T3; e.currentTarget.style.color = T2 }}>
-                  {s.icon}
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+              {[
+                { Icon: InstagramIcon, href: 'https://instagram.com/staaybystaay' },
+                { Icon: TikTokIcon,    href: 'https://tiktok.com/@staaybystaay'   },
+                { Icon: WhatsAppIcon,  href: 'https://wa.me/233503977985'         },
+              ].map(({ Icon, href }, i) => (
+                <a key={i} href={href} target="_blank" rel="noreferrer"
+                  style={{ width: '34px', height: '34px', border: `1px solid ${BR}`, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'all 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderColor = G }}
+                  onMouseLeave={e => { e.currentTarget.style.color = MD; e.currentTarget.style.borderColor = BR }}>
+                  <Icon />
                 </a>
               ))}
             </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', paddingTop: '20px', borderTop: `1px solid ${T3}` }}>
-              <a href="mailto:info@staayonline.com" style={{ ...F, fontSize: '12px', fontWeight: 300, color: T2, transition: 'color 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = G }} onMouseLeave={e => { e.currentTarget.style.color = T2 }}>
-                info@staayonline.com
-              </a>
-              <a href="https://wa.me/233503977985" target="_blank" rel="noreferrer" style={{ ...F, fontSize: '12px', fontWeight: 300, color: T2, transition: 'color 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = G }} onMouseLeave={e => { e.currentTarget.style.color = T2 }}>
-                +233 50 397 7985
-              </a>
-              <span style={{ ...F, fontSize: '11px', fontWeight: 300, color: 'rgba(255,255,255,0.2)' }}>@staaybystaay</span>
+            <div style={{ borderTop: `1px solid ${BR}`, paddingTop: '14px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <a href="mailto:info@staayonline.com" style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD, textDecoration: 'none' }}>info@staayonline.com</a>
+              <a href="tel:+233503977985" style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD, textDecoration: 'none' }}>+233 50 397 7985</a>
+              <a href="https://instagram.com/staaybystaay" target="_blank" rel="noreferrer" style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD, textDecoration: 'none' }}>@staaybystaay</a>
             </div>
           </div>
 
-          {/* Link columns */}
-          {[
-            { heading: 'Shop',    links: shopLinks    },
-            { heading: 'Company', links: companyLinks },
-            { heading: 'Support', links: supportLinks },
-            { heading: 'Legal',   links: legalLinks   },
-          ].map(col => (
-            <div key={col.heading}>
-              <h4 style={{ ...F, fontSize: '12px', fontWeight: 700, color: T1, letterSpacing: '0.04em', marginBottom: '20px' }}>
-                {col.heading}
-              </h4>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {col.links.map(link => (
-                  <FooterLink key={link.label} to={link.path}>{link.label}</FooterLink>
-                ))}
-              </ul>
+          <FooterColumn title="Shop"    links={shopLinks}    />
+          <FooterColumn title="Company" links={companyLinks} />
+          <FooterColumn title="Support" links={supportLinks} />
+          <FooterColumn title="Legal"   links={legalLinks}   />
+        </div>
+
+        {/* Newsletter */}
+        <div style={{ borderTop: `1px solid ${BR}`, paddingTop: '32px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <div className="newsletter-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
+            <div style={{ maxWidth: '420px' }}>
+              <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '6px' }}>Stay in the Loop</p>
+              <h3 style={{ ...F, fontSize: 'clamp(18px, 2.5vw, 24px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', marginBottom: '4px' }}>The Staay Woman Starts Here</h3>
+              <p style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD }}>Early access to new pieces and everything we're creating for you.</p>
             </div>
-          ))}
+            <form style={{ display: 'flex', gap: '0', width: '100%', maxWidth: '380px', flexShrink: 0 }} onSubmit={e => e.preventDefault()}>
+              <input type="email" placeholder="your@email.com"
+                style={{ flex: 1, padding: '13px 16px', background: 'rgba(255,255,255,0.06)', border: `1px solid ${BR}`, borderRight: 'none', color: W, outline: 'none', ...F, fontSize: '13px' }} />
+              <button type="submit"
+                style={{ padding: '13px 24px', background: G, color: '#1A1612', border: 'none', cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', whiteSpace: 'nowrap', transition: 'background 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#D4AF5A' }}
+                onMouseLeave={e => { e.currentTarget.style.background = G }}>
+                Subscribe
+              </button>
+            </form>
+          </div>
+          <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: '#6B6660' }}>No spam. Unsubscribe anytime.</p>
         </div>
 
-        {/* ── NEWSLETTER ── */}
-        <div style={{ borderTop: `1px solid ${T3}`, paddingTop: '48px', marginBottom: '48px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px', alignItems: 'center' }}>
-          <div>
-            <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Stay in the loop</p>
-            <h3 style={{ ...F, fontSize: 'clamp(18px, 2vw, 26px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', marginBottom: '6px' }}>
-              The Staay Woman Starts Here
-            </h3>
-            <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: T2 }}>
-              Early access to new pieces and everything we're creating for you.
-            </p>
-          </div>
-          <div>
-            <Newsletter />
-            <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: 'rgba(255,255,255,0.2)', marginTop: '8px' }}>No spam. Unsubscribe anytime.</p>
-          </div>
+        {/* Bottom bar */}
+        <div style={{ borderTop: `1px solid ${BR}`, marginTop: '28px', paddingTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
+          <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: '#6B6660' }}>
+            © {new Date().getFullYear()} STAAY Online. All rights reserved.
+          </p>
+          <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: '#6B6660' }}>
+            Made in Accra, Ghana 🇬🇭
+          </p>
         </div>
-
-        {/* ── BOTTOM BAR ── */}
-        <div style={{ borderTop: `1px solid ${T3}`, paddingTop: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span style={{ ...F, fontSize: '12px', fontWeight: 300, color: T2 }}>© {year} STAAY Online. All rights reserved.</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: G }} />
-            <span style={{ ...F, fontSize: '11px', fontWeight: 400, color: T2 }}>Made in Accra</span>
-          </div>
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            style={{ background: 'transparent', border: `1px solid ${T3}`, color: T2, padding: '8px 16px', cursor: 'pointer', ...F, fontSize: '11px', fontWeight: 500, letterSpacing: '0.04em', transition: 'all 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = G; e.currentTarget.style.color = G }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = T3; e.currentTarget.style.color = T2 }}>
-            Back to top ↑
-          </button>
-        </div>
-
       </div>
     </footer>
   )
