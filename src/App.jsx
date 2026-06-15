@@ -44,7 +44,6 @@ export default function App() {
           <Route path="/account" element={<Account />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/sale" element={<Sale />} />
-          {/* <Route path="/contact" element={<ContactSupport />} /> */}
           <Route path="/admin"        element={<AdminDashboard />} />
           <Route path="/admin/orders" element={<AdminOrders />} />
         </Routes>
