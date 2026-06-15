@@ -16,6 +16,9 @@ import ResetPassword from './pages/ResetPassword'
 import Account from './pages/Account'
 import Favorites from './pages/Favorites'
 import Sale from './pages/Sale'
+import AdminDashboard from './pages/AdminDashboard'
+import AdminOrders    from './pages/AdminOrders'
+
 
 
 // import ContactSupport from './pages/ContactSupport'
@@ -42,6 +45,8 @@ export default function App() {
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/sale" element={<Sale />} />
           {/* <Route path="/contact" element={<ContactSupport />} /> */}
+          <Route path="/admin"        element={<AdminDashboard />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
         </Routes>
         <Footer />
       </BrowserRouter>
