@@ -177,3 +177,10 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+@media (max-width: 860px) {
+  .cart-summary {
+    position: relative !important;
+    top: auto !important;
+  }
+}
