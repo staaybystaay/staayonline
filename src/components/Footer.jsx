@@ -27,7 +27,7 @@ const WhatsAppIcon = () => (
 )
 
 const shopLinks = [
-  { label: 'New Arrivals',    path: '/shop'              },
+
   { label: 'Eden Collection', path: '/shop?col=eden'     },
   { label: 'The Love Edit',   path: '/shop?col=love-edit'},
   { label: 'Bold & Beautiful',path: '/shop?col=bold'     },
@@ -106,11 +106,7 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-            <div style={{ borderTop: `1px solid ${BR}`, paddingTop: '14px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <a href="mailto:info@staayonline.com" style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD, textDecoration: 'none' }}>info@staayonline.com</a>
-              <a href="tel:+233503977985" style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD, textDecoration: 'none' }}>+233 50 397 7985</a>
-              <a href="https://instagram.com/staaybystaay" target="_blank" rel="noreferrer" style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD, textDecoration: 'none' }}>@staaybystaay</a>
-            </div>
+            
           </div>
 
           <FooterColumn title="Shop"    links={shopLinks}    />
