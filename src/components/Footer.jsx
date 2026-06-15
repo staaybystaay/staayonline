@@ -31,7 +31,7 @@ const shopLinks = [
   { label: 'Eden Collection', path: '/shop?col=eden'     },
   { label: 'The Love Edit',   path: '/shop?col=love-edit'},
   { label: 'Bold & Beautiful',path: '/shop?col=bold'     },
-  { label: 'Sale',            path: '/shop'              },
+  { label: 'Sales Promotion',            path: '/sale'              },
 ]
 const companyLinks = [
   { label: 'Our Brand', path: '/brand'    },
