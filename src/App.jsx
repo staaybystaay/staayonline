@@ -18,6 +18,7 @@ import Favorites from './pages/Favorites'
 import Sale from './pages/Sale'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminOrders    from './pages/AdminOrders'
+import ScrollToTop from './components/ScrollToTop'
 
 
 
@@ -28,6 +29,7 @@ export default function App() {
   return (
     <ThemeProvider>
       <BrowserRouter>
+          <ScrollToTop />
         <Navbar />
         <Routes>
           <Route path="/"            element={<Home />}     />
