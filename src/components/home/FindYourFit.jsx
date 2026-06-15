@@ -6,13 +6,12 @@ const DK = '#1A1612'
 const F  = { fontFamily: "'Inter', sans-serif" }
 
 const categories = [
-  { label: 'Eden Collection',  path: '/shop?col=eden',      image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=300&q=80&fit=crop' },
-  { label: 'The Love Edit',    path: '/shop?col=love-edit', image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=300&q=80&fit=crop' },
-  { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=300&q=80&fit=crop' },
-  { label: 'New In',           path: '/shop',               image: 'https://images.unsplash.com/photo-1551232864-3f0890e580d9?w=300&q=80&fit=crop' },
-  { label: 'Featured',         path: '/featured',           image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=300&q=80&fit=crop' },
-  { label: 'All Collections',  path: '/shop',               image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&q=80&fit=crop' },
-  { label: 'Sales Promotion',             path: '/sale',               image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&q=80&fit=crop' },
+  { label: 'Eden Collection',  path: '/shop?col=eden',      image: './collection1.jpg' },
+  { label: 'The Love Edit',    path: '/shop?col=love-edit', image: './loveEdit.jpg' },
+  { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: './bold.jpg' },
+  { label: 'Featured',         path: '/featured',           image: './featured.jpg' },
+  { label: 'All Collections',  path: '/shop',               image: './collection.jpg' },
+  { label: 'Sales Promotion',             path: '/sale',               image: './sale.jpg' },
 ]
 
 const doubled = [...categories, ...categories]
