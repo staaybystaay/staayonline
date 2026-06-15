@@ -168,3 +168,12 @@
     height: 76px !important;
   }
 }
+
+/* ============================================
+   Admin — order detail grid stacks on mobile
+   ============================================ */
+@media (max-width: 768px) {
+  .admin-order-detail {
+    grid-template-columns: 1fr !important;
+  }
+}
