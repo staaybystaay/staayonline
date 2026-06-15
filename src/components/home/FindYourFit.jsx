@@ -10,10 +10,9 @@ const categories = [
   { label: 'The Love Edit',    path: '/shop?col=love-edit', image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=300&q=80&fit=crop' },
   { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=300&q=80&fit=crop' },
   { label: 'New In',           path: '/shop',               image: 'https://images.unsplash.com/photo-1551232864-3f0890e580d9?w=300&q=80&fit=crop' },
-  { label: 'Accessories',      path: '/shop',               image: 'https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?w=300&q=80&fit=crop' },
   { label: 'Featured',         path: '/featured',           image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=300&q=80&fit=crop' },
   { label: 'All Collections',  path: '/shop',               image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&q=80&fit=crop' },
-  { label: 'Sale',             path: '/shop',               image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&q=80&fit=crop' },
+  { label: 'Sales Promotion',             path: '/sale',               image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=300&q=80&fit=crop' },
 ]
 
 const doubled = [...categories, ...categories]
