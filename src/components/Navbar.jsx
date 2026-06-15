@@ -61,8 +61,7 @@ const secondaryLinks = [
   { label: 'Eden Collection', path: '/shop?col=eden',      slug: 'eden' },
   { label: 'The Love Edit',   path: '/shop?col=love-edit', slug: 'love' },
   { label: 'Bold & Beautiful',path: '/shop?col=bold',      slug: 'bold' },
-  { label: 'New In',          path: '/shop',               slug: 'new'  },
-  { label: 'Sale',            path: '/sale',               slug: 'sale' },
+  { label: 'Sales Promotion',            path: '/sale',               slug: 'sale' },
 ]
 
 function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch }) {
