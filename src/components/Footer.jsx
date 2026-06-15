@@ -27,11 +27,10 @@ const WhatsAppIcon = () => (
 )
 
 const shopLinks = [
-
   { label: 'Eden Collection', path: '/shop?col=eden'     },
   { label: 'The Love Edit',   path: '/shop?col=love-edit'},
   { label: 'Bold & Beautiful',path: '/shop?col=bold'     },
-  { label: 'Sales Promotion',            path: '/sale'              },
+  { label: 'Sales Promotion', path: '/sale'              },
 ]
 const companyLinks = [
   { label: 'Our Brand', path: '/brand'    },
@@ -72,8 +71,6 @@ function FooterColumn({ title, links }) {
 export default function Footer() {
   return (
     <footer style={{ background: DK }}>
-      {/* Gold top stripe */}
-      <div style={{ height: '3px', background: `linear-gradient(90deg, ${G}, #E5C77E, ${G})` }} />
 
       <div className="page-padding" style={{ maxWidth: '1400px', margin: '0 auto', padding: '56px 40px 32px' }}>
 
@@ -106,7 +103,7 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-            
+
           </div>
 
           <FooterColumn title="Shop"    links={shopLinks}    />
