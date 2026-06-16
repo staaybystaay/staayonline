@@ -246,3 +246,17 @@
     width: 56px !important;
   }
 }
+
+/* ============================================
+   Contact page — stacks on mobile
+   ============================================ */
+@media (max-width: 860px) {
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (max-width: 480px) {
+  .contact-support-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
