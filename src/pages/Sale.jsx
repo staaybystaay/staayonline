@@ -6,22 +6,27 @@ import useFavoritesStore from '../store/useFavoritesStore'
 import { getSaleProducts } from '../lib/api'
 import QuickView from '../components/QuickView'
 
-const G   = '#B8903A'
-const W   = '#FFFFFF'
-const BK  = '#111111'
-const DK  = '#1A1612'
-const MD  = '#666'
-const FT  = '#999'
-const LG  = '#F7F6F4'
-const BR  = '#E8E4DF'
-const RD  = '#E11D48'
-const F   = { fontFamily: "'Inter', sans-serif" }
+const INK   = '#15130F'
+const G     = '#B8903A'
+const GL    = '#F5ECD8'
+const ACC   = '#E2542D'
+const W     = '#FFFFFF'
+const DK    = '#1A1612'
+const MD    = '#666'
+const FT    = '#999'
+const LG    = '#F7F6F4'
+const BR    = '#E8E4DF'
+const RD    = '#E11D48'
+const GR    = '#25D366'
+const F     = { fontFamily: "'Inter', sans-serif" }
 
 const SORT_OPTIONS = [
-  { label: 'Biggest Discount', value: 'discount' },
-  { label: 'Price: Low',       value: 'price_asc' },
+  { label: 'Biggest Discount', value: 'discount'   },
+  { label: 'Price: Low',       value: 'price_asc'  },
   { label: 'Price: High',      value: 'price_desc' },
 ]
+
+const GIFT_AMOUNTS = [300, 600, 1000, 1500]
 
 function Stars() {
   return (
@@ -35,6 +40,7 @@ function Stars() {
   )
 }
 
+// ─── Sale product card ────────────────────────
 function SaleCard({ product, onQuickView }) {
   const [hovered, setHovered] = useState(false)
   const addItem     = useCartStore(s => s.addItem)
@@ -42,8 +48,8 @@ function SaleCard({ product, onQuickView }) {
   const isFavorited = useFavoritesStore(s => s.isFavorited)
   const faved       = isFavorited(product.id)
 
-  const discount    = product.discount_percent
-  const origPrice   = Math.round(product.price / (1 - discount / 100))
+  const discount  = product.discount_percent
+  const origPrice = Math.round(product.price / (1 - discount / 100))
 
   return (
     <motion.div
@@ -95,7 +101,6 @@ function SaleCard({ product, onQuickView }) {
           <span style={{ ...F, fontSize: '13px', color: FT, textDecoration: 'line-through' }}>GH₵{origPrice.toLocaleString()}</span>
         </div>
 
-        {/* Mobile quick actions */}
         <div className="mobile-only" style={{ display: 'none', gap: '6px', marginTop: '10px' }}>
           <button onClick={() => onQuickView(product)}
             style={{ flex: 1, background: LG, border: `1px solid ${BR}`, padding: '8px 6px', ...F, fontSize: '11px', fontWeight: 600, color: DK, cursor: 'pointer' }}>
@@ -111,6 +116,190 @@ function SaleCard({ product, onQuickView }) {
   )
 }
 
+// ─── Hero ──────────────────────────────────────
+function PromoHero({ maxDiscount }) {
+  return (
+    <section style={{ background: INK, position: 'relative', overflow: 'hidden', padding: 'clamp(64px, 10vw, 110px) 24px clamp(56px, 8vw, 90px)' }}>
+
+      {/* Ambient texture */}
+      <div style={{ position: 'absolute', inset: 0, backgroundImage: `radial-gradient(circle, rgba(184,144,58,0.18) 1px, transparent 1px)`, backgroundSize: '26px 26px', opacity: 0.5 }} />
+      <div style={{ position: 'absolute', top: '-20%', left: '50%', transform: 'translateX(-50%)', width: '700px', height: '700px', background: `radial-gradient(circle, rgba(226,84,45,0.18), transparent 70%)`, pointerEvents: 'none' }} />
+
+      <div style={{ position: 'relative', maxWidth: '720px', margin: '0 auto', textAlign: 'center' }}>
+
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '24px' }}>
+          <img src="/stayonlinelogo.jpeg" alt="" style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover' }} />
+          <span style={{ ...F, fontSize: '13px', fontWeight: 700, color: W, letterSpacing: '0.04em' }}>STAAY <span style={{ color: G }}>ONLINE</span></span>
+        </div>
+
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <p style={{ ...F, fontSize: '12px', fontWeight: 700, color: G, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: '14px' }}>
+            Seasonal Promotions
+          </p>
+
+          {maxDiscount > 0 ? (
+            <h1 style={{ ...F, fontSize: 'clamp(56px, 11vw, 110px)', fontWeight: 900, color: ACC, letterSpacing: '-0.03em', lineHeight: 0.95, marginBottom: '18px' }}>
+              UP TO {maxDiscount}%<br />OFF
+            </h1>
+          ) : (
+            <h1 style={{ ...F, fontSize: 'clamp(36px, 6vw, 60px)', fontWeight: 900, color: W, letterSpacing: '-0.02em', lineHeight: 1.05, marginBottom: '18px' }}>
+              STAAY<br /><span style={{ color: G }}>Promotions</span>
+            </h1>
+          )}
+
+          <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: 'rgba(255,255,255,0.6)', lineHeight: 1.8, maxWidth: '420px', margin: '0 auto 32px' }}>
+            Discounted pieces, gift cards, and everything new — all in one place. Treat yourself, or someone who deserves it.
+          </p>
+
+          <a href="#shop-sale" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: G, color: INK, padding: '15px 40px', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.background = '#CBA34F' }}
+            onMouseLeave={e => { e.currentTarget.style.background = G }}>
+            Shop the Sale
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Feature block: Shop the Sale teaser ──────
+function ShopTeaser({ image }) {
+  return (
+    <section style={{ background: W, padding: 'clamp(48px, 7vw, 80px) 24px', borderBottom: `1px solid ${BR}` }}>
+      <div className="promo-feature-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(28px, 5vw, 64px)', alignItems: 'center' }}>
+        <motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
+          style={{ aspectRatio: '4/5', background: LG, overflow: 'hidden' }}>
+          {image && <img src={image} alt="" onError={e => { e.target.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
+        </motion.div>
+        <motion.div initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+          <p style={{ ...F, fontSize: '11px', fontWeight: 700, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '12px' }}>
+            Limited Time
+          </p>
+          <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 800, color: DK, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '16px' }}>
+            Discover your next favourite piece
+          </h2>
+          <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, lineHeight: 1.8, marginBottom: '28px', maxWidth: '400px' }}>
+            A rotating edit of marked-down pieces from across our collections. Once they're gone, they're gone.
+          </p>
+          <a href="#shop-sale" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: DK, color: W, padding: '13px 32px', ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.background = G }}
+            onMouseLeave={e => { e.currentTarget.style.background = DK }}>
+            Browse the Sale
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Feature block: Gift Cards (functional) ───
+function GiftCardSection() {
+  const [selected, setSelected] = useState(GIFT_AMOUNTS[1])
+  const [custom,   setCustom]   = useState('')
+  const [added,    setAdded]    = useState(false)
+  const addItem = useCartStore(s => s.addItem)
+
+  const amount = custom ? Number(custom) : selected
+
+  function handleAdd() {
+    if (!amount || amount <= 0) return
+    addItem({
+      id:       `giftcard-${amount}-${Date.now()}`,
+      name:     `STAAY Gift Card — GH₵${amount.toLocaleString()}`,
+      price:    amount,
+      image:    '/stayonlinelogo.jpeg',
+      category: 'Gift Card',
+      qty: 1,
+    })
+    setAdded(true)
+    setTimeout(() => setAdded(false), 2200)
+  }
+
+  return (
+    <section style={{ background: GL, padding: 'clamp(48px, 7vw, 80px) 24px', borderBottom: `1px solid ${BR}` }}>
+      <div className="promo-feature-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(28px, 5vw, 64px)', alignItems: 'center' }}>
+
+        <motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+          <p style={{ ...F, fontSize: '11px', fontWeight: 700, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '12px' }}>
+            Now Available
+          </p>
+          <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 800, color: DK, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '16px' }}>
+            STAAY Gift Cards
+          </h2>
+          <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, lineHeight: 1.8, marginBottom: '24px', maxWidth: '400px' }}>
+            A refined way to gift choice. Pick an amount, add it to the bag, and let them choose their own look.
+          </p>
+
+          <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '10px' }}>Choose an amount</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
+            {GIFT_AMOUNTS.map(amt => (
+              <button key={amt} onClick={() => { setSelected(amt); setCustom('') }}
+                style={{ padding: '10px 18px', border: `1.5px solid ${!custom && selected === amt ? G : BR}`, background: !custom && selected === amt ? W : 'transparent', ...F, fontSize: '13px', fontWeight: !custom && selected === amt ? 700 : 400, color: !custom && selected === amt ? G : DK, cursor: 'pointer', transition: 'all 0.15s' }}>
+                GH₵{amt.toLocaleString()}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '22px' }}>
+            <span style={{ ...F, fontSize: '12px', color: MD }}>or enter a custom amount:</span>
+            <input
+              type="number" min="1" value={custom}
+              onChange={e => setCustom(e.target.value)}
+              placeholder="GH₵"
+              style={{ width: '110px', padding: '8px 12px', border: `1px solid ${BR}`, ...F, fontSize: '13px', color: DK, outline: 'none' }}
+            />
+          </div>
+
+          <button onClick={handleAdd}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: added ? '#16A34A' : G, color: W, padding: '14px 36px', border: 'none', cursor: 'pointer', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', transition: 'background 0.2s' }}>
+            {added ? '✓ Added to Bag' : `Add Gift Card · GH₵${(amount || 0).toLocaleString()}`}
+          </button>
+        </motion.div>
+
+        {/* Visual gift card mockup */}
+        <motion.div initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
+          style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ width: '100%', maxWidth: '380px', aspectRatio: '1.6/1', background: `linear-gradient(135deg, ${DK}, #2B2419)`, borderRadius: '16px', padding: '28px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 20px 50px rgba(0,0,0,0.18)', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '160px', height: '160px', borderRadius: '50%', background: 'rgba(184,144,58,0.18)' }} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
+              <img src="/stayonlinelogo.jpeg" alt="" style={{ width: '26px', height: '26px', borderRadius: '50%', objectFit: 'cover' }} />
+              <span style={{ ...F, fontSize: '13px', fontWeight: 700, color: W }}>STAAY <span style={{ color: G }}>ONLINE</span></span>
+            </div>
+            <div style={{ position: 'relative' }}>
+              <p style={{ ...F, fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '6px' }}>Gift Card Value</p>
+              <p style={{ ...F, fontSize: 'clamp(28px, 4vw, 38px)', fontWeight: 800, color: W }}>GH₵{(amount || 0).toLocaleString()}</p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ─── Closing help banner ──────────────────────
+function HelpBanner() {
+  return (
+    <section style={{ background: DK, padding: 'clamp(40px, 6vw, 64px) 24px' }}>
+      <div style={{ maxWidth: '760px', margin: '0 auto', textAlign: 'center' }}>
+        <p style={{ ...F, fontSize: '11px', fontWeight: 700, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '12px' }}>
+          Need Help Choosing?
+        </p>
+        <h2 style={{ ...F, fontSize: 'clamp(20px, 2.6vw, 28px)', fontWeight: 700, color: W, letterSpacing: '-0.01em', marginBottom: '20px' }}>
+          Chat with us on WhatsApp
+        </h2>
+        <Link to="/contact" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: GR, color: W, padding: '13px 32px', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.04em', textDecoration: 'none', transition: 'background 0.2s' }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#1FAE56' }}
+          onMouseLeave={e => { e.currentTarget.style.background = GR }}>
+          Get in Touch
+        </Link>
+      </div>
+    </section>
+  )
+}
+
+// ═══════════════════════════════════════════════
+// PAGE
+// ═══════════════════════════════════════════════
 export default function Sale() {
   const [products, setProducts] = useState([])
   const [loading,  setLoading]  = useState(true)
@@ -134,104 +323,107 @@ export default function Sale() {
     })
   }, [products, sortBy])
 
+  const maxDiscount = useMemo(() => {
+    if (!products.length) return 0
+    return Math.max(...products.map(p => p.discount_percent || 0))
+  }, [products])
+
+  const teaserImage = sorted[0]?.image_url
+
   return (
     <div style={{ background: W, minHeight: '100vh' }}>
 
-      {/* ── HEADER ── */}
-      <div className="page-padding" style={{ background: '#FFF1F2', borderBottom: `1px solid ${BR}`, padding: '28px 40px' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '12px' }}>
-            <Link to="/" style={{ ...F, fontSize: '12px', color: MD, transition: 'color 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = RD }} onMouseLeave={e => { e.currentTarget.style.color = MD }}>Home</Link>
-            <span style={{ color: FT }}>/</span>
-            <span style={{ ...F, fontSize: '12px', fontWeight: 500, color: DK }}>Sale</span>
-          </div>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
-            <div>
-              <p style={{ ...F, fontSize: '11px', fontWeight: 700, color: RD, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '6px' }}>
-                Limited Time
-              </p>
-              <h1 style={{ ...F, fontSize: 'clamp(28px, 4.5vw, 48px)', fontWeight: 900, color: DK, letterSpacing: '-0.025em', lineHeight: 1.05 }}>
-                Sale
-              </h1>
-              <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD, marginTop: '6px' }}>
-                Pieces you love, for less — while stocks last.
-              </p>
-            </div>
-            {!loading && <p style={{ ...F, fontSize: '13px', color: MD }}>{sorted.length} {sorted.length === 1 ? 'item' : 'items'} on sale</p>}
-          </div>
-        </div>
-      </div>
+      <PromoHero maxDiscount={maxDiscount} />
+      <ShopTeaser image={teaserImage} />
+      <GiftCardSection />
+      <HelpBanner />
 
-      {/* ── TOOLBAR ── */}
-      {sorted.length > 0 && (
-        <div className="page-padding" style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '0 40px' }}>
-          <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'flex-end', height: '52px', alignItems: 'center' }}>
-            <div style={{ position: 'relative' }}>
-              <button onClick={() => setSortOpen(v => !v)}
-                style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '0', background: 'transparent', border: 'none', ...F, fontSize: '12px', color: DK, cursor: 'pointer' }}>
-                Sort: {SORT_OPTIONS.find(s => s.value === sortBy)?.label}
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transform: sortOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
-                  <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                </svg>
-              </button>
-              <AnimatePresence>
-                {sortOpen && (
-                  <>
-                    <div style={{ position: 'fixed', inset: 0, zIndex: 48 }} onClick={() => setSortOpen(false)} />
-                    <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.15 }}
-                      style={{ position: 'absolute', top: '100%', right: 0, zIndex: 49, minWidth: '180px', background: W, border: `1px solid ${BR}`, boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}>
-                      {SORT_OPTIONS.map(opt => (
-                        <button key={opt.value} onClick={() => { setSortBy(opt.value); setSortOpen(false) }}
-                          style={{ width: '100%', textAlign: 'left', padding: '11px 16px', border: 'none', borderBottom: `1px solid ${BR}`, background: sortBy === opt.value ? LG : W, ...F, fontSize: '13px', fontWeight: sortBy === opt.value ? 600 : 400, color: sortBy === opt.value ? RD : DK, cursor: 'pointer' }}>
-                          {sortBy === opt.value && '✓ '}{opt.label}
-                        </button>
-                      ))}
-                    </motion.div>
-                  </>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ── BODY ── */}
-      <div className="page-padding" style={{ maxWidth: '1400px', margin: '0 auto', padding: '32px 40px 96px' }}>
-
-        {loading ? (
-          <div className="grid-4-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px 14px' }}>
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i}>
-                <div style={{ aspectRatio: '3/4', background: LG, animation: 'pulse 1.5s ease-in-out infinite' }} />
-                <div style={{ height: '12px', background: LG, margin: '10px 0 6px', width: '70%', animation: 'pulse 1.5s ease-in-out infinite' }} />
-                <div style={{ height: '16px', background: LG, width: '40%', animation: 'pulse 1.5s ease-in-out infinite' }} />
+      {/* ── SHOP THE SALE ── */}
+      <div id="shop-sale" style={{ scrollMarginTop: '80px' }}>
+        <div className="page-padding" style={{ background: LG, borderBottom: `1px solid ${BR}`, padding: '28px 40px' }}>
+          <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
+              <div>
+                <p style={{ ...F, fontSize: '11px', fontWeight: 700, color: RD, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '6px' }}>
+                  Shop The Sale
+                </p>
+                <h2 style={{ ...F, fontSize: 'clamp(24px, 3.5vw, 36px)', fontWeight: 800, color: DK, letterSpacing: '-0.02em' }}>
+                  Marked Down, Not Compromised
+                </h2>
               </div>
-            ))}
-            <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}`}</style>
+              {!loading && <p style={{ ...F, fontSize: '13px', color: MD }}>{sorted.length} {sorted.length === 1 ? 'item' : 'items'} on sale</p>}
+            </div>
           </div>
-        ) : error ? (
-          <div style={{ padding: '16px', background: '#FEF2F2', border: '1px solid #FECACA', ...F, fontSize: '13px', color: RD }}>
-            Failed to load sale items: {error}
-          </div>
-        ) : sorted.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '100px 20px' }}>
-            <div style={{ fontSize: '40px', marginBottom: '16px' }}>🏷️</div>
-            <h2 style={{ ...F, fontSize: '20px', fontWeight: 700, color: DK, marginBottom: '8px' }}>No items on sale right now</h2>
-            <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, marginBottom: '28px', maxWidth: '380px', marginLeft: 'auto', marginRight: 'auto' }}>
-              We don't have any discounted pieces at the moment — check back soon or explore our full collection.
-            </p>
-            <Link to="/shop"
-              style={{ display: 'inline-block', background: BK, color: W, padding: '14px 40px', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', transition: 'background 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = G }}
-              onMouseLeave={e => { e.currentTarget.style.background = BK }}>
-              Shop All Collections
-            </Link>
-          </div>
-        ) : (
-          <div className="grid-4-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px 14px' }}>
-            {sorted.map(p => <SaleCard key={p.id} product={p} onQuickView={setQvProduct} />)}
+        </div>
+
+        {sorted.length > 0 && (
+          <div className="page-padding" style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '0 40px' }}>
+            <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'flex-end', height: '52px', alignItems: 'center' }}>
+              <div style={{ position: 'relative' }}>
+                <button onClick={() => setSortOpen(v => !v)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '0', background: 'transparent', border: 'none', ...F, fontSize: '12px', color: DK, cursor: 'pointer' }}>
+                  Sort: {SORT_OPTIONS.find(s => s.value === sortBy)?.label}
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transform: sortOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
+                    <path d="M2 4l4 4 4-4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+                  </svg>
+                </button>
+                <AnimatePresence>
+                  {sortOpen && (
+                    <>
+                      <div style={{ position: 'fixed', inset: 0, zIndex: 48 }} onClick={() => setSortOpen(false)} />
+                      <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.15 }}
+                        style={{ position: 'absolute', top: '100%', right: 0, zIndex: 49, minWidth: '180px', background: W, border: `1px solid ${BR}`, boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}>
+                        {SORT_OPTIONS.map(opt => (
+                          <button key={opt.value} onClick={() => { setSortBy(opt.value); setSortOpen(false) }}
+                            style={{ width: '100%', textAlign: 'left', padding: '11px 16px', border: 'none', borderBottom: `1px solid ${BR}`, background: sortBy === opt.value ? LG : W, ...F, fontSize: '13px', fontWeight: sortBy === opt.value ? 600 : 400, color: sortBy === opt.value ? RD : DK, cursor: 'pointer' }}>
+                            {sortBy === opt.value && '✓ '}{opt.label}
+                          </button>
+                        ))}
+                      </motion.div>
+                    </>
+                  )}
+                </AnimatePresence>
+              </div>
+            </div>
           </div>
         )}
+
+        <div className="page-padding" style={{ maxWidth: '1400px', margin: '0 auto', padding: '32px 40px 96px' }}>
+
+          {loading ? (
+            <div className="grid-4-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px 14px' }}>
+              {Array.from({ length: 8 }).map((_, i) => (
+                <div key={i}>
+                  <div style={{ aspectRatio: '3/4', background: LG, animation: 'pulse 1.5s ease-in-out infinite' }} />
+                  <div style={{ height: '12px', background: LG, margin: '10px 0 6px', width: '70%', animation: 'pulse 1.5s ease-in-out infinite' }} />
+                  <div style={{ height: '16px', background: LG, width: '40%', animation: 'pulse 1.5s ease-in-out infinite' }} />
+                </div>
+              ))}
+              <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}`}</style>
+            </div>
+          ) : error ? (
+            <div style={{ padding: '16px', background: '#FEF2F2', border: '1px solid #FECACA', ...F, fontSize: '13px', color: RD }}>
+              Failed to load sale items: {error}
+            </div>
+          ) : sorted.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '80px 20px' }}>
+              <p style={{ ...F, fontSize: '18px', fontWeight: 700, color: DK, marginBottom: '8px' }}>No items on sale right now</p>
+              <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, marginBottom: '28px', maxWidth: '380px', marginLeft: 'auto', marginRight: 'auto' }}>
+                Check back soon, or explore our full collection while you wait.
+              </p>
+              <Link to="/shop"
+                style={{ display: 'inline-block', background: DK, color: W, padding: '14px 40px', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', transition: 'background 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.background = G }}
+                onMouseLeave={e => { e.currentTarget.style.background = DK }}>
+                Shop All Collections
+              </Link>
+            </div>
+          ) : (
+            <div className="grid-4-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px 14px' }}>
+              {sorted.map(p => <SaleCard key={p.id} product={p} onQuickView={setQvProduct} />)}
+            </div>
+          )}
+        </div>
       </div>
 
       <AnimatePresence>
