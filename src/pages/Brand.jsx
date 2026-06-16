@@ -149,97 +149,13 @@ function Manifesto() {
 // ═══════════════════════════════════════════════
 // STORY — with stitch spine
 // ═══════════════════════════════════════════════
-const beats = [
-  {
-    label: 'The Spark',
-    body: "Founded by Stacey Sefah, STAAY began long before the first collection was released. From a young age, fashion became her way of saying what words often could not.",
-  },
-  {
-    label: 'The Realisation',
-    quote: 'That realisation changed everything.',
-  },
-  {
-    label: 'The Brand',
-    body: "Today, STAAY is a Ghanaian womenswear brand rooted in intention, craftsmanship, and grace — designed for women who want to feel effortlessly put together, in every season of life.",
-  },
-  {
-    label: 'The Promise',
-    panel: [
-      'STAAY is a love letter to women becoming.',
-      'Women learning to take up space.',
-      'Women embracing elegance without apology.',
-      'Women choosing confidence, grace, and authenticity — every single day.',
-    ],
-  },
-]
+
 
 function StitchSpine() {
   return (
     <div style={{ position: 'absolute', top: '6px', bottom: '6px', left: 0, width: '2px', backgroundImage: `repeating-linear-gradient(to bottom, ${GOLD} 0 6px, transparent 6px 14px)` }} />
   )
 }
-
-function Story() {
-  return (
-    <section id="story" style={{ padding: 'clamp(56px, 8vw, 96px) clamp(24px, 6vw, 80px)', borderBottom: `1px solid ${LINE}` }}>
-      <div className="brand-story-grid" style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '260px 1fr', gap: '64px', alignItems: 'start' }}>
-
-        <motion.div {...fadeUp} transition={{ duration: 0.55 }} style={{ position: 'sticky', top: '88px' }}>
-          <Eyebrow>Our Story</Eyebrow>
-          <h2 style={{ ...D, fontSize: 'clamp(28px, 3.6vw, 42px)', fontWeight: 600, color: INK, lineHeight: 1.12, letterSpacing: '-0.01em' }}>
-            Born from a belief.<br />Built with grace.
-          </h2>
-        </motion.div>
-
-        <div style={{ position: 'relative', paddingLeft: '32px' }}>
-          <StitchSpine />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
-            {beats.map((beat, i) => (
-              <motion.div key={beat.label} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.05 }} style={{ position: 'relative' }}>
-                <div style={{ position: 'absolute', left: '-32px', top: '6px', width: '8px', height: '8px', borderRadius: '50%', background: GOLD, transform: 'translateX(-3px)' }} />
-                <p style={{ ...F, fontSize: '11px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: GOLD, marginBottom: '10px' }}>
-                  {beat.label}
-                </p>
-
-                {beat.body && (
-                  <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE, maxWidth: '560px' }}>
-                    {beat.body}
-                  </p>
-                )}
-
-                {beat.quote && (
-                  <p style={{ ...D, fontSize: 'clamp(19px, 2.2vw, 24px)', fontStyle: 'italic', fontWeight: 400, color: INK, lineHeight: 1.5 }}>
-                    "{beat.quote}"
-                  </p>
-                )}
-
-                {beat.panel && (
-                  <div style={{ background: GPALE, borderLeft: `2px solid ${GOLD}`, padding: 'clamp(18px, 2.4vw, 28px)', maxWidth: '560px' }}>
-                    {beat.panel.map((line, j) => (
-                      <p key={j} style={{ ...D, fontSize: '16px', fontStyle: 'italic', fontWeight: 400, color: '#2A251C', lineHeight: 1.7, marginBottom: j < beat.panel.length - 1 ? '6px' : 0 }}>
-                        {line}
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ═══════════════════════════════════════════════
-// VALUES — editorial list, drop-cap markers
-// ═══════════════════════════════════════════════
-const values = [
-  { letter: 'I', title: 'Intentional Design',     body: "Every seam, silhouette, and fabric choice is deliberate. We don't make filler pieces — everything earns its place in your wardrobe.", accent: GOLD },
-  { letter: 'M', title: 'Made for African Women', body: 'Not adapted, not translated — designed from scratch for the bodies, lifestyles, and boldness of African women.', accent: CLAY },
-  { letter: 'S', title: 'Softness Is Strength',   body: 'We build pieces that honour femininity in every form. Elegance and confidence were never meant to be a choice.', accent: GOLD },
-  { letter: 'C', title: 'Community First',        body: "Our customers aren't just buyers. They're the first people we think of when we sketch, cut, and finish.", accent: CLAY },
-]
 
 function ValueRow({ value, index }) {
   return (
@@ -257,22 +173,6 @@ function ValueRow({ value, index }) {
   )
 }
 
-function Values() {
-  return (
-    <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 96px) clamp(24px, 6vw, 80px)', borderBottom: `1px solid ${LINE}` }}>
-      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-        <motion.div {...fadeUp} transition={{ duration: 0.5 }} style={{ marginBottom: '8px' }}>
-          <Eyebrow>What We Stand For</Eyebrow>
-          <h2 style={{ ...D, fontSize: 'clamp(28px, 3.6vw, 42px)', fontWeight: 600, color: INK, letterSpacing: '-0.01em' }}>Our Values</h2>
-        </motion.div>
-
-        <div>
-          {values.map((v, i) => <ValueRow key={v.letter} value={v} index={i} />)}
-        </div>
-      </div>
-    </section>
-  )
-}
 
 // ═══════════════════════════════════════════════
 // STATS
@@ -284,74 +184,9 @@ const stats = [
   { v: '100%', l: 'Finished by Hand' },
 ]
 
-function Stats() {
-  return (
-    <section style={{ background: INK, padding: 'clamp(40px, 6vw, 72px) clamp(24px, 6vw, 80px)', position: 'relative', overflow: 'hidden' }}>
-      <p style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', ...D, fontSize: 'clamp(120px, 22vw, 280px)', fontWeight: 600, color: 'rgba(255,255,255,0.025)', letterSpacing: '0.02em', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
-        STAAY
-      </p>
-      <motion.div {...fadeUp} transition={{ duration: 0.5 }} className="brand-stats-row" style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', position: 'relative' }}>
-        {stats.map((s, i) => (
-          <div key={s.l} style={{ flex: 1, padding: '0 clamp(12px, 2vw, 28px)', borderLeft: i > 0 ? `1px solid rgba(255,255,255,0.1)` : 'none', textAlign: 'center' }}>
-            <p style={{ ...D, fontSize: 'clamp(28px, 3.6vw, 44px)', fontWeight: 600, color: GOLD, lineHeight: 1, marginBottom: '8px' }}>{s.v}</p>
-            <p style={{ ...F, fontSize: '11px', fontWeight: 400, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{s.l}</p>
-          </div>
-        ))}
-      </motion.div>
-    </section>
-  )
-}
 
-// ═══════════════════════════════════════════════
-// SHOP CTA + CONTACT
-// ═══════════════════════════════════════════════
-const contacts = [
-  { k: 'Email',     v: 'info@staayonline.com', h: 'mailto:info@staayonline.com' },
-  { k: 'WhatsApp',  v: '+233 50 397 7985',      h: 'https://wa.me/233503977985' },
-  { k: 'Instagram', v: '@staaybystaay',         h: 'https://instagram.com/staaybystaay' },
-  { k: 'TikTok',    v: '@staaybystaay',         h: 'https://tiktok.com/@staaybystaay' },
-]
 
-function ShopContact() {
-  return (
-    <section style={{ padding: 'clamp(56px, 8vw, 96px) clamp(24px, 6vw, 80px)' }}>
-      <div className="brand-contact-grid" style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', border: `1px solid ${LINE}`, minHeight: '420px' }}>
 
-        <div style={{ position: 'relative', overflow: 'hidden', minHeight: '320px' }}>
-          <img src="https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=1000&q=80&fit=crop" alt=""
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', position: 'absolute', inset: 0 }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.55))' }} />
-          <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
-            <Eyebrow color={GPALE}>Ready to Wear STAAY?</Eyebrow>
-            <h2 style={{ ...D, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 600, color: W, lineHeight: 1.1, marginBottom: '16px' }}>
-              Shop the Collection
-            </h2>
-            <Link to="/shop" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: GOLD, color: W, padding: '13px 30px', ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none' }}>
-              Shop Now →
-            </Link>
-          </div>
-        </div>
-
-        <div style={{ padding: 'clamp(32px, 4vw, 56px)', background: PAPER }}>
-          <Eyebrow>Get in Touch</Eyebrow>
-          <div style={{ marginTop: '8px' }}>
-            {contacts.map(c => (
-              <div key={c.k} style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '16px', padding: '15px 0', borderBottom: `1px solid ${LINE}` }}>
-                <span style={{ ...F, fontSize: '11px', fontWeight: 500, color: FAINT, letterSpacing: '0.06em', textTransform: 'uppercase', flexShrink: 0 }}>
-                  {c.k}
-                </span>
-                <a href={c.h} target={c.h.startsWith('http') ? '_blank' : undefined} rel="noreferrer"
-                  style={{ ...F, fontSize: '14px', fontWeight: 400, color: INK, textDecoration: 'none', textAlign: 'right' }}>
-                  {c.v}
-                </a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 // ═══════════════════════════════════════════════
 // PAGE
