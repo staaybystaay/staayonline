@@ -86,11 +86,7 @@ function Hero() {
             Founded 2009
           </span>
 
-          <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '24px' }}>
-            <h1 style={{ ...D, fontSize: 'clamp(32px, 4.8vw, 58px)', fontWeight: 600, color: W, lineHeight: 1.04, letterSpacing: '-0.01em' }}>
-              Designed for women<br />who bloom
-            </h1>
-          </div>
+         
         </div>
 
         {/* Full story */}
