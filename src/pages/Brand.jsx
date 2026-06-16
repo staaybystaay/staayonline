@@ -84,9 +84,6 @@ function Hero() {
             <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE, maxWidth: '360px' }}>
               A Ghanaian womenswear brand rooted in intention, craftsmanship, and grace — built by a woman who understands what it means to come into your own.
             </p>
-            <a href="#story" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '24px', ...F, fontSize: '12px', fontWeight: 600, color: INK, textDecoration: 'none', borderBottom: `1px solid ${INK}`, paddingBottom: '3px' }}>
-              Read Her Story ↓
-            </a>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingTop: '24px', borderTop: `1px solid ${LINE}`, marginTop: '32px' }}>
@@ -147,48 +144,6 @@ function Manifesto() {
 }
 
 // ═══════════════════════════════════════════════
-// STORY — with stitch spine
-// ═══════════════════════════════════════════════
-
-
-function StitchSpine() {
-  return (
-    <div style={{ position: 'absolute', top: '6px', bottom: '6px', left: 0, width: '2px', backgroundImage: `repeating-linear-gradient(to bottom, ${GOLD} 0 6px, transparent 6px 14px)` }} />
-  )
-}
-
-function ValueRow({ value, index }) {
-  return (
-    <motion.div {...fadeUp} transition={{ duration: 0.5, delay: index * 0.05 }}
-      className="brand-values-row"
-      style={{ display: 'flex', alignItems: 'flex-start', gap: '28px', padding: 'clamp(22px, 3vw, 32px) 0', borderTop: index > 0 ? `1px solid ${LINE}` : 'none' }}>
-      <span className="drop-cap" style={{ ...D, fontSize: '64px', fontWeight: 600, color: value.accent, lineHeight: 1, width: '80px', flexShrink: 0, opacity: 0.85 }}>
-        {value.letter}
-      </span>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <h3 style={{ ...F, fontSize: '17px', fontWeight: 700, color: INK, marginBottom: '8px' }}>{value.title}</h3>
-        <p style={{ ...F, fontSize: '14px', fontWeight: 300, lineHeight: 1.75, color: MUTE, maxWidth: '520px' }}>{value.body}</p>
-      </div>
-    </motion.div>
-  )
-}
-
-
-// ═══════════════════════════════════════════════
-// STATS
-// ═══════════════════════════════════════════════
-const stats = [
-  { v: '2009', l: 'Founded in Accra' },
-  { v: '3',    l: 'Signature Collections' },
-  { v: '23',   l: 'Pieces in the Current Line' },
-  { v: '100%', l: 'Finished by Hand' },
-]
-
-
-
-
-
-// ═══════════════════════════════════════════════
 // PAGE
 // ═══════════════════════════════════════════════
 export default function Brand() {
@@ -213,10 +168,6 @@ export default function Brand() {
       <Hero />
       <Marquee />
       <Manifesto />
-      <Story />
-      <Values />
-      <Stats />
-      <ShopContact />
     </div>
   )
 }
