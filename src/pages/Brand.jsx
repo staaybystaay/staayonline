@@ -1,253 +1,102 @@
-'use client'
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
-import { useState, useEffect, useRef } from 'react'
+// ─── TOKENS ───────────────────────────────────
+const INK   = '#15130F'
+const PAPER = '#F8F3E8'
+const PANEL = '#EFE6D2'
+const GOLD  = '#B8903A'
+const GPALE = '#FBF6EA'
+const CLAY  = '#9B4A33'
+const MUTE  = '#6E6657'
+const FAINT = '#A79F8C'
+const LINE  = '#E2D7BE'
+const W     = '#FFFFFF'
 
-const T = {
-  gold: '#B8903A',
-  goldPale: '#FBF7EF',
-  bone: '#EDE8DE',
-  ink: '#111111',
-  charcoal: '#1E1E1E',
-  warm: '#FAF8F5',
-  off: '#F4F1EB',
-  mid: '#6B6460',
-  faint: '#9E9890',
-  line: '#E5DFD4',
-}
-
-const SERIF = "'Cormorant Garamond', Georgia, serif"
-const SANS = "'Outfit', sans-serif"
-
-const values = [
-  { n: '01', title: 'Intentional Design', body: 'Every seam, silhouette, and fabric choice is deliberate. We do not make filler pieces. Everything earns its place in your wardrobe and in your life.' },
-  { n: '02', title: 'Made for African Women', body: 'Not adapted, not translated, designed from scratch for the bodies, lifestyles, and boldness of African women. You are not an afterthought.' },
-  { n: '03', title: 'Softness is Strength', body: 'We build pieces that honour femininity in all its forms. You never have to choose between elegance and confidence - STAAY holds both.' },
-  { n: '04', title: 'Community First', body: 'Our customers are not buyers. They are the first people we think about when we sketch, cut, and finish. STAAY is built by community, for community.' },
-]
-
-const stats = [
-  { v: '16', l: 'Years of Craft' },
-  { v: '2,400+', l: 'Pieces in Circulation' },
-  { v: '50+', l: 'Countries Reached' },
-  { v: '98%', l: 'Customer Satisfaction' },
-]
-
-const contacts = [
-  { k: 'Email', v: 'info@staayonline.com', h: 'mailto:info@staayonline.com' },
-  { k: 'WhatsApp', v: '+233 50 397 7985', h: 'https://wa.me/233503977985' },
-  { k: 'Instagram', v: '@staaybystaay', h: 'https://instagram.com/staaybystaay' },
-  { k: 'TikTok', v: '@staaybystaay', h: 'https://tiktok.com/@staaybystaay' },
-  { k: 'Address', v: 'Nii Osabu Nsuta Lk. Street, Dzen Ayor Area, Adentan District, GD-137-2393, Ghana' },
-]
+const SANS = "'Inter', sans-serif"
+const SERIF = "'Fraunces', Georgia, serif"
+const F = { fontFamily: SANS }
+const D = { fontFamily: SERIF }
 
 function FontLoader() {
   useEffect(() => {
-    if (document.getElementById('staay-fonts')) return
+    if (document.getElementById('staay-fraunces')) return
     const l = document.createElement('link')
-    l.id = 'staay-fonts'
+    l.id = 'staay-fraunces'
     l.rel = 'stylesheet'
-    l.href = 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap'
+    l.href = 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap'
     document.head.appendChild(l)
   }, [])
   return null
 }
 
-function useIsMobile(bp = 780) {
-  const [mobile, setMobile] = useState(false)
-
-  useEffect(() => {
-    const mq = window.matchMedia(`(max-width: ${bp}px)`)
-    setMobile(mq.matches)
-    const h = e => setMobile(e.matches)
-    mq.addEventListener('change', h)
-    return () => mq.removeEventListener('change', h)
-  }, [bp])
-
-  return mobile
-}
-
-function FadeUp({ children, delay = 0, style = {} }) {
-  const ref = useRef(null)
-  const [on, setOn] = useState(false)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        setOn(true)
-        obs.unobserve(el)
-      }
-    }, { threshold: 0.1 })
-
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-
+function Eyebrow({ children, color = GOLD }) {
   return (
-    <div
-      ref={ref}
-      style={{
-        opacity: on ? 1 : 0,
-        transform: on ? 'translateY(0)' : 'translateY(18px)',
-        transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
-        ...style,
-      }}
-    >
-      {children}
+    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
+      <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: color, flexShrink: 0 }} />
+      <span style={{ ...F, fontSize: '11px', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color }}>
+        {children}
+      </span>
     </div>
   )
 }
 
-const SectionLabel = ({ tag }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-    <div style={{ width: 6, height: 6, borderRadius: '50%', background: T.gold, flexShrink: 0 }} />
-    <span style={{ fontFamily: SANS, fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: T.gold }}>
-      {tag}
-    </span>
-  </div>
-)
-
-const SH2 = ({ children, style = {} }) => (
-  <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(28px,3.8vw,48px)', fontWeight: 600, color: T.ink, lineHeight: 1.1, letterSpacing: '-.01em', ...style }}>
-    {children}
-  </h2>
-)
-
-function Nav() {
-  const mobile = useIsMobile(520)
-
-  return (
-    <nav style={{
-      background: T.warm,
-      borderBottom: `1px solid ${T.line}`,
-      padding: '0 clamp(20px,5vw,72px)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      height: 64,
-      position: 'sticky',
-      top: 0,
-      zIndex: 100,
-    }}>
-      <span />
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: T.mid, fontFamily: SANS }}>
-        <a href="/" style={{ color: T.mid }}>Home</a>
-        <span style={{ color: T.faint }}>/</span>
-        <strong style={{ fontWeight: 500, color: T.ink }}>Our Brand</strong>
-      </div>
-
-      {!mobile && (
-        <span style={{ fontFamily: SANS, fontSize: 11, color: T.faint, letterSpacing: '.06em' }}>
-          Est. 2009 — Accra, Ghana
-        </span>
-      )}
-    </nav>
-  )
+const fadeUp = {
+  initial: { opacity: 0, y: 22 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-60px' },
 }
 
+// ═══════════════════════════════════════════════
+// HERO
+// ═══════════════════════════════════════════════
 function Hero() {
-  const mobile = useIsMobile(780)
-
   return (
-    <section style={{
-      display: 'grid',
-      gridTemplateColumns: mobile ? '1fr' : '1fr 1fr',
-      borderBottom: `1px solid ${T.line}`,
-    }}>
-      <div style={{
-        position: 'relative',
-        overflow: 'hidden',
-        minHeight: mobile ? 'auto' : 560,
-        background: T.off,
-      }}>
-        <img
-          src="/sefah.png"
-          alt="Stacey Sefah, Founder of STAAY"
-          style={{
-            width: '100%',
-            height: mobile ? '420px' : '100%',
-            objectFit: mobile ? 'cover' : 'contain',
-            objectPosition: 'top center',
-            display: 'block',
-            ...(mobile ? {} : {
-              position: 'absolute',
-              inset: 0,
-              padding: 20,
-              boxSizing: 'border-box',
-            }),
-          }}
-          onError={e => {
-            e.currentTarget.style.display = 'none'
-            e.currentTarget.parentElement.style.background = 'linear-gradient(160deg,#3a2a10,#1a1409)'
-          }}
-        />
+    <section style={{ borderBottom: `1px solid ${LINE}` }}>
+      <div className="brand-hero-grid" style={{ display: 'grid', gridTemplateColumns: '1.15fr 0.85fr', minHeight: '560px' }}>
 
-        <span style={{
-          position: 'absolute',
-          top: 24,
-          left: 24,
-          background: T.gold,
-          color: '#fff',
-          fontFamily: SANS,
-          fontSize: 10,
-          fontWeight: 600,
-          letterSpacing: '.1em',
-          textTransform: 'uppercase',
-          padding: '6px 16px',
-          zIndex: 2,
-        }}>
-          Founded 2009
-        </span>
+        {/* Image + overlay headline */}
+        <div style={{ position: 'relative', overflow: 'hidden', background: PANEL }}>
+          <img
+            src="/sefah.png"
+            alt="Stacey Sefah, Founder of STAAY"
+            onError={e => { e.target.style.display = 'none' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.65) 100%)' }} />
 
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: T.gold, zIndex: 2 }} />
-      </div>
+          <span style={{ position: 'absolute', top: '24px', left: '24px', background: GOLD, color: W, ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '6px 14px' }}>
+            Founded 2009
+          </span>
 
-      <div style={{
-        background: T.off,
-        padding: 'clamp(32px,4vw,56px)',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        minHeight: mobile ? 'auto' : 560,
-      }}>
-        <div>
-          <p style={{ fontFamily: SANS, fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: T.gold, marginBottom: 14 }}>
-            Who We Are
-          </p>
-
-          <h1 style={{ fontFamily: SERIF, fontSize: 'clamp(36px,4.5vw,62px)', fontWeight: 600, lineHeight: 1.06, letterSpacing: '-.01em', color: T.ink, margin: '0 0 20px' }}>
-            Designed for Women<br />Who Bloom
-          </h1>
-
-          <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.75, color: T.mid, maxWidth: 340 }}>
-            A Ghanaian womenswear brand rooted in intention, craftsmanship, and grace built by a woman who understands what it means to come into your own.
-          </p>
+          <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '24px' }}>
+            <h1 style={{ ...D, fontSize: 'clamp(34px, 5.2vw, 64px)', fontWeight: 600, color: W, lineHeight: 1.04, letterSpacing: '-0.01em' }}>
+              Designed for women<br />who bloom
+            </h1>
+          </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14, paddingTop: 20, borderTop: `1px solid ${T.line}`, marginTop: 32 }}>
-          <div style={{
-            width: 44,
-            height: 44,
-            borderRadius: '50%',
-            background: T.gold,
-            flexShrink: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontFamily: SERIF,
-            fontSize: 18,
-            fontWeight: 600,
-            color: '#fff',
-          }}>
-            SS
+        {/* Support panel */}
+        <div style={{ background: PANEL, padding: 'clamp(32px, 4vw, 56px)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div>
+            <Eyebrow>Who We Are</Eyebrow>
+            <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE, maxWidth: '360px' }}>
+              A Ghanaian womenswear brand rooted in intention, craftsmanship, and grace — built by a woman who understands what it means to come into your own.
+            </p>
+            <a href="#story" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '24px', ...F, fontSize: '12px', fontWeight: 600, color: INK, textDecoration: 'none', borderBottom: `1px solid ${INK}`, paddingBottom: '3px' }}>
+              Read Her Story ↓
+            </a>
           </div>
 
-          <div>
-            <p style={{ fontFamily: SANS, fontSize: 14, fontWeight: 500, color: T.ink }}>Stacey Sefah</p>
-            <p style={{ fontFamily: SANS, fontSize: 11, color: T.faint, letterSpacing: '.04em', marginTop: 2 }}>Founder & Creative Director</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingTop: '24px', borderTop: `1px solid ${LINE}`, marginTop: '32px' }}>
+            <div style={{ width: '46px', height: '46px', borderRadius: '50%', background: GOLD, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', ...D, fontSize: '18px', fontWeight: 600, color: W }}>
+              SS
+            </div>
+            <div>
+              <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: INK }}>Stacey Sefah</p>
+              <p style={{ ...F, fontSize: '11px', color: FAINT, letterSpacing: '0.04em', marginTop: '2px' }}>Founder &amp; Creative Director</p>
+            </div>
           </div>
         </div>
       </div>
@@ -255,227 +104,284 @@ function Hero() {
   )
 }
 
+// ═══════════════════════════════════════════════
+// MARQUEE TICKER
+// ═══════════════════════════════════════════════
+const tickerWords = ['INTENTIONAL', 'CRAFTED WITH CARE', 'DESIGNED IN ACCRA', 'FOR WOMEN WHO BLOOM']
+
+function Marquee() {
+  const row = [...tickerWords, ...tickerWords, ...tickerWords]
+  return (
+    <div style={{ background: INK, overflow: 'hidden', borderBottom: `1px solid rgba(255,255,255,0.08)` }}>
+      <div className="brand-marquee-track" style={{ display: 'flex', alignItems: 'center', gap: '28px', width: 'max-content', padding: '16px 0', animation: 'brandMarquee 32s linear infinite' }}>
+        {row.map((word, i) => (
+          <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '28px', whiteSpace: 'nowrap' }}>
+            <span style={{ ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.14em', color: GPALE }}>{word}</span>
+            <span style={{ color: GOLD, fontSize: '10px' }}>◆</span>
+          </span>
+        ))}
+      </div>
+      <style>{`
+        @keyframes brandMarquee { from { transform: translateX(0); } to { transform: translateX(-33.333%); } }
+        .brand-marquee-track:hover { animation-play-state: paused; }
+      `}</style>
+    </div>
+  )
+}
+
+// ═══════════════════════════════════════════════
+// MANIFESTO
+// ═══════════════════════════════════════════════
 function Manifesto() {
   return (
-    <section style={{ background: T.charcoal, padding: 'clamp(56px,8vw,100px) clamp(24px,6vw,80px)' }}>
-      <FadeUp style={{ maxWidth: 900, margin: '0 auto' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
-          <div style={{ width: 32, height: 2, background: T.gold, flexShrink: 0 }} />
-          <span style={{ fontFamily: SANS, fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: T.gold }}>
-            Our Manifesto
-          </span>
-        </div>
-
-        <p style={{ fontFamily: SERIF, fontSize: 'clamp(22px,3.2vw,36px)', fontWeight: 400, lineHeight: 1.5, color: '#E8E1D4', fontStyle: 'italic' }}>
+    <section style={{ background: INK, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 80px)' }}>
+      <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '880px', margin: '0 auto' }}>
+        <Eyebrow color={GOLD}>The Manifesto</Eyebrow>
+        <p style={{ ...D, fontSize: 'clamp(24px, 3.4vw, 38px)', fontStyle: 'italic', fontWeight: 400, lineHeight: 1.5, color: '#EDE5D2' }}>
           "Women were never meant to shrink. They were meant to bloom, to evolve, and most importantly —{' '}
-          <span style={{ color: T.gold, fontStyle: 'normal' }}>to STAAY true to themselves.</span>"
+          <span style={{ color: GOLD, fontStyle: 'normal' }}>to STAAY true to themselves.</span>"
         </p>
-      </FadeUp>
+      </motion.div>
     </section>
+  )
+}
+
+// ═══════════════════════════════════════════════
+// STORY — with stitch spine
+// ═══════════════════════════════════════════════
+const beats = [
+  {
+    label: 'The Spark',
+    body: "Founded by Stacey Sefah, STAAY began long before the first collection was released. From a young age, fashion became her way of saying what words often could not.",
+  },
+  {
+    label: 'The Realisation',
+    quote: 'That realisation changed everything.',
+  },
+  {
+    label: 'The Brand',
+    body: "Today, STAAY is a Ghanaian womenswear brand rooted in intention, craftsmanship, and grace — designed for women who want to feel effortlessly put together, in every season of life.",
+  },
+  {
+    label: 'The Promise',
+    panel: [
+      'STAAY is a love letter to women becoming.',
+      'Women learning to take up space.',
+      'Women embracing elegance without apology.',
+      'Women choosing confidence, grace, and authenticity — every single day.',
+    ],
+  },
+]
+
+function StitchSpine() {
+  return (
+    <div style={{ position: 'absolute', top: '6px', bottom: '6px', left: 0, width: '2px', backgroundImage: `repeating-linear-gradient(to bottom, ${GOLD} 0 6px, transparent 6px 14px)` }} />
   )
 }
 
 function Story() {
-  const mobile = useIsMobile(780)
-
   return (
-    <section style={{ padding: 'clamp(56px,8vw,96px) clamp(24px,6vw,80px)', borderBottom: `1px solid ${T.line}` }}>
-      <div style={{
-        maxWidth: 1200,
-        margin: '0 auto',
-        display: 'grid',
-        gridTemplateColumns: mobile ? '1fr' : '280px 1fr',
-        gap: mobile ? 32 : 72,
-        alignItems: 'start',
-      }}>
-        <FadeUp style={mobile ? {} : { position: 'sticky', top: 88 }}>
-          <SectionLabel tag="Our Story" />
-          <SH2>Born from a Belief.<br />Built with Grace.</SH2>
-        </FadeUp>
+    <section id="story" style={{ padding: 'clamp(56px, 8vw, 96px) clamp(24px, 6vw, 80px)', borderBottom: `1px solid ${LINE}` }}>
+      <div className="brand-story-grid" style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '260px 1fr', gap: '64px', alignItems: 'start' }}>
 
-        <FadeUp delay={0.1}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: T.mid }}>
-              Founded by <strong style={{ fontWeight: 500, color: T.ink }}>Stacey Sefah</strong>, STAAY began long before the first collection was released. From a young age, fashion became Stacey's way of expressing herself in seasons where words often fell short.
-            </p>
+        <motion.div {...fadeUp} transition={{ duration: 0.55 }} style={{ position: 'sticky', top: '88px' }}>
+          <Eyebrow>Our Story</Eyebrow>
+          <h2 style={{ ...D, fontSize: 'clamp(28px, 3.6vw, 42px)', fontWeight: 600, color: INK, lineHeight: 1.12, letterSpacing: '-0.01em' }}>
+            Born from a belief.<br />Built with grace.
+          </h2>
+        </motion.div>
 
-            <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: T.mid }}>
-              Today, STAAY is a Ghanaian womenswear brand rooted in intention, craftsmanship, and grace. Every piece is thoughtfully designed for women who want to feel effortlessly put together.
-            </p>
-
-            <div style={{ borderLeft: `2px solid ${T.gold}`, paddingLeft: 20, margin: '4px 0' }}>
-              <p style={{ fontFamily: SERIF, fontSize: 20, fontWeight: 400, fontStyle: 'italic', color: T.ink, lineHeight: 1.55 }}>
-                "That realisation changed everything."
-              </p>
-            </div>
-
-            <p style={{ fontFamily: SANS, fontSize: 15, fontWeight: 300, lineHeight: 1.85, color: T.mid }}>
-              STAAY creates pieces that are meant to move with you through every season of life. We believe true style is not about trends; it is about how a garment makes you feel.
-            </p>
-
-            <div style={{ background: T.goldPale, border: `1px solid ${T.bone}`, padding: 'clamp(20px,3vw,32px)', marginTop: 8 }}>
-              {[
-                'But beyond the fabric, STAAY is a love letter to women becoming.',
-                'Women learning to take up space.',
-                'Women embracing elegance without apology.',
-                'Women choosing confidence, grace, and authenticity every single day.',
-              ].map((line, i, arr) => (
-                <p key={i} style={{ fontFamily: SERIF, fontSize: 17, fontWeight: 400, fontStyle: 'italic', color: T.charcoal, lineHeight: 1.7, marginBottom: i < arr.length - 1 ? 8 : 0 }}>
-                  {line}
+        <div style={{ position: 'relative', paddingLeft: '32px' }}>
+          <StitchSpine />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
+            {beats.map((beat, i) => (
+              <motion.div key={beat.label} {...fadeUp} transition={{ duration: 0.5, delay: i * 0.05 }} style={{ position: 'relative' }}>
+                <div style={{ position: 'absolute', left: '-32px', top: '6px', width: '8px', height: '8px', borderRadius: '50%', background: GOLD, transform: 'translateX(-3px)' }} />
+                <p style={{ ...F, fontSize: '11px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: GOLD, marginBottom: '10px' }}>
+                  {beat.label}
                 </p>
-              ))}
-            </div>
+
+                {beat.body && (
+                  <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE, maxWidth: '560px' }}>
+                    {beat.body}
+                  </p>
+                )}
+
+                {beat.quote && (
+                  <p style={{ ...D, fontSize: 'clamp(19px, 2.2vw, 24px)', fontStyle: 'italic', fontWeight: 400, color: INK, lineHeight: 1.5 }}>
+                    "{beat.quote}"
+                  </p>
+                )}
+
+                {beat.panel && (
+                  <div style={{ background: GPALE, borderLeft: `2px solid ${GOLD}`, padding: 'clamp(18px, 2.4vw, 28px)', maxWidth: '560px' }}>
+                    {beat.panel.map((line, j) => (
+                      <p key={j} style={{ ...D, fontSize: '16px', fontStyle: 'italic', fontWeight: 400, color: '#2A251C', lineHeight: 1.7, marginBottom: j < beat.panel.length - 1 ? '6px' : 0 }}>
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </motion.div>
+            ))}
           </div>
-        </FadeUp>
+        </div>
       </div>
     </section>
+  )
+}
+
+// ═══════════════════════════════════════════════
+// VALUES — editorial list, drop-cap markers
+// ═══════════════════════════════════════════════
+const values = [
+  { letter: 'I', title: 'Intentional Design',     body: "Every seam, silhouette, and fabric choice is deliberate. We don't make filler pieces — everything earns its place in your wardrobe.", accent: GOLD },
+  { letter: 'M', title: 'Made for African Women', body: 'Not adapted, not translated — designed from scratch for the bodies, lifestyles, and boldness of African women.', accent: CLAY },
+  { letter: 'S', title: 'Softness Is Strength',   body: 'We build pieces that honour femininity in every form. Elegance and confidence were never meant to be a choice.', accent: GOLD },
+  { letter: 'C', title: 'Community First',        body: "Our customers aren't just buyers. They're the first people we think of when we sketch, cut, and finish.", accent: CLAY },
+]
+
+function ValueRow({ value, index }) {
+  return (
+    <motion.div {...fadeUp} transition={{ duration: 0.5, delay: index * 0.05 }}
+      className="brand-values-row"
+      style={{ display: 'flex', alignItems: 'flex-start', gap: '28px', padding: 'clamp(22px, 3vw, 32px) 0', borderTop: index > 0 ? `1px solid ${LINE}` : 'none' }}>
+      <span className="drop-cap" style={{ ...D, fontSize: '64px', fontWeight: 600, color: value.accent, lineHeight: 1, width: '80px', flexShrink: 0, opacity: 0.85 }}>
+        {value.letter}
+      </span>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <h3 style={{ ...F, fontSize: '17px', fontWeight: 700, color: INK, marginBottom: '8px' }}>{value.title}</h3>
+        <p style={{ ...F, fontSize: '14px', fontWeight: 300, lineHeight: 1.75, color: MUTE, maxWidth: '520px' }}>{value.body}</p>
+      </div>
+    </motion.div>
   )
 }
 
 function Values() {
-  const [hov, setHov] = useState(null)
-  const smallMobile = useIsMobile(600)
-
   return (
-    <section style={{ background: T.off, padding: 'clamp(56px,8vw,96px) clamp(24px,6vw,80px)', borderBottom: `1px solid ${T.line}` }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        <FadeUp style={{ marginBottom: 48 }}>
-          <SectionLabel tag="What We Stand For" />
-          <SH2>Our Values</SH2>
-        </FadeUp>
+    <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 96px) clamp(24px, 6vw, 80px)', borderBottom: `1px solid ${LINE}` }}>
+      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+        <motion.div {...fadeUp} transition={{ duration: 0.5 }} style={{ marginBottom: '8px' }}>
+          <Eyebrow>What We Stand For</Eyebrow>
+          <h2 style={{ ...D, fontSize: 'clamp(28px, 3.6vw, 42px)', fontWeight: 600, color: INK, letterSpacing: '-0.01em' }}>Our Values</h2>
+        </motion.div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: smallMobile ? '1fr' : '1fr 1fr', border: `1px solid ${T.line}` }}>
-          {values.map((v, i) => (
-            <FadeUp key={v.n} delay={i * 0.07}>
-              <div
-                onMouseEnter={() => setHov(v.n)}
-                onMouseLeave={() => setHov(null)}
-                style={{
-                  padding: 'clamp(24px,3.5vw,40px)',
-                  borderTop: `3px solid ${hov === v.n ? T.gold : 'transparent'}`,
-                  background: hov === v.n ? T.warm : 'transparent',
-                  transition: 'all .22s',
-                  borderRight: !smallMobile && i % 2 === 0 ? `1px solid ${T.line}` : 'none',
-                  borderBottom: smallMobile ? i < values.length - 1 ? `1px solid ${T.line}` : 'none' : i < 2 ? `1px solid ${T.line}` : 'none',
-                  height: '100%',
-                }}
-              >
-                <p style={{ fontFamily: SERIF, fontSize: 34, fontWeight: 700, color: T.gold, opacity: .22, lineHeight: 1, marginBottom: 14 }}>{v.n}</p>
-                <h3 style={{ fontFamily: SANS, fontSize: 16, fontWeight: 600, color: T.ink, marginBottom: 10 }}>{v.title}</h3>
-                <p style={{ fontFamily: SANS, fontSize: 14, fontWeight: 300, color: T.mid, lineHeight: 1.7 }}>{v.body}</p>
-              </div>
-            </FadeUp>
-          ))}
+        <div>
+          {values.map((v, i) => <ValueRow key={v.letter} value={v} index={i} />)}
         </div>
       </div>
     </section>
   )
 }
 
-function Stats() {
-  const smallMobile = useIsMobile(600)
+// ═══════════════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════════════
+const stats = [
+  { v: '2009', l: 'Founded in Accra' },
+  { v: '3',    l: 'Signature Collections' },
+  { v: '23',   l: 'Pieces in the Current Line' },
+  { v: '100%', l: 'Finished by Hand' },
+]
 
+function Stats() {
   return (
-    <section style={{ background: T.ink, padding: 'clamp(40px,6vw,72px) clamp(24px,6vw,80px)' }}>
-      <FadeUp>
-        <div style={{
-          maxWidth: 1200,
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: smallMobile ? 'repeat(2,1fr)' : 'repeat(4,1fr)',
-          border: '1px solid rgba(255,255,255,.08)',
-        }}>
-          {stats.map((s, i) => (
-            <div key={s.l} style={{
-              padding: 'clamp(24px,3.5vw,40px)',
-              borderRight: smallMobile ? i % 2 === 0 ? '1px solid rgba(255,255,255,.08)' : 'none' : i < stats.length - 1 ? '1px solid rgba(255,255,255,.08)' : 'none',
-              borderTop: smallMobile && i >= 2 ? '1px solid rgba(255,255,255,.08)' : 'none',
-              textAlign: 'center',
-            }}>
-              <p style={{ fontFamily: SERIF, fontSize: 'clamp(34px,3.8vw,52px)', fontWeight: 600, color: T.gold, lineHeight: 1, marginBottom: 8 }}>{s.v}</p>
-              <p style={{ fontFamily: SANS, fontSize: 11, fontWeight: 400, color: 'rgba(255,255,255,.4)', letterSpacing: '.06em', textTransform: 'uppercase' }}>{s.l}</p>
-            </div>
-          ))}
-        </div>
-      </FadeUp>
+    <section style={{ background: INK, padding: 'clamp(40px, 6vw, 72px) clamp(24px, 6vw, 80px)', position: 'relative', overflow: 'hidden' }}>
+      <p style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', ...D, fontSize: 'clamp(120px, 22vw, 280px)', fontWeight: 600, color: 'rgba(255,255,255,0.025)', letterSpacing: '0.02em', whiteSpace: 'nowrap', pointerEvents: 'none' }}>
+        STAAY
+      </p>
+      <motion.div {...fadeUp} transition={{ duration: 0.5 }} className="brand-stats-row" style={{ maxWidth: '1100px', margin: '0 auto', display: 'flex', position: 'relative' }}>
+        {stats.map((s, i) => (
+          <div key={s.l} style={{ flex: 1, padding: '0 clamp(12px, 2vw, 28px)', borderLeft: i > 0 ? `1px solid rgba(255,255,255,0.1)` : 'none', textAlign: 'center' }}>
+            <p style={{ ...D, fontSize: 'clamp(28px, 3.6vw, 44px)', fontWeight: 600, color: GOLD, lineHeight: 1, marginBottom: '8px' }}>{s.v}</p>
+            <p style={{ ...F, fontSize: '11px', fontWeight: 400, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{s.l}</p>
+          </div>
+        ))}
+      </motion.div>
     </section>
   )
 }
 
-function Contact() {
-  const mobile = useIsMobile(780)
+// ═══════════════════════════════════════════════
+// SHOP CTA + CONTACT
+// ═══════════════════════════════════════════════
+const contacts = [
+  { k: 'Email',     v: 'info@staayonline.com', h: 'mailto:info@staayonline.com' },
+  { k: 'WhatsApp',  v: '+233 50 397 7985',      h: 'https://wa.me/233503977985' },
+  { k: 'Instagram', v: '@staaybystaay',         h: 'https://instagram.com/staaybystaay' },
+  { k: 'TikTok',    v: '@staaybystaay',         h: 'https://tiktok.com/@staaybystaay' },
+]
 
+function ShopContact() {
   return (
-    <section style={{ background: T.warm, padding: 'clamp(56px,8vw,96px) clamp(24px,6vw,80px)' }}>
-      <div style={{
-        maxWidth: 1200,
-        margin: '0 auto',
-        display: 'grid',
-        gridTemplateColumns: mobile ? '1fr' : '1fr 1fr',
-        border: `1px solid ${T.line}`,
-      }}>
-        <FadeUp style={{ padding: 'clamp(32px,4vw,56px)', borderBottom: mobile ? `1px solid ${T.line}` : 'none', borderRight: !mobile ? `1px solid ${T.line}` : 'none' }}>
-          <SectionLabel tag="Ready to wear STAAY?" />
-          <h2 style={{ fontFamily: SERIF, fontSize: 'clamp(26px,3.2vw,42px)', fontWeight: 600, color: T.ink, lineHeight: 1.1, margin: '12px 0 16px' }}>
-            Shop the Collection
-          </h2>
-          <p style={{ fontFamily: SANS, fontSize: 14, fontWeight: 300, color: T.mid, lineHeight: 1.7, marginBottom: 32, maxWidth: 300 }}>
-            Every piece in the SS 2025 collection is available now. Designed for the woman ready to show up fully as herself.
-          </p>
-          <a href="/shop" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: T.ink, color: '#fff', padding: '14px 32px', fontFamily: SANS, fontSize: 13, fontWeight: 500, letterSpacing: '.05em', textTransform: 'uppercase', textDecoration: 'none' }}>
-            Shop Now →
-          </a>
-        </FadeUp>
+    <section style={{ padding: 'clamp(56px, 8vw, 96px) clamp(24px, 6vw, 80px)' }}>
+      <div className="brand-contact-grid" style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', border: `1px solid ${LINE}`, minHeight: '420px' }}>
 
-        <FadeUp delay={0.1} style={{ padding: 'clamp(32px,4vw,56px)' }}>
-          <SectionLabel tag="Get in Touch" />
+        <div style={{ position: 'relative', overflow: 'hidden', minHeight: '320px' }}>
+          <img src="https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=1000&q=80&fit=crop" alt=""
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', position: 'absolute', inset: 0 }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.55))' }} />
+          <div style={{ position: 'absolute', bottom: '32px', left: '32px', right: '32px' }}>
+            <Eyebrow color={GPALE}>Ready to Wear STAAY?</Eyebrow>
+            <h2 style={{ ...D, fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 600, color: W, lineHeight: 1.1, marginBottom: '16px' }}>
+              Shop the Collection
+            </h2>
+            <Link to="/shop" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: GOLD, color: W, padding: '13px 30px', ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none' }}>
+              Shop Now →
+            </Link>
+          </div>
+        </div>
 
-          <div style={{ marginTop: 12 }}>
+        <div style={{ padding: 'clamp(32px, 4vw, 56px)', background: PAPER }}>
+          <Eyebrow>Get in Touch</Eyebrow>
+          <div style={{ marginTop: '8px' }}>
             {contacts.map(c => (
-              <div key={c.k} style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 20, padding: '16px 0', borderBottom: `1px solid ${T.line}` }}>
-                <span style={{ fontFamily: SANS, fontSize: 11, fontWeight: 500, color: T.faint, letterSpacing: '.06em', textTransform: 'uppercase', flexShrink: 0 }}>
+              <div key={c.k} style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '16px', padding: '15px 0', borderBottom: `1px solid ${LINE}` }}>
+                <span style={{ ...F, fontSize: '11px', fontWeight: 500, color: FAINT, letterSpacing: '0.06em', textTransform: 'uppercase', flexShrink: 0 }}>
                   {c.k}
                 </span>
-
-                {c.h ? (
-                  <a href={c.h} target={c.h.startsWith('http') ? '_blank' : undefined} rel="noreferrer" style={{ fontFamily: SANS, fontSize: 14, fontWeight: 400, color: T.ink, textDecoration: 'none', textAlign: 'right', lineHeight: 1.5 }}>
-                    {c.v}
-                  </a>
-                ) : (
-                  <span style={{ fontFamily: SANS, fontSize: 14, fontWeight: 400, color: T.ink, textAlign: 'right', lineHeight: 1.5, maxWidth: 320 }}>
-                    {c.v}
-                  </span>
-                )}
+                <a href={c.h} target={c.h.startsWith('http') ? '_blank' : undefined} rel="noreferrer"
+                  style={{ ...F, fontSize: '14px', fontWeight: 400, color: INK, textDecoration: 'none', textAlign: 'right' }}>
+                  {c.v}
+                </a>
               </div>
             ))}
           </div>
-        </FadeUp>
+        </div>
       </div>
     </section>
   )
 }
 
-function Footer() {
-  return (
-    <div style={{ background: T.charcoal, padding: '20px clamp(20px,5vw,72px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 8 }}>
-      <p style={{ fontFamily: SANS, fontSize: 12, color: 'rgba(255,255,255,.28)' }}>© 2025 STAAY by Stacey Sefah. All rights reserved.</p>
-      <p style={{ fontFamily: SANS, fontSize: 12, color: 'rgba(255,255,255,.28)' }}>Accra, Ghana — Designed with intention.</p>
-    </div>
-  )
-}
-
+// ═══════════════════════════════════════════════
+// PAGE
+// ═══════════════════════════════════════════════
 export default function Brand() {
   return (
-    <div style={{ background: T.warm, minHeight: '100vh' }}>
+    <div style={{ background: PAPER, minHeight: '100vh' }}>
       <FontLoader />
-      <Nav />
+
+      {/* Breadcrumb header — consistent with rest of site */}
+      <div className="page-padding" style={{ background: PANEL, borderBottom: `1px solid ${LINE}`, padding: '20px 40px' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Link to="/" style={{ ...F, fontSize: '12px', color: MUTE, textDecoration: 'none' }}>Home</Link>
+            <span style={{ color: FAINT, fontSize: '12px' }}>/</span>
+            <span style={{ ...F, fontSize: '12px', fontWeight: 500, color: INK }}>Our Brand</span>
+          </div>
+          <span className="desktop-only" style={{ ...F, fontSize: '11px', color: FAINT, letterSpacing: '0.06em' }}>
+            Est. 2009 — Accra, Ghana
+          </span>
+        </div>
+      </div>
+
       <Hero />
+      <Marquee />
       <Manifesto />
       <Story />
       <Values />
       <Stats />
-      <Contact />
-      <Footer />
+      <ShopContact />
     </div>
   )
 }
