@@ -19,6 +19,7 @@ import Sale from './pages/Sale'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminOrders    from './pages/AdminOrders'
 import ScrollToTop from './components/ScrollToTop'
+import Contact from './pages/Contact'
 
 
 
@@ -48,6 +49,7 @@ export default function App() {
           <Route path="/sale" element={<Sale />} />
           <Route path="/admin"        element={<AdminDashboard />} />
           <Route path="/admin/orders" element={<AdminOrders />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
         <Footer />
       </BrowserRouter>
