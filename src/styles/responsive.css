@@ -225,6 +225,22 @@
   .brand-values-row {
     gap: 16px !important;
   }
+
+
+   /* ============================================
+   Our Brand page — hero stacks on mobile,
+   sticky portrait becomes a normal static image
+   ============================================ */
+@media (max-width: 860px) {
+  .brand-hero-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .brand-hero-image {
+    position: relative !important;
+    top: auto !important;
+    height: 420px !important;
+  }
+}
   .brand-values-row .drop-cap {
     font-size: 44px !important;
     width: 56px !important;
