@@ -105,12 +105,6 @@ function ProductCard({ product, index, discount, onQuickView }) {
         </div>
         <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '2px', lineHeight: 1.35 }}>{product.name}</p>
         <p style={{ ...F, fontSize: '11px', fontWeight: 400, color: MD, textTransform: 'uppercase', letterSpacing: '0.03em', marginBottom: '8px' }}>{product.collection?.name || 'STAAY'}</p>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '8px' }}>
-          <span style={{ ...F, fontSize: '11px', color: MD, marginRight: '2px' }}>Colors:</span>
-          {[G, '#1A1612', '#C8A882'].slice(0, index % 2 === 0 ? 2 : 1).map((c, i) => (
-            <div key={i} style={{ width: '18px', height: '18px', borderRadius: '50%', background: c, border: '2px solid #fff', boxShadow: '0 0 0 1px #ddd' }} />
-          ))}
-        </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
           <span style={{ ...F, fontSize: '16px', fontWeight: 700, color: DK }}>GH₵{Number(product.price).toLocaleString()}</span>
           {originalPrice && <span style={{ ...F, fontSize: '13px', color: '#AAA', textDecoration: 'line-through' }}>GH₵{Number(originalPrice).toLocaleString()}</span>}
