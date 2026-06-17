@@ -26,7 +26,7 @@ const SORT_OPTIONS = [
   { label: 'Price: High',      value: 'price_desc' },
 ]
 
-const GIFT_AMOUNTS = [300, 600, 1000, 1500]
+const GIFT_AMOUNTS = [2000, 5000, 7500, 10000, 20000]
 
 function Stars() {
   return (
