@@ -195,11 +195,11 @@ function ShopTeaser({ image }) {
 // ─── Feature block: Gift Cards (functional) ───
 function GiftCardSection() {
   const [selected, setSelected] = useState(GIFT_AMOUNTS[1])
-  const [custom,   setCustom]   = useState('')
+  
   const [added,    setAdded]    = useState(false)
   const addItem = useCartStore(s => s.addItem)
 
-  const amount = custom ? Number(custom) : selected
+  
 
   function handleAdd() {
     if (!amount || amount <= 0) return
@@ -240,15 +240,6 @@ function GiftCardSection() {
             ))}
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '22px' }}>
-            <span style={{ ...F, fontSize: '12px', color: MD }}>or enter a custom amount:</span>
-            <input
-              type="number" min="1" value={custom}
-              onChange={e => setCustom(e.target.value)}
-              placeholder="GH₵"
-              style={{ width: '110px', padding: '8px 12px', border: `1px solid ${BR}`, ...F, fontSize: '13px', color: DK, outline: 'none' }}
-            />
-          </div>
 
           <button onClick={handleAdd}
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: added ? '#16A34A' : G, color: W, padding: '14px 36px', border: 'none', cursor: 'pointer', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', transition: 'background 0.2s' }}>
