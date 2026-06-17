@@ -19,11 +19,7 @@ const GR  = '#16A34A'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
 const SIZES  = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
-const COLORS = [
-  { name: 'Gold',  hex: '#B8903A' },
-  { name: 'Black', hex: '#1A1612' },
-  { name: 'Nude',  hex: '#C8A882' },
-]
+const CUSTOMIZATION_FEE = 300
 
 function StarRow({ score = 0, count = 0, hideLabel = false }) {
   return (
@@ -63,7 +59,8 @@ function Divider() {
 
 export default function QuickView({ product, onClose }) {
   const [selectedSize,  setSelectedSize]  = useState(null)
-  const [selectedColor, setSelectedColor] = useState(0)
+  const [customize,     setCustomize]     = useState(false)
+  const [customNote,    setCustomNote]    = useState('')
   const [qty,           setQty]           = useState(1)
   const [activeImg,     setActiveImg]     = useState(0)
   const [addedToBag,    setAddedToBag]    = useState(false)
@@ -114,7 +111,17 @@ export default function QuickView({ product, onClose }) {
   const images = [product.image_url, product.image_url]
 
   function handleAddToCart() {
-    addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY', badge: product.badge, qty })
+    const finalPrice = product.price + (customize ? CUSTOMIZATION_FEE : 0)
+    addItem({
+      id: product.id,
+      name: customize ? `${product.name} (Customized)` : product.name,
+      price: finalPrice,
+      image: product.image_url,
+      category: product.collection?.name || 'STAAY',
+      badge: product.badge,
+      qty,
+      customNote: customize ? customNote : null,
+    })
     setAddedToBag(true)
     setTimeout(() => setAddedToBag(false), 2500)
   }
@@ -230,8 +237,13 @@ export default function QuickView({ product, onClose }) {
               {/* Price */}
               <div>
                 <p style={{ ...F, fontSize: '28px', fontWeight: 800, color: G, letterSpacing: '-0.02em', lineHeight: 1 }}>
-                  GH₵{Number(product.price).toLocaleString()}
+                  GH₵{Number(product.price + (customize ? CUSTOMIZATION_FEE : 0)).toLocaleString()}
                 </p>
+                {customize && (
+                  <p style={{ ...F, fontSize: '11px', fontWeight: 500, color: MD, marginTop: '4px' }}>
+                    GH₵{Number(product.price).toLocaleString()} + GH₵{CUSTOMIZATION_FEE} customization
+                  </p>
+                )}
                 <p style={{ ...F, fontSize: '11px', fontWeight: 400, color: MD, marginTop: '4px' }}>
                   {product.collection?.name || 'STAAY Collection'}
                 </p>
@@ -244,18 +256,38 @@ export default function QuickView({ product, onClose }) {
 
               <Divider />
 
-              {/* Color */}
+              {/* Customization */}
               <div>
-                <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                  Colour — <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0, color: MD }}>{COLORS[selectedColor].name}</span>
-                </p>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  {COLORS.map((c, i) => (
-                    <button key={i} onClick={() => setSelectedColor(i)}
-                      style={{ width: '28px', height: '28px', borderRadius: '50%', background: c.hex, border: `3px solid ${W}`, cursor: 'pointer', padding: 0, outline: `2px solid ${selectedColor === i ? G : 'transparent'}`, outlineOffset: '2px', transition: 'outline-color 0.2s' }} />
-                  ))}
-                </div>
+                <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer' }}>
+                  <button
+                    type="button"
+                    onClick={() => setCustomize(v => !v)}
+                    style={{ width: '44px', height: '24px', borderRadius: '12px', background: customize ? G : '#D1D5DB', border: 'none', cursor: 'pointer', position: 'relative', flexShrink: 0, transition: 'background 0.2s', marginTop: '1px' }}>
+                    <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: W, position: 'absolute', top: '3px', left: customize ? '23px' : '3px', transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
+                  </button>
+                  <div>
+                    <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>
+                      Customize this piece <span style={{ color: G, fontWeight: 700 }}>+GH₵{CUSTOMIZATION_FEE}</span>
+                    </p>
+                    <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: MD, marginTop: '2px', lineHeight: 1.5 }}>
+                      Request adjustments to fit, length, or styling. We'll follow up with you to confirm details.
+                    </p>
+                  </div>
+                </label>
+
+                {customize && (
+                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} transition={{ duration: 0.2 }} style={{ overflow: 'hidden', marginTop: '12px' }}>
+                    <textarea
+                      value={customNote}
+                      onChange={e => setCustomNote(e.target.value)}
+                      placeholder="Optional — tell us what you'd like customized (e.g. shorten sleeves, take in waist)"
+                      rows={3}
+                      style={{ width: '100%', padding: '10px 12px', border: `1px solid ${BR}`, background: LG, ...F, fontSize: '12px', color: DK, outline: 'none', resize: 'vertical', boxSizing: 'border-box' }}
+                    />
+                  </motion.div>
+                )}
               </div>
+
 
               {/* Size */}
               <div>
