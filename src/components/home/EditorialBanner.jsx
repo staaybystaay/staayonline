@@ -11,7 +11,7 @@ export default function EditorialBanner() {
 
       {/* Background image */}
       <img
-        src="./storybanner.jpg"
+        src="./giftcard.jpeg"
         alt="STAAY"
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block', opacity: 0.55 }}
       />
