@@ -12,8 +12,8 @@ const slides = [
     image: '/staaybanner1.jpg',
     headline: 'WHERE BEAUTY\nBEGINS TODAY',
     sub: 'Soft, feminine, intentional.',
-    cta: 'Shop Eden Collection',
-    href: '/shop?col=eden',
+    cta: 'Sales Promotion',
+    href: '/sale?col=eden',
     align: 'left',
   },
   {
