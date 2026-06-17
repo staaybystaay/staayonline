@@ -39,7 +39,7 @@ const companyLinks = [
 const supportLinks = [
   { label: 'Track My Order',          path: '/account' },
   { label: 'Returns & Exchanges',     path: '/terms'    },
-  { label: 'FAQ',                     path: '/terms'    },
+  { label: 'FAQ',                     path: '/faq'    },
   { label: 'Contact Support',         path: '/contact'    },
   { label: 'Size Guide',              path: '/shop'     },
 ]
