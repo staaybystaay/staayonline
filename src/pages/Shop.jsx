@@ -231,7 +231,7 @@ function ProductCard({ product, index, viewMode, onQuickView }) {
         <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '2px', lineHeight: 1.3 }}>{product.name}</p>
         <p style={{ ...F, fontSize: '11px', color: MD, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px' }}>{product.collection?.name}</p>
 
-        {/* Colors */}
+       {/* Colors */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '6px' }}>
           <span style={{ ...F, fontSize: '11px', color: MD }}>Colors:</span>
           {[G, '#1A1612'].slice(0, index % 2 === 0 ? 2 : 1).map((c, i) => (
