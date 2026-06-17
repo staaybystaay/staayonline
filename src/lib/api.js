@@ -72,16 +72,6 @@ export async function signInWithGoogle() {
   return data
 }
 
-// ─── APPLE OAUTH ─────────────────────────────
-export async function signInWithApple() {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'apple',
-    options: { redirectTo: `${window.location.origin}/auth/callback` },
-  })
-  if (error) throw error
-  return data
-}
-
 // ─── FORGOT PASSWORD ─────────────────────────
 export async function resetPassword(email) {
   const { error } = await supabase.auth.resetPasswordForEmail(
@@ -235,6 +225,33 @@ export async function getCollections() {
   const { data, error } = await supabase
     .from('collections').select('*').eq('active', true)
     .order('created_at', { ascending: true })
+  if (error) throw error
+  return data
+}
+
+// ─── REVIEWS ─────────────────────────────────
+export async function getReviewsByProduct(productId) {
+  const { data, error } = await supabase
+    .from('reviews')
+    .select('*')
+    .eq('product_id', productId)
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data
+}
+
+export async function createReview({ productId, customerId, name, rating, comment }) {
+  const { data, error } = await supabase
+    .from('reviews')
+    .insert({
+      product_id:  productId,
+      customer_id: customerId || null,
+      name,
+      rating,
+      comment,
+    })
+    .select()
+    .single()
   if (error) throw error
   return data
 }
