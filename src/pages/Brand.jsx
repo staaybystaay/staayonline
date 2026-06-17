@@ -80,14 +80,7 @@ function Hero() {
             onError={e => { e.target.style.display = 'none' }}
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.65) 100%)' }} />
-
-          <span style={{ position: 'absolute', top: '24px', left: '24px', background: GOLD, color: W, ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '6px 14px' }}>
-            Founded 2009
-          </span>
-
-         
-        </div>
+      
 
         {/* Full story */}
         <div style={{ background: PANEL, padding: 'clamp(32px, 4vw, 56px)' }}>
