@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
-import { signIn, signUp, signOut, signInWithGoogle, signInWithApple, resetPassword, updatePassword, getCustomerProfile, uploadAvatar } from '../lib/api'
+import { signIn, signUp, signOut, signInWithGoogle, resetPassword, updatePassword, getCustomerProfile, uploadAvatar } from '../lib/api'
 
 export function useAuth() {
   const [user,    setUser]    = useState(null)
@@ -8,21 +8,19 @@ export function useAuth() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Get initial session
     supabase.auth.getSession().then(({ data }) => {
       const u = data.session?.user ?? null
       setUser(u)
-      if (u) loadProfile(u.id)
+      if (u) loadProfile(u)
       else setLoading(false)
     })
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         const u = session?.user ?? null
         setUser(u)
         if (u) {
-          await loadProfile(u.id)
+          await loadProfile(u)
         } else {
           setProfile(null)
           setLoading(false)
@@ -33,9 +31,34 @@ export function useAuth() {
     return () => subscription.unsubscribe()
   }, [])
 
-  async function loadProfile(userId) {
+  // Loads the customer profile, creating one if it doesn't exist yet
+  // (handles OAuth sign-ins like Google which skip the signUp() flow)
+  async function loadProfile(user) {
     try {
-      const p = await getCustomerProfile(userId)
+      let p = await getCustomerProfile(user.id)
+
+      if (!p) {
+        const meta = user.user_metadata || {}
+        const fullName = meta.full_name || meta.name || ''
+        const [firstName, ...rest] = fullName.split(' ')
+
+        const { data, error } = await supabase
+          .from('customers')
+          .upsert({
+            id:         user.id,
+            first_name: meta.first_name || firstName || null,
+            last_name:  meta.last_name  || rest.join(' ') || null,
+            phone:      meta.phone     || null,
+            gender:     meta.gender    || null,
+            interests:  meta.interests || null,
+            avatar_url: meta.avatar_url || meta.picture || null,
+          }, { onConflict: 'id' })
+          .select()
+          .single()
+
+        if (!error) p = data
+      }
+
       setProfile(p)
     } catch {
       setProfile(null)
@@ -68,10 +91,6 @@ export function useAuth() {
       return await signInWithGoogle()
     },
 
-    async loginWithApple() {
-      return await signInWithApple()
-    },
-
     async sendPasswordReset(email) {
       return await resetPassword(email)
     },
@@ -89,7 +108,7 @@ export function useAuth() {
     },
 
     async refreshProfile() {
-      if (user) await loadProfile(user.id)
+      if (user) await loadProfile(user)
     },
   }
 }
