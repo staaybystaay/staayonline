@@ -20,6 +20,8 @@ import AdminDashboard from './pages/AdminDashboard'
 import AdminOrders    from './pages/AdminOrders'
 import ScrollToTop from './components/ScrollToTop'
 import Contact from './pages/Contact'
+import FAQ from './pages/FAQ'
+
 
 
 
@@ -50,6 +52,7 @@ export default function App() {
           <Route path="/admin"        element={<AdminDashboard />} />
           <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<FAQ />} />
         </Routes>
         <Footer />
       </BrowserRouter>
