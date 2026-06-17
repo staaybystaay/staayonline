@@ -195,18 +195,15 @@ function ShopTeaser({ image }) {
 // ─── Feature block: Gift Cards (functional) ───
 function GiftCardSection() {
   const [selected, setSelected] = useState(GIFT_AMOUNTS[1])
-  
   const [added,    setAdded]    = useState(false)
   const addItem = useCartStore(s => s.addItem)
 
-  
-
   function handleAdd() {
-    if (!amount || amount <= 0) return
+    if (!selected || selected <= 0) return
     addItem({
-      id:       `giftcard-${amount}-${Date.now()}`,
-      name:     `STAAY Gift Card — GH₵${amount.toLocaleString()}`,
-      price:    amount,
+      id:       `giftcard-${selected}-${Date.now()}`,
+      name:     `STAAY Gift Card — GH₵${selected.toLocaleString()}`,
+      price:    selected,
       image:    '/stayonlinelogo.jpeg',
       category: 'Gift Card',
       qty: 1,
@@ -231,19 +228,18 @@ function GiftCardSection() {
           </p>
 
           <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '10px' }}>Choose an amount</p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '14px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '22px' }}>
             {GIFT_AMOUNTS.map(amt => (
-              <button key={amt} onClick={() => { setSelected(amt); setCustom('') }}
-                style={{ padding: '10px 18px', border: `1.5px solid ${!custom && selected === amt ? G : BR}`, background: !custom && selected === amt ? W : 'transparent', ...F, fontSize: '13px', fontWeight: !custom && selected === amt ? 700 : 400, color: !custom && selected === amt ? G : DK, cursor: 'pointer', transition: 'all 0.15s' }}>
+              <button key={amt} onClick={() => setSelected(amt)}
+                style={{ padding: '10px 18px', border: `1.5px solid ${selected === amt ? G : BR}`, background: selected === amt ? W : 'transparent', ...F, fontSize: '13px', fontWeight: selected === amt ? 700 : 400, color: selected === amt ? G : DK, cursor: 'pointer', transition: 'all 0.15s' }}>
                 GH₵{amt.toLocaleString()}
               </button>
             ))}
           </div>
 
-
           <button onClick={handleAdd}
             style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: added ? '#16A34A' : G, color: W, padding: '14px 36px', border: 'none', cursor: 'pointer', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', transition: 'background 0.2s' }}>
-            {added ? '✓ Added to Bag' : `Add Gift Card · GH₵${(amount || 0).toLocaleString()}`}
+            {added ? '✓ Added to Bag' : `Add Gift Card · GH₵${(selected || 0).toLocaleString()}`}
           </button>
         </motion.div>
 
@@ -258,7 +254,7 @@ function GiftCardSection() {
             </div>
             <div style={{ position: 'relative' }}>
               <p style={{ ...F, fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '6px' }}>Gift Card Value</p>
-              <p style={{ ...F, fontSize: 'clamp(28px, 4vw, 38px)', fontWeight: 800, color: W }}>GH₵{(amount || 0).toLocaleString()}</p>
+              <p style={{ ...F, fontSize: 'clamp(28px, 4vw, 38px)', fontWeight: 800, color: W }}>GH₵{(selected || 0).toLocaleString()}</p>
             </div>
           </div>
         </motion.div>
