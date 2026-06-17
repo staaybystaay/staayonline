@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
 import useFavoritesStore from '../store/useFavoritesStore'
+import { useAuth } from '../hooks/useAuth'
+import { getReviewsByProduct, createReview } from '../lib/api'
 
 const G   = '#B8903A'
 const GL  = '#F5ECD8'
@@ -23,17 +25,34 @@ const COLORS = [
   { name: 'Nude',  hex: '#C8A882' },
 ]
 
-function StarRow({ score = 0, count = 0 }) {
+function StarRow({ score = 0, count = 0, hideLabel = false }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
       <div style={{ display: 'flex', gap: '2px' }}>
         {[1,2,3,4,5].map(i => (
-          <svg key={i} width="13" height="13" viewBox="0 0 13 13" fill={i <= score ? G : '#E8E4DF'} stroke={i <= score ? G : '#D4CFC9'} strokeWidth="0.5">
+          <svg key={i} width="13" height="13" viewBox="0 0 13 13" fill={i <= Math.round(score) ? G : '#E8E4DF'} stroke={i <= Math.round(score) ? G : '#D4CFC9'} strokeWidth="0.5">
             <path d="M6.5 1l1.3 4H12L8.6 7.8l1.3 4L6.5 9.5 3.1 11.8l1.3-4L1 5h4.2z"/>
           </svg>
         ))}
       </div>
-      <span style={{ ...F, fontSize: '12px', color: MD }}>{score.toFixed(1)} ({count})</span>
+      {!hideLabel && <span style={{ ...F, fontSize: '12px', color: MD }}>{score.toFixed(1)} ({count})</span>}
+    </div>
+  )
+}
+
+function StarPicker({ value, onChange }) {
+  const [hovered, setHovered] = useState(0)
+  return (
+    <div style={{ display: 'flex', gap: '4px' }}>
+      {[1,2,3,4,5].map(i => (
+        <button key={i} type="button" onClick={() => onChange(i)}
+          onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(0)}
+          style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}>
+          <svg width="24" height="24" viewBox="0 0 13 13" fill={i <= (hovered || value) ? G : '#E8E4DF'} stroke={i <= (hovered || value) ? G : '#D4CFC9'} strokeWidth="0.5">
+            <path d="M6.5 1l1.3 4H12L8.6 7.8l1.3 4L6.5 9.5 3.1 11.8l1.3-4L1 5h4.2z"/>
+          </svg>
+        </button>
+      ))}
     </div>
   )
 }
@@ -50,10 +69,45 @@ export default function QuickView({ product, onClose }) {
   const [addedToBag,    setAddedToBag]    = useState(false)
   const [detailsOpen,   setDetailsOpen]   = useState(false)
 
+  const [reviews,        setReviews]        = useState([])
+  const [reviewsLoading,  setReviewsLoading] = useState(true)
+  const [showReviewForm, setShowReviewForm] = useState(false)
+  const [reviewName,    setReviewName]    = useState('')
+  const [reviewRating,  setReviewRating]  = useState(0)
+  const [reviewComment, setReviewComment] = useState('')
+  const [reviewError,   setReviewError]   = useState('')
+  const [submitting,    setSubmitting]    = useState(false)
+  const [submitted,     setSubmitted]     = useState(false)
+
   const addItem     = useCartStore(s => s.addItem)
   const toggle      = useFavoritesStore(s => s.toggle)
   const isFavorited = useFavoritesStore(s => s.isFavorited)
   const faved = isFavorited(product?.id)
+  const { user, profile } = useAuth()
+
+  useEffect(() => {
+    if (!product?.id) return
+    setReviewsLoading(true)
+    getReviewsByProduct(product.id)
+      .then(data => setReviews(data || []))
+      .catch(() => setReviews([]))
+      .finally(() => setReviewsLoading(false))
+  }, [product?.id])
+
+  useEffect(() => {
+    if (user && profile?.first_name) setReviewName(profile.first_name)
+  }, [user, profile])
+
+  const avgRating = useMemo(() => {
+    if (!reviews.length) return 0
+    return reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+  }, [reviews])
+
+  const ratingCounts = useMemo(() => {
+    const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 }
+    reviews.forEach(r => { counts[r.rating] = (counts[r.rating] || 0) + 1 })
+    return counts
+  }, [reviews])
 
   if (!product) return null
 
@@ -63,6 +117,34 @@ export default function QuickView({ product, onClose }) {
     addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY', badge: product.badge, qty })
     setAddedToBag(true)
     setTimeout(() => setAddedToBag(false), 2500)
+  }
+
+  async function handleSubmitReview(e) {
+    e.preventDefault()
+    if (!reviewName.trim())  { setReviewError('Please enter your name.'); return }
+    if (!reviewRating)       { setReviewError('Please select a star rating.'); return }
+    if (!reviewComment.trim()) { setReviewError('Please write a short review.'); return }
+
+    setSubmitting(true)
+    setReviewError('')
+    try {
+      const newReview = await createReview({
+        productId: product.id,
+        customerId: user?.id || null,
+        name: reviewName.trim(),
+        rating: reviewRating,
+        comment: reviewComment.trim(),
+      })
+      setReviews(prev => [newReview, ...prev])
+      setSubmitted(true)
+      setReviewComment('')
+      setReviewRating(0)
+      setTimeout(() => { setSubmitted(false); setShowReviewForm(false) }, 1800)
+    } catch (err) {
+      setReviewError(err.message || 'Something went wrong. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -143,7 +225,7 @@ export default function QuickView({ product, onClose }) {
             <div style={{ padding: '24px 28px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '18px', borderLeft: `1px solid ${BR}` }}>
 
               {/* Rating */}
-              <StarRow score={0} count={0} />
+              <StarRow score={avgRating} count={reviews.length} />
 
               {/* Price */}
               <div>
@@ -222,7 +304,7 @@ export default function QuickView({ product, onClose }) {
             </div>
           </div>
 
-          {/* ── SHIPPING INFO — no emojis ── */}
+          {/* ── SHIPPING INFO ── */}
           <div className="qv-shipping-grid" style={{ padding: '20px 28px', borderBottom: `1px solid ${BR}`, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
             {[
               { title: 'Free Shipping',    sub: 'On all orders within Accra'    },
@@ -254,39 +336,114 @@ export default function QuickView({ product, onClose }) {
           <div style={{ padding: '24px 28px' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
               <h3 style={{ ...F, fontSize: '16px', fontWeight: 700, color: DK }}>Reviews & Ratings</h3>
-              <button style={{ background: G, border: 'none', color: W, padding: '9px 20px', ...F, fontSize: '12px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}>
-                Write a Review
-              </button>
+              {!showReviewForm && (
+                <button onClick={() => setShowReviewForm(true)} style={{ background: G, border: 'none', color: W, padding: '9px 20px', ...F, fontSize: '12px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}>
+                  Write a Review
+                </button>
+              )}
             </div>
 
+            {/* Rating summary */}
             <div style={{ display: 'flex', gap: '32px', alignItems: 'flex-start', marginBottom: '28px' }}>
               <div style={{ textAlign: 'center', flexShrink: 0, paddingTop: '4px' }}>
-                <p style={{ ...F, fontSize: '48px', fontWeight: 900, color: DK, lineHeight: 1, letterSpacing: '-0.03em' }}>0.0</p>
-                <StarRow score={0} count={0} />
-                <p style={{ ...F, fontSize: '11px', color: MD, marginTop: '6px' }}>Based on 0 reviews</p>
+                <p style={{ ...F, fontSize: '48px', fontWeight: 900, color: DK, lineHeight: 1, letterSpacing: '-0.03em' }}>{avgRating.toFixed(1)}</p>
+                <StarRow score={avgRating} count={reviews.length} />
+                <p style={{ ...F, fontSize: '11px', color: MD, marginTop: '6px' }}>Based on {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}</p>
               </div>
               <div style={{ flex: 1 }}>
-                {[5,4,3,2,1].map(star => (
-                  <div key={star} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-                    <span style={{ ...F, fontSize: '12px', color: MD, width: '12px', textAlign: 'right', flexShrink: 0 }}>{star}</span>
-                    <div style={{ flex: 1, height: '8px', background: BR, borderRadius: '4px', overflow: 'hidden' }}>
-                      <div style={{ width: '0%', height: '100%', background: G, borderRadius: '4px' }} />
+                {[5,4,3,2,1].map(star => {
+                  const count = ratingCounts[star] || 0
+                  const pct = reviews.length ? (count / reviews.length) * 100 : 0
+                  return (
+                    <div key={star} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                      <span style={{ ...F, fontSize: '12px', color: MD, width: '12px', textAlign: 'right', flexShrink: 0 }}>{star}</span>
+                      <div style={{ flex: 1, height: '8px', background: BR, borderRadius: '4px', overflow: 'hidden' }}>
+                        <div style={{ width: `${pct}%`, height: '100%', background: G, borderRadius: '4px', transition: 'width 0.4s ease' }} />
+                      </div>
+                      <span style={{ ...F, fontSize: '12px', color: MD, width: '16px', flexShrink: 0 }}>{count}</span>
                     </div>
-                    <span style={{ ...F, fontSize: '12px', color: MD, width: '12px', flexShrink: 0 }}>0</span>
+                  )
+                })}
+              </div>
+            </div>
+
+            {/* Write review form */}
+            <AnimatePresence>
+              {showReviewForm && (
+                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}
+                  style={{ overflow: 'hidden', marginBottom: '24px' }}>
+                  <div style={{ background: LG, padding: '20px', border: `1px solid ${BR}` }}>
+                    {submitted ? (
+                      <div style={{ textAlign: 'center', padding: '12px 0' }}>
+                        <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: GR }}>✓ Thank you for your review!</p>
+                      </div>
+                    ) : (
+                      <form onSubmit={handleSubmitReview} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                        <div>
+                          <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '8px' }}>Your Rating</p>
+                          <StarPicker value={reviewRating} onChange={setReviewRating} />
+                        </div>
+                        <div>
+                          <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '8px' }}>Your Name</p>
+                          <input value={reviewName} onChange={e => setReviewName(e.target.value)} placeholder="e.g. Ama K."
+                            style={{ width: '100%', padding: '10px 14px', border: `1px solid ${BR}`, background: W, ...F, fontSize: '13px', color: DK, outline: 'none', boxSizing: 'border-box' }} />
+                        </div>
+                        <div>
+                          <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '8px' }}>Your Review</p>
+                          <textarea value={reviewComment} onChange={e => setReviewComment(e.target.value)} rows={3} placeholder="Tell us what you thought of this piece..."
+                            style={{ width: '100%', padding: '10px 14px', border: `1px solid ${BR}`, background: W, ...F, fontSize: '13px', color: DK, outline: 'none', resize: 'vertical', boxSizing: 'border-box' }} />
+                        </div>
+                        {reviewError && <p style={{ ...F, fontSize: '12px', color: RD }}>{reviewError}</p>}
+                        <div style={{ display: 'flex', gap: '8px' }}>
+                          <button type="submit" disabled={submitting}
+                            style={{ flex: 1, padding: '11px', background: submitting ? FT : G, color: W, border: 'none', cursor: submitting ? 'not-allowed' : 'pointer', ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.04em' }}>
+                            {submitting ? 'Submitting...' : 'Submit Review'}
+                          </button>
+                          <button type="button" onClick={() => setShowReviewForm(false)}
+                            style={{ padding: '11px 20px', background: 'transparent', border: `1px solid ${BR}`, color: MD, cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 500 }}>
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Review list / empty state */}
+            {reviewsLoading ? (
+              <p style={{ ...F, fontSize: '13px', color: FT, textAlign: 'center', padding: '20px 0' }}>Loading reviews...</p>
+            ) : reviews.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '32px 0', border: `1px dashed ${BR}` }}>
+                <p style={{ ...F, fontSize: '15px', fontWeight: 700, color: DK, marginBottom: '8px' }}>No Reviews Yet</p>
+                <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD, marginBottom: '20px' }}>
+                  Be the first to review this product
+                </p>
+                {!showReviewForm && (
+                  <button onClick={() => setShowReviewForm(true)} style={{ background: G, border: 'none', color: W, padding: '11px 36px', ...F, fontSize: '13px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}>
+                    Write First Review
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                {reviews.map(r => (
+                  <div key={r.id} style={{ borderTop: `1px solid ${BR}`, paddingTop: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                      <p style={{ ...F, fontSize: '13px', fontWeight: 700, color: DK }}>{r.name}</p>
+                      <span style={{ ...F, fontSize: '11px', color: FT }}>
+                        {new Date(r.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      </span>
+                    </div>
+                    <div style={{ marginBottom: '8px' }}>
+                      <StarRow score={r.rating} hideLabel />
+                    </div>
+                    <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD, lineHeight: 1.7 }}>{r.comment}</p>
                   </div>
                 ))}
               </div>
-            </div>
-
-            <div style={{ textAlign: 'center', padding: '32px 0', border: `1px dashed ${BR}` }}>
-              <p style={{ ...F, fontSize: '15px', fontWeight: 700, color: DK, marginBottom: '8px' }}>No Reviews Yet</p>
-              <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD, marginBottom: '20px' }}>
-                Be the first to review this product
-              </p>
-              <button style={{ background: G, border: 'none', color: W, padding: '11px 36px', ...F, fontSize: '13px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}>
-                Write First Review
-              </button>
-            </div>
+            )}
           </div>
 
         </div>
