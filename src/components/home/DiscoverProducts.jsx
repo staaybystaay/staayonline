@@ -5,6 +5,7 @@ import useCartStore from '../../store/useCartStore'
 import useFavoritesStore from '../../store/useFavoritesStore'
 import { supabase } from '../../lib/supabase'
 import QuickView from '../QuickView'
+import ApproxPrice from '../ApproxPrice'
 
 const G   = '#B8903A'
 const W   = '#FFFFFF'
@@ -110,6 +111,7 @@ function ProductCard({ product, index, discount, onQuickView }) {
           {originalPrice && <span style={{ ...F, fontSize: '13px', color: '#AAA', textDecoration: 'line-through' }}>GH₵{Number(originalPrice).toLocaleString()}</span>}
           <span style={{ ...F, fontSize: '11px', color: MD, marginLeft: 'auto' }}>(0)</span>
         </div>
+        <ApproxPrice ghs={product.price} style={{ marginTop: '-6px', marginBottom: '8px' }} />
         <div style={{ display: 'inline-block', background: '#FFF9C4', border: '1px solid #F6E05E', padding: '3px 10px', borderRadius: '4px', ...F, fontSize: '11px', fontWeight: 500, color: '#744210' }}>
           In Stock
         </div>
