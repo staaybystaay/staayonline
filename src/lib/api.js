@@ -141,14 +141,18 @@ export async function createOrder(orderData) {
   if (orderError) throw orderError
 
   const { error: itemsError } = await supabase.from('order_items').insert(
-    items.map(item => ({
-      order_id:   newOrder.id,
-      product_id: item.id        || null,
-      name:       item.name,
-      price:      item.price,
-      qty:        item.qty,
-      image_url:  item.image     || item.image_url || null,
-    }))
+    items.map(item => {
+      const isGiftCard = item.category === 'Gift Card' || String(item.id).startsWith('giftcard-')
+      return {
+        order_id:      newOrder.id,
+        product_id:    isGiftCard ? null : (item.id || null),
+        name:          item.name,
+        price:         item.price,
+        qty:           item.qty,
+        image_url:     item.image     || item.image_url || null,
+        customization: item.customization || null,
+      }
+    })
   )
   if (itemsError) throw itemsError
   return newOrder
