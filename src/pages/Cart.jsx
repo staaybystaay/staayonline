@@ -79,6 +79,13 @@ function CartItem({ item, index }) {
           <h3 style={{ ...F, fontSize: '15px', fontWeight: 600, color: INK, letterSpacing: '-0.01em' }}>
             {item.name}
           </h3>
+          {item.customization && (
+            <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: MUTE, marginTop: '4px', lineHeight: 1.5 }}>
+              {item.customization.color && `Colour: ${item.customization.color}`}
+              {item.customization.color && item.customization.note && ' · '}
+              {item.customization.note}
+            </p>
+          )}
         </div>
 
         {/* Qty + Remove */}
