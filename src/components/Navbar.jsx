@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
 import { useAuth } from '../hooks/useAuth'
+import CurrencySelector from './CurrencySelector'
 
 const G  = '#B8903A'
 const GL = '#F5ECD8'
@@ -79,7 +80,10 @@ function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch }) {
             style={{ position: 'fixed', top: 0, left: 0, bottom: 0, width: '280px', zIndex: 1000, background: W, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 24px', borderBottom: `1px solid ${BR}` }}>
               <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
-              <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: DK }}><CloseIcon /></button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <CurrencySelector />
+                <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: DK }}><CloseIcon /></button>
+              </div>
             </div>
 
             {/* Search */}
@@ -228,41 +232,46 @@ export default function Navbar() {
           </form>
 
           {/* Icons */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginLeft: 'auto' }}>
-            <Link to="/favorites"
-              style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.color = G }}
-              onMouseLeave={e => { e.currentTarget.style.color = MD }}>
-              <HeartIcon />
-            </Link>
-            <Link to="/cart"
-              style={{ position: 'relative', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.color = G }}
-              onMouseLeave={e => { e.currentTarget.style.color = MD }}>
-              <CartIcon />
-              <AnimatePresence>
-                {cartCount > 0 && (
-                  <motion.span key="badge" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
-                    style={{ position: 'absolute', top: '4px', right: '4px', width: '16px', height: '16px', background: G, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '9px', fontWeight: 700, color: W }}>
-                    {cartCount}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </Link>
-            {user && (
-              <Link to="/account" className="desktop-only"
-                style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, textDecoration: 'none', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginLeft: 'auto' }}>
+            <span className="desktop-only" style={{ display: 'flex' }}>
+              <CurrencySelector />
+            </span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Link to="/favorites"
+                style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s' }}
                 onMouseEnter={e => { e.currentTarget.style.color = G }}
-                onMouseLeave={e => { e.currentTarget.style.color = DK }}>
-                Hi, {profile?.first_name || user.email.split('@')[0]}
+                onMouseLeave={e => { e.currentTarget.style.color = MD }}>
+                <HeartIcon />
               </Link>
-            )}
-            <Link to={user ? '/account' : '/login'}
-              style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: user ? G : MD, transition: 'color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.color = G }}
-              onMouseLeave={e => { e.currentTarget.style.color = user ? G : MD }}>
-              <UserIcon />
-            </Link>
+              <Link to="/cart"
+                style={{ position: 'relative', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.color = G }}
+                onMouseLeave={e => { e.currentTarget.style.color = MD }}>
+                <CartIcon />
+                <AnimatePresence>
+                  {cartCount > 0 && (
+                    <motion.span key="badge" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
+                      style={{ position: 'absolute', top: '4px', right: '4px', width: '16px', height: '16px', background: G, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '9px', fontWeight: 700, color: W }}>
+                      {cartCount}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </Link>
+              {user && (
+                <Link to="/account" className="desktop-only"
+                  style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, textDecoration: 'none', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.color = G }}
+                  onMouseLeave={e => { e.currentTarget.style.color = DK }}>
+                  Hi, {profile?.first_name || user.email.split('@')[0]}
+                </Link>
+              )}
+              <Link to={user ? '/account' : '/login'}
+                style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: user ? G : MD, transition: 'color 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.color = G }}
+                onMouseLeave={e => { e.currentTarget.style.color = user ? G : MD }}>
+                <UserIcon />
+              </Link>
+            </div>
           </div>
         </div>
 
