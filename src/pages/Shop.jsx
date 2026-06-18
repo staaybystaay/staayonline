@@ -5,6 +5,7 @@ import useCartStore from '../store/useCartStore'
 import useFavoritesStore from '../store/useFavoritesStore'
 import { supabase } from '../lib/supabase'
 import QuickView from '../components/QuickView'
+import ApproxPrice from '../components/ApproxPrice'
 
 const G   = '#B8903A'
 const GL  = '#F5ECD8'
@@ -159,6 +160,7 @@ function ProductCard({ product, index, viewMode, onQuickView }) {
             <div>
               <p style={{ ...F, fontSize: '18px', fontWeight: 700, color: DK }}>GH₵{Number(product.price).toLocaleString()}</p>
               {origPrice && <p style={{ ...F, fontSize: '13px', color: FT, textDecoration: 'line-through' }}>GH₵{origPrice.toLocaleString()}</p>}
+              <ApproxPrice ghs={product.price} />
             </div>
             <button onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY' })}
               style={{ background: BK, color: W, border: 'none', padding: '10px 20px', ...F, fontSize: '12px', fontWeight: 600, cursor: 'pointer', transition: 'background 0.2s', whiteSpace: 'nowrap' }}
@@ -231,18 +233,11 @@ function ProductCard({ product, index, viewMode, onQuickView }) {
         <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '2px', lineHeight: 1.3 }}>{product.name}</p>
         <p style={{ ...F, fontSize: '11px', color: MD, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px' }}>{product.collection?.name}</p>
 
-       {/* Colors */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', marginBottom: '6px' }}>
-          <span style={{ ...F, fontSize: '11px', color: MD }}>Colors:</span>
-          {[G, '#1A1612'].slice(0, index % 2 === 0 ? 2 : 1).map((c, i) => (
-            <div key={i} style={{ width: '14px', height: '14px', borderRadius: '50%', background: c, border: '1.5px solid #fff', boxShadow: '0 0 0 1px #ddd' }} />
-          ))}
-        </div>
-
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
           <span style={{ ...F, fontSize: '15px', fontWeight: 700, color: DK }}>GH₵{Number(product.price).toLocaleString()}</span>
           {origPrice && <span style={{ ...F, fontSize: '12px', color: FT, textDecoration: 'line-through' }}>GH₵{origPrice.toLocaleString()}</span>}
         </div>
+        <ApproxPrice ghs={product.price} style={{ marginTop: '-4px', marginBottom: '6px' }} />
 
         <div style={{ display: 'inline-block', background: '#FFF9C4', border: '1px solid #F6E05E', padding: '2px 8px', borderRadius: '3px', ...F, fontSize: '10px', fontWeight: 600, color: '#744210' }}>
           Only {(index % 4) + 1} left in stock
