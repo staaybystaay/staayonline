@@ -20,6 +20,13 @@ const F   = { fontFamily: "'Inter', sans-serif" }
 
 const SIZES  = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
 const CUSTOMIZATION_FEE = 300
+const COLORS = [
+  { name: 'Gold',  hex: '#B8903A' },
+  { name: 'Black', hex: '#1A1612' },
+  { name: 'Nude',  hex: '#C8A882' },
+  { name: 'White', hex: '#F7F5F2' },
+  { name: 'Navy',  hex: '#1E3A5F' },
+]
 
 function StarRow({ score = 0, count = 0, hideLabel = false }) {
   return (
@@ -60,6 +67,7 @@ function Divider() {
 export default function QuickView({ product, onClose }) {
   const [selectedSize,  setSelectedSize]  = useState(null)
   const [customize,     setCustomize]     = useState(false)
+  const [customColor,   setCustomColor]   = useState(null)
   const [customNote,    setCustomNote]    = useState('')
   const [qty,           setQty]           = useState(1)
   const [activeImg,     setActiveImg]     = useState(0)
@@ -120,7 +128,7 @@ export default function QuickView({ product, onClose }) {
       category: product.collection?.name || 'STAAY',
       badge: product.badge,
       qty,
-      customNote: customize ? customNote : null,
+      customization: customize ? { color: customColor, note: customNote.trim() || null } : null,
     })
     setAddedToBag(true)
     setTimeout(() => setAddedToBag(false), 2500)
@@ -261,7 +269,7 @@ export default function QuickView({ product, onClose }) {
                 <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', cursor: 'pointer' }}>
                   <button
                     type="button"
-                    onClick={() => setCustomize(v => !v)}
+                    onClick={() => setCustomize(v => { const next = !v; if (!next) { setCustomColor(null); setCustomNote('') } return next })}
                     style={{ width: '44px', height: '24px', borderRadius: '12px', background: customize ? G : '#D1D5DB', border: 'none', cursor: 'pointer', position: 'relative', flexShrink: 0, transition: 'background 0.2s', marginTop: '1px' }}>
                     <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: W, position: 'absolute', top: '3px', left: customize ? '23px' : '3px', transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
                   </button>
@@ -270,13 +278,25 @@ export default function QuickView({ product, onClose }) {
                       Customize this piece <span style={{ color: G, fontWeight: 700 }}>+GH₵{CUSTOMIZATION_FEE}</span>
                     </p>
                     <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: MD, marginTop: '2px', lineHeight: 1.5 }}>
-                      Request adjustments to fit, length, or styling. We'll follow up with you to confirm details.
+                      Request a custom colour or adjustments to fit, length, or styling. We'll follow up to confirm details.
                     </p>
                   </div>
                 </label>
 
                 {customize && (
-                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} transition={{ duration: 0.2 }} style={{ overflow: 'hidden', marginTop: '12px' }}>
+                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} transition={{ duration: 0.2 }} style={{ overflow: 'hidden', marginTop: '14px' }}>
+
+                    {/* Custom color picker */}
+                    <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '8px' }}>
+                      Preferred Colour {customColor && <span style={{ fontWeight: 400, color: MD }}>— {customColor}</span>}
+                    </p>
+                    <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
+                      {COLORS.map(c => (
+                        <button key={c.name} type="button" onClick={() => setCustomColor(c.name)} title={c.name}
+                          style={{ width: '28px', height: '28px', borderRadius: '50%', background: c.hex, border: `3px solid ${W}`, cursor: 'pointer', padding: 0, outline: `2px solid ${customColor === c.name ? G : 'transparent'}`, outlineOffset: '2px', transition: 'outline-color 0.2s' }} />
+                      ))}
+                    </div>
+
                     <textarea
                       value={customNote}
                       onChange={e => setCustomNote(e.target.value)}
