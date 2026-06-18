@@ -4,6 +4,7 @@ import useCartStore from '../store/useCartStore'
 import useFavoritesStore from '../store/useFavoritesStore'
 import { useAuth } from '../hooks/useAuth'
 import { getReviewsByProduct, createReview } from '../lib/api'
+import ApproxPrice from './ApproxPrice'
 
 const G   = '#B8903A'
 const GL  = '#F5ECD8'
@@ -252,6 +253,7 @@ export default function QuickView({ product, onClose }) {
                     GH₵{Number(product.price).toLocaleString()} + GH₵{CUSTOMIZATION_FEE} customization
                   </p>
                 )}
+                <ApproxPrice ghs={product.price + (customize ? CUSTOMIZATION_FEE : 0)} />
                 <p style={{ ...F, fontSize: '11px', fontWeight: 400, color: MD, marginTop: '4px' }}>
                   {product.collection?.name || 'STAAY Collection'}
                 </p>
