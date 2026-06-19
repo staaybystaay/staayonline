@@ -6,6 +6,7 @@ import useFavoritesStore from '../store/useFavoritesStore'
 import { supabase } from '../lib/supabase'
 import QuickView from '../components/QuickView'
 import ApproxPrice from '../components/ApproxPrice'
+import CurrencySelector from '../components/CurrencySelector'
 
 const G   = '#B8903A'
 const GL  = '#F5ECD8'
@@ -461,6 +462,11 @@ export default function Shop() {
             style={{ display: 'none', alignItems: 'center', gap: '6px', padding: '0 14px', height: '52px', background: 'transparent', border: 'none', borderRight: `1px solid ${BR}`, ...F, fontSize: '12px', fontWeight: 600, color: DK, cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>
             <FilterIcon /> Filters
           </button>
+
+          {/* Currency selector — desktop only */}
+          <span className="desktop-only" style={{ display: 'flex', borderRight: `1px solid ${BR}`, paddingRight: '14px', marginRight: '0' }}>
+            <CurrencySelector />
+          </span>
 
           {/* View mode */}
           <div style={{ display: 'flex' }}>
