@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
 import { useAuth } from '../hooks/useAuth'
-import CurrencySelector from './CurrencySelector'
 
 const G  = '#B8903A'
 const GL = '#F5ECD8'
@@ -80,10 +79,7 @@ function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch }) {
             style={{ position: 'fixed', top: 0, left: 0, bottom: 0, width: '280px', zIndex: 1000, background: W, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 24px', borderBottom: `1px solid ${BR}` }}>
               <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <CurrencySelector />
-                <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: DK }}><CloseIcon /></button>
-              </div>
+              <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: DK }}><CloseIcon /></button>
             </div>
 
             {/* Search */}
@@ -233,9 +229,6 @@ export default function Navbar() {
 
           {/* Icons */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginLeft: 'auto' }}>
-            <span className="desktop-only" style={{ display: 'flex' }}>
-              <CurrencySelector />
-            </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <Link to="/favorites"
                 style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s' }}
