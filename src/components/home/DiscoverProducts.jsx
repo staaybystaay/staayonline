@@ -6,6 +6,7 @@ import useFavoritesStore from '../../store/useFavoritesStore'
 import { supabase } from '../../lib/supabase'
 import QuickView from '../QuickView'
 import ApproxPrice from '../ApproxPrice'
+import CurrencySelector from '../CurrencySelector'
 
 const G   = '#B8903A'
 const W   = '#FFFFFF'
@@ -165,13 +166,18 @@ export default function DiscoverProducts() {
     <section className="page-padding" style={{ background: W, padding: '48px 40px 56px' }}>
       <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
 
-        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: '28px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '28px', flexWrap: 'wrap', gap: '12px' }}>
           <h2 style={{ ...F, fontSize: '22px', fontWeight: 700, color: DK }}>Discover Your Best Products</h2>
-          <Link to="/shop" style={{ ...F, fontSize: '13px', fontWeight: 500, color: G }}
-            onMouseEnter={e => { e.currentTarget.style.opacity = '0.7' }}
-            onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}>
-            View all →
-          </Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <span className="desktop-only" style={{ display: 'flex' }}>
+              <CurrencySelector />
+            </span>
+            <Link to="/shop" style={{ ...F, fontSize: '13px', fontWeight: 500, color: G }}
+              onMouseEnter={e => { e.currentTarget.style.opacity = '0.7' }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}>
+              View all →
+            </Link>
+          </div>
         </div>
 
         {error && (
