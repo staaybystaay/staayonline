@@ -22,6 +22,9 @@ import ScrollToTop from './components/ScrollToTop'
 import Contact from './pages/Contact'
 import FAQ from './pages/FAQ'
 import AdminProducts from './components/admin/AdminProducts'
+import SizeGuide from './pages/SizeGuide'
+import CookiePolicy from './pages/CookiePolicy'
+
 
 
 
@@ -57,6 +60,9 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/size-guide" element={<SizeGuide />} />
+         <Route path="/cookie-policy" element={<CookiePolicy />} />
+
         </Routes>
         <Footer />
       </BrowserRouter>
