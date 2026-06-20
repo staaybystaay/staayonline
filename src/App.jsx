@@ -21,7 +21,7 @@ import AdminOrders    from './pages/AdminOrders'
 import ScrollToTop from './components/ScrollToTop'
 import Contact from './pages/Contact'
 import FAQ from './pages/FAQ'
-import AdminProducts from './pages/admin/AdminProducts'
+import AdminProducts from './components/admin/AdminProducts'
 
 
 
