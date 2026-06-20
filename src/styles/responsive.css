@@ -279,3 +279,19 @@
     grid-template-columns: 44px 1fr auto auto !important;
   }
 }
+
+/* ============================================
+   Size Guide — measure steps stack on mobile,
+   size table scrolls horizontally instead of
+   squeezing
+   ============================================ */
+@media (max-width: 700px) {
+  .size-guide-steps {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (max-width: 600px) {
+  .size-guide-table-wrap {
+    -webkit-overflow-scrolling: touch;
+  }
+}
