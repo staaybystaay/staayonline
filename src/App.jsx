@@ -21,6 +21,9 @@ import AdminOrders    from './pages/AdminOrders'
 import ScrollToTop from './components/ScrollToTop'
 import Contact from './pages/Contact'
 import FAQ from './pages/FAQ'
+import AdminProducts from './pages/admin/AdminProducts'
+
+
 
 
 
@@ -53,6 +56,7 @@ export default function App() {
           <Route path="/admin/orders" element={<AdminOrders />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
         </Routes>
         <Footer />
       </BrowserRouter>
