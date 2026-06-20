@@ -205,6 +205,55 @@ export async function getAllProducts() {
   return data
 }
 
+// ─── ADMIN — PRODUCTS ────────────────────────
+// Same as getAllProducts but includes inactive products too,
+// for the admin product management table.
+export async function getAllProductsAdmin() {
+  const { data, error } = await supabase
+    .from('products')
+    .select('*, collection:collections(id, slug, name)')
+    .order('sort_order', { ascending: true })
+  if (error) throw error
+  return data
+}
+
+export async function createProduct(product) {
+  const { data, error } = await supabase
+    .from('products')
+    .insert(product)
+    .select('*, collection:collections(id, slug, name)')
+    .single()
+  if (error) throw error
+  return data
+}
+
+export async function updateProduct(id, updates) {
+  const { data, error } = await supabase
+    .from('products')
+    .update(updates)
+    .eq('id', id)
+    .select('*, collection:collections(id, slug, name)')
+    .single()
+  if (error) throw error
+  return data
+}
+
+export async function deleteProduct(id) {
+  const { error } = await supabase.from('products').delete().eq('id', id)
+  if (error) throw error
+}
+
+export async function uploadProductImage(file) {
+  const ext  = file.name.split('.').pop().toLowerCase()
+  const path = `products/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
+  const { error } = await supabase.storage
+    .from('products')
+    .upload(path, file, { upsert: false, contentType: file.type })
+  if (error) throw error
+  const { data } = supabase.storage.from('products').getPublicUrl(path)
+  return data.publicUrl
+}
+
 export async function getSaleProducts() {
   const { data, error } = await supabase
     .from('products')
