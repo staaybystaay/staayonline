@@ -260,3 +260,22 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+
+/* ============================================
+   Admin Products — table compresses on small
+   screens; price/status columns hide below 640px
+   to keep things from feeling cramped
+   ============================================ */
+@media (max-width: 640px) {
+  .admin-product-row {
+    grid-template-columns: 44px 1fr auto auto !important;
+  }
+  .admin-product-price,
+  .admin-product-status {
+    display: none !important;
+  }
+  .admin-product-header {
+    grid-template-columns: 44px 1fr auto auto !important;
+  }
+}
