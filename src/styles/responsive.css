@@ -295,3 +295,17 @@
     -webkit-overflow-scrolling: touch;
   }
 }
+
+
+/* ============================================
+   Admin Newsletter — hide the date column on
+   small screens to keep email + actions readable
+   ============================================ */
+@media (max-width: 560px) {
+  .admin-newsletter-row {
+    grid-template-columns: 1fr auto !important;
+  }
+  .admin-newsletter-date {
+    display: none !important;
+  }
+}
