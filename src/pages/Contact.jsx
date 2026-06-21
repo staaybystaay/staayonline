@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { submitContactMessage } from '../lib/api'
 
 const G    = '#B8903A'
 const GL   = '#F5ECD8'
@@ -97,14 +98,42 @@ function ContactRow({ icon, iconBg, label, value, sub, href }) {
 }
 
 const quickHelp = [
-  { label: 'Frequently Asked Questions', path: '/terms' },
-  { label: 'Size Guide & Fitting Help',  path: '/shop'  },
-  { label: 'Shipping Information',       path: '/terms' },
-  { label: 'Returns & Exchanges',        path: '/terms' },
+  { label: 'Frequently Asked Questions', path: '/faq'        },
+  { label: 'Size Guide & Fitting Help',  path: '/size-guide' },
+  { label: 'Shipping Information',       path: '/faq'        },
+  { label: 'Returns & Exchanges',        path: '/faq'        },
 ]
 
 export default function Contact() {
-  const [message, setMessage] = useState('')
+  const [name,       setName]       = useState('')
+  const [email,      setEmail]      = useState('')
+  const [message,    setMessage]    = useState('')
+  const [error,      setError]      = useState('')
+  const [sending,    setSending]    = useState(false)
+  const [sent,       setSent]       = useState(false)
+
+  async function handleSend() {
+    if (!name.trim())    { setError('Please enter your name.'); return }
+    if (!message.trim()) { setError('Please enter a message.'); return }
+    if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setError('Enter a valid email, or leave it blank.')
+      return
+    }
+
+    setSending(true)
+    setError('')
+    try {
+      await submitContactMessage({ name: name.trim(), email: email.trim() || null, message: message.trim() })
+      setSent(true)
+    } catch (err) {
+      // Saving to our records failed, but don't block the customer from
+      // reaching us directly on WhatsApp — that's the primary channel.
+      console.error('Failed to save contact message:', err)
+    } finally {
+      setSending(false)
+      openWhatsApp(message)
+    }
+  }
 
   return (
     <div style={{ background: W, minHeight: '100vh' }}>
@@ -179,48 +208,99 @@ export default function Contact() {
               <span style={{ ...F, fontSize: '12px', fontWeight: 500, color: '#0E7A3E' }}>Get instant responses from our team via WhatsApp</span>
             </div>
 
-            <label style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, display: 'block', marginBottom: '8px' }}>
-              Your Message <span style={{ color: '#C0392B' }}>*</span>
-            </label>
-            <textarea
-              value={message}
-              onChange={e => setMessage(e.target.value)}
-              placeholder="Type your message here... our team will respond via WhatsApp shortly."
-              rows={5}
-              style={{ width: '100%', border: `1px solid ${BR}`, borderRadius: '8px', padding: '12px 14px', ...F, fontSize: '13px', color: DK, outline: 'none', resize: 'vertical', boxSizing: 'border-box', marginBottom: '18px' }}
-              onFocus={e => { e.target.style.borderColor = G }}
-              onBlur={e => { e.target.style.borderColor = BR }}
-            />
-
-            <div style={{ background: LG, borderRadius: '8px', padding: '16px 18px', marginBottom: '20px' }}>
-              <p style={{ ...F, fontSize: '12px', fontWeight: 700, color: DK, marginBottom: '10px' }}>WhatsApp Benefits:</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
-                {[
-                  'Instant responses within minutes',
-                  'Share photos for sizing or product questions',
-                  'Chat right from your phone',
-                  'Get real-time order updates',
-                ].map(item => (
-                  <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: G, flexShrink: 0 }} />
-                    <span style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD }}>{item}</span>
-                  </div>
-                ))}
+            {sent ? (
+              <div style={{ textAlign: 'center', padding: '32px 0' }}>
+                <p style={{ ...F, fontSize: '15px', fontWeight: 700, color: '#0E7A3E', marginBottom: '8px' }}>✓ Message sent</p>
+                <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD, marginBottom: '20px' }}>
+                  We've got your message and opened WhatsApp so you can continue the conversation there.
+                </p>
+                <button
+                  onClick={() => { setSent(false); setName(''); setEmail(''); setMessage('') }}
+                  style={{ background: 'none', border: `1px solid ${BR}`, borderRadius: '8px', padding: '10px 24px', ...F, fontSize: '12px', fontWeight: 600, color: DK, cursor: 'pointer' }}>
+                  Send Another Message
+                </button>
               </div>
-            </div>
+            ) : (
+              <>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '14px' }}>
+                  <div>
+                    <label style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, display: 'block', marginBottom: '8px' }}>
+                      Your Name <span style={{ color: '#C0392B' }}>*</span>
+                    </label>
+                    <input
+                      value={name}
+                      onChange={e => { setName(e.target.value); if (error) setError('') }}
+                      placeholder="e.g. Ama K."
+                      style={{ width: '100%', border: `1px solid ${BR}`, borderRadius: '8px', padding: '11px 14px', ...F, fontSize: '13px', color: DK, outline: 'none', boxSizing: 'border-box' }}
+                      onFocus={e => { e.target.style.borderColor = G }}
+                      onBlur={e => { e.target.style.borderColor = BR }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, display: 'block', marginBottom: '8px' }}>
+                      Email <span style={{ fontWeight: 300, color: FT }}>(optional)</span>
+                    </label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={e => { setEmail(e.target.value); if (error) setError('') }}
+                      placeholder="your@email.com"
+                      style={{ width: '100%', border: `1px solid ${BR}`, borderRadius: '8px', padding: '11px 14px', ...F, fontSize: '13px', color: DK, outline: 'none', boxSizing: 'border-box' }}
+                      onFocus={e => { e.target.style.borderColor = G }}
+                      onBlur={e => { e.target.style.borderColor = BR }}
+                    />
+                  </div>
+                </div>
 
-            <button
-              onClick={() => openWhatsApp(message)}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '14px', background: GR, color: W, border: 'none', borderRadius: '8px', cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 700, transition: 'background 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#1FAE56' }}
-              onMouseLeave={e => { e.currentTarget.style.background = GR }}>
-              <WhatsAppIcon size={17} color={W} />
-              Start WhatsApp Chat
-            </button>
+                <label style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, display: 'block', marginBottom: '8px' }}>
+                  Your Message <span style={{ color: '#C0392B' }}>*</span>
+                </label>
+                <textarea
+                  value={message}
+                  onChange={e => { setMessage(e.target.value); if (error) setError('') }}
+                  placeholder="Type your message here... our team will respond via WhatsApp shortly."
+                  rows={5}
+                  style={{ width: '100%', border: `1px solid ${BR}`, borderRadius: '8px', padding: '12px 14px', ...F, fontSize: '13px', color: DK, outline: 'none', resize: 'vertical', boxSizing: 'border-box', marginBottom: error ? '8px' : '18px' }}
+                  onFocus={e => { e.target.style.borderColor = G }}
+                  onBlur={e => { e.target.style.borderColor = BR }}
+                />
 
-            <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: FT, textAlign: 'center', marginTop: '12px', lineHeight: 1.6 }}>
-              Clicking "Start WhatsApp Chat" opens WhatsApp in a new tab. We typically respond within a few hours during business days.
-            </p>
+                {error && (
+                  <p style={{ ...F, fontSize: '12px', color: '#C0392B', marginBottom: '14px' }}>{error}</p>
+                )}
+
+                <div style={{ background: LG, borderRadius: '8px', padding: '16px 18px', marginBottom: '20px' }}>
+                  <p style={{ ...F, fontSize: '12px', fontWeight: 700, color: DK, marginBottom: '10px' }}>WhatsApp Benefits:</p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
+                    {[
+                      'Instant responses within minutes',
+                      'Share photos for sizing or product questions',
+                      'Chat right from your phone',
+                      'Get real-time order updates',
+                    ].map(item => (
+                      <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: G, flexShrink: 0 }} />
+                        <span style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD }}>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleSend}
+                  disabled={sending}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '14px', background: sending ? '#8FD9AC' : GR, color: W, border: 'none', borderRadius: '8px', cursor: sending ? 'not-allowed' : 'pointer', ...F, fontSize: '14px', fontWeight: 700, transition: 'background 0.2s' }}
+                  onMouseEnter={e => { if (!sending) e.currentTarget.style.background = '#1FAE56' }}
+                  onMouseLeave={e => { if (!sending) e.currentTarget.style.background = GR }}>
+                  <WhatsAppIcon size={17} color={W} />
+                  {sending ? 'Sending...' : 'Send Message & Open WhatsApp'}
+                </button>
+
+                <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: FT, textAlign: 'center', marginTop: '12px', lineHeight: 1.6 }}>
+                  We'll save your message and open WhatsApp so you can continue the conversation there. We typically respond within a few hours during business days.
+                </p>
+              </>
+            )}
           </div>
 
           {/* Two support cards */}
