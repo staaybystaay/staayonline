@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { subscribeToNewsletter } from '../lib/api'
 
 const G   = '#B8903A'
 const W   = '#FFFFFF'
@@ -39,15 +41,15 @@ const companyLinks = [
 const supportLinks = [
   { label: 'Track My Order',          path: '/account' },
   { label: 'Returns & Exchanges',     path: '/terms'    },
-  { label: 'FAQ',                     path: '/faq'    },
-  { label: 'Contact Support',         path: '/contact'    },
-  { label: 'Size Guide',              path: '/size-guide'     },
+  { label: 'FAQ',                     path: '/terms'    },
+  { label: 'Contact Support',         path: '/terms'    },
+  { label: 'Size Guide',              path: '/shop'     },
 ]
 const legalLinks = [
   { label: 'Terms of Service', path: '/terms'   },
   { label: 'Privacy Policy',   path: '/privacy' },
   { label: 'Shipping Info',    path: '/terms'   },
-  { label: 'Cookie Policy',    path: '/cookie-policy' },
+  { label: 'Cookie Policy',    path: '/privacy' },
 ]
 
 function FooterColumn({ title, links }) {
@@ -69,6 +71,34 @@ function FooterColumn({ title, links }) {
 }
 
 export default function Footer() {
+  const [email,    setEmail]    = useState('')
+  const [status,   setStatus]   = useState('idle') // idle | loading | success | already | error
+  const [errorMsg, setErrorMsg] = useState('')
+
+  async function handleSubscribe(e) {
+    e.preventDefault()
+    const trimmed = email.trim()
+    if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      setStatus('error')
+      setErrorMsg('Enter a valid email address.')
+      return
+    }
+
+    setStatus('loading')
+    setErrorMsg('')
+    try {
+      await subscribeToNewsletter(trimmed)
+      setStatus('success')
+      setEmail('')
+    } catch (err) {
+      if (err.message === 'ALREADY_SUBSCRIBED') {
+        setStatus('already')
+      } else {
+        setStatus('error')
+        setErrorMsg('Something went wrong. Please try again.')
+      }
+    }
+  }
   return (
     <footer style={{ background: DK }}>
 
@@ -116,23 +146,45 @@ export default function Footer() {
         <div style={{ borderTop: `1px solid ${BR}`, paddingTop: '32px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
           <div className="newsletter-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
             <div style={{ maxWidth: '420px' }}>
-              <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '6px' }}>get connected</p>
-              <h3 style={{ ...F, fontSize: 'clamp(18px, 2.5vw, 24px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', marginBottom: '4px' }}>The STAAY Woman Starts Here</h3>
+              <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '6px' }}>Stay in the Loop</p>
+              <h3 style={{ ...F, fontSize: 'clamp(18px, 2.5vw, 24px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', marginBottom: '4px' }}>The Staay Woman Starts Here</h3>
               <p style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD }}>Early access to new pieces and everything we're creating for you.</p>
             </div>
-            <form style={{ display: 'flex', gap: '0', width: '100%', maxWidth: '380px', flexShrink: 0 }} onSubmit={e => e.preventDefault()}>
-              <input type="email" placeholder="your@email.com"
-                style={{ flex: 1, padding: '13px 16px', background: 'rgba(255,255,255,0.06)', border: `1px solid ${BR}`, borderRight: 'none', color: W, outline: 'none', ...F, fontSize: '13px' }} />
-              <button type="submit"
-                style={{ padding: '13px 24px', background: G, color: '#1A1612', border: 'none', cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', whiteSpace: 'nowrap', transition: 'background 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.background = '#D4AF5A' }}
-                onMouseLeave={e => { e.currentTarget.style.background = G }}>
-                Subscribe
-              </button>
-            </form>
+
+            {status === 'success' ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '13px 16px', width: '100%', maxWidth: '380px', flexShrink: 0, background: 'rgba(37,211,102,0.1)', border: '1px solid rgba(37,211,102,0.3)' }}>
+                <span style={{ ...F, fontSize: '13px', fontWeight: 600, color: '#25D366' }}>✓ You're on the list!</span>
+              </div>
+            ) : status === 'already' ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '13px 16px', width: '100%', maxWidth: '380px', flexShrink: 0, background: 'rgba(184,144,58,0.1)', border: `1px solid ${BR}` }}>
+                <span style={{ ...F, fontSize: '13px', fontWeight: 600, color: G }}>You're already subscribed</span>
+              </div>
+            ) : (
+              <form style={{ display: 'flex', flexDirection: 'column', gap: '6px', width: '100%', maxWidth: '380px', flexShrink: 0 }} onSubmit={handleSubscribe}>
+                <div style={{ display: 'flex' }}>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => { setEmail(e.target.value); if (status === 'error') setStatus('idle') }}
+                    placeholder="your@email.com"
+                    disabled={status === 'loading'}
+                    style={{ flex: 1, padding: '13px 16px', background: 'rgba(255,255,255,0.06)', border: `1px solid ${status === 'error' ? '#E53E3E' : BR}`, borderRight: 'none', color: W, outline: 'none', ...F, fontSize: '13px' }} />
+                  <button type="submit" disabled={status === 'loading'}
+                    style={{ padding: '13px 24px', background: G, color: '#1A1612', border: 'none', cursor: status === 'loading' ? 'not-allowed' : 'pointer', ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', whiteSpace: 'nowrap', transition: 'background 0.2s', opacity: status === 'loading' ? 0.7 : 1 }}
+                    onMouseEnter={e => { if (status !== 'loading') e.currentTarget.style.background = '#D4AF5A' }}
+                    onMouseLeave={e => { if (status !== 'loading') e.currentTarget.style.background = G }}>
+                    {status === 'loading' ? 'Subscribing...' : 'Subscribe'}
+                  </button>
+                </div>
+                {status === 'error' && (
+                  <span style={{ ...F, fontSize: '11px', color: '#E53E3E' }}>{errorMsg}</span>
+                )}
+              </form>
+            )}
           </div>
           <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: '#6B6660' }}>No spam. Unsubscribe anytime.</p>
         </div>
+
 
         {/* Bottom bar */}
         <div style={{ borderTop: `1px solid ${BR}`, marginTop: '28px', paddingTop: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
