@@ -162,6 +162,9 @@ function ProductCard({ product, index, viewMode, onQuickView }) {
               <p style={{ ...F, fontSize: '18px', fontWeight: 700, color: DK }}>GH₵{Number(product.price).toLocaleString()}</p>
               {origPrice && <p style={{ ...F, fontSize: '13px', color: FT, textDecoration: 'line-through' }}>GH₵{origPrice.toLocaleString()}</p>}
               <ApproxPrice ghs={product.price} />
+              <div className="desktop-only" style={{ marginTop: '4px' }}>
+                <CurrencySelector />
+              </div>
             </div>
             <button onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY' })}
               style={{ background: BK, color: W, border: 'none', padding: '10px 20px', ...F, fontSize: '12px', fontWeight: 600, cursor: 'pointer', transition: 'background 0.2s', whiteSpace: 'nowrap' }}
@@ -239,6 +242,9 @@ function ProductCard({ product, index, viewMode, onQuickView }) {
           {origPrice && <span style={{ ...F, fontSize: '12px', color: FT, textDecoration: 'line-through' }}>GH₵{origPrice.toLocaleString()}</span>}
         </div>
         <ApproxPrice ghs={product.price} style={{ marginTop: '-4px', marginBottom: '6px' }} />
+        <div className="desktop-only" style={{ marginBottom: '6px' }}>
+          <CurrencySelector />
+        </div>
 
         <div style={{ display: 'inline-block', background: '#FFF9C4', border: '1px solid #F6E05E', padding: '2px 8px', borderRadius: '3px', ...F, fontSize: '10px', fontWeight: 600, color: '#744210' }}>
           Only {(index % 4) + 1} left in stock
@@ -462,11 +468,6 @@ export default function Shop() {
             style={{ display: 'none', alignItems: 'center', gap: '6px', padding: '0 14px', height: '52px', background: 'transparent', border: 'none', borderRight: `1px solid ${BR}`, ...F, fontSize: '12px', fontWeight: 600, color: DK, cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>
             <FilterIcon /> Filters
           </button>
-
-          {/* Currency selector — desktop only */}
-          <span className="desktop-only" style={{ display: 'flex', borderRight: `1px solid ${BR}`, paddingRight: '14px', marginRight: '0' }}>
-            <CurrencySelector />
-          </span>
 
           {/* View mode */}
           <div style={{ display: 'flex' }}>
