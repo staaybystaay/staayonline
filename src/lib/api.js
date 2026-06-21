@@ -323,3 +323,18 @@ export async function subscribeToNewsletter(email) {
     throw error
   }
 }
+
+// ─── ADMIN — NEWSLETTER ──────────────────────
+export async function getNewsletterSubscribers() {
+  const { data, error } = await supabase
+    .from('newsletter_subscribers')
+    .select('*')
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data
+}
+
+export async function deleteNewsletterSubscriber(id) {
+  const { error } = await supabase.from('newsletter_subscribers').delete().eq('id', id)
+  if (error) throw error
+}
