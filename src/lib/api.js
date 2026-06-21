@@ -308,3 +308,18 @@ export async function createReview({ productId, customerId, name, rating, commen
   if (error) throw error
   return data
 }
+
+// ─── NEWSLETTER ──────────────────────────────
+export async function subscribeToNewsletter(email) {
+  const { error } = await supabase
+    .from('newsletter_subscribers')
+    .insert({ email: email.trim().toLowerCase() })
+
+  if (error) {
+    // Postgres unique-violation code — they're already on the list
+    if (error.code === '23505') {
+      throw new Error('ALREADY_SUBSCRIBED')
+    }
+    throw error
+  }
+}
