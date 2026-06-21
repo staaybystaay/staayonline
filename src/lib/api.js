@@ -338,3 +338,37 @@ export async function deleteNewsletterSubscriber(id) {
   const { error } = await supabase.from('newsletter_subscribers').delete().eq('id', id)
   if (error) throw error
 }
+
+// ─── CONTACT MESSAGES ────────────────────────
+export async function submitContactMessage({ name, email, message }) {
+  const { error } = await supabase
+    .from('contact_messages')
+    .insert({ name, email: email || null, message })
+  if (error) throw error
+}
+
+// ─── ADMIN — CONTACT MESSAGES ────────────────
+export async function getContactMessages() {
+  const { data, error } = await supabase
+    .from('contact_messages')
+    .select('*')
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data
+}
+
+export async function markMessageRead(id) {
+  const { data, error } = await supabase
+    .from('contact_messages')
+    .update({ status: 'read' })
+    .eq('id', id)
+    .select()
+    .single()
+  if (error) throw error
+  return data
+}
+
+export async function deleteContactMessage(id) {
+  const { error } = await supabase.from('contact_messages').delete().eq('id', id)
+  if (error) throw error
+}
