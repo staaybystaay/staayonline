@@ -25,6 +25,9 @@ import AdminProducts from './components/admin/AdminProducts'
 import SizeGuide from './pages/SizeGuide'
 import CookiePolicy from './pages/CookiePolicy'
 import AdminNewsletter from './components/admin/AdminNewsletter'
+import AdminMessages from './components/admin/AdminMessages'
+
+
 
 
 
@@ -66,6 +69,7 @@ export default function App() {
           <Route path="/size-guide" element={<SizeGuide />} />
          <Route path="/cookie-policy" element={<CookiePolicy />} />
           <Route path="/admin/newsletter" element={<AdminNewsletter />} />
+          <Route path="/admin/messages" element={<AdminMessages />} />
 
         </Routes>
         <Footer />
