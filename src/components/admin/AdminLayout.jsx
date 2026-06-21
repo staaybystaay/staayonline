@@ -13,9 +13,10 @@ const BL  = '#3B5BDB'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
 const NAV_ITEMS = [
-  { label: 'Dashboard', path: '/admin',          icon: 'M2 2h6v6H2zM10 2h6v6h-6zM2 10h6v6H2zM10 10h6v6h-6z' },
-  { label: 'Orders',     path: '/admin/orders',   icon: 'M2 4h14M2 9h14M2 14h10' },
-  { label: 'Products',   path: '/admin/products', icon: 'M2 5l7-3 7 3v8l-7 3-7-3z M2 5l7 3 7-3 M9 8v8' },
+  { label: 'Dashboard',  path: '/admin',            icon: 'M2 2h6v6H2zM10 2h6v6h-6zM2 10h6v6H2zM10 10h6v6h-6z' },
+  { label: 'Orders',     path: '/admin/orders',     icon: 'M2 4h14M2 9h14M2 14h10' },
+  { label: 'Products',   path: '/admin/products',   icon: 'M2 5l7-3 7 3v8l-7 3-7-3z M2 5l7 3 7-3 M9 8v8' },
+  { label: 'Newsletter', path: '/admin/newsletter', icon: 'M2 4h14v10H2z M2 4l7 6 7-6' },
 ]
 
 function NavIcon({ d }) {
