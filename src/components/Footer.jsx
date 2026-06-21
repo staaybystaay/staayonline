@@ -41,15 +41,15 @@ const companyLinks = [
 const supportLinks = [
   { label: 'Track My Order',          path: '/account' },
   { label: 'Returns & Exchanges',     path: '/terms'    },
-  { label: 'FAQ',                     path: '/terms'    },
-  { label: 'Contact Support',         path: '/terms'    },
-  { label: 'Size Guide',              path: '/shop'     },
+  { label: 'FAQ',                     path: '/faq'    },
+  { label: 'Contact Support',         path: '/contact'    },
+  { label: 'Size Guide',              path: '/size-guide'     },
 ]
 const legalLinks = [
   { label: 'Terms of Service', path: '/terms'   },
   { label: 'Privacy Policy',   path: '/privacy' },
   { label: 'Shipping Info',    path: '/terms'   },
-  { label: 'Cookie Policy',    path: '/privacy' },
+  { label: 'Cookie Policy',    path: '/cookie-policy' },
 ]
 
 function FooterColumn({ title, links }) {
