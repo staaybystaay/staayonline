@@ -28,7 +28,7 @@ const slides = [
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1800&q=85&fit=crop',
+    image: '/staayhero1.png',
     headline: 'MADE IN ACCRA.\nWORN EVERYWHERE.',
     sub: 'Local craftsmanship. International standard.',
     cta: 'Explore the Brand',
