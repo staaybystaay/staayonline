@@ -213,6 +213,7 @@ export default function Shop() {
   const [sortBy,           setSortBy]           = useState('newest')
   const [viewMode,         setViewMode]         = useState('grid')
   const [sortOpen,         setSortOpen]         = useState(false)
+  const [visibleCount,     setVisibleCount]     = useState(12)
   // Fetch collections + products together
   useEffect(() => {
     async function load() {
@@ -235,8 +236,9 @@ export default function Shop() {
 
   const activeCol = collections.find(c => c.slug === activeCollection)
 
-  const togglePrice    = label => setActivePrices(prev => prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label])
-  const clearAll       = () => { setActiveCollection('all'); setActivePrices([]) }
+  const togglePrice    = label => { setActivePrices(prev => prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label]); setVisibleCount(12) }
+  const clearAll       = () => { setActiveCollection('all'); setActivePrices([]); setVisibleCount(12) }
+  const setCollection  = (slug) => { setActiveCollection(slug); setVisibleCount(12) }
 
   const filtered = useMemo(() => {
     return products.filter(p => {
@@ -387,7 +389,7 @@ export default function Shop() {
             <p style={{ ...F, fontSize: '12px', fontWeight: 700, color: DK, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '14px', paddingBottom: '10px', borderBottom: `1px solid ${BR}` }}>Collections</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
               {collectionPills.map(col => (
-                <button key={col.slug} onClick={() => setActiveCollection(col.slug)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '10px 12px', background: activeCollection === col.slug ? GL : 'transparent', border: 'none', borderLeft: `2px solid ${activeCollection === col.slug ? G : 'transparent'}`, ...F, cursor: 'pointer', textAlign: 'left', transition: 'all 0.18s' }} onMouseEnter={e => { if (activeCollection !== col.slug) e.currentTarget.style.background = OW }} onMouseLeave={e => { if (activeCollection !== col.slug) e.currentTarget.style.background = 'transparent' }}>
+                <button key={col.slug} onClick={() => setCollection(col.slug)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '10px 12px', background: activeCollection === col.slug ? GL : 'transparent', border: 'none', borderLeft: `2px solid ${activeCollection === col.slug ? G : 'transparent'}`, ...F, cursor: 'pointer', textAlign: 'left', transition: 'all 0.18s' }} onMouseEnter={e => { if (activeCollection !== col.slug) e.currentTarget.style.background = OW }} onMouseLeave={e => { if (activeCollection !== col.slug) e.currentTarget.style.background = 'transparent' }}>
                   <span style={{ fontSize: '13px', fontWeight: activeCollection === col.slug ? 600 : 400, color: activeCollection === col.slug ? G : DK }}>{col.name}</span>
                   {col.subtitle && <span style={{ fontSize: '11px', fontWeight: 300, color: activeCollection === col.slug ? G : FT, marginTop: '1px' }}>{col.subtitle}</span>}
                 </button>
@@ -424,17 +426,41 @@ export default function Shop() {
           ) : sorted.length === 0 ? (
             <ComingSoon label={activeCol?.name || 'this collection'} />
           ) : viewMode === 'grid' ? (
-            <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px 20px' }}>
-              {sorted.map(p => (
-                <ProductCardGrid key={p.id} product={p} />
-              ))}
-            </motion.div>
+            <>
+              <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px 20px' }}>
+                {sorted.slice(0, visibleCount).map(p => (
+                  <ProductCardGrid key={p.id} product={p} />
+                ))}
+              </motion.div>
+              {visibleCount < sorted.length && (
+                <div style={{ textAlign: 'center', marginTop: '48px' }}>
+                  <button onClick={() => setVisibleCount(n => n + 12)}
+                    style={{ padding: '14px 48px', background: 'transparent', border: `1px solid ${DK}`, ...F, fontSize: '13px', fontWeight: 600, letterSpacing: '0.05em', color: DK, cursor: 'pointer', transition: 'all 0.2s' }}
+                    onMouseEnter={e => { e.currentTarget.style.background = DK; e.currentTarget.style.color = W }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = DK }}>
+                    Load More ({sorted.length - visibleCount} remaining)
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
-            <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {sorted.map(p => (
-                <ProductCardList key={p.id} product={p} />
-              ))}
-            </motion.div>
+            <>
+              <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {sorted.slice(0, visibleCount).map(p => (
+                  <ProductCardList key={p.id} product={p} />
+                ))}
+              </motion.div>
+              {visibleCount < sorted.length && (
+                <div style={{ textAlign: 'center', marginTop: '48px' }}>
+                  <button onClick={() => setVisibleCount(n => n + 12)}
+                    style={{ padding: '14px 48px', background: 'transparent', border: `1px solid ${DK}`, ...F, fontSize: '13px', fontWeight: 600, letterSpacing: '0.05em', color: DK, cursor: 'pointer', transition: 'all 0.2s' }}
+                    onMouseEnter={e => { e.currentTarget.style.background = DK; e.currentTarget.style.color = W }}
+                    onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = DK }}>
+                    Load More ({sorted.length - visibleCount} remaining)
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
 

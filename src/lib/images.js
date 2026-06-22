@@ -2,14 +2,12 @@ import { supabase } from './supabase'
 
 const BUCKET = 'products'
 
-// ─── Get optimized image URL from Supabase Storage ───
-// Uses Supabase's built-in image transformation to serve
-// resized WebP images — turns a 3MB JPEG into ~150KB WebP
+// Matches a full Supabase storage URL and captures the path after /object/public/<bucket>/
+const SUPABASE_STORAGE_RE = /\/storage\/v1\/object\/public\/([^?#]+)/
+
+// ─── Get optimized image URL ──────────────────
 export function getImageUrl(path, options = {}) {
   if (!path) return null
-
-  // If it's already a full URL (old /public/ paths), return as-is
-  if (path.startsWith('http') || path.startsWith('/')) return path
 
   const {
     width   = 800,
@@ -18,25 +16,36 @@ export function getImageUrl(path, options = {}) {
     format  = 'webp',
   } = options
 
-  const transform = { width, quality, format }
-  if (height) transform.height = height
+  const params = new URLSearchParams({ width: String(width), quality: String(quality), format })
+  if (height) params.set('height', String(height))
 
-  const { data } = supabase.storage
-    .from(BUCKET)
-    .getPublicUrl(path, { transform })
+  // Case 1: full Supabase storage URL — rewrite to the render/image endpoint
+  const match = path.match(SUPABASE_STORAGE_RE)
+  if (match) {
+    const storageBase = path.split('/storage/v1/')[0]
+    return `${storageBase}/storage/v1/render/image/public/${match[1]}?${params}`
+  }
 
-  return data?.publicUrl || null
+  // Case 2: relative storage path — use the SDK helper
+  if (!path.startsWith('http') && !path.startsWith('/')) {
+    const { data } = supabase.storage
+      .from(BUCKET)
+      .getPublicUrl(path, { transform: { width, quality, format, ...(height ? { height } : {}) } })
+    return data?.publicUrl || null
+  }
+
+  // Case 3: external URL or local /public/ path — return as-is (can't transform)
+  return path
 }
 
-// ─── Preset sizes for different use cases ─────────────
-export const imgCard      = (path) => getImageUrl(path, { width: 400,  quality: 80 })
-export const imgHero      = (path) => getImageUrl(path, { width: 1400, quality: 85 })
-export const imgThumb     = (path) => getImageUrl(path, { width: 160,  quality: 75 })
-export const imgFull      = (path) => getImageUrl(path, { width: 800,  quality: 85 })
+// ─── Preset sizes ─────────────────────────────
+export const imgCard  = (path) => getImageUrl(path, { width: 400,  quality: 80 })
+export const imgHero  = (path) => getImageUrl(path, { width: 1400, quality: 85 })
+export const imgThumb = (path) => getImageUrl(path, { width: 160,  quality: 75 })
+export const imgFull  = (path) => getImageUrl(path, { width: 800,  quality: 85 })
 
-// ─── Upload image to Supabase Storage ─────────────────
+// ─── Upload image to Supabase Storage ─────────
 export async function uploadProductImage(file, productSlug) {
-  // Sanitise filename
   const ext      = file.name.split('.').pop().toLowerCase()
   const filename = `${productSlug}-${Date.now()}.${ext}`
   const path     = `collection/${filename}`
@@ -50,10 +59,10 @@ export async function uploadProductImage(file, productSlug) {
     })
 
   if (error) throw error
-  return data.path  // returns the storage path, not the full URL
+  return data.path
 }
 
-// ─── Delete image from Supabase Storage ───────────────
+// ─── Delete image from Supabase Storage ───────
 export async function deleteProductImage(path) {
   if (!path || path.startsWith('/') || path.startsWith('http')) return
   const { error } = await supabase.storage.from(BUCKET).remove([path])
