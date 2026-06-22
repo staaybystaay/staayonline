@@ -30,9 +30,11 @@ function slugify(text) {
     .replace(/(^-|-$)/g, '')
 }
 
+const ALL_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+
 const emptyForm = {
   name: '', slug: '', price: '', discount_percent: '', collection_id: '',
-  image_url: '', sort_order: '0', active: true,
+  image_url: '', sort_order: '0', active: true, sizes: [...ALL_SIZES],
 }
 
 // ─── Product row ───────────────────────────────
@@ -123,6 +125,7 @@ function ProductDrawer({ open, product, collections, onClose, onSaved }) {
         image_url: product.image_url || '',
         sort_order: String(product.sort_order ?? '0'),
         active: product.active !== false,
+        sizes: product.sizes?.length ? product.sizes : [...ALL_SIZES],
       })
       setSlugTouched(true)
     } else {
@@ -168,6 +171,7 @@ function ProductDrawer({ open, product, collections, onClose, onSaved }) {
         image_url: form.image_url || null,
         sort_order: Number(form.sort_order) || 0,
         active: form.active,
+        sizes: form.sizes,
       }
       if (product) {
         await updateProduct(product.id, payload)
@@ -252,6 +256,25 @@ function ProductDrawer({ open, product, collections, onClose, onSaved }) {
                   <option value="">No collection</option>
                   {collections.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                 </select>
+              </div>
+
+              {/* Sizes */}
+              <div>
+                <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '8px' }}>
+                  Available Sizes <span style={{ fontWeight: 300, color: MD }}>(tick the sizes this product comes in)</span>
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                  {ALL_SIZES.map(s => {
+                    const on = form.sizes.includes(s)
+                    return (
+                      <button key={s} type="button"
+                        onClick={() => setForm(f => ({ ...f, sizes: on ? f.sizes.filter(x => x !== s) : [...f.sizes, s] }))}
+                        style={{ padding: '7px 16px', border: `1.5px solid ${on ? G : BR}`, background: on ? GL : W, ...F, fontSize: '12px', fontWeight: on ? 700 : 400, color: on ? G : MD, cursor: 'pointer', borderRadius: '4px', transition: 'all 0.15s' }}>
+                        {s}
+                      </button>
+                    )
+                  })}
+                </div>
               </div>
 
               {/* Sort order */}

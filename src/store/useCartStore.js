@@ -1,34 +1,38 @@
 import { create } from 'zustand'
 
+// Unique key per product + size + customization variant
+function makeCartId(product) {
+  const sizeKey    = product.size || ''
+  const customKey  = product.customization ? 'c' : ''
+  return `${product.id}__${sizeKey}__${customKey}`
+}
+
 const useCartStore = create((set) => ({
   items: [],
 
   addItem: (product) =>
     set((state) => {
-      const exists = state.items.find((i) => i.id === product.id)
+      const cartId = makeCartId(product)
+      const exists = state.items.find((i) => i.cartId === cartId)
       if (exists) {
         return {
           items: state.items.map((i) =>
-            i.id === product.id ? { ...i, qty: i.qty + 1 } : i
+            i.cartId === cartId ? { ...i, qty: Math.min(i.qty + (product.qty || 1), 10) } : i
           ),
         }
       }
-      return { items: [...state.items, { ...product, qty: 1 }] }
+      return { items: [...state.items, { ...product, cartId, qty: product.qty || 1 }] }
     }),
 
-  removeItem: (id) =>
-    set((state) => ({ items: state.items.filter((i) => i.id !== id) })),
+  removeItem: (cartId) =>
+    set((state) => ({ items: state.items.filter((i) => i.cartId === cartId) })),
 
-  updateQty: (id, qty) =>
+  updateQty: (cartId, qty) =>
     set((state) => ({
-      items: state.items.map((i) => (i.id === id ? { ...i, qty } : i)),
+      items: state.items.map((i) => (i.cartId === cartId ? { ...i, qty } : i)),
     })),
 
   clearCart: () => set({ items: [] }),
-
-  get total() {
-    return this.items.reduce((sum, i) => sum + i.price * i.qty, 0)
-  },
 }))
 
 export default useCartStore

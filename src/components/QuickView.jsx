@@ -20,7 +20,7 @@ const RD  = '#E53E3E'
 const GR  = '#16A34A'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
-const SIZES  = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+const DEFAULT_SIZES     = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
 const CUSTOMIZATION_FEE = 300
 const COLORS = [
   { name: 'Gold',  hex: '#B8903A' },
@@ -74,6 +74,7 @@ export default function QuickView({ product, onClose }) {
   const [qty,           setQty]           = useState(1)
   const [activeImg,     setActiveImg]     = useState(0)
   const [addedToBag,    setAddedToBag]    = useState(false)
+  const [sizeError,     setSizeError]     = useState(false)
   const [detailsOpen,   setDetailsOpen]   = useState(false)
 
   const [reviews,        setReviews]        = useState([])
@@ -117,9 +118,15 @@ export default function QuickView({ product, onClose }) {
 
   if (!product) return null
 
-  const images = [imgFull(product.image_url), imgCard(product.image_url)]
+  const images    = [imgFull(product.image_url), imgCard(product.image_url)]
+  const availSizes = (product.sizes && product.sizes.length > 0) ? product.sizes : DEFAULT_SIZES
 
   function handleAddToCart() {
+    if (availSizes.length > 0 && !selectedSize) {
+      setSizeError(true)
+      setTimeout(() => setSizeError(false), 2000)
+      return
+    }
     const finalPrice = product.price + (customize ? CUSTOMIZATION_FEE : 0)
     addItem({
       id: product.id,
@@ -128,6 +135,7 @@ export default function QuickView({ product, onClose }) {
       image: product.image_url,
       category: product.collection?.name || 'STAAY',
       badge: product.badge,
+      size: selectedSize,
       qty,
       customization: customize ? { color: customColor, note: customNote.trim() || null } : null,
     })
@@ -315,13 +323,15 @@ export default function QuickView({ product, onClose }) {
               {/* Size */}
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                  <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, textTransform: 'uppercase', letterSpacing: '0.06em' }}>Size</p>
+                  <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: sizeError ? RD : DK, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                    Size {sizeError && <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>— please select a size</span>}
+                  </p>
                   <button style={{ background: 'none', border: 'none', ...F, fontSize: '11px', color: G, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: '2px', padding: 0 }}>Size Guide</button>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                  {SIZES.map(s => (
-                    <button key={s} onClick={() => setSelectedSize(s)}
-                      style={{ padding: '7px 14px', border: `1.5px solid ${selectedSize === s ? G : BR}`, background: selectedSize === s ? GL : W, ...F, fontSize: '12px', fontWeight: selectedSize === s ? 700 : 400, color: selectedSize === s ? G : DK, cursor: 'pointer', transition: 'all 0.15s', minWidth: '46px', textAlign: 'center' }}>
+                  {availSizes.map(s => (
+                    <button key={s} onClick={() => { setSelectedSize(s); setSizeError(false) }}
+                      style={{ padding: '7px 14px', border: `1.5px solid ${selectedSize === s ? G : sizeError ? RD : BR}`, background: selectedSize === s ? GL : W, ...F, fontSize: '12px', fontWeight: selectedSize === s ? 700 : 400, color: selectedSize === s ? G : DK, cursor: 'pointer', transition: 'all 0.15s', minWidth: '46px', textAlign: 'center' }}>
                       {s}
                     </button>
                   ))}

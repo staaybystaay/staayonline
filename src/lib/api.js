@@ -76,12 +76,14 @@ export async function createOrder(orderData) {
 
   // 2 — insert the order items
   const orderItems = items.map(item => ({
-    order_id:   newOrder.id,
-    product_id: item.id || null,
-    name:       item.name,
-    price:      item.price,
-    qty:        item.qty,
-    image_url:  item.image || item.image_url || null,
+    order_id:      newOrder.id,
+    product_id:    item.id || null,
+    name:          item.name,
+    price:         item.price,
+    qty:           item.qty,
+    image_url:     item.image || item.image_url || null,
+    size:          item.size || null,
+    customization: item.customization || null,
   }))
 
   const { error: itemsError } = await supabase
@@ -323,6 +325,14 @@ export async function updateOrderStatus(id, status) {
   const { error } = await supabase
     .from('orders')
     .update({ status })
+    .eq('id', id)
+  if (error) throw error
+}
+
+export async function updatePaymentStatus(id, payment_status) {
+  const { error } = await supabase
+    .from('orders')
+    .update({ payment_status })
     .eq('id', id)
   if (error) throw error
 }

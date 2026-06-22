@@ -79,6 +79,11 @@ function CartItem({ item, index }) {
           <h3 style={{ ...F, fontSize: '15px', fontWeight: 600, color: INK, letterSpacing: '-0.01em' }}>
             {item.name}
           </h3>
+          {item.size && (
+            <p style={{ ...F, fontSize: '11px', fontWeight: 500, color: MUTE, marginTop: '2px' }}>
+              Size: {item.size}
+            </p>
+          )}
           {item.customization && (
             <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: MUTE, marginTop: '4px', lineHeight: 1.5 }}>
               {item.customization.color && `Colour: ${item.customization.color}`}
@@ -92,7 +97,7 @@ function CartItem({ item, index }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '14px' }}>
           <div style={{ display: 'flex', alignItems: 'stretch', border: `1px solid ${LINE}` }}>
             <button
-              onClick={() => item.qty > 1 ? updateQty(item.id, item.qty - 1) : removeItem(item.id)}
+              onClick={() => item.qty > 1 ? updateQty(item.cartId, item.qty - 1) : removeItem(item.cartId)}
               style={{ width: '32px', height: '32px', background: 'transparent', border: 'none', borderRight: `1px solid ${LINE}`, color: MUTE, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '16px' }}>
               −
             </button>
@@ -100,13 +105,13 @@ function CartItem({ item, index }) {
               {item.qty}
             </span>
             <button
-              onClick={() => updateQty(item.id, item.qty + 1)}
+              onClick={() => updateQty(item.cartId, item.qty + 1)}
               style={{ width: '32px', height: '32px', background: 'transparent', border: 'none', borderLeft: `1px solid ${LINE}`, color: MUTE, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '16px' }}>
               +
             </button>
           </div>
           <button
-            onClick={() => removeItem(item.id)}
+            onClick={() => removeItem(item.cartId)}
             style={{ background: 'transparent', border: 'none', ...F, fontSize: '12px', fontWeight: 400, color: FAINT, cursor: 'pointer', transition: 'color 0.2s', padding: 0 }}
             onMouseEnter={e => { e.currentTarget.style.color = RD }}
             onMouseLeave={e => { e.currentTarget.style.color = FAINT }}>
