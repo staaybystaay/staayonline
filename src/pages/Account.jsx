@@ -6,18 +6,27 @@ import { getOrdersByEmail, updateCustomerProfile } from '../lib/api'
 import { useWishlist } from '../hooks/useWishlist'
 
 // ─── TOKENS ──────────────────────────────────────────────────────
-const G   = '#B8903A'
-const GL  = '#F7F0E4'
-const W   = '#FFFFFF'
-const LG  = '#F7F6F4'
-const BK  = '#111111'
-const DK  = '#1A1612'
-const MD  = '#666'
-const FT  = '#999'
-const BR  = '#E8E4DF'
-const RD  = '#C0392B'
-const GR  = '#2E7D5E'
-const F   = { fontFamily: "'Inter', sans-serif" }
+const G    = '#B8903A'   // brand gold
+const GL   = '#F7F0E4'   // gold light
+const W    = '#FFFFFF'
+const LG   = '#F7F6F4'
+const BK   = '#111111'
+const DK   = '#1A1612'
+const MD   = '#666'
+const FT   = '#999'
+const BR   = '#E8E4DF'
+const RD   = '#C0392B'
+const GR   = '#2E7D5E'   // dark green (text / icons)
+const GRN  = '#16A34A'   // vivid green (toggles on-state)
+const GRND = '#DCFCE7'   // green light bg
+const BL   = '#1D4ED8'   // blue for info
+const F    = { fontFamily: "'Inter', sans-serif" }
+
+const NOTIF_DEFAULTS = {
+  order_updates: true,
+  new_arrivals:  false,
+  promotions:    false,
+}
 
 const TABS = [
   { key: 'orders',   icon: OrderIcon,   label: 'My Orders'  },
@@ -452,39 +461,51 @@ function WishlistTab() {
   )
 }
 
-// ─── NOTIF TOGGLE ─────────────────────────────────────────────────
-function NotifRow({ label, sub, defaultOn }) {
-  const [on, setOn] = useState(defaultOn)
+// ─── TOGGLE SWITCH ────────────────────────────────────────────────
+function Toggle({ on, onChange, saving }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '13px 0', borderBottom: `1px solid ${BR}` }}>
-      <div>
-        <p style={{ ...F, fontSize: '13px', fontWeight: 500, color: DK }}>{label}</p>
-        <p style={{ ...F, fontSize: '12px', color: FT, marginTop: '2px' }}>{sub}</p>
-      </div>
-      <button onClick={() => setOn(v => !v)}
-        style={{ width: '42px', height: '24px', borderRadius: '12px', background: on ? G : BR, border: 'none', cursor: 'pointer', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
-        <span style={{ position: 'absolute', top: '3px', left: on ? '21px' : '3px', width: '18px', height: '18px', borderRadius: '50%', background: W, transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
-      </button>
-    </div>
+    <button
+      onClick={() => !saving && onChange(!on)}
+      disabled={saving}
+      style={{ width: '44px', height: '26px', borderRadius: '13px', background: on ? GRN : '#D1D5DB', border: 'none', cursor: saving ? 'wait' : 'pointer', position: 'relative', transition: 'background 0.2s', flexShrink: 0, opacity: saving ? 0.7 : 1 }}>
+      <span style={{ position: 'absolute', top: '3px', left: on ? '21px' : '3px', width: '20px', height: '20px', borderRadius: '50%', background: W, transition: 'left 0.18s', boxShadow: '0 1px 4px rgba(0,0,0,0.25)' }} />
+    </button>
   )
 }
 
 // ─── SETTINGS TAB ─────────────────────────────────────────────────
-function SettingsTab({ user, auth, onLogout }) {
+function SettingsTab({ user, profile, auth, onLogout }) {
+  // ── password ──
   const [pwForm,   setPwForm]   = useState({ next: '', confirm: '' })
   const [pwSaving, setPwSaving] = useState(false)
   const [pwError,  setPwError]  = useState('')
-  const [toast,    setToast]    = useState(null)
+  const [pwDone,   setPwDone]   = useState(false)
 
-  function setPw(k, v) { setPwForm(f => ({ ...f, [k]: v })); setPwError('') }
+  // ── notifications ──
+  const [notifs,       setNotifs]       = useState({ ...NOTIF_DEFAULTS })
+  const [notifSaving,  setNotifSaving]  = useState(false)
+  const [notifSavedAt, setNotifSavedAt] = useState(null)
+
+  // ── toast ──
+  const [toast, setToast] = useState(null)
+
+  // Load notification prefs from profile
+  useEffect(() => {
+    if (profile?.notification_prefs) {
+      setNotifs({ ...NOTIF_DEFAULTS, ...profile.notification_prefs })
+    }
+  }, [profile])
+
+  function setPw(k, v) { setPwForm(f => ({ ...f, [k]: v })); setPwError(''); setPwDone(false) }
 
   async function handlePasswordChange() {
     if (!pwForm.next || pwForm.next.length < 8) { setPwError('Password must be at least 8 characters'); return }
-    if (pwForm.next !== pwForm.confirm) { setPwError('Passwords do not match'); return }
+    if (pwForm.next !== pwForm.confirm)          { setPwError('Passwords do not match'); return }
     setPwSaving(true)
     try {
       await auth.changePassword(pwForm.next)
       setPwForm({ next: '', confirm: '' })
+      setPwDone(true)
       setToast({ message: 'Password updated successfully', type: 'success' })
     } catch (e) {
       setPwError(e.message || 'Failed to update password')
@@ -493,39 +514,74 @@ function SettingsTab({ user, auth, onLogout }) {
     }
   }
 
+  async function handleNotifToggle(key, val) {
+    const updated = { ...notifs, [key]: val }
+    setNotifs(updated)
+    setNotifSaving(true)
+    try {
+      await updateCustomerProfile(user.id, { notification_prefs: updated })
+      await auth.refreshProfile()
+      setNotifSavedAt(Date.now())
+    } catch {
+      // revert on failure
+      setNotifs(notifs)
+      setToast({ message: 'Could not save preference — try again', type: 'error' })
+    } finally {
+      setNotifSaving(false)
+    }
+  }
+
   const isGoogle = user.app_metadata?.provider === 'google'
+
+  const NOTIF_ROWS = [
+    { key: 'order_updates', label: 'Order updates',       sub: 'Shipping and delivery status updates',   color: BL   },
+    { key: 'new_arrivals',  label: 'New arrivals',        sub: 'Be the first to see new collections',    color: G    },
+    { key: 'promotions',    label: 'Promotions & sales',  sub: 'Exclusive deals, discounts, and events', color: RD   },
+  ]
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <h2 style={{ ...F, fontSize: '20px', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>Settings</h2>
 
-      {/* Account info */}
+      {/* ── Account info ── */}
       <div style={{ background: W, border: `1px solid ${BR}`, borderRadius: '12px', padding: '24px' }}>
-        <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '16px' }}>Account</p>
+        <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '16px' }}>Account Details</p>
         {[
           { label: 'Email',        value: user.email },
-          { label: 'Sign-in',      value: isGoogle ? 'Google' : 'Email & password' },
+          { label: 'Sign-in',      value: isGoogle ? 'Google OAuth' : 'Email & password' },
           { label: 'Member since', value: new Date(user.created_at).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }) },
+          { label: 'User ID',      value: user.id.slice(0, 16) + '…' },
         ].map((row, i, arr) => (
-          <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '13px 0', borderBottom: i < arr.length - 1 ? `1px solid ${BR}` : 'none', flexWrap: 'wrap', gap: '8px' }}>
+          <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: i < arr.length - 1 ? `1px solid ${BR}` : 'none', flexWrap: 'wrap', gap: '8px' }}>
             <span style={{ ...F, fontSize: '13px', color: MD }}>{row.label}</span>
             <span style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>{row.value}</span>
           </div>
         ))}
       </div>
 
-      {/* Change password — only for email users */}
+      {/* ── Change password ── */}
       {!isGoogle && (
         <div style={{ background: W, border: `1px solid ${BR}`, borderRadius: '12px', padding: '24px' }}>
-          <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '20px' }}>Change Password</p>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
+            <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>Change Password</p>
+            {pwDone && (
+              <span style={{ ...F, fontSize: '12px', color: GRN, fontWeight: 500, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                ✓ Updated
+              </span>
+            )}
+          </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <Field label="New Password"     value={pwForm.next}    onChange={v => setPw('next', v)}    type="password" />
             <Field label="Confirm Password" value={pwForm.confirm} onChange={v => setPw('confirm', v)} type="password" />
-            {pwError && <p style={{ ...F, fontSize: '12px', color: RD }}>{pwError}</p>}
+            {pwError && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 14px', background: '#FEF2F2', borderRadius: '8px', border: '1px solid #FCA5A5' }}>
+                <span style={{ ...F, fontSize: '12px', color: RD }}>{pwError}</span>
+              </div>
+            )}
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <button onClick={handlePasswordChange} disabled={pwSaving}
                 style={{ padding: '11px 28px', background: pwSaving ? MD : BK, color: W, border: 'none', borderRadius: '8px', ...F, fontSize: '13px', fontWeight: 600, cursor: pwSaving ? 'wait' : 'pointer', transition: 'background 0.2s' }}
-                onMouseEnter={e => { if (!pwSaving) e.currentTarget.style.background = G }}
+                onMouseEnter={e => { if (!pwSaving) e.currentTarget.style.background = '#333' }}
                 onMouseLeave={e => { if (!pwSaving) e.currentTarget.style.background = BK }}>
                 {pwSaving ? 'Updating…' : 'Update Password'}
               </button>
@@ -534,23 +590,44 @@ function SettingsTab({ user, auth, onLogout }) {
         </div>
       )}
 
-      {/* Notification preferences */}
+      {/* ── Notification preferences ── */}
       <div style={{ background: W, border: `1px solid ${BR}`, borderRadius: '12px', padding: '24px' }}>
-        <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '4px' }}>Notifications</p>
-        <NotifRow label="Order updates"      sub="Shipping and delivery status"  defaultOn={true}  />
-        <NotifRow label="New arrivals"       sub="Be first to see new pieces"    defaultOn={false} />
-        <NotifRow label="Promotions & sales" sub="Exclusive deals and discounts" defaultOn={false} />
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+          <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>Email Notifications</p>
+          {notifSavedAt && !notifSaving && (
+            <span style={{ ...F, fontSize: '11px', color: GRN, fontWeight: 500 }}>✓ Saved</span>
+          )}
+          {notifSaving && (
+            <span style={{ ...F, fontSize: '11px', color: MD }}>Saving…</span>
+          )}
+        </div>
+        <p style={{ ...F, fontSize: '12px', color: FT, marginBottom: '16px' }}>Choose which emails you'd like to receive from Staay.</p>
+        <div>
+          {NOTIF_ROWS.map((row, i) => (
+            <div key={row.key}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 0', borderBottom: i < NOTIF_ROWS.length - 1 ? `1px solid ${BR}` : 'none', gap: '16px' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: row.color, marginTop: '5px', flexShrink: 0 }} />
+                <div>
+                  <p style={{ ...F, fontSize: '13px', fontWeight: 500, color: DK }}>{row.label}</p>
+                  <p style={{ ...F, fontSize: '12px', color: FT, marginTop: '2px' }}>{row.sub}</p>
+                </div>
+              </div>
+              <Toggle on={notifs[row.key]} onChange={val => handleNotifToggle(row.key, val)} saving={notifSaving} />
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Danger zone */}
-      <div style={{ background: W, border: '1px solid #FCA5A5', borderRadius: '12px', padding: '24px' }}>
+      {/* ── Danger zone ── */}
+      <div style={{ background: W, border: '1px solid #FECACA', borderRadius: '12px', padding: '24px' }}>
         <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: RD, marginBottom: '8px' }}>Danger Zone</p>
-        <p style={{ ...F, fontSize: '13px', color: MD, marginBottom: '16px', lineHeight: 1.6 }}>
-          Signing out clears your local session. To delete your account entirely, contact{' '}
-          <a href="mailto:info@gogmi.org.gh" style={{ color: G }}>info@gogmi.org.gh</a>.
+        <p style={{ ...F, fontSize: '13px', color: MD, marginBottom: '16px', lineHeight: 1.7 }}>
+          Signing out clears your local session. To permanently delete your account and all associated data, contact us at{' '}
+          <a href="mailto:info@gogmi.org.gh" style={{ color: BL, fontWeight: 500 }}>info@gogmi.org.gh</a>.
         </p>
         <button onClick={onLogout}
-          style={{ padding: '11px 24px', background: 'transparent', border: '1px solid #FCA5A5', color: RD, borderRadius: '8px', ...F, fontSize: '13px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
+          style={{ padding: '11px 24px', background: 'transparent', border: '1px solid #FECACA', color: RD, borderRadius: '8px', ...F, fontSize: '13px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
           onMouseEnter={e => { e.currentTarget.style.background = '#FEF2F2' }}
           onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}>
           Sign Out
@@ -672,7 +749,7 @@ export default function Account() {
             {activeTab === 'orders'   && <OrdersTab   user={user} />}
             {activeTab === 'profile'  && <ProfileTab  user={user} profile={profile} auth={auth} />}
             {activeTab === 'wishlist' && <WishlistTab />}
-            {activeTab === 'settings' && <SettingsTab user={user} auth={auth} onLogout={handleLogout} />}
+            {activeTab === 'settings' && <SettingsTab user={user} profile={profile} auth={auth} onLogout={handleLogout} />}
           </motion.div>
         </AnimatePresence>
 
