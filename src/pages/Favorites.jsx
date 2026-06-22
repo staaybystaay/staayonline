@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import useFavoritesStore from '../store/useFavoritesStore'
+import { useWishlist } from '../hooks/useWishlist'
 import useCartStore from '../store/useCartStore'
 
 const G   = '#B8903A'
@@ -91,9 +91,7 @@ function FavoriteCard({ item, onRemove }) {
 }
 
 export default function Favorites() {
-  const items     = useFavoritesStore(s => s.items)
-  const removeItem = useFavoritesStore(s => s.removeItem)
-  const clearAll   = useFavoritesStore(s => s.clearAll)
+  const { items, removeItem, clearAll } = useWishlist()
   const [confirmClear, setConfirmClear] = useState(false)
 
   return (

@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
-import useFavoritesStore from '../store/useFavoritesStore'
+import { useWishlist } from '../hooks/useWishlist'
 import { getSaleProducts } from '../lib/api'
 import QuickView from '../components/QuickView'
 
@@ -44,8 +44,7 @@ function Stars() {
 function SaleCard({ product, onQuickView }) {
   const [hovered, setHovered] = useState(false)
   const addItem     = useCartStore(s => s.addItem)
-  const toggle      = useFavoritesStore(s => s.toggle)
-  const isFavorited = useFavoritesStore(s => s.isFavorited)
+  const { toggle, isFavorited } = useWishlist()
   const faved       = isFavorited(product.id)
 
   const discount  = product.discount_percent

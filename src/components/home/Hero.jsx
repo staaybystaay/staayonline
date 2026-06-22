@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
+
 const G  = '#B8903A'
 const W  = '#FFFFFF'
 const F  = { fontFamily: "'Inter', sans-serif" }
@@ -9,16 +10,16 @@ const F  = { fontFamily: "'Inter', sans-serif" }
 const slides = [
   {
     id: 1,
-    image: '/staaybanner1.jpg',
+    image: 'staaybanner1.jpg',
     headline: 'WHERE BEAUTY\nBEGINS TODAY',
     sub: 'Soft, feminine, intentional.',
-    cta: 'Sales Promotion',
-    href: '/sale?col=eden',
+    cta: 'Shop Eden Collection',
+    href: '/shop?col=eden',
     align: 'left',
   },
   {
     id: 2,
-    image: '/staayhero.png',
+    image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=1800&q=85&fit=crop',
     headline: 'DRESS THE WAY\nYOU FEEL TODAY',
     sub: 'Styles that match every version of you.',
     cta: 'Shop All Collections',
@@ -27,7 +28,7 @@ const slides = [
   },
   {
     id: 3,
-    image: '/staayhero1.png',
+    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1800&q=85&fit=crop',
     headline: 'MADE IN ACCRA.\nWORN EVERYWHERE.',
     sub: 'Local craftsmanship. International standard.',
     cta: 'Explore the Brand',
@@ -77,7 +78,7 @@ export default function Hero() {
       <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.28)' }} />
 
       {/* ── HUGE TEXT — Damsyn style ── */}
-      <div className="hero-content" style={{
+      <div style={{
         position: 'absolute', inset: 0, zIndex: 2,
         display: 'flex', flexDirection: 'column',
         justifyContent: 'flex-end',
@@ -145,7 +146,6 @@ export default function Hero() {
         <button
           key={pos}
           onClick={fn}
-          className="hero-arrow"
           style={{
             position: 'absolute', top: '50%', transform: 'translateY(-50%)',
             ...Object.fromEntries(pos.split(': ').map((v, i, a) => i % 2 === 0 ? [v, a[i + 1]] : []).filter(Boolean)),

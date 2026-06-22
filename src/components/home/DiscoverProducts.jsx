@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../../store/useCartStore'
-import useFavoritesStore from '../../store/useFavoritesStore'
+import { useWishlist } from '../../hooks/useWishlist'
 import { supabase } from '../../lib/supabase'
 import QuickView from '../QuickView'
 import ApproxPrice from '../ApproxPrice'
@@ -35,8 +35,7 @@ function StarRating() {
 function ProductCard({ product, index, discount, onQuickView }) {
   const [hovered, setHovered] = useState(false)
   const addItem     = useCartStore(s => s.addItem)
-  const toggle      = useFavoritesStore(s => s.toggle)
-  const isFavorited = useFavoritesStore(s => s.isFavorited)
+  const { toggle, isFavorited } = useWishlist()
   const faved = isFavorited(product.id)
   const originalPrice = discount ? Math.round(product.price / (1 - Math.abs(discount) / 100)) : null
 

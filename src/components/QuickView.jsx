@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
-import useFavoritesStore from '../store/useFavoritesStore'
+import { useWishlist } from '../hooks/useWishlist'
 import { useAuth } from '../hooks/useAuth'
 import { getReviewsByProduct, createReview } from '../lib/api'
 import ApproxPrice from './ApproxPrice'
@@ -86,8 +86,7 @@ export default function QuickView({ product, onClose }) {
   const [submitted,     setSubmitted]     = useState(false)
 
   const addItem     = useCartStore(s => s.addItem)
-  const toggle      = useFavoritesStore(s => s.toggle)
-  const isFavorited = useFavoritesStore(s => s.isFavorited)
+  const { toggle, isFavorited } = useWishlist()
   const faved = isFavorited(product?.id)
   const { user, profile } = useAuth()
 

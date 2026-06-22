@@ -192,6 +192,187 @@ export async function updatePassword(newPassword) {
   if (error) throw error
 }
 
+export async function signInWithGoogle() {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: `${window.location.origin}/auth/callback` },
+  })
+  if (error) throw error
+  return data
+}
+
+export async function resetPassword(email) {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${window.location.origin}/reset-password`,
+  })
+  if (error) throw error
+}
+
+export async function uploadAvatar(userId, file) {
+  const ext  = file.name.split('.').pop()
+  const path = `avatars/${userId}.${ext}`
+  const { error: upErr } = await supabase.storage.from('avatars').upload(path, file, { upsert: true })
+  if (upErr) throw upErr
+  const { data } = supabase.storage.from('avatars').getPublicUrl(path)
+  const url = data.publicUrl
+  await supabase.from('customers').update({ avatar_url: url }).eq('id', userId)
+  return url
+}
+
+// ─── NEWSLETTER ──────────────────────────────
+
+export async function subscribeToNewsletter(email) {
+  const { error } = await supabase
+    .from('newsletter_subscribers')
+    .upsert({ email }, { onConflict: 'email' })
+  if (error) throw error
+}
+
+export async function getNewsletterSubscribers() {
+  const { data, error } = await supabase
+    .from('newsletter_subscribers')
+    .select('*')
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data
+}
+
+export async function deleteNewsletterSubscriber(id) {
+  const { error } = await supabase.from('newsletter_subscribers').delete().eq('id', id)
+  if (error) throw error
+}
+
+// ─── CONTACT MESSAGES ────────────────────────
+
+export async function submitContactMessage({ name, email, subject, message }) {
+  const { error } = await supabase
+    .from('contact_messages')
+    .insert({ name, email, subject, message })
+  if (error) throw error
+}
+
+export async function getContactMessages() {
+  const { data, error } = await supabase
+    .from('contact_messages')
+    .select('*')
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data
+}
+
+export async function markMessageRead(id) {
+  const { error } = await supabase
+    .from('contact_messages')
+    .update({ read: true })
+    .eq('id', id)
+  if (error) throw error
+}
+
+export async function deleteContactMessage(id) {
+  const { error } = await supabase.from('contact_messages').delete().eq('id', id)
+  if (error) throw error
+}
+
+// ─── REVIEWS ─────────────────────────────────
+
+export async function getReviewsByProduct(productId) {
+  const { data, error } = await supabase
+    .from('reviews')
+    .select('*')
+    .eq('product_id', productId)
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data
+}
+
+export async function createReview({ productId, userId, rating, body }) {
+  const { data, error } = await supabase
+    .from('reviews')
+    .insert({ product_id: productId, user_id: userId, rating, body })
+    .select()
+    .single()
+  if (error) throw error
+  return data
+}
+
+// ─── SALE PRODUCTS ───────────────────────────
+
+export async function getSaleProducts() {
+  const { data, error } = await supabase
+    .from('products')
+    .select('*, collection:collections(id, slug, name)')
+    .eq('active', true)
+    .eq('on_sale', true)
+    .order('sort_order', { ascending: true })
+  if (error) throw error
+  return data
+}
+
+// ─── ADMIN — ORDERS ──────────────────────────
+
+export async function getAllOrders() {
+  const { data, error } = await supabase
+    .from('orders')
+    .select('*, order_items(*)')
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data
+}
+
+export async function updateOrderStatus(id, status) {
+  const { error } = await supabase
+    .from('orders')
+    .update({ status })
+    .eq('id', id)
+  if (error) throw error
+}
+
+// ─── ADMIN — PRODUCTS ────────────────────────
+
+export async function getAllProductsAdmin() {
+  const { data, error } = await supabase
+    .from('products')
+    .select('*, collection:collections(id, slug, name)')
+    .order('sort_order', { ascending: true })
+  if (error) throw error
+  return data
+}
+
+export async function createProduct(product) {
+  const { data, error } = await supabase
+    .from('products')
+    .insert(product)
+    .select()
+    .single()
+  if (error) throw error
+  return data
+}
+
+export async function updateProduct(id, updates) {
+  const { data, error } = await supabase
+    .from('products')
+    .update(updates)
+    .eq('id', id)
+    .select()
+    .single()
+  if (error) throw error
+  return data
+}
+
+export async function deleteProduct(id) {
+  const { error } = await supabase.from('products').delete().eq('id', id)
+  if (error) throw error
+}
+
+export async function uploadProductImage(file) {
+  const ext  = file.name.split('.').pop()
+  const path = `products/${Date.now()}.${ext}`
+  const { error: upErr } = await supabase.storage.from('product-images').upload(path, file)
+  if (upErr) throw upErr
+  const { data } = supabase.storage.from('product-images').getPublicUrl(path)
+  return data.publicUrl
+}
+
 // ─── WISHLIST ─────────────────────────────────
 
 export async function getWishlist(userId) {
@@ -221,4 +402,3 @@ export async function removeFromWishlist(userId, productId) {
 
   if (error) throw error
 }
- 
