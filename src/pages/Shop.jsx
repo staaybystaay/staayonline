@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import useCartStore from '../store/useCartStore'
 import { useWishlist } from '../hooks/useWishlist'
 import { imgCard, imgThumb } from '../lib/images'
+import ApproxPrice from '../components/ApproxPrice'
 import { supabase } from '../lib/supabase'
 
 const G   = '#B8903A'
@@ -114,7 +115,6 @@ function ProductCardGrid({ product }) {
 
   return (
     <motion.div
-      layout
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
@@ -152,7 +152,10 @@ function ProductCardGrid({ product }) {
         </p>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
           <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: DK }}>{product.name}</p>
-          <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: DK, flexShrink: 0 }}>GH₵{Number(product.price).toLocaleString()}</p>
+          <div style={{ textAlign: 'right', flexShrink: 0 }}>
+            <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: DK }}>GH₵{Number(product.price).toLocaleString()}</p>
+            <ApproxPrice ghs={product.price} />
+          </div>
         </div>
       </div>
     </motion.div>
@@ -169,7 +172,6 @@ function ProductCardList({ product }) {
 
   return (
     <motion.div
-      layout
       initial={{ opacity: 0, x: -12 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0 }}
@@ -188,7 +190,10 @@ function ProductCardList({ product }) {
           <p style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD }}>{product.in_stock ? 'In stock' : 'Out of stock'}</p>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
-          <p style={{ ...F, fontSize: '18px', fontWeight: 700, color: DK }}>GH₵{Number(product.price).toLocaleString()}</p>
+          <div>
+            <p style={{ ...F, fontSize: '18px', fontWeight: 700, color: DK }}>GH₵{Number(product.price).toLocaleString()}</p>
+            <ApproxPrice ghs={product.price} />
+          </div>
           <button onClick={() => onWishlist(product.id)} style={{ width: '36px', height: '36px', borderRadius: '50%', background: wishlisted ? '#FEE2E2' : OW, border: `1px solid ${wishlisted ? RD : BR}`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '15px', color: wishlisted ? RD : MD, transition: 'all 0.2s' }}>
             {wishlisted ? '♥' : '♡'}
           </button>
