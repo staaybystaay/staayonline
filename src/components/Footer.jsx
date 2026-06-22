@@ -147,7 +147,7 @@ export default function Footer() {
           <div className="newsletter-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
             <div style={{ maxWidth: '420px' }}>
               <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '6px' }}>Stay in the Loop</p>
-              <h3 style={{ ...F, fontSize: 'clamp(18px, 2.5vw, 24px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', marginBottom: '4px' }}>The Staay Woman Starts Here</h3>
+              <h3 style={{ ...F, fontSize: 'clamp(18px, 2.5vw, 24px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', marginBottom: '4px' }}>THE STAAY WOMAN STARTS HERE</h3>
               <p style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD }}>Early access to new pieces and everything we're creating for you.</p>
             </div>
 
