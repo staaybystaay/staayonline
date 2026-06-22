@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import useCartStore from '../store/useCartStore'
 import { useWishlist } from '../hooks/useWishlist'
+import { imgCard, imgThumb } from '../lib/images'
 import { supabase } from '../lib/supabase'
 
 const G   = '#B8903A'
@@ -123,7 +124,8 @@ function ProductCardGrid({ product }) {
       <div>
         <div style={{ position: 'relative', aspectRatio: '3/4', background: B2, overflow: 'hidden', marginBottom: '10px' }}>
           <img
-            src={product.image_url} alt={product.name}
+            src={imgCard(product.image_url)} alt={product.name}
+            loading="lazy" decoding="async"
             onError={e => { e.target.style.display = 'none' }}
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)', transform: hovered ? 'scale(1.05)' : 'scale(1)' }}
           />
@@ -176,7 +178,7 @@ function ProductCardList({ product }) {
       onMouseLeave={() => setHovered(false)}
       style={{ display: 'flex', background: W, border: `1px solid ${hovered ? DK : BR}`, transition: 'border-color 0.2s', overflow: 'hidden' }}>
       <div style={{ width: '140px', flexShrink: 0, position: 'relative', overflow: 'hidden', background: B2 }}>
-        <img src={product.image_url} alt={product.name} onError={e => { e.target.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s', transform: hovered ? 'scale(1.04)' : 'scale(1)', position: 'absolute', inset: 0 }} />
+        <img src={imgThumb(product.image_url)} alt={product.name} loading="lazy" decoding="async" onError={e => { e.target.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s', transform: hovered ? 'scale(1.04)' : 'scale(1)', position: 'absolute', inset: 0 }} />
         {product.badge && <span style={{ position: 'absolute', top: '8px', left: '8px', background: G, color: W, padding: '3px 8px', ...F, fontSize: '9px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{product.badge}</span>}
       </div>
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 24px', gap: '16px' }}>

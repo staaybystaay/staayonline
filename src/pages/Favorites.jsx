@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useWishlist } from '../hooks/useWishlist'
+import { imgCard } from '../lib/images'
 import useCartStore from '../store/useCartStore'
 
 const G   = '#B8903A'
@@ -45,7 +46,8 @@ function FavoriteCard({ item, onRemove }) {
       {/* Image */}
       <div style={{ position: 'relative', aspectRatio: '3/4', background: LG, overflow: 'hidden', marginBottom: '10px' }}>
         <img
-          src={item.image_url || item.image}
+          src={imgCard(item.image_url || item.image)}
+          loading="lazy" decoding="async"
           alt={item.name}
           onError={e => { e.target.style.display = 'none' }}
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}

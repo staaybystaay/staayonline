@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
 import { useWishlist } from '../hooks/useWishlist'
+import { imgCard, imgFull } from '../lib/images'
 import { useAuth } from '../hooks/useAuth'
 import { getReviewsByProduct, createReview } from '../lib/api'
 import ApproxPrice from './ApproxPrice'
@@ -116,7 +117,7 @@ export default function QuickView({ product, onClose }) {
 
   if (!product) return null
 
-  const images = [product.image_url, product.image_url]
+  const images = [imgFull(product.image_url), imgCard(product.image_url)]
 
   function handleAddToCart() {
     const finalPrice = product.price + (customize ? CUSTOMIZATION_FEE : 0)
@@ -224,7 +225,7 @@ export default function QuickView({ product, onClose }) {
               {images.map((img, i) => (
                 <div key={i} onClick={() => setActiveImg(i)}
                   style={{ width: '54px', height: '68px', overflow: 'hidden', cursor: 'pointer', border: `2px solid ${activeImg === i ? G : 'transparent'}`, flexShrink: 0, transition: 'border-color 0.2s' }}>
-                  <img src={img} alt="" onError={e => { e.target.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <img src={img} alt="" loading="lazy" decoding="async" onError={e => { e.target.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 </div>
               ))}
             </div>
@@ -232,6 +233,7 @@ export default function QuickView({ product, onClose }) {
             {/* Main image */}
             <div style={{ overflow: 'hidden', background: LG }}>
               <img src={images[activeImg]} alt={product.name}
+                decoding="async"
                 onError={e => { e.target.src = 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80&fit=crop' }}
                 style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>

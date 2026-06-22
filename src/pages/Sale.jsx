@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
 import { useWishlist } from '../hooks/useWishlist'
 import { getSaleProducts } from '../lib/api'
+import { imgCard, imgThumb } from '../lib/images'
 import QuickView from '../components/QuickView'
 
 const INK   = '#15130F'
@@ -60,7 +61,7 @@ function SaleCard({ product, onQuickView }) {
       style={{ background: W }}>
 
       <div style={{ position: 'relative', aspectRatio: '3/4', background: LG, overflow: 'hidden', marginBottom: '10px' }}>
-        <img src={product.image_url} alt={product.name} onError={e => { e.target.style.display = 'none' }}
+        <img src={imgCard(product.image_url)} alt={product.name} loading="lazy" decoding="async" onError={e => { e.target.style.display = 'none' }}
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)', transform: hovered ? 'scale(1.05)' : 'scale(1)' }} />
 
         <div style={{ position: 'absolute', top: '10px', left: '10px', background: RD, color: W, padding: '4px 10px', borderRadius: '4px', ...F, fontSize: '12px', fontWeight: 800, letterSpacing: '0.02em' }}>

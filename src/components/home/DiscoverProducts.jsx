@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../../store/useCartStore'
 import { useWishlist } from '../../hooks/useWishlist'
+import { imgCard } from '../../lib/images'
 import { supabase } from '../../lib/supabase'
 import QuickView from '../QuickView'
 import ApproxPrice from '../ApproxPrice'
@@ -51,8 +52,9 @@ function ProductCard({ product, index, discount, onQuickView }) {
 
       <div style={{ position: 'relative', aspectRatio: '3/4', background: LG, overflow: 'hidden' }}>
         <img
-          src={product.image_url || ''}
+          src={imgCard(product.image_url) || ''}
           alt={product.name}
+          loading="lazy" decoding="async"
           onError={e => { e.target.src = 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=75&fit=crop' }}
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)', transform: hovered ? 'scale(1.05)' : 'scale(1)' }}
         />
