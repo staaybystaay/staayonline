@@ -1,112 +1,175 @@
 import { supabase } from './supabase'
 
-// ─── SIGN IN ─────────────────────────────────
-export async function signIn({ email, password }) {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: email.trim().toLowerCase(),
-    password,
-  })
+// ─── COLLECTIONS ─────────────────────────────
+
+export async function getCollections() {
+  const { data, error } = await supabase
+    .from('collections')
+    .select('*')
+    .eq('active', true)
+    .order('created_at', { ascending: true })
+
   if (error) throw error
   return data
 }
 
-// ─── SIGN UP ─────────────────────────────────
-export async function signUp({
-  email,
-  password,
-  firstName,
-  lastName,
-  phone,
-  gender,
-  interests,
-  avatarUrl,
-}) {
+// ─── PRODUCTS ────────────────────────────────
+
+export async function getAllProducts() {
+  const { data, error } = await supabase
+    .from('products')
+    .select(`
+      *,
+      collection:collections(id, slug, name)
+    `)
+    .eq('active', true)
+    .eq('in_stock', true)
+    .order('sort_order', { ascending: true })
+
+  if (error) throw error
+  return data
+}
+
+export async function getProductsByCollection(collectionSlug) {
+  const { data, error } = await supabase
+    .from('products')
+    .select(`
+      *,
+      collection:collections(id, slug, name)
+    `)
+    .eq('active', true)
+    .eq('in_stock', true)
+    .eq('collections.slug', collectionSlug)
+    .order('sort_order', { ascending: true })
+
+  if (error) throw error
+  return data
+}
+
+export async function getProductBySlug(slug) {
+  const { data, error } = await supabase
+    .from('products')
+    .select(`
+      *,
+      collection:collections(id, slug, name)
+    `)
+    .eq('slug', slug)
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+// ─── ORDERS ──────────────────────────────────
+
+export async function createOrder(orderData) {
+  const { items, ...order } = orderData
+
+  // 1 — insert the order
+  const { data: newOrder, error: orderError } = await supabase
+    .from('orders')
+    .insert(order)
+    .select()
+    .single()
+
+  if (orderError) throw orderError
+
+  // 2 — insert the order items
+  const orderItems = items.map(item => ({
+    order_id:   newOrder.id,
+    product_id: item.id || null,
+    name:       item.name,
+    price:      item.price,
+    qty:        item.qty,
+    image_url:  item.image || item.image_url || null,
+  }))
+
+  const { error: itemsError } = await supabase
+    .from('order_items')
+    .insert(orderItems)
+
+  if (itemsError) throw itemsError
+
+  return newOrder
+}
+
+export async function getOrdersByEmail(email) {
+  const { data, error } = await supabase
+    .from('orders')
+    .select(`
+      *,
+      order_items(*)
+    `)
+    .eq('email', email)
+    .order('created_at', { ascending: false })
+
+  if (error) throw error
+  return data
+}
+
+export async function getOrderById(id) {
+  const { data, error } = await supabase
+    .from('orders')
+    .select(`
+      *,
+      order_items(*)
+    `)
+    .eq('id', id)
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+// ─── AUTH / CUSTOMERS ────────────────────────
+
+export async function signUp({ email, password, firstName, lastName, phone }) {
   const { data, error } = await supabase.auth.signUp({
-    email: email.trim().toLowerCase(),
+    email,
     password,
     options: {
-      data: {
-        first_name: firstName,
-        last_name:  lastName,
-        phone,
-        gender,
-        interests,
-        avatar_url: avatarUrl,
-      },
-      emailRedirectTo: `${window.location.origin}/auth/callback`,
+      data: { first_name: firstName, last_name: lastName, phone },
     },
   })
   if (error) throw error
 
+  // Create customer profile row
   if (data.user) {
     await supabase.from('customers').upsert({
       id:         data.user.id,
       first_name: firstName,
       last_name:  lastName,
-      phone:      phone      || null,
-      gender:     gender     || null,
-      interests:  interests  || null,
-      avatar_url: avatarUrl  || null,
-    }, { onConflict: 'id' })
+      phone,
+    })
   }
 
   return data
 }
 
-// ─── SIGN OUT ────────────────────────────────
+export async function signIn({ email, password }) {
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+  if (error) throw error
+  return data
+}
+
 export async function signOut() {
   const { error } = await supabase.auth.signOut()
   if (error) throw error
 }
 
-// ─── GOOGLE OAUTH ────────────────────────────
-export async function signInWithGoogle() {
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      redirectTo: `${window.location.origin}/auth/callback`,
-      queryParams: { access_type: 'offline', prompt: 'consent' },
-    },
-  })
-  if (error) throw error
-  return data
-}
-
-// ─── FORGOT PASSWORD ─────────────────────────
-export async function resetPassword(email) {
-  const { error } = await supabase.auth.resetPasswordForEmail(
-    email.trim().toLowerCase(),
-    { redirectTo: `${window.location.origin}/auth/reset-password` }
-  )
-  if (error) throw error
-}
-
-// ─── UPDATE PASSWORD ─────────────────────────
-export async function updatePassword(newPassword) {
-  const { error } = await supabase.auth.updateUser({ password: newPassword })
-  if (error) throw error
-}
-
-// ─── SESSION / USER ──────────────────────────
 export async function getSession() {
   const { data } = await supabase.auth.getSession()
   return data.session
 }
 
-export async function getUser() {
-  const { data: { user }, error } = await supabase.auth.getUser()
-  if (error) throw error
-  return user
-}
-
-// ─── CUSTOMER PROFILE ────────────────────────
 export async function getCustomerProfile(userId) {
   const { data, error } = await supabase
     .from('customers')
     .select('*')
     .eq('id', userId)
     .single()
-  if (error && error.code !== 'PGRST116') throw error
+
+  if (error) throw error
   return data
 }
 
@@ -117,258 +180,37 @@ export async function updateCustomerProfile(userId, updates) {
     .eq('id', userId)
     .select()
     .single()
+
   if (error) throw error
   return data
 }
 
-// ─── UPLOAD AVATAR ───────────────────────────
-export async function uploadAvatar(userId, file) {
-  const ext  = file.name.split('.').pop().toLowerCase()
-  const path = `avatars/${userId}.${ext}`
-  const { error } = await supabase.storage
-    .from('products')
-    .upload(path, file, { upsert: true, contentType: file.type })
-  if (error) throw error
-  const { data } = supabase.storage.from('products').getPublicUrl(path)
-  return data.publicUrl
-}
+// ─── WISHLIST ─────────────────────────────────
 
-// ─── ORDERS ──────────────────────────────────
-export async function createOrder(orderData) {
-  const { items, ...order } = orderData
-  const { data: newOrder, error: orderError } = await supabase
-    .from('orders').insert(order).select().single()
-  if (orderError) throw orderError
-
-  const { error: itemsError } = await supabase.from('order_items').insert(
-    items.map(item => {
-      const isGiftCard = item.category === 'Gift Card' || String(item.id).startsWith('giftcard-')
-      return {
-        order_id:      newOrder.id,
-        product_id:    isGiftCard ? null : (item.id || null),
-        name:          item.name,
-        price:         item.price,
-        qty:           item.qty,
-        image_url:     item.image     || item.image_url || null,
-        customization: item.customization || null,
-      }
-    })
-  )
-  if (itemsError) throw itemsError
-  return newOrder
-}
-
-export async function getOrdersByEmail(email) {
+export async function getWishlist(userId) {
   const { data, error } = await supabase
-    .from('orders').select('*, order_items(*)').eq('email', email)
-    .order('created_at', { ascending: false })
+    .from('wishlists')
+    .select('product_id, products(*,collection:collections(id,slug,name))')
+    .eq('user_id', userId)
+
   if (error) throw error
-  return data
+  return data.map(row => row.products).filter(Boolean)
 }
 
-export async function getOrderById(id) {
-  const { data, error } = await supabase
-    .from('orders').select('*, order_items(*)').eq('id', id).single()
-  if (error) throw error
-  return data
+export async function addToWishlist(userId, productId) {
+  const { error } = await supabase
+    .from('wishlists')
+    .insert({ user_id: userId, product_id: productId })
+
+  if (error && error.code !== '23505') throw error // ignore duplicate
 }
 
-// ─── ADMIN — ORDERS ──────────────────────────
-export async function getAllOrders() {
-  const { data, error } = await supabase
-    .from('orders')
-    .select('*, order_items(*)')
-    .order('created_at', { ascending: false })
-  if (error) throw error
-  return data
-}
-
-export async function updateOrderStatus(orderId, status) {
-  const { data, error } = await supabase
-    .from('orders')
-    .update({ status })
-    .eq('id', orderId)
-    .select()
-    .single()
-  if (error) throw error
-  return data
-}
-
-// ─── PRODUCTS ────────────────────────────────
-export async function getAllProducts() {
-  const { data, error } = await supabase
-    .from('products')
-    .select('*, collection:collections(id, slug, name)')
-    .eq('active', true)
-    .order('sort_order', { ascending: true })
-  if (error) throw error
-  return data
-}
-
-// ─── ADMIN — PRODUCTS ────────────────────────
-// Same as getAllProducts but includes inactive products too,
-// for the admin product management table.
-export async function getAllProductsAdmin() {
-  const { data, error } = await supabase
-    .from('products')
-    .select('*, collection:collections(id, slug, name)')
-    .order('sort_order', { ascending: true })
-  if (error) throw error
-  return data
-}
-
-export async function createProduct(product) {
-  const { data, error } = await supabase
-    .from('products')
-    .insert(product)
-    .select('*, collection:collections(id, slug, name)')
-    .single()
-  if (error) throw error
-  return data
-}
-
-export async function updateProduct(id, updates) {
-  const { data, error } = await supabase
-    .from('products')
-    .update(updates)
-    .eq('id', id)
-    .select('*, collection:collections(id, slug, name)')
-    .single()
-  if (error) throw error
-  return data
-}
-
-export async function deleteProduct(id) {
-  const { error } = await supabase.from('products').delete().eq('id', id)
-  if (error) throw error
-}
-
-export async function uploadProductImage(file) {
-  const ext  = file.name.split('.').pop().toLowerCase()
-  const path = `products/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
-  const { error } = await supabase.storage
-    .from('products')
-    .upload(path, file, { upsert: false, contentType: file.type })
-  if (error) throw error
-  const { data } = supabase.storage.from('products').getPublicUrl(path)
-  return data.publicUrl
-}
-
-export async function getSaleProducts() {
-  const { data, error } = await supabase
-    .from('products')
-    .select('*, collection:collections(id, slug, name)')
-    .eq('active', true)
-    .gt('discount_percent', 0)
-    .order('discount_percent', { ascending: false })
-  if (error) throw error
-  return data
-}
-
-export async function getProductBySlug(slug) {
-  const { data, error } = await supabase
-    .from('products')
-    .select('*, collection:collections(id, slug, name)')
-    .eq('slug', slug).single()
-  if (error) throw error
-  return data
-}
-
-export async function getCollections() {
-  const { data, error } = await supabase
-    .from('collections').select('*').eq('active', true)
-    .order('created_at', { ascending: true })
-  if (error) throw error
-  return data
-}
-
-// ─── REVIEWS ─────────────────────────────────
-export async function getReviewsByProduct(productId) {
-  const { data, error } = await supabase
-    .from('reviews')
-    .select('*')
+export async function removeFromWishlist(userId, productId) {
+  const { error } = await supabase
+    .from('wishlists')
+    .delete()
+    .eq('user_id', userId)
     .eq('product_id', productId)
-    .order('created_at', { ascending: false })
-  if (error) throw error
-  return data
-}
 
-export async function createReview({ productId, customerId, name, rating, comment }) {
-  const { data, error } = await supabase
-    .from('reviews')
-    .insert({
-      product_id:  productId,
-      customer_id: customerId || null,
-      name,
-      rating,
-      comment,
-    })
-    .select()
-    .single()
-  if (error) throw error
-  return data
-}
-
-// ─── NEWSLETTER ──────────────────────────────
-export async function subscribeToNewsletter(email) {
-  const { error } = await supabase
-    .from('newsletter_subscribers')
-    .insert({ email: email.trim().toLowerCase() })
-
-  if (error) {
-    // Postgres unique-violation code — they're already on the list
-    if (error.code === '23505') {
-      throw new Error('ALREADY_SUBSCRIBED')
-    }
-    throw error
-  }
-}
-
-// ─── ADMIN — NEWSLETTER ──────────────────────
-export async function getNewsletterSubscribers() {
-  const { data, error } = await supabase
-    .from('newsletter_subscribers')
-    .select('*')
-    .order('created_at', { ascending: false })
-  if (error) throw error
-  return data
-}
-
-export async function deleteNewsletterSubscriber(id) {
-  const { error } = await supabase.from('newsletter_subscribers').delete().eq('id', id)
-  if (error) throw error
-}
-
-// ─── CONTACT MESSAGES ────────────────────────
-export async function submitContactMessage({ name, email, message }) {
-  const { error } = await supabase
-    .from('contact_messages')
-    .insert({ name, email: email || null, message })
-  if (error) throw error
-}
-
-// ─── ADMIN — CONTACT MESSAGES ────────────────
-export async function getContactMessages() {
-  const { data, error } = await supabase
-    .from('contact_messages')
-    .select('*')
-    .order('created_at', { ascending: false })
-  if (error) throw error
-  return data
-}
-
-export async function markMessageRead(id) {
-  const { data, error } = await supabase
-    .from('contact_messages')
-    .update({ status: 'read' })
-    .eq('id', id)
-    .select()
-    .single()
-  if (error) throw error
-  return data
-}
-
-export async function deleteContactMessage(id) {
-  const { error } = await supabase.from('contact_messages').delete().eq('id', id)
   if (error) throw error
 }
