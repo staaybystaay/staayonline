@@ -185,6 +185,13 @@ export async function updateCustomerProfile(userId, updates) {
   return data
 }
 
+// ─── AUTH HELPERS ────────────────────────────
+
+export async function updatePassword(newPassword) {
+  const { error } = await supabase.auth.updateUser({ password: newPassword })
+  if (error) throw error
+}
+
 // ─── WISHLIST ─────────────────────────────────
 
 export async function getWishlist(userId) {
@@ -214,3 +221,4 @@ export async function removeFromWishlist(userId, productId) {
 
   if (error) throw error
 }
+ 
