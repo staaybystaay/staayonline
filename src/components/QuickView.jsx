@@ -269,9 +269,19 @@ export default function QuickView({ product, onClose }) {
               </div>
 
               {/* Stock */}
-              <div style={{ background: '#FFFBEB', border: '1px solid #FDE68A', padding: '8px 14px', ...F, fontSize: '12px', fontWeight: 600, color: '#92400E' }}>
-                Only {Math.floor(Math.random() * 4) + 1} left in stock
-              </div>
+              {product.stock_quantity === 0 ? (
+                <div style={{ background: '#FEF2F2', border: '1px solid #FECACA', padding: '8px 14px', ...F, fontSize: '12px', fontWeight: 600, color: '#B91C1C' }}>
+                  Out of stock
+                </div>
+              ) : product.stock_quantity > 0 && product.stock_quantity <= 5 ? (
+                <div style={{ background: '#FFFBEB', border: '1px solid #FDE68A', padding: '8px 14px', ...F, fontSize: '12px', fontWeight: 600, color: '#92400E' }}>
+                  Only {product.stock_quantity} left in stock
+                </div>
+              ) : product.stock_quantity > 5 ? (
+                <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', padding: '8px 14px', ...F, fontSize: '12px', fontWeight: 600, color: '#166534' }}>
+                  In stock
+                </div>
+              ) : null}
 
               <Divider />
 

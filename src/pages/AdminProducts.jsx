@@ -33,6 +33,8 @@ export default function AdminProducts() {
   const [selected,    setSelected]    = useState(null)
   const [filter,      setFilter]      = useState('all')
   const [search,      setSearch]      = useState('')
+  const [stockValues, setStockValues] = useState({})
+  const [savingIds,   setSavingIds]   = useState(new Set())
 
   // Guard — only admins
   useEffect(() => {
@@ -48,7 +50,12 @@ export default function AdminProducts() {
         supabase.from('products').select('*, collection:collections(id, slug, name)').order('sort_order', { ascending: true }),
         supabase.from('collections').select('*').order('created_at', { ascending: true }),
       ])
-      if (prodRes.data)  setProducts(prodRes.data)
+      if (prodRes.data) {
+        setProducts(prodRes.data)
+        const init = {}
+        prodRes.data.forEach(p => { init[p.id] = p.stock_quantity ?? '' })
+        setStockValues(init)
+      }
       if (colRes.data)   setCollections(colRes.data)
       setLoading(false)
     }
@@ -58,6 +65,16 @@ export default function AdminProducts() {
   function handleUploadSuccess(path, productId) {
     setProducts(prev => prev.map(p => p.id === productId ? { ...p, image_url: path } : p))
     setSelected(null)
+  }
+
+  async function saveStock(productId) {
+    const raw = stockValues[productId]
+    const qty = raw === '' ? null : parseInt(raw, 10)
+    if (qty !== null && (isNaN(qty) || qty < 0)) return
+    setSavingIds(prev => new Set([...prev, productId]))
+    await supabase.from('products').update({ stock_quantity: qty }).eq('id', productId)
+    setProducts(prev => prev.map(p => p.id === productId ? { ...p, stock_quantity: qty } : p))
+    setSavingIds(prev => { const s = new Set(prev); s.delete(productId); return s })
   }
 
   const filtered = products.filter(p => {
@@ -171,9 +188,32 @@ export default function AdminProducts() {
                   <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: DK, marginBottom: '4px' }}>
                     {product.name}
                   </p>
-                  <p style={{ ...F, fontSize: '13px', fontWeight: 400, color: MD, marginBottom: '12px' }}>
+                  <p style={{ ...F, fontSize: '13px', fontWeight: 400, color: MD, marginBottom: '10px' }}>
                     GH₵{Number(product.price).toLocaleString()}
                   </p>
+
+                  {/* Stock quantity */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '10px' }}>
+                    <span style={{ ...F, fontSize: '11px', fontWeight: 600, color: DK }}>Stock:</span>
+                    <input
+                      type="number"
+                      min="0"
+                      placeholder="qty"
+                      value={stockValues[product.id] ?? ''}
+                      onChange={e => setStockValues(prev => ({ ...prev, [product.id]: e.target.value }))}
+                      onKeyDown={e => e.key === 'Enter' && saveStock(product.id)}
+                      style={{ width: '64px', padding: '5px 8px', border: `1px solid ${BR}`, background: W, ...F, fontSize: '12px', color: DK, outline: 'none', textAlign: 'center' }}
+                    />
+                    <button
+                      onClick={() => saveStock(product.id)}
+                      disabled={savingIds.has(product.id)}
+                      style={{ padding: '5px 10px', background: savingIds.has(product.id) ? FT : G, color: W, border: 'none', ...F, fontSize: '11px', fontWeight: 600, cursor: savingIds.has(product.id) ? 'not-allowed' : 'pointer', transition: 'background 0.2s' }}>
+                      {savingIds.has(product.id) ? '…' : 'Save'}
+                    </button>
+                    {product.stock_quantity === 0 && (
+                      <span style={{ ...F, fontSize: '10px', fontWeight: 600, color: '#B91C1C' }}>Out</span>
+                    )}
+                  </div>
 
                   <button
                     onClick={() => setSelected(isSelected ? null : product)}

@@ -108,9 +108,19 @@ function ProductCard({ product, index, onQuickView }) {
         <p style={{ ...F, fontSize: '11px', fontWeight: 400, color: MD, textTransform: 'uppercase', letterSpacing: '0.03em', marginBottom: '8px' }}>{product.collection?.name || 'STAAY'}</p>
         <MiniCurrencyPicker ghs={product.price} priceStyle={{ fontSize: '16px' }} strikethrough={originalPrice} />
 
-        <div style={{ display: 'inline-block', background: '#FFF9C4', border: '1px solid #F6E05E', padding: '3px 10px', borderRadius: '4px', ...F, fontSize: '11px', fontWeight: 500, color: '#744210' }}>
-          In Stock
-        </div>
+        {product.stock_quantity === 0 ? (
+          <div style={{ display: 'inline-block', background: '#FEF2F2', border: '1px solid #FECACA', padding: '3px 10px', borderRadius: '4px', ...F, fontSize: '11px', fontWeight: 500, color: '#B91C1C' }}>
+            Out of stock
+          </div>
+        ) : product.stock_quantity > 0 && product.stock_quantity <= 5 ? (
+          <div style={{ display: 'inline-block', background: '#FFF9C4', border: '1px solid #F6E05E', padding: '3px 10px', borderRadius: '4px', ...F, fontSize: '11px', fontWeight: 500, color: '#744210' }}>
+            Only {product.stock_quantity} left
+          </div>
+        ) : product.stock_quantity > 5 ? (
+          <div style={{ display: 'inline-block', background: '#F0FDF4', border: '1px solid #BBF7D0', padding: '3px 10px', borderRadius: '4px', ...F, fontSize: '11px', fontWeight: 500, color: '#166534' }}>
+            In Stock
+          </div>
+        ) : null}
 
         {/* Mobile-only quick actions */}
         <div className="mobile-only" style={{ display: 'none', gap: '6px', marginTop: '10px' }}>
