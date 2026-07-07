@@ -108,7 +108,7 @@ export default function Terms() {
     <div style={{ background: W, minHeight: '100vh' }}>
 
       {/* ── PAGE HEADER ── */}
-      <div style={{ background: OW, borderBottom: `1px solid ${BR}`, padding: '40px 64px' }}>
+      <div className="page-padding" style={{ background: OW, borderBottom: `1px solid ${BR}`, padding: '40px 64px' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '20px' }}>
             <Link
@@ -134,8 +134,8 @@ export default function Terms() {
       </div>
 
       {/* ── BODY ── */}
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '56px 64px 96px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: '64px', alignItems: 'start' }}>
+      <div className="page-padding" style={{ maxWidth: '1280px', margin: '0 auto', padding: '56px 64px 96px' }}>
+        <div className="layout-sidebar" style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: '64px', alignItems: 'start' }}>
 
           {/* ── STICKY SIDEBAR NAV ── */}
           <aside style={{ position: 'sticky', top: '80px' }}>

@@ -54,7 +54,7 @@ const features = [
 export default function Features() {
   return (
     <section style={{ background: OW, padding: '80px 64px', borderTop: `1px solid ${BR}` }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }}>
+      <div className="features-layout" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }}>
 
         {/* Left — image */}
         <motion.div

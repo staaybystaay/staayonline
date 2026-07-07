@@ -78,7 +78,7 @@ export default function Hero() {
       <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.28)' }} />
 
       {/* ── HUGE TEXT — Damsyn style ── */}
-      <div style={{
+      <div className="hero-content" style={{
         position: 'absolute', inset: 0, zIndex: 2,
         display: 'flex', flexDirection: 'column',
         justifyContent: 'flex-end',

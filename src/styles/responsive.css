@@ -338,6 +338,52 @@
 }
 
 /* ============================================
+   Features section — image + 2x2 grid stack on mobile
+   ============================================ */
+@media (max-width: 768px) {
+  .features-layout {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+}
+
+/* ============================================
+   Product detail page
+   ============================================ */
+@media (max-width: 768px) {
+  .product-main-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .product-main-grid > div:first-child {
+    position: relative !important;
+    top: auto !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+}
+@media (max-width: 480px) {
+  .size-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  .product-shipping-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .product-shipping-grid > div:nth-child(2) {
+    border-left: 1px solid var(--border) !important;
+    border-top: none !important;
+  }
+}
+
+/* ============================================
+   Contact form — name/email row stacks on phone
+   ============================================ */
+@media (max-width: 480px) {
+  .contact-name-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ============================================
    Admin Newsletter
    ============================================ */
 @media (max-width: 560px) {

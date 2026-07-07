@@ -270,7 +270,7 @@ export default function Product() {
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
 
       {/* ── BREADCRUMB BAR ── */}
-      <div style={{
+      <div className="page-padding" style={{
         borderBottom: '1px solid var(--border)',
         padding: '14px 80px',
         background: 'var(--bg-surface)',
@@ -316,8 +316,8 @@ export default function Product() {
       </div>
 
       {/* ── MAIN PRODUCT LAYOUT ── */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
-        <div style={{
+      <div className="page-padding" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 80px' }}>
+        <div className="product-main-grid" style={{
           display: 'grid', gridTemplateColumns: '1fr 1fr',
           borderBottom: '1px solid var(--border)',
         }}>
@@ -586,7 +586,7 @@ export default function Product() {
                 </button>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '0' }}>
+              <div className="size-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '0' }}>
                 {(product.sizes || ['XS','S','M','L','XL','XXL']).map((size, i, arr) => {
                   const active = selectedSize === size
                   return (
@@ -734,7 +734,7 @@ export default function Product() {
             </div>
 
             {/* Shipping info strip */}
-            <div style={{
+            <div className="product-shipping-grid" style={{
               display: 'grid', gridTemplateColumns: '1fr 1fr',
               marginBottom: '32px',
             }}>

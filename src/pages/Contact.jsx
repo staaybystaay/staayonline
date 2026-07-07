@@ -222,7 +222,7 @@ export default function Contact() {
               </div>
             ) : (
               <>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '14px' }}>
+                <div className="contact-name-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '14px' }}>
                   <div>
                     <label style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, display: 'block', marginBottom: '8px' }}>
                       Your Name <span style={{ color: '#C0392B' }}>*</span>
