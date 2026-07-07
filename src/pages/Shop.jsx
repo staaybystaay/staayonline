@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import useCartStore from '../store/useCartStore'
 import { useWishlist } from '../hooks/useWishlist'
 import { imgCard, imgThumb } from '../lib/images'
@@ -215,6 +215,8 @@ function ProductCardList({ product }) {
 
 // ─── MAIN SHOP PAGE ──────────────────────────
 export default function Shop() {
+  const location = useLocation()
+  const navigate  = useNavigate()
   const [collections,      setCollections]      = useState([])
   const [products,         setProducts]         = useState([])
   const [loading,          setLoading]          = useState(true)
@@ -224,6 +226,13 @@ export default function Shop() {
   const [viewMode,         setViewMode]         = useState('grid')
   const [sortOpen,         setSortOpen]         = useState(false)
   const [visibleCount,     setVisibleCount]     = useState(12)
+
+  // Sync active collection from URL ?col= param (used by navbar links & mobile drawer)
+  useEffect(() => {
+    const col = new URLSearchParams(location.search).get('col')
+    setActiveCollection(col || 'all')
+    setVisibleCount(12)
+  }, [location.search])
   // Fetch collections + products together
   useEffect(() => {
     async function load() {
@@ -247,8 +256,8 @@ export default function Shop() {
   const activeCol = collections.find(c => c.slug === activeCollection)
 
   const togglePrice    = label => { setActivePrices(prev => prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label]); setVisibleCount(12) }
-  const clearAll       = () => { setActiveCollection('all'); setActivePrices([]); setVisibleCount(12) }
-  const setCollection  = (slug) => { setActiveCollection(slug); setVisibleCount(12) }
+  const clearAll       = () => { navigate('/shop'); setActivePrices([]); setVisibleCount(12) }
+  const setCollection  = (slug) => { navigate(slug === 'all' ? '/shop' : `/shop?col=${slug}`) }
 
   const filtered = useMemo(() => {
     return products.filter(p => {
