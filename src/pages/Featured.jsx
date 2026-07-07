@@ -124,8 +124,8 @@ function Tag({ children, color = G, bg = GL }) {
 // ─── RITH SECTION ─────────────────────────────────────────────────
 const RITH_RUNWAY = [
   { src: '/featured/rith-steps.jpg',   caption: 'STAAY on the steps of the British Museum' },
-  { src: '/featured/rith-runway1.jpg', caption: 'Running in the Halls — British Museum', ratio: '4/5' },
-  { src: '/featured/rith-runway2.jpg', caption: 'Running in the Halls — British Museum', ratio: '4/5' },
+  { src: '/featured/feature1.jpg', caption: 'Running in the Halls — British Museum', ratio: '4/5' },
+  { src: '/featured/feature2.jpg', caption: 'Running in the Halls — British Museum', ratio: '4/5' },
   { src: '/featured/rith-crowd.jpg',   caption: 'The Great Court, British Museum', ratio: '16/10' },
 ]
 
