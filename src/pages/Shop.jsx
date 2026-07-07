@@ -113,6 +113,8 @@ function ProductCardGrid({ product }) {
   const { toggle, isFavorited } = useWishlist()
   const wishlisted = isFavorited(product.id)
   const onWishlist = () => toggle(product)
+  const discount      = product.discount_percent || null
+  const originalPrice = discount ? Math.round(product.price / (1 - discount / 100)) : null
 
   return (
     <motion.div
@@ -130,7 +132,11 @@ function ProductCardGrid({ product }) {
             onError={e => { e.target.style.display = 'none' }}
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)', transform: hovered ? 'scale(1.05)' : 'scale(1)' }}
           />
-          {product.badge && (
+          {discount ? (
+            <span style={{ position: 'absolute', top: '10px', left: '10px', background: RD, color: W, padding: '4px 10px', ...F, fontSize: '10px', fontWeight: 700 }}>
+              -{discount}%
+            </span>
+          ) : product.badge && (
             <span style={{ position: 'absolute', top: '10px', left: '10px', background: G, color: W, padding: '4px 10px', ...F, fontSize: '10px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               {product.badge}
             </span>
@@ -152,7 +158,7 @@ function ProductCardGrid({ product }) {
           {product.collection?.name}
         </p>
         <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '6px' }}>{product.name}</p>
-        <MiniCurrencyPicker ghs={product.price} priceStyle={{ fontSize: '14px' }} />
+        <MiniCurrencyPicker ghs={product.price} priceStyle={{ fontSize: '14px' }} strikethrough={originalPrice} />
       </div>
     </motion.div>
   )
@@ -165,6 +171,8 @@ function ProductCardList({ product }) {
   const { toggle, isFavorited } = useWishlist()
   const wishlisted = isFavorited(product.id)
   const onWishlist = () => toggle(product)
+  const discount      = product.discount_percent || null
+  const originalPrice = discount ? Math.round(product.price / (1 - discount / 100)) : null
 
   return (
     <motion.div
@@ -177,7 +185,11 @@ function ProductCardList({ product }) {
       style={{ display: 'flex', background: W, border: `1px solid ${hovered ? DK : BR}`, transition: 'border-color 0.2s', overflow: 'hidden' }}>
       <div style={{ width: '140px', flexShrink: 0, position: 'relative', overflow: 'hidden', background: B2 }}>
         <img src={imgThumb(product.image_url)} alt={product.name} loading="lazy" decoding="async" onError={e => { e.target.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s', transform: hovered ? 'scale(1.04)' : 'scale(1)', position: 'absolute', inset: 0 }} />
-        {product.badge && <span style={{ position: 'absolute', top: '8px', left: '8px', background: G, color: W, padding: '3px 8px', ...F, fontSize: '9px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{product.badge}</span>}
+        {discount ? (
+          <span style={{ position: 'absolute', top: '8px', left: '8px', background: RD, color: W, padding: '3px 8px', ...F, fontSize: '9px', fontWeight: 700 }}>-{discount}%</span>
+        ) : product.badge && (
+          <span style={{ position: 'absolute', top: '8px', left: '8px', background: G, color: W, padding: '3px 8px', ...F, fontSize: '9px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{product.badge}</span>
+        )}
       </div>
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 24px', gap: '16px' }}>
         <div style={{ flex: 1 }}>
@@ -186,7 +198,7 @@ function ProductCardList({ product }) {
           <p style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD }}>{product.in_stock ? 'In stock' : 'Out of stock'}</p>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
-          <MiniCurrencyPicker ghs={product.price} priceStyle={{ fontSize: '18px' }} />
+          <MiniCurrencyPicker ghs={product.price} priceStyle={{ fontSize: '18px' }} strikethrough={originalPrice} />
           <button onClick={() => onWishlist(product.id)} style={{ width: '36px', height: '36px', borderRadius: '50%', background: wishlisted ? '#FEE2E2' : OW, border: `1px solid ${wishlisted ? RD : BR}`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '15px', color: wishlisted ? RD : MD, transition: 'all 0.2s' }}>
             {wishlisted ? '♥' : '♡'}
           </button>

@@ -17,8 +17,6 @@ const BR  = '#E8E4DF'
 const RD  = '#E53E3E'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
-const DISCOUNTS = [null, -22, null, -13, -29, null, -23, -15]
-
 function StarRating() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
@@ -32,12 +30,13 @@ function StarRating() {
   )
 }
 
-function ProductCard({ product, index, discount, onQuickView }) {
+function ProductCard({ product, index, onQuickView }) {
   const [hovered, setHovered] = useState(false)
   const addItem     = useCartStore(s => s.addItem)
   const { toggle, isFavorited } = useWishlist()
   const faved = isFavorited(product.id)
-  const originalPrice = discount ? Math.round(product.price / (1 - Math.abs(discount) / 100)) : null
+  const discount     = product.discount_percent || null
+  const originalPrice = discount ? Math.round(product.price / (1 - discount / 100)) : null
 
   return (
     <motion.div
@@ -60,7 +59,7 @@ function ProductCard({ product, index, discount, onQuickView }) {
 
         {discount && (
           <div style={{ position: 'absolute', top: '10px', left: '10px', background: RD, color: W, padding: '4px 10px', borderRadius: '4px', ...F, fontSize: '12px', fontWeight: 700 }}>
-            {discount}%
+            -{discount}%
           </div>
         )}
 
@@ -195,7 +194,7 @@ export default function DiscoverProducts() {
         {!loading && !error && products.length > 0 && (
           <div className="grid-4-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
             {products.map((p, i) => (
-              <ProductCard key={p.id} product={p} index={i} discount={DISCOUNTS[i] || null} onQuickView={setQuickViewProduct} />
+              <ProductCard key={p.id} product={p} index={i} onQuickView={setQuickViewProduct} />
             ))}
           </div>
         )}
