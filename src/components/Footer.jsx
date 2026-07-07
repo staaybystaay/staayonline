@@ -113,7 +113,7 @@ export default function Footer() {
               <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
               <div>
                 <p style={{ ...F, fontSize: '16px', fontWeight: 800, color: W, letterSpacing: '-0.01em', lineHeight: 1 }}>STAAY</p>
-                <p style={{ ...F, fontSize: '8px', fontWeight: 600, color: G, letterSpacing: '0.22em', textTransform: 'uppercase' }}>ONLINE</p>
+              
               </div>
             </div>
             <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD, lineHeight: 1.7, marginBottom: '18px', maxWidth: '240px' }}>
