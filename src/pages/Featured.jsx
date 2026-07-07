@@ -243,8 +243,8 @@ function RunwayTile({ img }) {
 
 // ─── EDEN COLLECTION SECTION ──────────────────────────────────────
 const EDEN_GALLERY = [
-  { src: '/featured/eden-hero.jpg',      caption: 'The Eden Collection — STAAY', ratio: '3/4' },
-  { src: '/featured/eden-editorial.jpg', caption: 'Eden Editorial',               ratio: '3/4' },
+  { src: '/featured/feature2.jpg',      caption: 'The Eden Collection — STAAY', ratio: '3/4' },
+  { src: '/featured/feature6.jpg', caption: 'Eden Editorial',               ratio: '3/4' },
 ]
 
 function EdenSection() {
