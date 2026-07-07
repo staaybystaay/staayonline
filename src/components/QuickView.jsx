@@ -369,18 +369,13 @@ export default function QuickView({ product, onClose }) {
             </div>
           </div>
 
-          {/* ── SHIPPING INFO ── */}
-          <div className="qv-shipping-grid" style={{ padding: '20px 28px', borderBottom: `1px solid ${BR}`, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px' }}>
-            {[
-              { title: 'Free Shipping',    sub: 'On all orders within Accra'    },
-              { title: 'Fast Delivery',    sub: '2–3 business days'             },
-              { title: 'Easy Returns',     sub: 'Free returns within 7 days'    },
-            ].map(item => (
-              <div key={item.title} style={{ padding: '12px 16px', background: LG, borderLeft: `2px solid ${G}` }}>
-                <p style={{ ...F, fontSize: '12px', fontWeight: 700, color: DK, marginBottom: '3px' }}>{item.title}</p>
-                <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: MD }}>{item.sub}</p>
-              </div>
-            ))}
+          {/* ── SHIPPING LINK ── */}
+          <div style={{ padding: '14px 28px', borderBottom: `1px solid ${BR}` }}>
+            <a href="/shipping" style={{ ...F, fontSize: '12px', fontWeight: 500, color: MD, textDecoration: 'underline', textUnderlineOffset: '3px', transition: 'color 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.color = G }}
+              onMouseLeave={e => { e.currentTarget.style.color = MD }}>
+              View shipping &amp; returns information →
+            </a>
           </div>
 
           {/* ── PRODUCT DETAILS TOGGLE ── */}
