@@ -113,7 +113,7 @@ function RITHSection() {
         <div style={{ maxWidth: '1320px', margin: '0 auto', padding: 'clamp(48px,7vw,96px) clamp(24px,5vw,64px)' }}>
 
           {/* Intro 2-col */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,5fr) minmax(0,7fr)', gap: 'clamp(32px,5vw,80px)', alignItems: 'start', marginBottom: 'clamp(64px,8vw,120px)' }}>
+          <div className="featured-intro-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,5fr) minmax(0,7fr)', gap: 'clamp(32px,5vw,80px)', alignItems: 'start', marginBottom: 'clamp(64px,8vw,120px)' }}>
 
             {/* Portrait */}
             <Tile src="/featured/feature8.jpeg" caption="STAAY · British Museum steps"
@@ -163,7 +163,7 @@ function RITHSection() {
           </div>
 
           {/* Asymmetric 3-col editorial grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto auto', gap: '8px' }}>
+          <div className="featured-runway-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto auto', gap: '8px' }}>
             <Tile src={runway[0].src} caption={runway[0].caption} style={{ gridColumn: '1', gridRow: '1', aspectRatio: '4/5' }} />
             <Tile src={runway[1].src} caption={runway[1].caption} style={{ gridColumn: '2', gridRow: '1', aspectRatio: '4/5' }} />
             <Tile src={runway[2].src} caption={runway[2].caption} style={{ gridColumn: '3', gridRow: '1 / 3', minHeight: '500px' }} />
@@ -224,7 +224,7 @@ function EdenSection() {
         </div>
 
         {/* Text + second image — reversed col */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,6fr) minmax(0,5fr)', gap: 'clamp(40px,6vw,96px)', alignItems: 'center', marginBottom: 'clamp(48px,6vw,80px)' }}>
+        <div className="featured-eden-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,6fr) minmax(0,5fr)', gap: 'clamp(40px,6vw,96px)', alignItems: 'center', marginBottom: 'clamp(48px,6vw,80px)' }}>
 
           {/* Text */}
           <div>

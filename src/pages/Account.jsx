@@ -674,7 +674,7 @@ export default function Account() {
 
       {/* ── HEADER ── */}
       <div style={{ background: W, borderBottom: `1px solid ${BR}` }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '28px 40px' }}>
+        <div className="page-padding" style={{ maxWidth: '1280px', margin: '0 auto', padding: '28px 40px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '22px' }}>
             <Link to="/" style={{ ...F, fontSize: '12px', color: MD, transition: 'color 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.color = G }}
@@ -713,7 +713,7 @@ export default function Account() {
         <aside style={{ position: 'sticky', top: '32px' }}>
           <div style={{ background: W, border: `1px solid ${BR}`, borderRadius: '14px', overflow: 'hidden' }}>
             <div style={{ height: '3px', background: `linear-gradient(90deg, ${G}, #D4A853)` }} />
-            <nav style={{ padding: '8px' }}>
+            <nav className="account-sidebar-nav" style={{ padding: '8px' }}>
               {TABS.map(tab => {
                 const Icon = tab.icon
                 const active = activeTab === tab.key

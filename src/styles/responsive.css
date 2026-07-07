@@ -2,63 +2,90 @@
    STAAY ONLINE — Global Responsive Utilities
    ============================================ */
 
-/* Hide scrollbars on horizontally-scrolling rows
-   (category pills, collection bars, marquees) */
+/* Hide scrollbars on horizontally-scrolling rows */
 .hide-scroll {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-.hide-scroll::-webkit-scrollbar {
-  display: none;
+.hide-scroll::-webkit-scrollbar { display: none; }
+
+/* ============================================
+   Desktop / Mobile visibility toggles
+   Defined here at 768px; index.css also has 768px.
+   ============================================ */
+.mobile-only  { display: none; }
+.desktop-only { display: flex; }
+
+@media (max-width: 768px) {
+  .desktop-only { display: none !important; }
+  .mobile-only  { display: flex !important; }
 }
 
-/* Desktop / Mobile visibility toggles.
-   Default (desktop): desktop-only visible, mobile-only hidden.
-   On small screens these flip. */
-.mobile-only {
-  display: none;
-}
-.desktop-only {
-  display: flex;
-}
-
-@media (max-width: 860px) {
-  .desktop-only {
-    display: none !important;
+/* ============================================
+   Generic page padding — reduces on small screens.
+   Overrides only left/right so top/bottom are
+   set by each component individually.
+   ============================================ */
+@media (max-width: 768px) {
+  .page-padding {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
   }
-  .mobile-only {
-    display: flex !important;
+}
+@media (max-width: 480px) {
+  .page-padding {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
   }
 }
 
 /* ============================================
    Generic responsive grid helpers
-   Add these classNames alongside inline styles —
-   the !important rules below override the inline
-   gridTemplateColumns on small screens.
    ============================================ */
 
-/* 4-column product grids → 2 columns on mobile */
-@media (max-width: 860px) {
+/* 4-col product grids → 2 columns on tablet, 1 on phone */
+@media (max-width: 768px) {
   .grid-4-cols {
     grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+}
+@media (max-width: 480px) {
+  .grid-4-cols {
+    grid-template-columns: 1fr !important;
     gap: 12px !important;
   }
 }
 
-/* 3-column layouts (auth register, etc.) → stack */
-@media (max-width: 900px) {
+/* 3-col grids → 2 columns on tablet, 1 on phone */
+@media (max-width: 768px) {
+  .grid-3-cols {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+}
+@media (max-width: 480px) {
   .grid-3-cols {
     grid-template-columns: 1fr !important;
+    gap: 12px !important;
   }
 }
 
-/* Sidebar + content layouts → stack, sidebar full width on top */
+/* Horizontal 2-col sections (Sale teaser, gift card) → stack */
+@media (max-width: 640px) {
+  .promo-feature-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+}
+
+/* Sidebar + content layouts → stack on tablet */
 @media (max-width: 860px) {
   .layout-sidebar {
     grid-template-columns: 1fr !important;
     display: flex !important;
     flex-direction: column !important;
+    gap: 24px !important;
   }
   .layout-sidebar > aside {
     width: 100% !important;
@@ -67,35 +94,23 @@
   }
 }
 
-/* Footer multi-column → stack */
-@media (max-width: 860px) {
+/* Footer multi-column → 2 col on tablet, 1 col on phone */
+@media (max-width: 768px) {
   .footer-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 28px 16px !important;
   }
-  .footer-grid > div:first-child {
-    grid-column: 1 / -1;
-  }
+  .footer-grid > div:first-child { grid-column: 1 / -1; }
 }
-@media (max-width: 520px) {
-  .footer-grid {
-    grid-template-columns: 1fr !important;
-  }
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr !important; }
 }
 
-/* Newsletter row → stack on mobile */
+/* Newsletter row → stack */
 @media (max-width: 640px) {
   .newsletter-row {
     flex-direction: column !important;
     align-items: stretch !important;
-  }
-}
-
-/* General page padding reduction on small screens */
-@media (max-width: 640px) {
-  .page-padding {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
   }
 }
 
@@ -113,10 +128,9 @@
   }
 }
 
-
 /* ============================================
-   QuickView drawer — mobile becomes full-screen,
-   image on top, details panel flows below.
+   QuickView drawer — full-screen on mobile,
+   image + thumbnails on top, details below.
    ============================================ */
 @media (max-width: 640px) {
   .qv-drawer {
@@ -133,18 +147,33 @@
     border-left: none !important;
     border-top: 1px solid #E8E4DF !important;
     overflow-y: visible !important;
+    max-height: none !important;
   }
-  .qv-shipping-grid {
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
+}
+
+/* ============================================
+   Shop page — sidebar stacks above products,
+   toolbar scrolls horizontally, padding shrinks
+   ============================================ */
+@media (max-width: 860px) {
+  .shop-body {
+    padding-top: 24px !important;
+    padding-bottom: 48px !important;
+  }
+  .shop-toolbar {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .shop-header {
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
   }
 }
 
 /* ============================================
    Collection grid (Shop by Collection)
-   1 tall tile + 6 small tiles → 2 columns on mobile
    ============================================ */
-@media (max-width: 860px) {
+@media (max-width: 768px) {
   .collection-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     grid-template-rows: none !important;
@@ -154,18 +183,51 @@
   }
 }
 @media (max-width: 480px) {
-  .collection-grid {
-    grid-auto-rows: 130px !important;
+  .collection-grid { grid-auto-rows: 120px !important; }
+}
+
+/* ============================================
+   Featured page — editorial grids stack on mobile
+   ============================================ */
+@media (max-width: 640px) {
+  .featured-intro-grid,
+  .featured-eden-grid {
+    grid-template-columns: 1fr !important;
+    gap: 28px !important;
+  }
+  .featured-runway-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+  }
+  /* kill complex grid spans on mobile */
+  .featured-runway-grid > div {
+    grid-column: auto !important;
+    grid-row: auto !important;
+  }
+}
+@media (max-width: 400px) {
+  .featured-runway-grid {
+    grid-template-columns: 1fr !important;
   }
 }
 
 /* ============================================
-   FindYourFit marquee circles — smaller on mobile
+   FindYourFit circles — smaller on mobile
    ============================================ */
 @media (max-width: 640px) {
   .fit-circle {
     width: 76px !important;
     height: 76px !important;
+  }
+}
+
+/* ============================================
+   Cart — summary unsticks on mobile
+   ============================================ */
+@media (max-width: 860px) {
+  .cart-summary {
+    position: relative !important;
+    top: auto !important;
   }
 }
 
@@ -178,14 +240,6 @@
   }
 }
 
-@media (max-width: 860px) {
-  .cart-summary {
-    position: relative !important;
-    top: auto !important;
-  }
-}
-
-
 /* ============================================
    Our Brand page
    ============================================ */
@@ -194,9 +248,7 @@
     grid-template-columns: 1fr !important;
     min-height: auto !important;
   }
-  .brand-hero-grid > div:first-child {
-    min-height: 440px !important;
-  }
+  .brand-hero-grid > div:first-child { min-height: 440px !important; }
   .brand-story-grid {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
@@ -205,9 +257,7 @@
     position: relative !important;
     top: auto !important;
   }
-  .brand-contact-grid {
-    grid-template-columns: 1fr !important;
-  }
+  .brand-contact-grid { grid-template-columns: 1fr !important; }
   .brand-stats-row {
     flex-wrap: wrap !important;
     gap: 20px 0 !important;
@@ -219,28 +269,14 @@
   .brand-stats-row > div:nth-child(2n) {
     border-left: 1px solid rgba(255,255,255,0.1) !important;
   }
-}
-
-@media (max-width: 560px) {
-  .brand-values-row {
-    gap: 16px !important;
-  }
-
-
-   /* ============================================
-   Our Brand page — hero stacks on mobile,
-   sticky portrait becomes a normal static image
-   ============================================ */
-@media (max-width: 860px) {
-  .brand-hero-grid {
-    grid-template-columns: 1fr !important;
-  }
   .brand-hero-image {
     position: relative !important;
     top: auto !important;
     height: 420px !important;
   }
 }
+@media (max-width: 560px) {
+  .brand-values-row { gap: 16px !important; }
   .brand-values-row .drop-cap {
     font-size: 44px !important;
     width: 56px !important;
@@ -248,64 +284,63 @@
 }
 
 /* ============================================
-   Contact page — stacks on mobile
+   Contact page
    ============================================ */
 @media (max-width: 860px) {
-  .contact-grid {
-    grid-template-columns: 1fr !important;
-  }
+  .contact-grid { grid-template-columns: 1fr !important; }
 }
 @media (max-width: 480px) {
-  .contact-support-grid {
-    grid-template-columns: 1fr !important;
-  }
+  .contact-support-grid { grid-template-columns: 1fr !important; }
 }
 
-
 /* ============================================
-   Admin Products — table compresses on small
-   screens; price/status columns hide below 640px
-   to keep things from feeling cramped
+   Admin Products table
    ============================================ */
 @media (max-width: 640px) {
-  .admin-product-row {
-    grid-template-columns: 44px 1fr auto auto !important;
-  }
+  .admin-product-row    { grid-template-columns: 44px 1fr auto auto !important; }
+  .admin-product-header { grid-template-columns: 44px 1fr auto auto !important; }
   .admin-product-price,
-  .admin-product-status {
-    display: none !important;
-  }
-  .admin-product-header {
-    grid-template-columns: 44px 1fr auto auto !important;
-  }
+  .admin-product-status { display: none !important; }
 }
 
 /* ============================================
-   Size Guide — measure steps stack on mobile,
-   size table scrolls horizontally instead of
-   squeezing
+   Size Guide
    ============================================ */
 @media (max-width: 700px) {
-  .size-guide-steps {
-    grid-template-columns: 1fr !important;
-  }
+  .size-guide-steps { grid-template-columns: 1fr !important; }
 }
 @media (max-width: 600px) {
-  .size-guide-table-wrap {
-    -webkit-overflow-scrolling: touch;
+  .size-guide-table-wrap { -webkit-overflow-scrolling: touch; }
+}
+
+/* ============================================
+   Account page — sidebar becomes horizontal tab row on mobile
+   ============================================ */
+@media (max-width: 860px) {
+  .account-sidebar-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    padding: 8px !important;
+    gap: 4px !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+  .account-sidebar-nav::-webkit-scrollbar { display: none; }
+  .account-sidebar-nav button {
+    white-space: nowrap !important;
+    width: auto !important;
+    flex-shrink: 0 !important;
+    padding: 9px 16px !important;
+    margin-bottom: 0 !important;
+    border-radius: 100px !important;
   }
 }
 
-
 /* ============================================
-   Admin Newsletter — hide the date column on
-   small screens to keep email + actions readable
+   Admin Newsletter
    ============================================ */
 @media (max-width: 560px) {
-  .admin-newsletter-row {
-    grid-template-columns: 1fr auto !important;
-  }
-  .admin-newsletter-date {
-    display: none !important;
-  }
+  .admin-newsletter-row { grid-template-columns: 1fr auto !important; }
+  .admin-newsletter-date { display: none !important; }
 }

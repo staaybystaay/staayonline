@@ -273,7 +273,7 @@ export default function Shop() {
     <div style={{ background: W, minHeight: '100vh' }}>
 
       {/* ── HEADER ── */}
-      <div style={{ background: OW, borderBottom: `1px solid ${BR}`, padding: '40px 64px' }}>
+      <div className="page-padding shop-header" style={{ background: OW, borderBottom: `1px solid ${BR}`, padding: '40px 64px' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '20px' }}>
             <Link to="/" style={{ ...F, fontSize: '12px', fontWeight: 400, color: MD, transition: 'color 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = G }} onMouseLeave={e => { e.currentTarget.style.color = MD }}>Home</Link>
@@ -308,7 +308,7 @@ export default function Shop() {
       </div>
 
       {/* ── TOOLBAR ── */}
-      <div style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '0 64px', position: 'sticky', top: '0', zIndex: 40 }}>
+      <div className="shop-toolbar" style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '0 64px', position: 'sticky', top: '0', zIndex: 40 }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'flex', alignItems: 'stretch', height: '52px' }}>
 
           {/* Collection pills */}
@@ -359,7 +359,7 @@ export default function Shop() {
 
       {/* ── ACTIVE FILTERS ── */}
       {hasFilters && (
-        <div style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '10px 64px' }}>
+        <div className="page-padding" style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '10px 64px' }}>
           <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
             <span style={{ ...F, fontSize: '11px', fontWeight: 500, color: MD }}>Filters:</span>
             {activeCollection !== 'all' && activeCol && (
@@ -379,7 +379,7 @@ export default function Shop() {
       )}
 
       {/* ── BODY ── */}
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 64px 96px', display: 'flex', gap: '40px' }}>
+      <div className="layout-sidebar page-padding shop-body" style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 64px 96px', display: 'flex', gap: '40px' }}>
 
         {/* Sidebar */}
         <aside style={{ width: '220px', flexShrink: 0, position: 'sticky', top: '64px', alignSelf: 'flex-start' }}>
@@ -425,7 +425,7 @@ export default function Shop() {
             <ComingSoon label={activeCol?.name || 'this collection'} />
           ) : viewMode === 'grid' ? (
             <>
-              <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px 20px' }}>
+              <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid-3-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px 20px' }}>
                 {sorted.slice(0, visibleCount).map(p => (
                   <ProductCardGrid key={p.id} product={p} />
                 ))}

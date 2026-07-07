@@ -274,7 +274,7 @@ export default function Navbar() {
 
         {/* ── SECONDARY BAR ── */}
         <div style={{ borderTop: `1px solid ${BR}` }}>
-          <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px' }}>
+          <div className="page-padding" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px' }}>
             <div className="hide-scroll" style={{ display: 'flex', alignItems: 'center', overflowX: 'auto' }}>
               {secondaryLinks.map(col => {
                 const active = col.path === location.pathname || (activeCol === col.slug && location.pathname === '/shop') || (!activeCol && col.slug === 'all' && location.pathname === '/shop')
