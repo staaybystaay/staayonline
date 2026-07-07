@@ -77,10 +77,10 @@ function Tile({ src, caption, style = {}, imgStyle = {} }) {
 function RITHSection() {
   const [lb, setLb] = useState(null)
   const runway = [
-    { src: '/featured/rith-runway1.jpg', caption: 'Running in the Halls — British Museum' },
-    { src: '/featured/rith-runway2.jpg', caption: 'Running in the Halls — British Museum' },
-    { src: '/featured/rith-steps.jpg',   caption: 'STAAY on the steps of the British Museum' },
-    { src: '/featured/rith-poster.jpg',  caption: 'RITH — Collection Preview' },
+    { src: '/featured/feature5.jpeg', caption: 'Running in the Halls — British Museum' },
+    { src: '/featured/feature6.jpeg', caption: 'Running in the Halls — The Great Court' },
+    { src: '/featured/feature1.jpeg', caption: 'STAAY at the British Museum' },
+    { src: '/featured/feature3.jpeg', caption: 'RITH — Running in the Halls' },
   ]
 
   return (
@@ -88,7 +88,7 @@ function RITHSection() {
 
       {/* ── HERO: full-bleed crowd shot ── */}
       <div style={{ position: 'relative', height: 'clamp(500px, 75vh, 780px)', overflow: 'hidden' }}>
-        <img src="/featured/rith-crowd.jpg" alt="Running in the Halls — British Museum"
+        <img src="/featured/feature6.jpeg" alt="Running in the Halls — British Museum"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 25%' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.82) 100%)' }} />
 
@@ -116,7 +116,7 @@ function RITHSection() {
           <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,5fr) minmax(0,7fr)', gap: 'clamp(32px,5vw,80px)', alignItems: 'start', marginBottom: 'clamp(64px,8vw,120px)' }}>
 
             {/* Portrait */}
-            <Tile src="/featured/rith-steps.jpg" caption="STAAY · British Museum steps"
+            <Tile src="/featured/feature8.jpeg" caption="STAAY · British Museum steps"
               style={{ aspectRatio: '3/4' }}
             />
 
@@ -184,8 +184,8 @@ function RITHSection() {
 function EdenSection() {
   const [lb, setLb] = useState(null)
   const gallery = [
-    { src: '/featured/eden-hero.jpg',      caption: 'The Eden Collection — STAAY' },
-    { src: '/featured/eden-editorial.jpg', caption: 'Eden Editorial'               },
+    { src: '/featured/feature2.jpeg', caption: 'The Eden Collection — STAAY' },
+    { src: '/featured/feature4.jpeg', caption: 'Eden Editorial'               },
   ]
 
   return (
