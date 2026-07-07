@@ -193,7 +193,7 @@ export default function Navbar() {
             <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} />
             <div style={{ lineHeight: 1 }}>
               <span style={{ ...F, fontSize: '17px', fontWeight: 800, color: DK, letterSpacing: '-0.02em', display: 'block' }}>STAAY</span>
-              <span style={{ ...F, fontSize: '8px', fontWeight: 600, color: G, letterSpacing: '0.22em', textTransform: 'uppercase' }}>ONLINE</span>
+            
             </div>
           </Link>
 
