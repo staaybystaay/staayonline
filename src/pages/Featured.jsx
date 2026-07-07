@@ -88,7 +88,7 @@ function RITHSection() {
 
       {/* ── HERO: full-bleed crowd shot ── */}
       <div style={{ position: 'relative', height: 'clamp(500px, 75vh, 780px)', overflow: 'hidden' }}>
-        <img src="/featured/feature8.png" alt="Running in the Halls — British Museum"
+        <img src="/featured/feature6.jpeg" alt="Running in the Halls — British Museum"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 25%' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.82) 100%)' }} />
 
