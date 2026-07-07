@@ -371,7 +371,7 @@ export default function QuickView({ product, onClose }) {
 
           {/* ── SHIPPING LINK ── */}
           <div style={{ padding: '14px 28px', borderBottom: `1px solid ${BR}` }}>
-            <a href="/shipping" style={{ ...F, fontSize: '12px', fontWeight: 500, color: MD, textDecoration: 'underline', textUnderlineOffset: '3px', transition: 'color 0.2s' }}
+            <a href="/terms" style={{ ...F, fontSize: '12px', fontWeight: 500, color: MD, textDecoration: 'underline', textUnderlineOffset: '3px', transition: 'color 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.color = G }}
               onMouseLeave={e => { e.currentTarget.style.color = MD }}>
               View shipping &amp; returns information →
