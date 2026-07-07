@@ -33,7 +33,7 @@ function slugify(text) {
 const ALL_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
 
 const emptyForm = {
-  name: '', slug: '', price: '', discount_percent: '', collection_id: '',
+  name: '', slug: '', price: '', discount_percent: '', stock_quantity: '', collection_id: '',
   image_url: '', sort_order: '0', active: true, sizes: [...ALL_SIZES],
 }
 
@@ -121,6 +121,7 @@ function ProductDrawer({ open, product, collections, onClose, onSaved }) {
         slug: product.slug || '',
         price: String(product.price ?? ''),
         discount_percent: product.discount_percent != null ? String(product.discount_percent) : '',
+        stock_quantity: product.stock_quantity != null ? String(product.stock_quantity) : '',
         collection_id: product.collection?.id || product.collection_id || '',
         image_url: product.image_url || '',
         sort_order: String(product.sort_order ?? '0'),
@@ -167,6 +168,7 @@ function ProductDrawer({ open, product, collections, onClose, onSaved }) {
         slug: slugify(form.slug),
         price: Number(form.price),
         discount_percent: form.discount_percent ? Number(form.discount_percent) : null,
+        stock_quantity: form.stock_quantity !== '' ? Number(form.stock_quantity) : null,
         collection_id: form.collection_id || null,
         image_url: form.image_url || null,
         sort_order: Number(form.sort_order) || 0,
@@ -246,6 +248,15 @@ function ProductDrawer({ open, product, collections, onClose, onSaved }) {
                   <input type="number" value={form.discount_percent} onChange={e => setForm(f => ({ ...f, discount_percent: e.target.value }))} placeholder="20"
                     style={{ width: '100%', padding: '10px 14px', border: `1px solid ${BR}`, borderRadius: '6px', ...F, fontSize: '13px', color: DK, outline: 'none', boxSizing: 'border-box' }} />
                 </div>
+              </div>
+
+              {/* Stock quantity */}
+              <div>
+                <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '8px' }}>
+                  Stock Quantity <span style={{ fontWeight: 300, color: MD }}>(leave blank if untracked)</span>
+                </p>
+                <input type="number" min="0" value={form.stock_quantity} onChange={e => setForm(f => ({ ...f, stock_quantity: e.target.value }))} placeholder="e.g. 12"
+                  style={{ width: '100%', padding: '10px 14px', border: `1px solid ${BR}`, borderRadius: '6px', ...F, fontSize: '13px', color: DK, outline: 'none', boxSizing: 'border-box' }} />
               </div>
 
               {/* Collection */}
