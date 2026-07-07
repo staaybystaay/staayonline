@@ -123,10 +123,10 @@ function Tag({ children, color = G, bg = GL }) {
 
 // ─── RITH SECTION ─────────────────────────────────────────────────
 const RITH_RUNWAY = [
-  { src: '/featured/feature3.jpg',   caption: 'STAAY on the steps of the British Museum' },
-  { src: '/featured/feature1.jpg', caption: 'Running in the Halls — British Museum', ratio: '4/5' },
-  { src: '/featured/feature2.jpg', caption: 'Running in the Halls — British Museum', ratio: '4/5' },
-  { src: '/featured/feature4.jpg',   caption: 'The Great Court, British Museum', ratio: '16/10' },
+  { src: '/featured/feature3.jpeg',   caption: 'STAAY on the steps of the British Museum' },
+  { src: '/featured/feature1.jpeg', caption: 'Running in the Halls — British Museum', ratio: '4/5' },
+  { src: '/featured/feature2.jpeg', caption: 'Running in the Halls — British Museum', ratio: '4/5' },
+  { src: '/featured/feature4.jpeg',   caption: 'The Great Court, British Museum', ratio: '16/10' },
 ]
 
 function RITHSection() {
@@ -157,7 +157,7 @@ function RITHSection() {
 
           {/* Left — steps hero */}
           <div style={{ position: 'relative', overflow: 'hidden' }}>
-            <img src="/featured/rith-steps.jpg" alt="STAAY on the British Museum steps"
+            <img src="/featured/feature7.jpeg" alt="STAAY on the British Museum steps"
               style={{ width: '100%', aspectRatio: '3/4', objectFit: 'cover', display: 'block' }} />
             <div style={{ position: 'absolute', bottom: '16px', left: '16px', background: 'rgba(0,0,0,0.6)', padding: '8px 14px' }}>
               <p style={{ ...F, fontSize: '11px', color: 'rgba(255,255,255,0.8)', letterSpacing: '0.05em' }}>STAAY · Eden Collection</p>
@@ -210,10 +210,10 @@ function RITHSection() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px' }}>
           {[
-            { src: '/featured/rith-runway1.jpg', caption: 'Running in the Halls', style: { gridRow: 'span 1' } },
-            { src: '/featured/rith-runway2.jpg', caption: 'Running in the Halls', style: { gridRow: 'span 1' } },
-            { src: '/featured/rith-steps.jpg',   caption: 'STAAY on the steps', style: { gridRow: 'span 2' } },
-            { src: '/featured/rith-poster.jpg',  caption: 'RITH Collection Preview', style: { gridColumn: 'span 2' } },
+            { src: '/featured/feature5.jpeg', caption: 'Running in the Halls', style: { gridRow: 'span 1' } },
+            { src: '/featured/feature6.jpeg', caption: 'Running in the Halls', style: { gridRow: 'span 1' } },
+            { src: '/featured/feature4.jpeg',   caption: 'STAAY on the steps', style: { gridRow: 'span 2' } },
+            { src: '/featured/feature3.jpeg',  caption: 'RITH Collection Preview', style: { gridColumn: 'span 2' } },
           ].map((img, i) => (
             <RunwayTile key={i} img={img} />
           ))}
@@ -243,8 +243,8 @@ function RunwayTile({ img }) {
 
 // ─── EDEN COLLECTION SECTION ──────────────────────────────────────
 const EDEN_GALLERY = [
-  { src: '/featured/feature2.jpg',      caption: 'The Eden Collection — STAAY', ratio: '3/4' },
-  { src: '/featured/feature6.jpg', caption: 'Eden Editorial',               ratio: '3/4' },
+  { src: '/featured/feature2.jpeg',      caption: 'The Eden Collection — STAAY', ratio: '3/4' },
+  { src: '/featured/feature6.jpeg', caption: 'Eden Editorial',               ratio: '3/4' },
 ]
 
 function EdenSection() {
