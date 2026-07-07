@@ -5,7 +5,7 @@ import { useWishlist } from '../hooks/useWishlist'
 import { imgCard, imgFull } from '../lib/images'
 import { useAuth } from '../hooks/useAuth'
 import { getReviewsByProduct, createReview } from '../lib/api'
-import ApproxPrice from './ApproxPrice'
+import useCurrencyStore from '../store/useCurrencyStore'
 
 const G   = '#B8903A'
 const GL  = '#F5ECD8'
@@ -91,6 +91,7 @@ export default function QuickView({ product, onClose }) {
   const { toggle, isFavorited } = useWishlist()
   const faved = isFavorited(product?.id)
   const { user, profile } = useAuth()
+  const format = useCurrencyStore(s => s.format)
 
   useEffect(() => {
     if (!product?.id) return
@@ -255,14 +256,13 @@ export default function QuickView({ product, onClose }) {
               {/* Price */}
               <div>
                 <p style={{ ...F, fontSize: '28px', fontWeight: 800, color: G, letterSpacing: '-0.02em', lineHeight: 1 }}>
-                  GH₵{Number(product.price + (customize ? CUSTOMIZATION_FEE : 0)).toLocaleString()}
+                  {format(product.price + (customize ? CUSTOMIZATION_FEE : 0))}
                 </p>
                 {customize && (
                   <p style={{ ...F, fontSize: '11px', fontWeight: 500, color: MD, marginTop: '4px' }}>
-                    GH₵{Number(product.price).toLocaleString()} + GH₵{CUSTOMIZATION_FEE} customization
+                    {format(product.price)} + {format(CUSTOMIZATION_FEE)} customization
                   </p>
                 )}
-                <ApproxPrice ghs={product.price + (customize ? CUSTOMIZATION_FEE : 0)} />
                 <p style={{ ...F, fontSize: '11px', fontWeight: 400, color: MD, marginTop: '4px' }}>
                   {product.collection?.name || 'STAAY Collection'}
                 </p>
@@ -286,7 +286,7 @@ export default function QuickView({ product, onClose }) {
                   </button>
                   <div>
                     <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>
-                      Customize this piece <span style={{ color: G, fontWeight: 700 }}>+GH₵{CUSTOMIZATION_FEE}</span>
+                      Customize this piece <span style={{ color: G, fontWeight: 700 }}>+{format(CUSTOMIZATION_FEE)}</span>
                     </p>
                     <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: MD, marginTop: '2px', lineHeight: 1.5 }}>
                       Request a custom colour or adjustments to fit, length, or styling. We'll follow up to confirm details.

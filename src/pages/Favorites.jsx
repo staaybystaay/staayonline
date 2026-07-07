@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useWishlist } from '../hooks/useWishlist'
 import { imgCard } from '../lib/images'
 import useCartStore from '../store/useCartStore'
-import ApproxPrice from '../components/ApproxPrice'
+import useCurrencyStore from '../store/useCurrencyStore'
 
 const G   = '#B8903A'
 const W   = '#FFFFFF'
@@ -21,6 +21,7 @@ const F   = { fontFamily: "'Inter', sans-serif" }
 function FavoriteCard({ item, onRemove }) {
   const [added, setAdded] = useState(false)
   const addItem = useCartStore(s => s.addItem)
+  const format  = useCurrencyStore(s => s.format)
 
   function handleAdd() {
     addItem({
@@ -77,10 +78,9 @@ function FavoriteCard({ item, onRemove }) {
         <p style={{ ...F, fontSize: '11px', color: MD, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '8px' }}>
           {item.category || item.collection?.name || 'STAAY'}
         </p>
-        <p style={{ ...F, fontSize: '16px', fontWeight: 700, color: DK, marginBottom: '4px' }}>
-          GH₵{Number(item.price).toLocaleString()}
+        <p style={{ ...F, fontSize: '16px', fontWeight: 700, color: DK, marginBottom: '10px' }}>
+          {format(item.price)}
         </p>
-        <ApproxPrice ghs={item.price} style={{ marginBottom: '10px' }} />
 
         <button
           onClick={handleAdd}

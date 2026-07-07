@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import useCartStore from '../store/useCartStore'
 import { useWishlist } from '../hooks/useWishlist'
 import { imgCard, imgThumb } from '../lib/images'
-import ApproxPrice from '../components/ApproxPrice'
 import { supabase } from '../lib/supabase'
+import useCurrencyStore from '../store/useCurrencyStore'
 
 const G   = '#B8903A'
 const GL  = '#F5ECD8'
@@ -112,6 +112,7 @@ function ProductCardGrid({ product }) {
   const { toggle, isFavorited } = useWishlist()
   const wishlisted = isFavorited(product.id)
   const onWishlist = () => toggle(product)
+  const format = useCurrencyStore(s => s.format)
 
   return (
     <motion.div
@@ -153,8 +154,7 @@ function ProductCardGrid({ product }) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
           <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: DK }}>{product.name}</p>
           <div style={{ textAlign: 'right', flexShrink: 0 }}>
-            <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: DK }}>GH₵{Number(product.price).toLocaleString()}</p>
-            <ApproxPrice ghs={product.price} />
+            <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: DK }}>{format(product.price)}</p>
           </div>
         </div>
       </div>
@@ -169,6 +169,7 @@ function ProductCardList({ product }) {
   const { toggle, isFavorited } = useWishlist()
   const wishlisted = isFavorited(product.id)
   const onWishlist = () => toggle(product)
+  const format = useCurrencyStore(s => s.format)
 
   return (
     <motion.div
@@ -191,8 +192,7 @@ function ProductCardList({ product }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
           <div>
-            <p style={{ ...F, fontSize: '18px', fontWeight: 700, color: DK }}>GH₵{Number(product.price).toLocaleString()}</p>
-            <ApproxPrice ghs={product.price} />
+            <p style={{ ...F, fontSize: '18px', fontWeight: 700, color: DK }}>{format(product.price)}</p>
           </div>
           <button onClick={() => onWishlist(product.id)} style={{ width: '36px', height: '36px', borderRadius: '50%', background: wishlisted ? '#FEE2E2' : OW, border: `1px solid ${wishlisted ? RD : BR}`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '15px', color: wishlisted ? RD : MD, transition: 'all 0.2s' }}>
             {wishlisted ? '♥' : '♡'}

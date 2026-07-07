@@ -6,7 +6,7 @@ import { useWishlist } from '../hooks/useWishlist'
 import { getSaleProducts } from '../lib/api'
 import { imgCard, imgThumb } from '../lib/images'
 import QuickView from '../components/QuickView'
-import ApproxPrice from '../components/ApproxPrice'
+import useCurrencyStore from '../store/useCurrencyStore'
 
 const INK   = '#15130F'
 const G     = '#B8903A'
@@ -48,6 +48,7 @@ function SaleCard({ product, onQuickView }) {
   const addItem     = useCartStore(s => s.addItem)
   const { toggle, isFavorited } = useWishlist()
   const faved       = isFavorited(product.id)
+  const format      = useCurrencyStore(s => s.format)
 
   const discount  = product.discount_percent
   const origPrice = Math.round(product.price / (1 - discount / 100))
@@ -98,10 +99,9 @@ function SaleCard({ product, onQuickView }) {
         <p style={{ ...F, fontSize: '11px', color: MD, textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '6px' }}>{product.collection?.name || 'STAAY'}</p>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ ...F, fontSize: '16px', fontWeight: 700, color: RD }}>GH₵{Number(product.price).toLocaleString()}</span>
-          <span style={{ ...F, fontSize: '13px', color: FT, textDecoration: 'line-through' }}>GH₵{origPrice.toLocaleString()}</span>
+          <span style={{ ...F, fontSize: '16px', fontWeight: 700, color: RD }}>{format(product.price)}</span>
+          <span style={{ ...F, fontSize: '13px', color: FT, textDecoration: 'line-through' }}>{format(origPrice)}</span>
         </div>
-        <ApproxPrice ghs={product.price} />
 
         <div className="mobile-only" style={{ display: 'none', gap: '6px', marginTop: '10px' }}>
           <button onClick={() => onQuickView(product)}

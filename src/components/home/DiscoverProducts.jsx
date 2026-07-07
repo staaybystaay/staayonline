@@ -6,7 +6,7 @@ import { useWishlist } from '../../hooks/useWishlist'
 import { imgCard } from '../../lib/images'
 import { supabase } from '../../lib/supabase'
 import QuickView from '../QuickView'
-import ApproxPrice from '../ApproxPrice'
+import useCurrencyStore from '../../store/useCurrencyStore'
 
 const G   = '#B8903A'
 const W   = '#FFFFFF'
@@ -38,6 +38,7 @@ function ProductCard({ product, index, discount, onQuickView }) {
   const { toggle, isFavorited } = useWishlist()
   const faved = isFavorited(product.id)
   const originalPrice = discount ? Math.round(product.price / (1 - Math.abs(discount) / 100)) : null
+  const format = useCurrencyStore(s => s.format)
 
   return (
     <motion.div
@@ -108,11 +109,10 @@ function ProductCard({ product, index, discount, onQuickView }) {
         <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '2px', lineHeight: 1.35 }}>{product.name}</p>
         <p style={{ ...F, fontSize: '11px', fontWeight: 400, color: MD, textTransform: 'uppercase', letterSpacing: '0.03em', marginBottom: '8px' }}>{product.collection?.name || 'STAAY'}</p>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-          <span style={{ ...F, fontSize: '16px', fontWeight: 700, color: DK }}>GH₵{Number(product.price).toLocaleString()}</span>
-          {originalPrice && <span style={{ ...F, fontSize: '13px', color: '#AAA', textDecoration: 'line-through' }}>GH₵{Number(originalPrice).toLocaleString()}</span>}
+          <span style={{ ...F, fontSize: '16px', fontWeight: 700, color: DK }}>{format(product.price)}</span>
+          {originalPrice && <span style={{ ...F, fontSize: '13px', color: '#AAA', textDecoration: 'line-through' }}>{format(originalPrice)}</span>}
           <span style={{ ...F, fontSize: '11px', color: MD, marginLeft: 'auto' }}>(0)</span>
         </div>
-        <ApproxPrice ghs={product.price} style={{ marginTop: '-6px', marginBottom: '8px' }} />
         <div style={{ display: 'inline-block', background: '#FFF9C4', border: '1px solid #F6E05E', padding: '3px 10px', borderRadius: '4px', ...F, fontSize: '11px', fontWeight: 500, color: '#744210' }}>
           In Stock
         </div>

@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
 import { useAuth } from '../hooks/useAuth'
+import CurrencySelector from './CurrencySelector'
 
 const G  = '#B8903A'
 const GL = '#F5ECD8'
@@ -229,6 +230,9 @@ export default function Navbar() {
 
           {/* Icons */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginLeft: 'auto' }}>
+            <div className="desktop-only" style={{ display: 'flex' }}>
+              <CurrencySelector />
+            </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <Link to="/favorites"
                 style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s' }}

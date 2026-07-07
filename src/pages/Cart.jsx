@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import useCartStore from '../store/useCartStore'
+import useCurrencyStore from '../store/useCurrencyStore'
 
 const INK   = '#171614'
 const PAPER = '#FAF9F6'
@@ -51,6 +52,7 @@ function EmptyCart() {
 // ─── CART ITEM ───────────────────────────────
 function CartItem({ item, index }) {
   const { updateQty, removeItem } = useCartStore()
+  const format = useCurrencyStore(s => s.format)
 
   return (
     <motion.div
@@ -123,11 +125,11 @@ function CartItem({ item, index }) {
       {/* Price */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'space-between', minWidth: '90px' }}>
         <p style={{ ...F, fontSize: '15px', fontWeight: 600, color: INK }}>
-          GH₵{(item.price * item.qty).toLocaleString()}
+          {format(item.price * item.qty)}
         </p>
         {item.qty > 1 && (
           <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: FAINT }}>
-            GH₵{item.price.toLocaleString()} each
+            {format(item.price)} each
           </p>
         )}
       </div>
@@ -142,6 +144,7 @@ function OrderSummary({ items }) {
   const [promoApplied, setPromoApplied] = useState(false)
   const [promoError,   setPromoError]   = useState(false)
   const [focused,      setFocused]      = useState(false)
+  const format = useCurrencyStore(s => s.format)
 
   const subtotal = items.reduce((s, i) => s + i.price * i.qty, 0)
   const discount = promoApplied ? Math.round(subtotal * 0.1) : 0
@@ -171,12 +174,12 @@ function OrderSummary({ items }) {
           <div style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '11px 0', borderBottom: `1px solid ${LINE}` }}>
               <span style={{ ...F, fontSize: '13px', fontWeight: 300, color: MUTE }}>Subtotal</span>
-              <span style={{ ...F, fontSize: '13px', fontWeight: 600, color: INK }}>GH₵{subtotal.toLocaleString()}</span>
+              <span style={{ ...F, fontSize: '13px', fontWeight: 600, color: INK }}>{format(subtotal)}</span>
             </div>
             {promoApplied && (
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '11px 0', borderBottom: `1px solid ${LINE}` }}>
                 <span style={{ ...F, fontSize: '13px', fontWeight: 300, color: MUTE }}>Promo STAAY10 (10%)</span>
-                <span style={{ ...F, fontSize: '13px', fontWeight: 600, color: GR }}>−GH₵{discount.toLocaleString()}</span>
+                <span style={{ ...F, fontSize: '13px', fontWeight: 600, color: GR }}>−{format(discount)}</span>
               </div>
             )}
           </div>
@@ -223,7 +226,7 @@ function OrderSummary({ items }) {
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', borderTop: `1px solid ${INK}`, marginBottom: '6px' }}>
             <span style={{ ...F, fontSize: '14px', fontWeight: 700, color: INK }}>Total</span>
             <span style={{ ...F, fontSize: '21px', fontWeight: 800, color: INK, letterSpacing: '-0.02em' }}>
-              GH₵{total.toLocaleString()}
+              {format(total)}
             </span>
           </div>
           <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: FAINT, marginBottom: '20px' }}>
