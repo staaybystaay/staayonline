@@ -6,6 +6,7 @@ import { useWishlist } from '../hooks/useWishlist'
 import { getSaleProducts } from '../lib/api'
 import { imgCard, imgThumb } from '../lib/images'
 import QuickView from '../components/QuickView'
+import ApproxPrice from '../components/ApproxPrice'
 
 const INK   = '#15130F'
 const G     = '#B8903A'
@@ -100,6 +101,7 @@ function SaleCard({ product, onQuickView }) {
           <span style={{ ...F, fontSize: '16px', fontWeight: 700, color: RD }}>GH₵{Number(product.price).toLocaleString()}</span>
           <span style={{ ...F, fontSize: '13px', color: FT, textDecoration: 'line-through' }}>GH₵{origPrice.toLocaleString()}</span>
         </div>
+        <ApproxPrice ghs={product.price} />
 
         <div className="mobile-only" style={{ display: 'none', gap: '6px', marginTop: '10px' }}>
           <button onClick={() => onQuickView(product)}
