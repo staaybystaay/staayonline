@@ -88,7 +88,7 @@ function RITHSection() {
 
       {/* ── HERO: full-bleed crowd shot ── */}
       <div style={{ position: 'relative', height: 'clamp(500px, 75vh, 780px)', overflow: 'hidden' }}>
-        <img src="/featured/feature6.jpeg" alt="Running in the Halls — British Museum"
+        <img src="/featured/feature8.png" alt="Running in the Halls — British Museum"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 25%' }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.82) 100%)' }} />
 
@@ -304,7 +304,7 @@ export default function Featured() {
       {/* Replace the src below with your banner image path, e.g. /featured/banner.jpg */}
       <div style={{ position: 'relative', width: '100%', overflow: 'hidden', background: BK }}>
         <img
-          src="/featured/banner.jpg"
+          src="/featured/feature8.png"
           alt="STAAY Featured"
           style={{ width: '100%', display: 'block', maxHeight: '90vh', objectFit: 'cover' }}
           onError={e => { e.currentTarget.style.display = 'none' }}
