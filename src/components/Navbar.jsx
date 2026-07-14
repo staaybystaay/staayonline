@@ -62,6 +62,7 @@ const secondaryLinks = [
   { label: 'Eden Collection', path: '/shop?col=eden',      slug: 'eden' },
   { label: 'The Love Edit',   path: '/shop?col=love-edit', slug: 'love' },
   { label: 'Bold & Beautiful',path: '/shop?col=bold',      slug: 'bold' },
+  { label: ' Pleasure Pleats',path: '/shop?col=bold',      slug: 'pleasure' },
   { label: 'Sales Promotion',            path: '/sale',               slug: 'sale' },
 ]
 
