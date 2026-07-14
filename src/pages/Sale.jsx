@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
 import { useWishlist } from '../hooks/useWishlist'
 import { getSaleProducts } from '../lib/api'
-import { imgCard, imgThumb } from '../lib/images'
+import { imgCard } from '../lib/images'
 import QuickView from '../components/QuickView'
 import MiniCurrencyPicker from '../components/MiniCurrencyPicker'
 

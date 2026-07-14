@@ -28,6 +28,7 @@ export function useWishlist() {
   }, [])
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentionally reset then refetch when user changes
     if (!user) { setDbItems(null); return }
     getWishlist(user.id)
       .then(products => setDbItems(products))

@@ -186,7 +186,7 @@ function SignIn({ onSwitch }) {
 
         {/* Social buttons */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
-          <button onClick={async () => { try { await signInWithGoogle() } catch(e) { setError('Google sign in failed.') } }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
+          <button onClick={async () => { try { await signInWithGoogle() } catch { setError('Google sign in failed.') } }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = '#4285F4' }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = BR }}>
             <GoogleIcon /> Continue with Google
@@ -252,7 +252,7 @@ function Register({ onSwitch }) {
     try {
       let avatarUrl = null
       if (avatarFile) {
-        try { avatarUrl = await uploadAvatar('temp-' + Date.now(), avatarFile) } catch {}
+        try { avatarUrl = await uploadAvatar('temp-' + Date.now(), avatarFile) } catch { /* continue sign-up without an avatar */ }
       }
       await signUp({
         email:     form.email,
@@ -414,7 +414,7 @@ function Register({ onSwitch }) {
                   <div style={{ flex: 1, height: '1px', background: BR }} />
                 </div>
 
-                <button type="button" onClick={async () => { try { await signInWithGoogle() } catch(e) { setError('Google sign in failed.') } }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
+                <button type="button" onClick={async () => { try { await signInWithGoogle() } catch { setError('Google sign in failed.') } }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = '#4285F4' }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = BR }}>
                   <GoogleIcon /> Continue with Google

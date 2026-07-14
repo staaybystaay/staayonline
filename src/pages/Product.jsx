@@ -587,7 +587,7 @@ export default function Product() {
               </div>
 
               <div className="size-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '0' }}>
-                {(product.sizes || ['XS','S','M','L','XL','XXL']).map((size, i, arr) => {
+                {(product.sizes || ['XS','S','M','L','XL','XXL']).map((size, i) => {
                   const active = selectedSize === size
                   return (
                     <button

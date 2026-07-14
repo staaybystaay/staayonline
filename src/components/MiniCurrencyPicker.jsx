@@ -35,6 +35,7 @@ export default function MiniCurrencyPicker({ ghs, priceStyle = {}, strikethrough
   const [local, setLocal] = useState(null)
 
   // When the global currency changes, reset the local override
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- intentionally reset override on currency change
   useEffect(() => { setLocal(null) }, [globalCurrency])
 
   const cur   = local || globalCurrency

@@ -165,6 +165,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- intentionally close mobile menu on route change
   useEffect(() => { setMobileOpen(false) }, [location])
 
   async function handleLogout() { await logout(); navigate('/') }

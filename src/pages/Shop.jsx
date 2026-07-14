@@ -5,7 +5,6 @@ import useCartStore from '../store/useCartStore'
 import { useWishlist } from '../hooks/useWishlist'
 import { imgCard, imgThumb } from '../lib/images'
 import { supabase } from '../lib/supabase'
-import useCurrencyStore from '../store/useCurrencyStore'
 import MiniCurrencyPicker from '../components/MiniCurrencyPicker'
 
 const G   = '#B8903A'

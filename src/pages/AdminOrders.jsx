@@ -214,10 +214,6 @@ export default function AdminOrders() {
   const [statusFilter,    setStatusFilter]    = useState('all')
   const [customOnly,      setCustomOnly]      = useState(false)
 
-  useEffect(() => {
-    load()
-  }, [])
-
   function load() {
     setLoading(true)
     getAllOrders()
@@ -225,6 +221,11 @@ export default function AdminOrders() {
       .catch(err => setError(err.message))
       .finally(() => setLoading(false))
   }
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- fetch orders once on mount
+    load()
+  }, [])
 
   async function handleStatusChange(orderId, newStatus) {
     setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o))
@@ -259,7 +260,7 @@ export default function AdminOrders() {
       }
       return true
     })
-  }, [orders, search, statusFilter])
+  }, [orders, search, statusFilter, customOnly])
 
   const counts = useMemo(() => {
     const c = { all: orders.length }

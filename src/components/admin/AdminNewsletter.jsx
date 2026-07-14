@@ -98,6 +98,7 @@ export default function AdminNewsletter() {
 
   // Subscribers in the last 7 days, for a quick "momentum" stat
   const recentCount = useMemo(() => {
+    // eslint-disable-next-line react-hooks/purity -- dashboard stat, doesn't need to be pure across renders
     const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000
     return subscribers.filter(s => new Date(s.created_at).getTime() > weekAgo).length
   }, [subscribers])
