@@ -6,9 +6,9 @@ const DK = '#1A1612'
 const F  = { fontFamily: "'Inter', sans-serif" }
 
 const categories = [
-  { label: 'Eden Collection',  path: '/shop?col=eden',      image: './collection1.jpg' },
+  { label: 'Eden Collection',  path: '/shop?col=eden',      image: './edenbanner.jpg' },
   { label: 'The Love Edit',    path: '/shop?col=love-edit', image: './loveEdit.jpg' },
-  { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: './bold.jpg' },
+  { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: './boldbeauty.jpg' },
   { label: 'Featured',         path: '/featured',           image: './featured.jpg' },
   { label: 'All Collections',  path: '/shop',               image: './collection.jpg' },
   { label: 'Sales Promotion',             path: '/sale',               image: './sale.jpg' },
