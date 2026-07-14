@@ -4,9 +4,9 @@ const W  = '#FFFFFF'
 const DK = '#1A1612'
 const F  = { fontFamily: "'Inter', sans-serif" }
 const categories = [
-  { label: 'Eden Collection',  path: '/shop?col=eden',      image: '/edenBanner.jpg'},
+  { label: 'Eden Collection',  path: '/shop?col=eden',      image: '/edenBanner.jpg', pos: '80% 50%' },
   { label: 'The Love Edit',    path: '/shop?col=love-edit', image: '/loveEdits.jpg' },
-  { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: '/boldBeauty.jpg'},
+  { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: '/boldBeauty.jpg', pos: '80% 50%' },
   { label: 'Featured',         path: '/featured',           image: '/featured.jpg' },
   { label: 'All Collections',  path: '/shop',               image: '/collection.jpg'},
   { label: 'Sales Promotion',  path: '/sale',                image: '/sale.jpg' },
@@ -28,7 +28,7 @@ export default function FindYourFit() {
           {doubled.map((cat, i) => (
             <Link key={i} to={cat.path} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>
               <div className="fit-circle" style={{ width: '108px', height: '108px', borderRadius: '50%', overflow: 'hidden', border: `2px solid ${W}`, boxShadow: '0 4px 16px rgba(0,0,0,0.08)', flexShrink: 0 }}>
-                <img src={cat.image} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                <img src={cat.image} alt={cat.label} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: cat.pos || '50% 50%', display: 'block' }} />
               </div>
               <span style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, textAlign: 'center', whiteSpace: 'nowrap' }}>{cat.label}</span>
             </Link>
