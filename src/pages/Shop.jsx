@@ -20,6 +20,14 @@ const BR  = '#E4E0D8'
 const RD  = '#B91C1C'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
+// Banner shown at the top of the Shop page when a specific collection is selected.
+// `fit: 'cover'` for wide banner photos, `fit: 'contain'` for square logo badges.
+const COLLECTION_BANNERS = {
+  eden:        { src: '/edenBanner.jpg', fit: 'cover' },
+  'love-edit': { src: '/loveEdits.jpg',  fit: 'contain' },
+  bold:        { src: '/boldBeauty.jpg', fit: 'cover' },
+}
+
 const SORT_OPTIONS = [
   { label: 'Newest',      value: 'newest'     },
   { label: 'Price: Low',  value: 'price_asc'  },
@@ -291,6 +299,17 @@ export default function Shop() {
 
   return (
     <div style={{ background: W, minHeight: '100vh' }}>
+
+      {/* ── COLLECTION BANNER ── */}
+      {activeCollection !== 'all' && COLLECTION_BANNERS[activeCollection] && (
+        <div style={{ width: '100%', aspectRatio: '1920 / 540', overflow: 'hidden', background: GL }}>
+          <img
+            src={COLLECTION_BANNERS[activeCollection].src}
+            alt={activeCol?.name || activeCollection}
+            style={{ width: '100%', height: '100%', objectFit: COLLECTION_BANNERS[activeCollection].fit, display: 'block' }}
+          />
+        </div>
+      )}
 
       {/* ── HEADER ── */}
       <div className="page-padding shop-header" style={{ background: OW, borderBottom: `1px solid ${BR}`, padding: '40px 64px' }}>
