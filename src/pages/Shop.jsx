@@ -260,7 +260,8 @@ export default function Shop() {
     load()
   }, [])
 
-  const activeCol = collections.find(c => c.slug === activeCollection)
+  const activeCol   = collections.find(c => c.slug === activeCollection)
+  const bannerImage = activeCollection !== 'all' ? COLLECTION_BANNERS[activeCollection] : null
 
   const togglePrice    = label => { setActivePrices(prev => prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label]); setVisibleCount(12) }
   const clearAll       = () => { navigate('/shop'); setActivePrices([]); setVisibleCount(12) }
@@ -300,51 +301,69 @@ export default function Shop() {
   return (
     <div style={{ background: W, minHeight: '100vh' }}>
 
-      {/* ── COLLECTION BANNER ── */}
-      {activeCollection !== 'all' && COLLECTION_BANNERS[activeCollection] && (
-        <div style={{ width: '100%', aspectRatio: '1920 / 540', overflow: 'hidden', background: GL }}>
+      {/* ── COLLECTION BANNER (with name + description overlaid) ── */}
+      {bannerImage && (
+        <div style={{ position: 'relative', width: '100%', aspectRatio: '1920 / 540', overflow: 'hidden', background: GL }}>
           <img
-            src={COLLECTION_BANNERS[activeCollection].src}
+            src={bannerImage.src}
             alt={activeCol?.name || activeCollection}
-            style={{ width: '100%', height: '100%', objectFit: COLLECTION_BANNERS[activeCollection].fit, display: 'block' }}
+            style={{ width: '100%', height: '100%', objectFit: bannerImage.fit, display: 'block' }}
           />
+          <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center' }}>
+            <div className="page-padding" style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', padding: '0 64px' }}>
+              <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>Collection</p>
+              <h1 style={{ ...F, fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: activeCol?.subtitle ? '6px' : '0' }}>
+                {activeCol?.name || 'Collection'}
+              </h1>
+              {activeCol?.subtitle && (
+                <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, maxWidth: '360px' }}>{activeCol.subtitle}</p>
+              )}
+              {!loading && (
+                <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD, marginTop: '10px' }}>
+                  {sorted.length} {sorted.length === 1 ? 'piece' : 'pieces'}
+                </p>
+              )}
+            </div>
+          </div>
         </div>
       )}
 
-      {/* ── HEADER ── */}
-      <div className="page-padding shop-header" style={{ background: OW, borderBottom: `1px solid ${BR}`, padding: '40px 64px' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '20px' }}>
-            <Link to="/" style={{ ...F, fontSize: '12px', fontWeight: 400, color: MD, transition: 'color 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = G }} onMouseLeave={e => { e.currentTarget.style.color = MD }}>Home</Link>
-            <span style={{ color: FT, fontSize: '12px' }}>/</span>
-            <span style={{ ...F, fontSize: '12px', fontWeight: 500, color: DK }}>Shop</span>
-            {activeCollection !== 'all' && activeCol && (
-              <>
-                <span style={{ color: FT, fontSize: '12px' }}>/</span>
-                <span style={{ ...F, fontSize: '12px', fontWeight: 500, color: G }}>{activeCol.name}</span>
-              </>
-            )}
-          </div>
-          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
-            <div>
-              <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
-                {activeCollection === 'all' ? 'All Collections' : 'Collection'}
-              </p>
-              <h1 style={{ ...F, fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: activeCol?.subtitle && activeCollection !== 'all' ? '6px' : '0' }}>
-                {activeCollection === 'all' ? 'Shop All Collections' : activeCol?.name}
-              </h1>
-              {activeCol?.subtitle && activeCollection !== 'all' && (
-                <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD }}>{activeCol.subtitle}</p>
+      {/* ── HEADER (All Collections only — no banner to overlay onto) ── */}
+      {!bannerImage && (
+        <div className="page-padding shop-header" style={{ background: OW, borderBottom: `1px solid ${BR}`, padding: '40px 64px' }}>
+          <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '20px' }}>
+              <Link to="/" style={{ ...F, fontSize: '12px', fontWeight: 400, color: MD, transition: 'color 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = G }} onMouseLeave={e => { e.currentTarget.style.color = MD }}>Home</Link>
+              <span style={{ color: FT, fontSize: '12px' }}>/</span>
+              <span style={{ ...F, fontSize: '12px', fontWeight: 500, color: DK }}>Shop</span>
+              {activeCollection !== 'all' && activeCol && (
+                <>
+                  <span style={{ color: FT, fontSize: '12px' }}>/</span>
+                  <span style={{ ...F, fontSize: '12px', fontWeight: 500, color: G }}>{activeCol.name}</span>
+                </>
               )}
             </div>
-            {!loading && (
-              <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD }}>
-                {sorted.length} {sorted.length === 1 ? 'piece' : 'pieces'}
-              </p>
-            )}
+            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+              <div>
+                <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
+                  {activeCollection === 'all' ? 'All Collections' : 'Collection'}
+                </p>
+                <h1 style={{ ...F, fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: activeCol?.subtitle && activeCollection !== 'all' ? '6px' : '0' }}>
+                  {activeCollection === 'all' ? 'Shop All Collections' : activeCol?.name}
+                </h1>
+                {activeCol?.subtitle && activeCollection !== 'all' && (
+                  <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD }}>{activeCol.subtitle}</p>
+                )}
+              </div>
+              {!loading && (
+                <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD }}>
+                  {sorted.length} {sorted.length === 1 ? 'piece' : 'pieces'}
+                </p>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* ── TOOLBAR ── */}
       <div className="shop-toolbar" style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '0 64px', position: 'sticky', top: '0', zIndex: 40 }}>
