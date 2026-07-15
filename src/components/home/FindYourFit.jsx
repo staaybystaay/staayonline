@@ -8,9 +8,9 @@ const categories = [
   { label: 'The Love Edit',    path: '/shop?col=love-edit', image: '/loveEdits.jpg' },
   { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: '/BB.jpg' },
   { label: 'Pleasure Pleats',  path: '/shop?col=pleasure-pleats', image: '/pleasure-findfit.jpg' },
-  { label: 'Featured',         path: '/featured',           image: '/featured.jpg' },
+  { label: 'Featured',         path: '/featured',           image: '/featured-fit.jpg' },
   { label: 'All Collections',  path: '/shop',               image: '/collection.jpg'},
-  { label: 'Sales Promotion',  path: '/sale',                image: '/sale.jpg' },
+  { label: 'Sales Promotion',  path: '/sale',                image: '/sales-fit.jpg' },
   { label: 'Gift Card',        path: '/sale',                image: '/giftcard-findfit.jpg' },
 ]
 const doubled = [...categories, ...categories]
