@@ -9,7 +9,7 @@ const categories = [
   { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: '/BB.jpg' },
   { label: 'Pleasure Pleats',  path: '/shop?col=pleasure-pleats', image: '/pleasure-findfit.jpg' },
   { label: 'Featured',         path: '/featured',           image: '/featured-fit.jpg' },
-  { label: 'All Collections',  path: '/shop',               image: '/collection.jpg'},
+  { label: 'All Collections',  path: '/shop',               image: '/collection-fit.jpg'},
   { label: 'Sales Promotion',  path: '/sale',                image: '/sales-fit.jpg' },
   { label: 'Gift Card',        path: '/sale',                image: '/giftcard-findfit.jpg' },
 ]
