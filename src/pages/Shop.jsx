@@ -23,9 +23,9 @@ const F   = { fontFamily: "'Inter', sans-serif" }
 // Banner shown at the top of the Shop page when a specific collection is selected.
 // All three are square logo badges, so they're shown with object-fit: contain.
 const COLLECTION_BANNERS = {
-  eden:        { src: '/eden-banner.jpg',     fit: 'contain' },
-  'love-edit': { src: '/loveEdits-banner.jpg', fit: 'contain' },
-  bold:        { src: '/bold-banner.jpg',        fit: 'contain' },
+  eden:        { src: '/eden-ash.jpg',     fit: 'contain' },
+  'love-edit': { src: '/love-ash.jpg', fit: 'contain' },
+  bold:        { src: '/bold-ash.jpg',        fit: 'contain' },
 }
 
 const SORT_OPTIONS = [
