@@ -7,6 +7,7 @@ const categories = [
   { label: 'Eden Collection',  path: '/shop?col=eden',      image: '/Edenn.jpg' },
   { label: 'The Love Edit',    path: '/shop?col=love-edit', image: '/loveEdits.jpg' },
   { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: '/BB.jpg' },
+  { label: 'Pleasure Pleats',  path: '/shop?col=pleasure-pleats', image: '/pleasure-findfit.jpg' },
   { label: 'Featured',         path: '/featured',           image: '/featured.jpg' },
   { label: 'All Collections',  path: '/shop',               image: '/collection.jpg'},
   { label: 'Sales Promotion',  path: '/sale',                image: '/sale.jpg' },

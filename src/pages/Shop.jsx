@@ -21,11 +21,12 @@ const RD  = '#B91C1C'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
 // Banner shown at the top of the Shop page when a specific collection is selected.
-// All three are square logo badges, so they're shown with object-fit: contain.
+// All are square logo badges, so they're shown with object-fit: contain.
 const COLLECTION_BANNERS = {
-  eden:        { src: '/eden-ash.jpg',     fit: 'contain' },
-  'love-edit': { src: '/love-ash.jpg', fit: 'contain' },
-  bold:        { src: '/bold-ash.jpg',        fit: 'contain' },
+  eden:             { src: '/eden-ash.jpg',     fit: 'contain' },
+  'love-edit':      { src: '/love-ash.jpg',     fit: 'contain' },
+  bold:             { src: '/bold-ash.jpg',     fit: 'contain' },
+  'pleasure-pleats': { src: '/pleasure-ash.jpg', fit: 'contain' },
 }
 
 const SORT_OPTIONS = [
