@@ -377,9 +377,9 @@ export async function deleteProduct(id) {
 export async function uploadProductImage(file) {
   const ext  = file.name.split('.').pop()
   const path = `products/${Date.now()}.${ext}`
-  const { error: upErr } = await supabase.storage.from('product-images').upload(path, file)
+  const { error: upErr } = await supabase.storage.from('products').upload(path, file)
   if (upErr) throw upErr
-  const { data } = supabase.storage.from('product-images').getPublicUrl(path)
+  const { data } = supabase.storage.from('products').getPublicUrl(path)
   return data.publicUrl
 }
 
