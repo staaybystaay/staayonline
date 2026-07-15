@@ -293,10 +293,13 @@ export default function Shop() {
 
   const hasFilters = activeCollection !== 'all' || activePrices.length > 0
 
-  // Collections for the pills — "All" + db collections
+  // Collections for the pills — "All" + db collections.
+  // Pleasure Pleats isn't in Supabase yet, so it's added here as a stand-in
+  // until it's created there — this falls away on its own once it exists.
   const collectionPills = [
     { slug: 'all', name: 'All Collections' },
     ...collections,
+    ...(collections.some(c => c.slug === 'pleasure-pleats') ? [] : [{ slug: 'pleasure-pleats', name: 'Pleasure Pleats' }]),
   ]
 
   return (
@@ -318,11 +321,6 @@ export default function Shop() {
               </h1>
               {activeCol?.subtitle && (
                 <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, maxWidth: '360px' }}>{activeCol.subtitle}</p>
-              )}
-              {!loading && (
-                <p style={{ ...F, fontSize: '13px', fontWeight: 300, color: MD, marginTop: '10px' }}>
-                  {sorted.length} {sorted.length === 1 ? 'piece' : 'pieces'}
-                </p>
               )}
             </div>
           </div>
