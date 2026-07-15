@@ -21,11 +21,11 @@ const RD  = '#B91C1C'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
 // Banner shown at the top of the Shop page when a specific collection is selected.
-// `fit: 'cover'` for wide banner photos, `fit: 'contain'` for square logo badges.
+// All three are square logo badges, so they're shown with object-fit: contain.
 const COLLECTION_BANNERS = {
-  eden:        { src: '/edenBanner.jpg', fit: 'cover' },
-  'love-edit': { src: '/loveEdits.jpg',  fit: 'contain' },
-  bold:        { src: '/boldBeauty.jpg', fit: 'cover' },
+  eden:        { src: '/Edenn.jpg',     fit: 'contain' },
+  'love-edit': { src: '/loveEdits.jpg', fit: 'contain' },
+  bold:        { src: '/BB.jpg',        fit: 'contain' },
 }
 
 const SORT_OPTIONS = [

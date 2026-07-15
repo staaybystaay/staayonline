@@ -4,7 +4,7 @@ const W  = '#FFFFFF'
 const DK = '#1A1612'
 const F  = { fontFamily: "'Inter', sans-serif" }
 const categories = [
-  { label: 'Eden Collection',  path: '/shop?col=eden',      image: '/Edenn.jpg'},
+  { label: 'Eden Collection',  path: '/shop?col=eden',      image: '/Edenn.jpg' },
   { label: 'The Love Edit',    path: '/shop?col=love-edit', image: '/loveEdits.jpg' },
   { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: '/BB.jpg' },
   { label: 'Featured',         path: '/featured',           image: '/featured.jpg' },
