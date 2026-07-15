@@ -10,7 +10,7 @@ const categories = [
   { label: 'Featured',         path: '/featured',           image: '/featured.jpg' },
   { label: 'All Collections',  path: '/shop',               image: '/collection.jpg'},
   { label: 'Sales Promotion',  path: '/sale',                image: '/sale.jpg' },
-  { label: 'Gift Card',        path: '/sale',                image: '/giftcard.jpeg' },
+  { label: 'Gift Card',        path: '/sale',                image: '/giftcard-findfit.jpg' },
 ]
 const doubled = [...categories, ...categories]
 export default function FindYourFit() {
