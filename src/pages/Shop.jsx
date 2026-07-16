@@ -20,13 +20,21 @@ const BR  = '#E4E0D8'
 const RD  = '#B91C1C'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
-// Banner shown at the top of the Shop page when a specific collection is selected.
-// All are square logo badges, so they're shown with object-fit: contain.
+// Banner shown at the top of the Shop page. All are square logo badges,
+// so they're shown with object-fit: contain.
 const COLLECTION_BANNERS = {
+  all:              { src: '/collection-banner.jpg', fit: 'contain' },
   eden:             { src: '/eden-ash.jpg',     fit: 'contain' },
   'love-edit':      { src: '/love-ash.jpg',     fit: 'contain' },
   bold:             { src: '/bold-ash.jpg',     fit: 'contain' },
   'pleasure-pleats': { src: '/pleasure-ash.jpg', fit: 'contain' },
+}
+
+// Pleasure Pleats isn't in Supabase yet — this stands in for its name
+// until it's created there, so the pills and banner show real text
+// instead of falling back to generic "Collection".
+const FALLBACK_COLLECTION_NAMES = {
+  'pleasure-pleats': 'Pleasure Pleats',
 }
 
 const SORT_OPTIONS = [
@@ -262,7 +270,7 @@ export default function Shop() {
   }, [])
 
   const activeCol   = collections.find(c => c.slug === activeCollection)
-  const bannerImage = activeCollection !== 'all' ? COLLECTION_BANNERS[activeCollection] : null
+  const bannerImage = COLLECTION_BANNERS[activeCollection]
 
   const togglePrice    = label => { setActivePrices(prev => prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label]); setVisibleCount(12) }
   const clearAll       = () => { navigate('/shop'); setActivePrices([]); setVisibleCount(12) }
@@ -293,13 +301,13 @@ export default function Shop() {
 
   const hasFilters = activeCollection !== 'all' || activePrices.length > 0
 
-  // Collections for the pills — "All" + db collections.
-  // Pleasure Pleats isn't in Supabase yet, so it's added here as a stand-in
-  // until it's created there — this falls away on its own once it exists.
+  // Collections for the pills — "All" + db collections + fallback stand-ins
   const collectionPills = [
     { slug: 'all', name: 'All Collections' },
     ...collections,
-    ...(collections.some(c => c.slug === 'pleasure-pleats') ? [] : [{ slug: 'pleasure-pleats', name: 'Pleasure Pleats' }]),
+    ...Object.entries(FALLBACK_COLLECTION_NAMES)
+      .filter(([slug]) => !collections.some(c => c.slug === slug))
+      .map(([slug, name]) => ({ slug, name })),
   ]
 
   return (
@@ -315,9 +323,11 @@ export default function Shop() {
           />
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center' }}>
             <div className="page-padding" style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', padding: '0 64px' }}>
-              <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>Collection</p>
+              <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
+                {activeCollection === 'all' ? 'All Collections' : 'Collection'}
+              </p>
               <h1 style={{ ...F, fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: activeCol?.subtitle ? '6px' : '0' }}>
-                {activeCol?.name || 'Collection'}
+                {activeCollection === 'all' ? 'Shop All Collections' : (activeCol?.name || FALLBACK_COLLECTION_NAMES[activeCollection] || 'Collection')}
               </h1>
               {activeCol?.subtitle && (
                 <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, maxWidth: '360px' }}>{activeCol.subtitle}</p>
@@ -348,7 +358,7 @@ export default function Shop() {
                   {activeCollection === 'all' ? 'All Collections' : 'Collection'}
                 </p>
                 <h1 style={{ ...F, fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: activeCol?.subtitle && activeCollection !== 'all' ? '6px' : '0' }}>
-                  {activeCollection === 'all' ? 'Shop All Collections' : activeCol?.name}
+                  {activeCollection === 'all' ? 'Shop All Collections' : (activeCol?.name || FALLBACK_COLLECTION_NAMES[activeCollection])}
                 </h1>
                 {activeCol?.subtitle && activeCollection !== 'all' && (
                   <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD }}>{activeCol.subtitle}</p>
