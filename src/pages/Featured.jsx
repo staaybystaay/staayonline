@@ -101,9 +101,7 @@ function RITHSection() {
             Running<br />in the Halls
           </h2>
 
-          <p style={{ ...F, fontSize: 'clamp(13px, 1.4vw, 15px)', fontWeight: 500, color: 'rgba(255,255,255,0.65)', letterSpacing: '0.05em', maxWidth: '480px', lineHeight: 1.7 }}>
-            Friday, 17th April &nbsp;·&nbsp; The British Museum, London &nbsp;·&nbsp; 5:30 – 8:30 pm
-          </p>
+       
         </div>
       </div>
 
