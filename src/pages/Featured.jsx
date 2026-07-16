@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // ─── DESIGN TOKENS ───────────────────────────────────────────────
@@ -269,33 +268,6 @@ export default function Featured() {
       {/* ── STORIES ── */}
       <RITHSection />
       <EdenSection />
-
-      {/* ── FOOTER CTA ── */}
-      <div style={{ background: BK, padding: 'clamp(72px,8vw,120px) clamp(24px,5vw,64px)', textAlign: 'center' }}>
-        <span style={{ ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', display: 'block', marginBottom: '20px' }}>
-          Stay Connected
-        </span>
-        <h3 style={{ ...SERIF, fontSize: 'clamp(32px, 5vw, 64px)', fontWeight: 700, color: W, letterSpacing: '-0.03em', lineHeight: 1, marginBottom: '20px' }}>
-          More stories<br />coming soon
-        </h3>
-        <p style={{ ...F, fontSize: '15px', fontWeight: 500, color: 'rgba(255,255,255,0.45)', marginBottom: '44px', maxWidth: '400px', margin: '0 auto 44px', lineHeight: 1.8 }}>
-          Be first to know when new editorials, events, and collection stories drop.
-        </p>
-        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link to="/shop"
-            style={{ background: W, color: BK, padding: '16px 44px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'opacity 0.2s', display: 'inline-block' }}
-            onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
-            onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}>
-            Shop All Collections
-          </Link>
-          <Link to="/"
-            style={{ background: 'transparent', border: '1.5px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)', padding: '16px 36px', ...F, fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.2s', display: 'inline-block' }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = W; e.currentTarget.style.color = W }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}>
-            Back to Home
-          </Link>
-        </div>
-      </div>
 
     </div>
   )
