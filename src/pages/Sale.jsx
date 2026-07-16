@@ -248,7 +248,7 @@ function GiftCardSection() {
             <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '160px', height: '160px', borderRadius: '50%', background: 'rgba(184,144,58,0.18)' }} />
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
               <img src="/stayonlinelogo.jpeg" alt="" style={{ width: '26px', height: '26px', borderRadius: '50%', objectFit: 'cover' }} />
-              <span style={{ ...F, fontSize: '13px', fontWeight: 700, color: W }}>STAAY <span style={{ color: G }}>ONLINE</span></span>
+              <span style={{ ...F, fontSize: '13px', fontWeight: 700, color: W }}>STAAY </span>
             </div>
             <div style={{ position: 'relative' }}>
               <p style={{ ...F, fontSize: '10px', fontWeight: 600, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '6px' }}>Gift Card Value</p>
