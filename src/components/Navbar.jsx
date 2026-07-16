@@ -55,6 +55,7 @@ const navLinks = [
   { label: 'Shop',      path: '/shop'     },
   { label: 'Our Brand', path: '/brand'    },
   { label: 'Featured',  path: '/featured' },
+   { label: 'About Us', path: '/brand'    },
 ]
 
 const secondaryLinks = [
