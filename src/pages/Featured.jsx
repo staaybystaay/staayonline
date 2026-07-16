@@ -182,7 +182,6 @@ function RITHSection() {
 
 // ─── EDEN SECTION ────────────────────────────────────────────────
 function EdenSection() {
-  const [lb, setLb] = useState(null)
   const gallery = [
     { src: '/featured/feature2.jpeg', caption: 'The Eden Collection — STAAY' },
     { src: '/featured/feature4.jpeg', caption: 'Eden Editorial'               },
@@ -191,37 +190,6 @@ function EdenSection() {
   return (
     <article style={{ background: CREAM }}>
       <div style={{ maxWidth: '1320px', margin: '0 auto', padding: 'clamp(64px,8vw,120px) clamp(24px,5vw,64px)' }}>
-
-        {/* Section label bar */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: 'clamp(48px,6vw,80px)' }}>
-          <span style={{ ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: SAGE }}>
-            Collection · 2025
-          </span>
-          <div style={{ flex: 1, height: '1px', background: LGREY }} />
-          <span style={{ ...F, fontSize: '10px', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: GREY }}>
-            STAAY
-          </span>
-        </div>
-
-        {/* Big headline */}
-        <h2 style={{ ...SERIF, fontSize: 'clamp(52px, 9vw, 120px)', fontWeight: 700, color: INK, letterSpacing: '-0.035em', lineHeight: 0.92, marginBottom: 'clamp(48px,7vw,96px)' }}>
-          The Eden<br />Collection
-        </h2>
-
-        {/* Full-bleed hero image */}
-        <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '21/9', marginBottom: 'clamp(48px,6vw,80px)', cursor: 'zoom-in' }}
-          onClick={() => setLb(0)}>
-          <img src={gallery[0].src} alt={gallery[0].caption}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', transition: 'transform 0.6s cubic-bezier(.25,.46,.45,.94)' }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.03)' }}
-            onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)' }}
-          />
-          <div style={{ position: 'absolute', bottom: '24px', right: '28px', background: 'rgba(0,0,0,0.55)', padding: '8px 16px' }}>
-            <span style={{ ...F, fontSize: '10px', color: 'rgba(255,255,255,0.8)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-              The Eden Collection
-            </span>
-          </div>
-        </div>
 
         {/* Text + second image — reversed col */}
         <div className="featured-eden-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0,6fr) minmax(0,5fr)', gap: 'clamp(40px,6vw,96px)', alignItems: 'center', marginBottom: 'clamp(48px,6vw,80px)' }}>
@@ -253,22 +221,6 @@ function EdenSection() {
                 STAAY
               </cite>
             </blockquote>
-
-            {/* CTAs */}
-            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <Link to="/shop"
-                style={{ background: INK, color: W, padding: '16px 40px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.25s', display: 'inline-block' }}
-                onMouseEnter={e => { e.currentTarget.style.background = SAGE }}
-                onMouseLeave={e => { e.currentTarget.style.background = INK }}>
-                Shop the Collection
-              </Link>
-              <Link to="/shop"
-                style={{ background: 'transparent', border: `1.5px solid ${LGREY}`, color: INK, padding: '16px 32px', ...F, fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.25s', display: 'inline-block' }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = INK }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = LGREY }}>
-                Explore More
-              </Link>
-            </div>
           </div>
 
           {/* Second image */}
@@ -287,10 +239,6 @@ function EdenSection() {
         </div>
 
       </div>
-
-      <AnimatePresence>
-        {lb !== null && <Lightbox images={gallery} startIndex={lb} onClose={() => setLb(null)} />}
-      </AnimatePresence>
     </article>
   )
 }
@@ -300,25 +248,6 @@ export default function Featured() {
   return (
     <div style={{ background: W, minHeight: '100vh' }}>
 
-      {/* ── BANNER SLOT — upload your image here ── */}
-      {/* Replace the src below with your banner image path, e.g. /featured/banner.jpg */}
-      <div style={{ position: 'relative', width: '100%', overflow: 'hidden', background: BK }}>
-        <img
-          src="/featured/feature8.png"
-          alt="STAAY Featured"
-          style={{ width: '100%', display: 'block', maxHeight: '90vh', objectFit: 'cover' }}
-          onError={e => { e.currentTarget.style.display = 'none' }}
-        />
-
-        {/* Overlay breadcrumb — shows on top of banner or alone if no banner yet */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, padding: '28px clamp(24px,5vw,64px)', display: 'flex', alignItems: 'center', gap: '8px', zIndex: 2 }}>
-          <Link to="/" style={{ ...F, fontSize: '12px', fontWeight: 500, color: 'rgba(255,255,255,0.5)', transition: 'color 0.2s', textDecoration: 'none' }}
-            onMouseEnter={e => { e.currentTarget.style.color = W }}
-            onMouseLeave={e => { e.currentTarget.style.color = 'rgba(255,255,255,0.5)' }}>Home</Link>
-          <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '11px' }}>/</span>
-          <span style={{ ...F, fontSize: '12px', fontWeight: 600, color: 'rgba(255,255,255,0.75)', letterSpacing: '0.04em' }}>Featured</span>
-        </div>
-      </div>
 
       {/* ── PAGE TITLE BAR ── */}
       <div style={{ background: BK, padding: 'clamp(40px,5vw,72px) clamp(24px,5vw,64px) clamp(36px,4vw,60px)' }}>
