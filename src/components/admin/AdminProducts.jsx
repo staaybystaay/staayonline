@@ -34,7 +34,7 @@ const ALL_SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
 
 const emptyForm = {
   name: '', slug: '', price: '', discount_percent: '', stock_quantity: '', collection_id: '',
-  image_url: '', sort_order: '0', active: true, sizes: [...ALL_SIZES],
+  image_url: '', image_url_2: '', sort_order: '0', active: true, sizes: [...ALL_SIZES],
 }
 
 // ─── Product row ───────────────────────────────
@@ -112,7 +112,8 @@ function ProductDrawer({ open, product, collections, onClose, onSaved }) {
   const [uploading, setUploading] = useState(false)
   const [saving, setSaving]     = useState(false)
   const [error, setError]       = useState('')
-  const fileRef = useRef()
+  const fileRef  = useRef()
+  const fileRef2 = useRef()
 
   useEffect(() => {
     if (product) {
@@ -124,6 +125,7 @@ function ProductDrawer({ open, product, collections, onClose, onSaved }) {
         stock_quantity: product.stock_quantity != null ? String(product.stock_quantity) : '',
         collection_id: product.collection?.id || product.collection_id || '',
         image_url: product.image_url || '',
+        image_url_2: product.image_url_2 || '',
         sort_order: String(product.sort_order ?? '0'),
         active: product.active !== false,
         sizes: product.sizes?.length ? product.sizes : [...ALL_SIZES],
@@ -140,14 +142,14 @@ function ProductDrawer({ open, product, collections, onClose, onSaved }) {
     setForm(f => ({ ...f, name: val, slug: slugTouched ? f.slug : slugify(val) }))
   }
 
-  async function handleImageUpload(e) {
+  async function handleImageUpload(e, field) {
     const file = e.target.files?.[0]
     if (!file) return
     setUploading(true)
     setError('')
     try {
       const url = await uploadProductImage(file)
-      setForm(f => ({ ...f, image_url: url }))
+      setForm(f => ({ ...f, [field]: url }))
     } catch (err) {
       setError(err.message || 'Image upload failed')
     } finally {
@@ -171,6 +173,7 @@ function ProductDrawer({ open, product, collections, onClose, onSaved }) {
         stock_quantity: form.stock_quantity !== '' ? Number(form.stock_quantity) : null,
         collection_id: form.collection_id || null,
         image_url: form.image_url || null,
+        image_url_2: form.image_url_2 || null,
         sort_order: Number(form.sort_order) || 0,
         active: form.active,
         sizes: form.sizes,
@@ -205,18 +208,35 @@ function ProductDrawer({ open, product, collections, onClose, onSaved }) {
 
             <div style={{ flex: 1, overflowY: 'auto', padding: '22px 24px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
 
-              {/* Image */}
+              {/* Image 1 (Front) */}
               <div>
-                <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '8px' }}>Product Image</p>
+                <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '8px' }}>Image 1 (Front)</p>
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                   <div style={{ width: '72px', height: '90px', background: LG, borderRadius: '6px', overflow: 'hidden', flexShrink: 0, border: `1px solid ${BR}` }}>
                     {form.image_url && <img src={form.image_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
                   </div>
                   <div>
-                    <input ref={fileRef} type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
+                    <input ref={fileRef} type="file" accept="image/*" onChange={e => handleImageUpload(e, 'image_url')} style={{ display: 'none' }} />
                     <button type="button" onClick={() => fileRef.current?.click()} disabled={uploading}
                       style={{ padding: '9px 16px', background: LG, border: `1px solid ${BR}`, borderRadius: '6px', ...F, fontSize: '12px', fontWeight: 600, color: DK, cursor: uploading ? 'not-allowed' : 'pointer' }}>
                       {uploading ? 'Uploading...' : form.image_url ? 'Change Image' : 'Upload Image'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Image 2 (Back) */}
+              <div>
+                <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '8px' }}>Image 2 (Back)</p>
+                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                  <div style={{ width: '72px', height: '90px', background: LG, borderRadius: '6px', overflow: 'hidden', flexShrink: 0, border: `1px solid ${BR}` }}>
+                    {form.image_url_2 && <img src={form.image_url_2} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                  </div>
+                  <div>
+                    <input ref={fileRef2} type="file" accept="image/*" onChange={e => handleImageUpload(e, 'image_url_2')} style={{ display: 'none' }} />
+                    <button type="button" onClick={() => fileRef2.current?.click()} disabled={uploading}
+                      style={{ padding: '9px 16px', background: LG, border: `1px solid ${BR}`, borderRadius: '6px', ...F, fontSize: '12px', fontWeight: 600, color: DK, cursor: uploading ? 'not-allowed' : 'pointer' }}>
+                      {uploading ? 'Uploading...' : form.image_url_2 ? 'Change Image' : 'Upload Image'}
                     </button>
                   </div>
                 </div>

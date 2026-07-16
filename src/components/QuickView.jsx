@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
 import { useWishlist } from '../hooks/useWishlist'
-import { imgCard, imgFull } from '../lib/images'
+import { imgFull } from '../lib/images'
 import { useAuth } from '../hooks/useAuth'
 import { getReviewsByProduct, createReview } from '../lib/api'
 import useCurrencyStore from '../store/useCurrencyStore'
@@ -119,7 +119,7 @@ export default function QuickView({ product, onClose }) {
 
   if (!product) return null
 
-  const images    = [imgFull(product.image_url), imgCard(product.image_url)]
+  const images    = [product.image_url, product.image_url_2].filter(Boolean).map(imgFull)
   const availSizes = (product.sizes && product.sizes.length > 0) ? product.sizes : DEFAULT_SIZES
 
   function handleAddToCart() {
