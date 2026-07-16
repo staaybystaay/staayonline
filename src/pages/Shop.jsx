@@ -6,6 +6,7 @@ import { useWishlist } from '../hooks/useWishlist'
 import { imgCard, imgThumb } from '../lib/images'
 import { supabase } from '../lib/supabase'
 import MiniCurrencyPicker from '../components/MiniCurrencyPicker'
+import QuickView from '../components/QuickView'
 
 const G   = '#B8903A'
 const GL  = '#F5ECD8'
@@ -123,7 +124,7 @@ function ComingSoon({ label }) {
 }
 
 // ─── PRODUCT CARD — GRID ─────────────────────
-function ProductCardGrid({ product }) {
+function ProductCardGrid({ product, onQuickView }) {
   const [hovered, setHovered] = useState(false)
   const addItem = useCartStore(s => s.addItem)
   const { toggle, isFavorited } = useWishlist()
@@ -162,10 +163,15 @@ function ProductCardGrid({ product }) {
             style={{ position: 'absolute', top: '10px', right: '10px', width: '32px', height: '32px', borderRadius: '50%', background: W, border: 'none', cursor: 'pointer', fontSize: '16px', color: wishlisted ? RD : DK, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: hovered || wishlisted ? 1 : 0, transition: 'opacity 0.25s', boxShadow: '0 1px 6px rgba(17,17,17,0.14)' }}>
             {wishlisted ? '♥' : '♡'}
           </button>
-          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: BK, transform: hovered ? 'translateY(0)' : 'translateY(100%)', transition: 'transform 0.3s' }}>
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: BK, display: 'flex', transform: hovered ? 'translateY(0)' : 'translateY(100%)', transition: 'transform 0.3s' }}>
+            <button
+              onClick={() => onQuickView(product)}
+              style={{ flex: 1, padding: '12px', background: 'transparent', border: 'none', borderRight: '1px solid rgba(255,255,255,0.2)', color: W, cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+              Quick View
+            </button>
             <button
               onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY', badge: product.badge })}
-              style={{ width: '100%', padding: '12px', background: 'transparent', border: 'none', color: W, cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+              style={{ flex: 1, padding: '12px', background: 'transparent', border: 'none', color: W, cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.05em', textTransform: 'uppercase' }}>
               Add to Bag
             </button>
           </div>
@@ -175,13 +181,27 @@ function ProductCardGrid({ product }) {
         </p>
         <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '6px' }}>{product.name}</p>
         <MiniCurrencyPicker ghs={product.price} priceStyle={{ fontSize: '14px' }} strikethrough={originalPrice} />
+
+        {/* Mobile-only quick actions */}
+        <div className="mobile-only" style={{ display: 'none', gap: '6px', marginTop: '10px' }}>
+          <button
+            onClick={() => onQuickView(product)}
+            style={{ flex: 1, background: B2, border: `1px solid ${BR}`, padding: '8px 6px', ...F, fontSize: '11px', fontWeight: 600, color: DK, cursor: 'pointer' }}>
+            Quick View
+          </button>
+          <button
+            onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY', badge: product.badge })}
+            style={{ flex: 1, background: BK, border: 'none', padding: '8px 6px', ...F, fontSize: '11px', fontWeight: 600, color: W, cursor: 'pointer' }}>
+            Add to Bag
+          </button>
+        </div>
       </div>
     </motion.div>
   )
 }
 
 // ─── PRODUCT CARD — LIST ─────────────────────
-function ProductCardList({ product }) {
+function ProductCardList({ product, onQuickView }) {
   const [hovered, setHovered] = useState(false)
   const addItem = useCartStore(s => s.addItem)
   const { toggle, isFavorited } = useWishlist()
@@ -219,6 +239,13 @@ function ProductCardList({ product }) {
             {wishlisted ? '♥' : '♡'}
           </button>
           <button
+            onClick={() => onQuickView(product)}
+            style={{ background: 'transparent', border: `1px solid ${BR}`, color: DK, padding: '10px 16px', cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', transition: 'all 0.2s', whiteSpace: 'nowrap' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = DK }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = BR }}>
+            Quick View
+          </button>
+          <button
             onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY', badge: product.badge })}
             style={{ background: hovered ? G : BK, border: 'none', color: W, padding: '10px 20px', cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', transition: 'background 0.2s', whiteSpace: 'nowrap' }}>
             Add to Bag
@@ -242,6 +269,7 @@ export default function Shop() {
   const [viewMode,         setViewMode]         = useState('grid')
   const [sortOpen,         setSortOpen]         = useState(false)
   const [visibleCount,     setVisibleCount]     = useState(12)
+  const [quickViewProduct, setQuickViewProduct] = useState(null)
 
   // Sync active collection from URL ?col= param (used by navbar links & mobile drawer)
   useEffect(() => {
@@ -494,7 +522,7 @@ export default function Shop() {
             <>
               <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid-3-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px 20px' }}>
                 {sorted.slice(0, visibleCount).map(p => (
-                  <ProductCardGrid key={p.id} product={p} />
+                  <ProductCardGrid key={p.id} product={p} onQuickView={setQuickViewProduct} />
                 ))}
               </motion.div>
               {visibleCount < sorted.length && (
@@ -512,7 +540,7 @@ export default function Shop() {
             <>
               <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {sorted.slice(0, visibleCount).map(p => (
-                  <ProductCardList key={p.id} product={p} />
+                  <ProductCardList key={p.id} product={p} onQuickView={setQuickViewProduct} />
                 ))}
               </motion.div>
               {visibleCount < sorted.length && (
@@ -530,6 +558,10 @@ export default function Shop() {
         </div>
 
       </div>
+
+      {quickViewProduct && (
+        <QuickView product={quickViewProduct} onClose={() => setQuickViewProduct(null)} />
+      )}
     </div>
   )
 }
