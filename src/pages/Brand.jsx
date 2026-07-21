@@ -9,21 +9,20 @@ const PANEL = '#EFE6D2'
 const GOLD  = '#B8903A'
 const TERRA = '#B5502E'   // secondary accent — used to break the gold-everywhere flatness
 const MUTE  = '#6E6657'
-const FAINT = '#A79F8C'
 const W     = '#FFFFFF'
 
 const SANS  = "'Inter', sans-serif"
-const SERIF = "'Fraunces', Georgia, serif"
+const SERIF = "'Bodoni Moda', 'Times New Roman', serif"
 const F = { fontFamily: SANS }
 const D = { fontFamily: SERIF }
 
 function FontLoader() {
   useEffect(() => {
-    if (document.getElementById('staay-fraunces')) return
+    if (document.getElementById('staay-bodoni')) return
     const l = document.createElement('link')
-    l.id = 'staay-fraunces'
+    l.id = 'staay-bodoni'
     l.rel = 'stylesheet'
-    l.href = 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap'
+    l.href = 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,500&display=swap'
     document.head.appendChild(l)
   }, [])
   return null
@@ -72,48 +71,46 @@ function Hero() {
 }
 
 // ═══════════════════════════════════════════════
-// MISSION — text left, image right
+// FOUNDER — closing chapter, full-bleed portrait + overlay text
 // ═══════════════════════════════════════════════
-function Mission() {
+function Founder() {
   return (
-    <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
-      <div className="brand-split-grid" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 0.9fr', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+    <section style={{ position: 'relative', minHeight: 'clamp(600px, 92vh, 860px)', overflow: 'hidden', background: INK }}>
+      <img
+        src="/sefah.png"
+        alt="Stacey Sefah, Founder of STAAY"
+        onError={e => { e.target.style.display = 'none' }}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%' }}
+      />
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(100deg, rgba(21,19,15,0.96) 0%, rgba(21,19,15,0.82) 38%, rgba(21,19,15,0.25) 68%, rgba(21,19,15,0.05) 100%)' }} />
 
-        <motion.div {...fadeUp} transition={{ duration: 0.6 }}>
-          <Eyebrow>Our Mission</Eyebrow>
-          <h2 style={{ ...D, fontSize: 'clamp(28px, 3.6vw, 44px)', fontWeight: 600, color: INK, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '24px' }}>
-            Founded by Stacey Sefah
+      <div style={{ position: 'relative', maxWidth: '1280px', margin: '0 auto', minHeight: 'inherit', display: 'flex', alignItems: 'center', padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
+        <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '560px' }}>
+          <Eyebrow color={TERRA}>Meet the Founder</Eyebrow>
+          <h2 style={{ ...D, fontSize: 'clamp(38px, 5.5vw, 68px)', fontWeight: 500, color: W, letterSpacing: '-0.01em', lineHeight: 1.05, marginBottom: '28px' }}>
+            Stacey Sefah
           </h2>
 
-          <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE, marginBottom: '18px' }}>
+          <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: 'rgba(255,255,255,0.72)', marginBottom: '18px' }}>
             STAAY began long before the first collection was released. From a young age, fashion became Stacey's way of expressing herself in seasons where words often fell short. While studying law and navigating the expectations of life, she found comfort in creating pieces that made women feel seen, beautiful, confident, and unforgettable.
           </p>
 
-          <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE, marginBottom: '28px' }}>
-            For years, Stacey often hid behind black clothing, believing simplicity meant shrinking herself. Like many women, she struggled with insecurities, self-doubt, and the pressure to fit into spaces that often demanded less softness, less color, and less individuality. But somewhere along the journey, she realized confidence was never about blending in — it was about embracing who God created her to be.
+          <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: 'rgba(255,255,255,0.72)', marginBottom: '28px' }}>
+            For years, Stacey often hid behind black clothing, believing simplicity meant shrinking herself. But somewhere along the journey, she realized confidence was never about blending in — it was about embracing who God created her to be.
           </p>
 
-          <p style={{ ...D, fontSize: 'clamp(19px, 2.2vw, 24px)', fontStyle: 'italic', fontWeight: 500, color: INK, lineHeight: 1.4, borderLeft: `2px solid ${GOLD}`, paddingLeft: '18px', marginBottom: '32px' }}>
+          <p style={{ ...D, fontSize: 'clamp(19px, 2.2vw, 24px)', fontStyle: 'italic', fontWeight: 500, color: W, lineHeight: 1.4, borderLeft: `2px solid ${TERRA}`, paddingLeft: '18px', marginBottom: '32px' }}>
             "That realization changed everything."
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <div style={{ width: '46px', height: '46px', borderRadius: '50%', background: GOLD, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', ...D, fontSize: '18px', fontWeight: 600, color: W }}>
+            <div style={{ width: '46px', height: '46px', borderRadius: '50%', background: TERRA, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', ...D, fontSize: '18px', fontWeight: 600, color: W }}>
               SS
             </div>
             <div>
-              <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: INK }}>Stacey Sefah</p>
-              <p style={{ ...F, fontSize: '11px', color: FAINT, letterSpacing: '0.04em', marginTop: '2px' }}>Founder &amp; Creative Director</p>
+              <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: W }}>Stacey Sefah</p>
+              <p style={{ ...F, fontSize: '11px', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.04em', marginTop: '2px' }}>Founder &amp; Creative Director</p>
             </div>
-          </div>
-        </motion.div>
-
-        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} style={{ position: 'relative' }}>
-          <div style={{ position: 'absolute', top: '18px', left: '18px', right: '-18px', bottom: '-18px', background: TERRA, zIndex: 0 }} />
-          <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', background: PANEL, zIndex: 1 }}>
-            <img src="/sefah.png" alt="Stacey Sefah, Founder of STAAY"
-              onError={e => { e.target.style.display = 'none' }}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           </div>
         </motion.div>
       </div>
@@ -287,12 +284,12 @@ export default function Brand() {
       <FontLoader />
 
       <Hero />
-      <Mission />
       <TrueColors />
       <FeatureRow />
       <Manifesto />
       <DiscoverCollection />
       <InstagramSection />
+      <Founder />
     </div>
   )
 }
