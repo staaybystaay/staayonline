@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
@@ -11,28 +10,13 @@ const TERRA = '#B5502E'   // secondary accent — used to break the gold-everywh
 const MUTE  = '#6E6657'
 const W     = '#FFFFFF'
 
-const SANS  = "'Inter', sans-serif"
-const SERIF = "'Bodoni Moda', 'Times New Roman', serif"
-const F = { fontFamily: SANS }
-const D = { fontFamily: SERIF }
-
-function FontLoader() {
-  useEffect(() => {
-    if (document.getElementById('staay-bodoni')) return
-    const l = document.createElement('link')
-    l.id = 'staay-bodoni'
-    l.rel = 'stylesheet'
-    l.href = 'https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,500&display=swap'
-    document.head.appendChild(l)
-  }, [])
-  return null
-}
+const F = { fontFamily: "'Inter', sans-serif" }
 
 function Eyebrow({ children, color = GOLD, center = false }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: center ? 'center' : 'flex-start', gap: '10px', marginBottom: '16px' }}>
       <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: color, flexShrink: 0 }} />
-      <span style={{ ...F, fontSize: '11px', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color }}>
+      <span style={{ ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color }}>
         {children}
       </span>
     </div>
@@ -61,7 +45,7 @@ function Hero() {
       <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
         <div>
           <Eyebrow color={GOLD} center>Who We Are</Eyebrow>
-          <h1 style={{ ...D, fontSize: 'clamp(48px, 9vw, 110px)', fontWeight: 600, color: W, letterSpacing: '-0.02em', lineHeight: 1 }}>
+          <h1 style={{ ...F, fontSize: 'clamp(40px, 8vw, 92px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', lineHeight: 1 }}>
             About Us
           </h1>
         </div>
@@ -87,28 +71,28 @@ function Founder() {
       <div style={{ position: 'relative', maxWidth: '1280px', margin: '0 auto', minHeight: 'inherit', display: 'flex', alignItems: 'center', padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
         <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '560px' }}>
           <Eyebrow color={TERRA}>Meet the Founder</Eyebrow>
-          <h2 style={{ ...D, fontSize: 'clamp(38px, 5.5vw, 68px)', fontWeight: 500, color: W, letterSpacing: '-0.01em', lineHeight: 1.05, marginBottom: '28px' }}>
+          <h2 style={{ ...F, fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 800, color: W, letterSpacing: '-0.01em', lineHeight: 1.1, marginBottom: '28px' }}>
             Stacey Sefah
           </h2>
 
-          <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: 'rgba(255,255,255,0.72)', marginBottom: '18px' }}>
+          <p style={{ ...F, fontSize: '15px', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.75)', marginBottom: '18px' }}>
             STAAY began long before the first collection was released. From a young age, fashion became Stacey's way of expressing herself in seasons where words often fell short. While studying law and navigating the expectations of life, she found comfort in creating pieces that made women feel seen, beautiful, confident, and unforgettable.
           </p>
 
-          <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: 'rgba(255,255,255,0.72)', marginBottom: '28px' }}>
+          <p style={{ ...F, fontSize: '15px', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.75)', marginBottom: '28px' }}>
             For years, Stacey often hid behind black clothing, believing simplicity meant shrinking herself. But somewhere along the journey, she realized confidence was never about blending in — it was about embracing who God created her to be.
           </p>
 
-          <p style={{ ...D, fontSize: 'clamp(19px, 2.2vw, 24px)', fontStyle: 'italic', fontWeight: 500, color: W, lineHeight: 1.4, borderLeft: `2px solid ${TERRA}`, paddingLeft: '18px', marginBottom: '32px' }}>
+          <p style={{ ...F, fontSize: 'clamp(17px, 2vw, 21px)', fontWeight: 700, color: W, lineHeight: 1.4, borderLeft: `3px solid ${TERRA}`, paddingLeft: '18px', marginBottom: '32px' }}>
             "That realization changed everything."
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <div style={{ width: '46px', height: '46px', borderRadius: '50%', background: TERRA, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', ...D, fontSize: '18px', fontWeight: 600, color: W }}>
+            <div style={{ width: '46px', height: '46px', borderRadius: '50%', background: TERRA, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '16px', fontWeight: 700, color: W }}>
               SS
             </div>
             <div>
-              <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: W }}>Stacey Sefah</p>
+              <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: W }}>Stacey Sefah</p>
               <p style={{ ...F, fontSize: '11px', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.04em', marginTop: '2px' }}>Founder &amp; Creative Director</p>
             </div>
           </div>
@@ -137,44 +121,18 @@ function TrueColors() {
 
         <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }}>
           <Eyebrow>Our Evolution</Eyebrow>
-          <h2 style={{ ...D, fontSize: 'clamp(28px, 3.6vw, 44px)', fontWeight: 600, color: INK, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '24px' }}>
+          <h2 style={{ ...F, fontSize: 'clamp(26px, 3.4vw, 40px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: '24px' }}>
             Effortless. Feminine. Timeless.
           </h2>
 
-          <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE, marginBottom: '18px' }}>
+          <p style={{ ...F, fontSize: '15px', fontWeight: 400, lineHeight: 1.85, color: MUTE, marginBottom: '18px' }}>
             What started as designing a few custom pieces for friends and family quickly became something bigger. Women connected deeply with the feeling behind the designs — elegant pieces that felt intentional, feminine, expressive, and timeless. STAAY became more than clothing; it became a reminder that women do not have to choose between softness and strength, simplicity and statement, elegance and confidence.
           </p>
 
-          <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE }}>
+          <p style={{ ...F, fontSize: '15px', fontWeight: 400, lineHeight: 1.85, color: MUTE }}>
             Today, STAAY is a Ghanaian womenswear brand rooted in intention, craftsmanship, and grace. Every piece is thoughtfully designed for women who want to feel effortlessly put together — women who are evolving, growing, leading, celebrating, healing, building, and showing up fully as themselves.
           </p>
         </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ═══════════════════════════════════════════════
-// FEATURE ROW — 3 pillars, bold color band, no icons
-// ═══════════════════════════════════════════════
-const features = [
-  { num: 'I',   label: 'Intentional' },
-  { num: 'II',  label: 'Handcrafted' },
-  { num: 'III', label: 'Timeless'    },
-]
-
-function FeatureRow() {
-  return (
-    <section style={{ background: TERRA, padding: 'clamp(48px, 6vw, 72px) clamp(24px, 6vw, 64px)' }}>
-      <div className="brand-feature-grid" style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
-        {features.map((feat, i) => (
-          <div key={feat.label} style={{ textAlign: 'center', padding: '0 24px', borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.25)' : 'none' }}>
-            <p style={{ ...D, fontSize: '15px', fontStyle: 'italic', color: 'rgba(255,255,255,0.55)', marginBottom: '8px' }}>{feat.num}</p>
-            <span style={{ ...F, fontSize: '15px', fontWeight: 600, letterSpacing: '0.04em', color: W }}>
-              {feat.label}
-            </span>
-          </div>
-        ))}
       </div>
     </section>
   )
@@ -188,9 +146,9 @@ function Manifesto() {
     <section style={{ background: INK, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 80px)' }}>
       <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '880px', margin: '0 auto', textAlign: 'center' }}>
         <Eyebrow color={GOLD} center>The Manifesto</Eyebrow>
-        <p style={{ ...D, fontSize: 'clamp(24px, 3.4vw, 38px)', fontStyle: 'italic', fontWeight: 400, lineHeight: 1.5, color: '#EDE5D2' }}>
+        <p style={{ ...F, fontSize: 'clamp(22px, 3vw, 34px)', fontWeight: 700, lineHeight: 1.5, color: '#EDE5D2' }}>
           "STAAY exists to remind women that they were never meant to shrink. They were meant to bloom, to evolve, and most importantly —{' '}
-          <span style={{ color: GOLD, fontStyle: 'normal' }}>to STAAY true to themselves.</span>"
+          <span style={{ color: GOLD }}>to STAAY true to themselves.</span>"
         </p>
       </motion.div>
     </section>
@@ -213,10 +171,10 @@ function DiscoverCollection() {
           </div>
           <div>
             <Eyebrow color={TERRA}>New Season</Eyebrow>
-            <h2 style={{ ...D, fontSize: 'clamp(26px, 3.2vw, 38px)', fontWeight: 600, color: INK, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '18px' }}>
+            <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: '18px' }}>
               Discover the Eden Collection
             </h2>
-            <p style={{ ...F, fontSize: '14px', fontWeight: 300, lineHeight: 1.75, color: MUTE, marginBottom: '24px', maxWidth: '420px' }}>
+            <p style={{ ...F, fontSize: '14px', fontWeight: 400, lineHeight: 1.75, color: MUTE, marginBottom: '24px', maxWidth: '420px' }}>
               An Eden for the modern African woman — rooted in beauty, grace, and quiet strength.
             </p>
             <Link to="/shop"
@@ -254,7 +212,7 @@ function InstagramSection() {
     <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center' }}>
         <Eyebrow color={GOLD} center>Stay Current With Us</Eyebrow>
-        <h2 style={{ ...D, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 600, color: INK, letterSpacing: '-0.01em', marginBottom: 'clamp(32px, 5vw, 48px)' }}>
+        <h2 style={{ ...F, fontSize: 'clamp(22px, 2.6vw, 30px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', marginBottom: 'clamp(32px, 5vw, 48px)' }}>
           Tag Us @staaybystaay on Instagram
         </h2>
 
@@ -281,11 +239,8 @@ function InstagramSection() {
 export default function Brand() {
   return (
     <div style={{ background: PAPER, minHeight: '100vh' }}>
-      <FontLoader />
-
       <Hero />
       <TrueColors />
-      <FeatureRow />
       <Manifesto />
       <DiscoverCollection />
       <InstagramSection />
