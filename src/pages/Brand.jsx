@@ -7,10 +7,9 @@ const INK   = '#15130F'
 const PAPER = '#F8F3E8'
 const PANEL = '#EFE6D2'
 const GOLD  = '#B8903A'
-const GPALE = '#FBF6EA'
+const TERRA = '#B5502E'   // secondary accent — used to break the gold-everywhere flatness
 const MUTE  = '#6E6657'
 const FAINT = '#A79F8C'
-const LINE  = '#E2D7BE'
 const W     = '#FFFFFF'
 
 const SANS  = "'Inter', sans-serif"
@@ -73,31 +72,6 @@ function Hero() {
 }
 
 // ═══════════════════════════════════════════════
-// MARQUEE TICKER
-// ═══════════════════════════════════════════════
-const tickerWords = ['INTENTIONAL', 'CRAFTED WITH CARE', 'DESIGNED IN ACCRA', 'FOR WOMEN WHO BLOOM']
-
-function Marquee() {
-  const row = [...tickerWords, ...tickerWords, ...tickerWords]
-  return (
-    <div style={{ background: INK, overflow: 'hidden', borderBottom: `1px solid rgba(255,255,255,0.08)` }}>
-      <div className="brand-marquee-track" style={{ display: 'flex', alignItems: 'center', gap: '28px', width: 'max-content', padding: '16px 0', animation: 'brandMarquee 32s linear infinite' }}>
-        {row.map((word, i) => (
-          <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '28px', whiteSpace: 'nowrap' }}>
-            <span style={{ ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.14em', color: GPALE }}>{word}</span>
-            <span style={{ color: GOLD, fontSize: '10px' }}>◆</span>
-          </span>
-        ))}
-      </div>
-      <style>{`
-        @keyframes brandMarquee { from { transform: translateX(0); } to { transform: translateX(-33.333%); } }
-        .brand-marquee-track:hover { animation-play-state: paused; }
-      `}</style>
-    </div>
-  )
-}
-
-// ═══════════════════════════════════════════════
 // MISSION — text left, image right
 // ═══════════════════════════════════════════════
 function Mission() {
@@ -134,10 +108,13 @@ function Mission() {
           </div>
         </motion.div>
 
-        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} style={{ aspectRatio: '4/5', overflow: 'hidden', background: PANEL }}>
-          <img src="/sefah.png" alt="Stacey Sefah, Founder of STAAY"
-            onError={e => { e.target.style.display = 'none' }}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} style={{ position: 'relative' }}>
+          <div style={{ position: 'absolute', top: '18px', left: '18px', right: '-18px', bottom: '-18px', background: TERRA, zIndex: 0 }} />
+          <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', background: PANEL, zIndex: 1 }}>
+            <img src="/sefah.png" alt="Stacey Sefah, Founder of STAAY"
+              onError={e => { e.target.style.display = 'none' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          </div>
         </motion.div>
       </div>
     </section>
@@ -152,10 +129,13 @@ function TrueColors() {
     <section style={{ background: PANEL, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
       <div className="brand-split-grid brand-split-reverse" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '0.9fr 1fr', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
 
-        <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ aspectRatio: '4/5', overflow: 'hidden', background: '#DCD0AE' }}>
-          <img src="/herobanner1.jpg" alt="STAAY editorial"
-            onError={e => { e.target.style.display = 'none' }}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'right center', display: 'block' }} />
+        <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ position: 'relative' }}>
+          <div style={{ position: 'absolute', bottom: '18px', right: '18px', left: '-18px', top: '-18px', background: GOLD, zIndex: 0 }} />
+          <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', background: '#DCD0AE', zIndex: 1 }}>
+            <img src="/herobanner1.jpg" alt="STAAY editorial"
+              onError={e => { e.target.style.display = 'none' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'right center', display: 'block' }} />
+          </div>
         </motion.div>
 
         <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }}>
@@ -178,39 +158,22 @@ function TrueColors() {
 }
 
 // ═══════════════════════════════════════════════
-// FEATURE ROW — 4 icon values
+// FEATURE ROW — 3 pillars, bold color band, no icons
 // ═══════════════════════════════════════════════
 const features = [
-  { label: 'Intentional Design',    icon: 'spark'  },
-  { label: 'Crafted With Care',     icon: 'heart'  },
-  { label: 'Designed in Accra',     icon: 'pin'    },
-  { label: 'For Women Who Bloom',   icon: 'bloom'  },
+  { num: 'I',   label: 'Intentional' },
+  { num: 'II',  label: 'Handcrafted' },
+  { num: 'III', label: 'Timeless'    },
 ]
-
-function FeatureIcon({ type }) {
-  const common = { width: 26, height: 26, viewBox: '0 0 26 26', fill: 'none', stroke: GOLD, strokeWidth: 1.3 }
-  if (type === 'spark') return (
-    <svg {...common}><path d="M13 3v6M13 17v6M3 13h6M17 13h6M6 6l4 4M20 6l-4 4M6 20l4-4M20 20l-4-4" strokeLinecap="round" /></svg>
-  )
-  if (type === 'heart') return (
-    <svg {...common}><path d="M13 22S3 15.5 3 8.8A5 5 0 0 1 13 6a5 5 0 0 1 10 2.8C23 15.5 13 22 13 22z" strokeLinejoin="round" /></svg>
-  )
-  if (type === 'pin') return (
-    <svg {...common}><circle cx="13" cy="10" r="3.2" /><path d="M13 24s8-8.5 8-14a8 8 0 1 0-16 0c0 5.5 8 14 8 14z" strokeLinejoin="round" /></svg>
-  )
-  return (
-    <svg {...common}><path d="M13 3c2 3 2 5 0 7-2-2-2-4 0-7z" /><path d="M13 23v-6M13 17c-4 0-7-2.5-7-7 4 0 7 2.5 7 7zM13 17c4 0 7-2.5 7-7-4 0-7 2.5-7 7z" strokeLinejoin="round" /></svg>
-  )
-}
 
 function FeatureRow() {
   return (
-    <section style={{ background: PAPER, padding: 'clamp(48px, 6vw, 72px) clamp(24px, 6vw, 64px)', borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}>
-      <div className="brand-feature-grid" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '32px' }}>
-        {features.map(feat => (
-          <div key={feat.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '14px' }}>
-            <FeatureIcon type={feat.icon} />
-            <span style={{ ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: INK }}>
+    <section style={{ background: TERRA, padding: 'clamp(48px, 6vw, 72px) clamp(24px, 6vw, 64px)' }}>
+      <div className="brand-feature-grid" style={{ maxWidth: '1000px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)' }}>
+        {features.map((feat, i) => (
+          <div key={feat.label} style={{ textAlign: 'center', padding: '0 24px', borderLeft: i > 0 ? '1px solid rgba(255,255,255,0.25)' : 'none' }}>
+            <p style={{ ...D, fontSize: '15px', fontStyle: 'italic', color: 'rgba(255,255,255,0.55)', marginBottom: '8px' }}>{feat.num}</p>
+            <span style={{ ...F, fontSize: '15px', fontWeight: 600, letterSpacing: '0.04em', color: W }}>
               {feat.label}
             </span>
           </div>
@@ -252,7 +215,7 @@ function DiscoverCollection() {
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
           </div>
           <div>
-            <Eyebrow>New Season</Eyebrow>
+            <Eyebrow color={TERRA}>New Season</Eyebrow>
             <h2 style={{ ...D, fontSize: 'clamp(26px, 3.2vw, 38px)', fontWeight: 600, color: INK, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '18px' }}>
               Discover the Eden Collection
             </h2>
@@ -260,9 +223,9 @@ function DiscoverCollection() {
               An Eden for the modern African woman — rooted in beauty, grace, and quiet strength.
             </p>
             <Link to="/shop"
-              style={{ display: 'inline-block', background: INK, color: W, padding: '15px 38px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.25s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = GOLD }}
-              onMouseLeave={e => { e.currentTarget.style.background = INK }}>
+              style={{ display: 'inline-block', background: TERRA, color: W, padding: '15px 38px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.25s' }}
+              onMouseEnter={e => { e.currentTarget.style.background = INK }}
+              onMouseLeave={e => { e.currentTarget.style.background = TERRA }}>
               Shop Now
             </Link>
           </div>
@@ -324,7 +287,6 @@ export default function Brand() {
       <FontLoader />
 
       <Hero />
-      <Marquee />
       <Mission />
       <TrueColors />
       <FeatureRow />

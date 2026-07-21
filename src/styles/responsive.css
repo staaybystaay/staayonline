@@ -247,10 +247,6 @@
   .brand-split-grid {
     grid-template-columns: 1fr !important;
   }
-  .brand-feature-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 28px !important;
-  }
   .brand-ig-grid {
     grid-template-columns: repeat(3, 1fr) !important;
   }
@@ -258,6 +254,19 @@
 @media (max-width: 560px) {
   .brand-ig-grid {
     grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .brand-feature-grid {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+  .brand-feature-grid > div {
+    border-left: none !important;
+    border-top: 1px solid rgba(255,255,255,0.25) !important;
+    padding: 20px 0 0 !important;
+  }
+  .brand-feature-grid > div:first-child {
+    border-top: none !important;
+    padding-top: 0 !important;
   }
 }
 
