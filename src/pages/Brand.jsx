@@ -30,9 +30,9 @@ function FontLoader() {
   return null
 }
 
-function Eyebrow({ children, color = GOLD }) {
+function Eyebrow({ children, color = GOLD, center = false }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: center ? 'center' : 'flex-start', gap: '10px', marginBottom: '16px' }}>
       <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: color, flexShrink: 0 }} />
       <span style={{ ...F, fontSize: '11px', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color }}>
         {children}
@@ -48,88 +48,24 @@ const fadeUp = {
 }
 
 // ═══════════════════════════════════════════════
-// HERO — sticky portrait, full story scrolls beside it
+// HERO — full-bleed image, centered title
 // ═══════════════════════════════════════════════
-const storyBlocks = [
-  { type: 'p', text: "Founded by Stacey Sefah, STAAY began long before the first collection was released. From a young age, fashion became Stacey's way of expressing herself in seasons where words often fell short. While studying law and navigating the expectations of life, she found comfort in creating pieces that made women feel seen, beautiful, confident, and unforgettable." },
-  { type: 'p', text: "For years, Stacey often hid behind black clothing, believing simplicity meant shrinking herself. Like many women, she struggled with insecurities, self-doubt, and the pressure to fit into spaces that often demanded less softness, less color, and less individuality. But somewhere along the journey, she realized confidence was never about blending in — it was about embracing who God created her to be." },
-  { type: 'quote', text: 'That realization changed everything.' },
-  { type: 'p', text: "What started as designing a few custom pieces for friends and family quickly became something bigger. Women connected deeply with the feeling behind the designs — elegant pieces that felt intentional, feminine, expressive, and timeless. STAAY became more than clothing; it became a reminder that women do not have to choose between softness and strength, simplicity and statement, elegance and confidence." },
-  { type: 'p', text: "Today, STAAY is a Ghanaian womenswear brand rooted in intention, craftsmanship, and grace. Every piece is thoughtfully designed for women who want to feel effortlessly put together — women who are evolving, growing, leading, celebrating, healing, building, and showing up fully as themselves." },
-  { type: 'p', text: "Our designs embrace movement, color, structure, and individuality. From dramatic occasion wear to refined everyday elegance, STAAY creates pieces that are meant to move with you through every season of life. We believe true style is not about trends; it is about how a garment makes you feel." },
-  { type: 'p', text: "At the heart of STAAY is a commitment to creating with meaning. We work closely with local artisans and makers, valuing quality craftsmanship, attention to detail, and the beauty of intentional production. Every stitch, silhouette, and finish reflects our belief that fashion should feel personal, empowering, and enduring." },
-  { type: 'stanza', lines: [
-      'But beyond the fabric, STAAY is a love letter to women becoming.',
-      'Women learning to take up space.',
-      'Women rediscovering themselves.',
-      'Women embracing elegance without apology.',
-      'Women choosing confidence, grace, and authenticity every single day.',
-    ] },
-]
-
 function Hero() {
   return (
-    <section style={{ borderBottom: `1px solid ${LINE}` }}>
-      <div className="brand-hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1.05fr', alignItems: 'start' }}>
-
-        {/* Sticky portrait */}
-        <div className="brand-hero-image" style={{ position: 'sticky', top: '112px', height: '620px', overflow: 'hidden', background: PANEL }}>
-          <img
-            src="/sefah.png"
-            alt="Stacey Sefah, Founder of STAAY"
-            onError={e => { e.target.style.display = 'none' }}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.65) 100%)' }} />
-
-
-        
-        </div>
-
-        {/* Full story */}
-        <div style={{ background: PANEL, padding: 'clamp(32px, 4vw, 56px)' }}>
-          <Eyebrow>Who We Are</Eyebrow>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '22px' }}>
-            {storyBlocks.map((block, i) => {
-              if (block.type === 'p') {
-                return (
-                  <p key={i} style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE, maxWidth: '480px' }}>
-                    {block.text}
-                  </p>
-                )
-              }
-              if (block.type === 'quote') {
-                return (
-                  <p key={i} style={{ ...D, fontSize: 'clamp(20px, 2.4vw, 26px)', fontStyle: 'italic', fontWeight: 500, color: INK, lineHeight: 1.4, borderLeft: `2px solid ${GOLD}`, paddingLeft: '18px', maxWidth: '440px' }}>
-                    "{block.text}"
-                  </p>
-                )
-              }
-              if (block.type === 'stanza') {
-                return (
-                  <div key={i} style={{ background: GPALE, borderLeft: `2px solid ${GOLD}`, padding: 'clamp(18px, 2.4vw, 28px)', maxWidth: '480px' }}>
-                    {block.lines.map((line, j) => (
-                      <p key={j} style={{ ...D, fontSize: '15px', fontStyle: 'italic', fontWeight: 400, color: '#2A251C', lineHeight: 1.7, marginBottom: j < block.lines.length - 1 ? '6px' : 0 }}>
-                        {line}
-                      </p>
-                    ))}
-                  </div>
-                )
-              }
-              return null
-            })}
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', paddingTop: '28px', borderTop: `1px solid ${LINE}`, marginTop: '32px' }}>
-            <div style={{ width: '46px', height: '46px', borderRadius: '50%', background: GOLD, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', ...D, fontSize: '18px', fontWeight: 600, color: W }}>
-              SS
-            </div>
-            <div>
-              <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: INK }}>Stacey Sefah</p>
-              <p style={{ ...F, fontSize: '11px', color: FAINT, letterSpacing: '0.04em', marginTop: '2px' }}>Founder &amp; Creative Director</p>
-            </div>
-          </div>
+    <section style={{ position: 'relative', height: 'clamp(420px, 60vh, 640px)', overflow: 'hidden', background: INK }}>
+      <img
+        src="/herobanner2.jpg"
+        alt="STAAY — About Us"
+        onError={e => { e.target.style.display = 'none' }}
+        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }}
+      />
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%)' }} />
+      <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
+        <div>
+          <Eyebrow color={GOLD} center>Who We Are</Eyebrow>
+          <h1 style={{ ...D, fontSize: 'clamp(48px, 9vw, 110px)', fontWeight: 600, color: W, letterSpacing: '-0.02em', lineHeight: 1 }}>
+            About Us
+          </h1>
         </div>
       </div>
     </section>
@@ -162,18 +98,219 @@ function Marquee() {
 }
 
 // ═══════════════════════════════════════════════
+// MISSION — text left, image right
+// ═══════════════════════════════════════════════
+function Mission() {
+  return (
+    <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
+      <div className="brand-split-grid" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 0.9fr', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+
+        <motion.div {...fadeUp} transition={{ duration: 0.6 }}>
+          <Eyebrow>Our Mission</Eyebrow>
+          <h2 style={{ ...D, fontSize: 'clamp(28px, 3.6vw, 44px)', fontWeight: 600, color: INK, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '24px' }}>
+            Founded by Stacey Sefah
+          </h2>
+
+          <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE, marginBottom: '18px' }}>
+            STAAY began long before the first collection was released. From a young age, fashion became Stacey's way of expressing herself in seasons where words often fell short. While studying law and navigating the expectations of life, she found comfort in creating pieces that made women feel seen, beautiful, confident, and unforgettable.
+          </p>
+
+          <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE, marginBottom: '28px' }}>
+            For years, Stacey often hid behind black clothing, believing simplicity meant shrinking herself. Like many women, she struggled with insecurities, self-doubt, and the pressure to fit into spaces that often demanded less softness, less color, and less individuality. But somewhere along the journey, she realized confidence was never about blending in — it was about embracing who God created her to be.
+          </p>
+
+          <p style={{ ...D, fontSize: 'clamp(19px, 2.2vw, 24px)', fontStyle: 'italic', fontWeight: 500, color: INK, lineHeight: 1.4, borderLeft: `2px solid ${GOLD}`, paddingLeft: '18px', marginBottom: '32px' }}>
+            "That realization changed everything."
+          </p>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div style={{ width: '46px', height: '46px', borderRadius: '50%', background: GOLD, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', ...D, fontSize: '18px', fontWeight: 600, color: W }}>
+              SS
+            </div>
+            <div>
+              <p style={{ ...F, fontSize: '14px', fontWeight: 600, color: INK }}>Stacey Sefah</p>
+              <p style={{ ...F, fontSize: '11px', color: FAINT, letterSpacing: '0.04em', marginTop: '2px' }}>Founder &amp; Creative Director</p>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} style={{ aspectRatio: '4/5', overflow: 'hidden', background: PANEL }}>
+          <img src="/sefah.png" alt="Stacey Sefah, Founder of STAAY"
+            onError={e => { e.target.style.display = 'none' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ═══════════════════════════════════════════════
+// TRUE COLORS — image left, text right (reversed)
+// ═══════════════════════════════════════════════
+function TrueColors() {
+  return (
+    <section style={{ background: PANEL, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
+      <div className="brand-split-grid brand-split-reverse" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '0.9fr 1fr', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+
+        <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ aspectRatio: '4/5', overflow: 'hidden', background: '#DCD0AE' }}>
+          <img src="/herobanner1.jpg" alt="STAAY editorial"
+            onError={e => { e.target.style.display = 'none' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'right center', display: 'block' }} />
+        </motion.div>
+
+        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }}>
+          <Eyebrow>Our Evolution</Eyebrow>
+          <h2 style={{ ...D, fontSize: 'clamp(28px, 3.6vw, 44px)', fontWeight: 600, color: INK, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '24px' }}>
+            Effortless. Feminine. Timeless.
+          </h2>
+
+          <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE, marginBottom: '18px' }}>
+            What started as designing a few custom pieces for friends and family quickly became something bigger. Women connected deeply with the feeling behind the designs — elegant pieces that felt intentional, feminine, expressive, and timeless. STAAY became more than clothing; it became a reminder that women do not have to choose between softness and strength, simplicity and statement, elegance and confidence.
+          </p>
+
+          <p style={{ ...F, fontSize: '15px', fontWeight: 300, lineHeight: 1.85, color: MUTE }}>
+            Today, STAAY is a Ghanaian womenswear brand rooted in intention, craftsmanship, and grace. Every piece is thoughtfully designed for women who want to feel effortlessly put together — women who are evolving, growing, leading, celebrating, healing, building, and showing up fully as themselves.
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ═══════════════════════════════════════════════
+// FEATURE ROW — 4 icon values
+// ═══════════════════════════════════════════════
+const features = [
+  { label: 'Intentional Design',    icon: 'spark'  },
+  { label: 'Crafted With Care',     icon: 'heart'  },
+  { label: 'Designed in Accra',     icon: 'pin'    },
+  { label: 'For Women Who Bloom',   icon: 'bloom'  },
+]
+
+function FeatureIcon({ type }) {
+  const common = { width: 26, height: 26, viewBox: '0 0 26 26', fill: 'none', stroke: GOLD, strokeWidth: 1.3 }
+  if (type === 'spark') return (
+    <svg {...common}><path d="M13 3v6M13 17v6M3 13h6M17 13h6M6 6l4 4M20 6l-4 4M6 20l4-4M20 20l-4-4" strokeLinecap="round" /></svg>
+  )
+  if (type === 'heart') return (
+    <svg {...common}><path d="M13 22S3 15.5 3 8.8A5 5 0 0 1 13 6a5 5 0 0 1 10 2.8C23 15.5 13 22 13 22z" strokeLinejoin="round" /></svg>
+  )
+  if (type === 'pin') return (
+    <svg {...common}><circle cx="13" cy="10" r="3.2" /><path d="M13 24s8-8.5 8-14a8 8 0 1 0-16 0c0 5.5 8 14 8 14z" strokeLinejoin="round" /></svg>
+  )
+  return (
+    <svg {...common}><path d="M13 3c2 3 2 5 0 7-2-2-2-4 0-7z" /><path d="M13 23v-6M13 17c-4 0-7-2.5-7-7 4 0 7 2.5 7 7zM13 17c4 0 7-2.5 7-7-4 0-7 2.5-7 7z" strokeLinejoin="round" /></svg>
+  )
+}
+
+function FeatureRow() {
+  return (
+    <section style={{ background: PAPER, padding: 'clamp(48px, 6vw, 72px) clamp(24px, 6vw, 64px)', borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}>
+      <div className="brand-feature-grid" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '32px' }}>
+        {features.map(feat => (
+          <div key={feat.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '14px' }}>
+            <FeatureIcon type={feat.icon} />
+            <span style={{ ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: INK }}>
+              {feat.label}
+            </span>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+// ═══════════════════════════════════════════════
 // MANIFESTO
 // ═══════════════════════════════════════════════
 function Manifesto() {
   return (
     <section style={{ background: INK, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 80px)' }}>
-      <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '880px', margin: '0 auto' }}>
-        <Eyebrow color={GOLD}>The Manifesto</Eyebrow>
+      <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '880px', margin: '0 auto', textAlign: 'center' }}>
+        <Eyebrow color={GOLD} center>The Manifesto</Eyebrow>
         <p style={{ ...D, fontSize: 'clamp(24px, 3.4vw, 38px)', fontStyle: 'italic', fontWeight: 400, lineHeight: 1.5, color: '#EDE5D2' }}>
           "STAAY exists to remind women that they were never meant to shrink. They were meant to bloom, to evolve, and most importantly —{' '}
           <span style={{ color: GOLD, fontStyle: 'normal' }}>to STAAY true to themselves.</span>"
         </p>
       </motion.div>
+    </section>
+  )
+}
+
+// ═══════════════════════════════════════════════
+// DISCOVER COLLECTION — CTA
+// ═══════════════════════════════════════════════
+function DiscoverCollection() {
+  return (
+    <section style={{ background: PANEL, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
+      <div className="brand-split-grid" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(24px, 4vw, 40px)', alignItems: 'stretch' }}>
+
+        <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <div style={{ flex: 1, overflow: 'hidden', background: '#DCD0AE', minHeight: '220px' }}>
+            <img src="/featured/feature2.jpeg" alt="The Eden Collection"
+              onError={e => { e.target.style.display = 'none' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
+          </div>
+          <div>
+            <Eyebrow>New Season</Eyebrow>
+            <h2 style={{ ...D, fontSize: 'clamp(26px, 3.2vw, 38px)', fontWeight: 600, color: INK, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '18px' }}>
+              Discover the Eden Collection
+            </h2>
+            <p style={{ ...F, fontSize: '14px', fontWeight: 300, lineHeight: 1.75, color: MUTE, marginBottom: '24px', maxWidth: '420px' }}>
+              An Eden for the modern African woman — rooted in beauty, grace, and quiet strength.
+            </p>
+            <Link to="/shop"
+              style={{ display: 'inline-block', background: INK, color: W, padding: '15px 38px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.25s' }}
+              onMouseEnter={e => { e.currentTarget.style.background = GOLD }}
+              onMouseLeave={e => { e.currentTarget.style.background = INK }}>
+              Shop Now
+            </Link>
+          </div>
+        </motion.div>
+
+        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} style={{ overflow: 'hidden', background: '#DCD0AE' }}>
+          <img src="/featured/feature6.jpeg" alt="STAAY runway"
+            onError={e => { e.target.style.display = 'none' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 25%', display: 'block' }} />
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+// ═══════════════════════════════════════════════
+// INSTAGRAM GRID
+// ═══════════════════════════════════════════════
+const igImages = [
+  '/featured/feature1.jpeg',
+  '/featured/feature3.jpeg',
+  '/featured/feature4.jpeg',
+  '/featured/feature5.jpeg',
+  '/featured/feature8.jpeg',
+]
+
+function InstagramSection() {
+  return (
+    <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
+      <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center' }}>
+        <Eyebrow color={GOLD} center>Stay Current With Us</Eyebrow>
+        <h2 style={{ ...D, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 600, color: INK, letterSpacing: '-0.01em', marginBottom: 'clamp(32px, 5vw, 48px)' }}>
+          Tag Us @staaybystaay on Instagram
+        </h2>
+
+        <div className="brand-ig-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px' }}>
+          {igImages.map((src, i) => (
+            <a key={i} href="https://instagram.com/staaybystaay" target="_blank" rel="noreferrer"
+              style={{ aspectRatio: '1/1', overflow: 'hidden', display: 'block', background: PANEL }}>
+              <img src={src} alt="STAAY on Instagram" loading="lazy"
+                onError={e => { e.target.style.display = 'none' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.5s' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)' }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)' }} />
+            </a>
+          ))}
+        </div>
+      </div>
     </section>
   )
 }
@@ -186,23 +323,14 @@ export default function Brand() {
     <div style={{ background: PAPER, minHeight: '100vh' }}>
       <FontLoader />
 
-      {/* Breadcrumb header — consistent with rest of site */}
-      <div className="page-padding" style={{ background: PANEL, borderBottom: `1px solid ${LINE}`, padding: '20px 40px' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <Link to="/" style={{ ...F, fontSize: '12px', color: MUTE, textDecoration: 'none' }}>Home</Link>
-            <span style={{ color: FAINT, fontSize: '12px' }}>/</span>
-            <span style={{ ...F, fontSize: '12px', fontWeight: 500, color: INK }}>Our Brand</span>
-          </div>
-          <span className="desktop-only" style={{ ...F, fontSize: '11px', color: FAINT, letterSpacing: '0.06em' }}>
-            Est. 2009 — Accra, Ghana
-          </span>
-        </div>
-      </div>
-
       <Hero />
       <Marquee />
+      <Mission />
+      <TrueColors />
+      <FeatureRow />
       <Manifesto />
+      <DiscoverCollection />
+      <InstagramSection />
     </div>
   )
 }

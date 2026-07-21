@@ -244,42 +244,20 @@
    Our Brand page
    ============================================ */
 @media (max-width: 860px) {
-  .brand-hero-grid {
+  .brand-split-grid {
     grid-template-columns: 1fr !important;
-    min-height: auto !important;
   }
-  .brand-hero-grid > div:first-child { min-height: 440px !important; }
-  .brand-story-grid {
-    grid-template-columns: 1fr !important;
+  .brand-feature-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 28px !important;
   }
-  .brand-story-grid > div:first-child {
-    position: relative !important;
-    top: auto !important;
-  }
-  .brand-contact-grid { grid-template-columns: 1fr !important; }
-  .brand-stats-row {
-    flex-wrap: wrap !important;
-    gap: 20px 0 !important;
-  }
-  .brand-stats-row > div {
-    flex: 1 1 50% !important;
-    border-left: none !important;
-  }
-  .brand-stats-row > div:nth-child(2n) {
-    border-left: 1px solid rgba(255,255,255,0.1) !important;
-  }
-  .brand-hero-image {
-    position: relative !important;
-    top: auto !important;
-    height: 420px !important;
+  .brand-ig-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
   }
 }
 @media (max-width: 560px) {
-  .brand-values-row { gap: 16px !important; }
-  .brand-values-row .drop-cap {
-    font-size: 44px !important;
-    width: 56px !important;
+  .brand-ig-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }
 
