@@ -197,7 +197,7 @@ function DiscoverCollection() {
           <div>
             <Eyebrow color={TERRA}>New Season</Eyebrow>
             <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: '18px' }}>
-              Discover the Eden Collection
+              Discover Our Collection
             </h2>
             <p style={{ ...F, fontSize: '14px', fontWeight: 400, lineHeight: 1.75, color: MUTE, marginBottom: '24px', maxWidth: '420px' }}>
               Inspired by the Garden of Eden, a symbol of life and abundance. Effortless femininity, natural confidence, and quiet strength for the modern African woman.
