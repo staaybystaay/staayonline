@@ -47,10 +47,13 @@ function Hero() {
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%)' }} />
       <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
         <div>
-          <Eyebrow color={GOLD} center>Who We Are</Eyebrow>
-          <h1 style={{ ...F, fontSize: 'clamp(40px, 8vw, 92px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', lineHeight: 1 }}>
-            About Us
+          <Eyebrow color={GOLD} center>Brand &amp; Communications</Eyebrow>
+          <h1 style={{ ...F, fontSize: 'clamp(40px, 8vw, 92px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', lineHeight: 1, marginBottom: '18px' }}>
+            STAAY
           </h1>
+          <p style={{ ...F, fontSize: 'clamp(14px, 1.6vw, 17px)', fontWeight: 500, color: 'rgba(255,255,255,0.75)', maxWidth: '480px', margin: '0 auto' }}>
+            Ghanaian womenswear, designed with intention — for press, partners, and everyone building with us.
+          </p>
         </div>
       </div>
     </section>
@@ -106,6 +109,40 @@ function Manifesto() {
           <span style={{ color: GOLD }}>to STAAY true to themselves.</span>"
         </p>
       </motion.div>
+    </section>
+  )
+}
+
+// ═══════════════════════════════════════════════
+// CAMPAIGN SPOTLIGHT — press / partnership highlight
+// ═══════════════════════════════════════════════
+function CampaignSpotlight() {
+  return (
+    <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
+      <div className="brand-split-grid" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
+
+        <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ aspectRatio: '4/3', overflow: 'hidden', background: '#DCD0AE' }}>
+          <img src="/featured/rith-crowd.jpg" alt="R.I.T.H — STAAY at the British Museum"
+            onError={e => { e.target.style.display = 'none' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        </motion.div>
+
+        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }}>
+          <Eyebrow color={TERRA}>Campaign Spotlight</Eyebrow>
+          <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: '18px' }}>
+            R.I.T.H — Running in the Halls
+          </h2>
+          <p style={{ ...F, fontSize: '15px', fontWeight: 400, lineHeight: 1.8, color: MUTE, marginBottom: '24px', maxWidth: '440px' }}>
+            STAAY joined My Runway Group at the British Museum's Young People's Lates programme, bringing Ghanaian design into one of the world's most recognised cultural institutions. Full editorial, runway gallery, and event recap on our Featured page.
+          </p>
+          <Link to="/featured"
+            style={{ display: 'inline-block', background: 'transparent', border: `1.5px solid ${INK}`, color: INK, padding: '13px 32px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.25s' }}
+            onMouseEnter={e => { e.currentTarget.style.background = INK; e.currentTarget.style.color = W }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = INK }}>
+            View the Full Story
+          </Link>
+        </motion.div>
+      </div>
     </section>
   )
 }
@@ -194,6 +231,31 @@ function InstagramSection() {
 }
 
 // ═══════════════════════════════════════════════
+// PRESS & PARTNERSHIPS — closing contact CTA
+// ═══════════════════════════════════════════════
+function PressContact() {
+  return (
+    <section style={{ background: INK, padding: 'clamp(56px, 8vw, 90px) clamp(24px, 6vw, 64px)', textAlign: 'center' }}>
+      <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '560px', margin: '0 auto' }}>
+        <Eyebrow color={GOLD} center>Press &amp; Partnerships</Eyebrow>
+        <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 32px)', fontWeight: 800, color: W, letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: '16px' }}>
+          Media, collaborations &amp; wholesale inquiries
+        </h2>
+        <p style={{ ...F, fontSize: '14px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(255,255,255,0.65)', marginBottom: '28px' }}>
+          For press requests, brand partnerships, or collaboration proposals, reach out and our team will follow up directly.
+        </p>
+        <Link to="/contact"
+          style={{ display: 'inline-block', background: GOLD, color: INK, padding: '15px 40px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'opacity 0.25s' }}
+          onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
+          onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}>
+          Get in Touch
+        </Link>
+      </motion.div>
+    </section>
+  )
+}
+
+// ═══════════════════════════════════════════════
 // PAGE
 // ═══════════════════════════════════════════════
 export default function Brand() {
@@ -202,8 +264,10 @@ export default function Brand() {
       <Hero />
       <TrueColors />
       <Manifesto />
+      <CampaignSpotlight />
       <DiscoverCollection />
       <InstagramSection />
+      <PressContact />
     </div>
   )
 }
