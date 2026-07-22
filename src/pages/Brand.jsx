@@ -55,54 +55,6 @@ function Hero() {
 }
 
 // ═══════════════════════════════════════════════
-// FOUNDER — closing chapter, full-bleed portrait + overlay text
-// ═══════════════════════════════════════════════
-function Founder() {
-  return (
-    <section style={{ position: 'relative', minHeight: 'clamp(600px, 92vh, 860px)', overflow: 'hidden', background: INK }}>
-      <img
-        src="/sefah.png"
-        alt="Stacey Sefah, Founder of STAAY"
-        onError={e => { e.target.style.display = 'none' }}
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%' }}
-      />
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(100deg, rgba(21,19,15,0.96) 0%, rgba(21,19,15,0.82) 38%, rgba(21,19,15,0.25) 68%, rgba(21,19,15,0.05) 100%)' }} />
-
-      <div style={{ position: 'relative', maxWidth: '1280px', margin: '0 auto', minHeight: 'inherit', display: 'flex', alignItems: 'center', padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
-        <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '560px' }}>
-          <Eyebrow color={TERRA}>Meet the Founder</Eyebrow>
-          <h2 style={{ ...F, fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 800, color: W, letterSpacing: '-0.01em', lineHeight: 1.1, marginBottom: '28px' }}>
-            Stacey Sefah
-          </h2>
-
-          <p style={{ ...F, fontSize: '15px', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.75)', marginBottom: '18px' }}>
-            STAAY began long before the first collection was released. From a young age, fashion became Stacey's way of expressing herself in seasons where words often fell short. While studying law and navigating the expectations of life, she found comfort in creating pieces that made women feel seen, beautiful, confident, and unforgettable.
-          </p>
-
-          <p style={{ ...F, fontSize: '15px', fontWeight: 400, lineHeight: 1.85, color: 'rgba(255,255,255,0.75)', marginBottom: '28px' }}>
-            For years, Stacey often hid behind black clothing, believing simplicity meant shrinking herself. But somewhere along the journey, she realized confidence was never about blending in — it was about embracing who God created her to be.
-          </p>
-
-          <p style={{ ...F, fontSize: 'clamp(17px, 2vw, 21px)', fontWeight: 700, color: W, lineHeight: 1.4, borderLeft: `3px solid ${TERRA}`, paddingLeft: '18px', marginBottom: '32px' }}>
-            "That realization changed everything."
-          </p>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <div style={{ width: '46px', height: '46px', borderRadius: '50%', background: TERRA, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '16px', fontWeight: 700, color: W }}>
-              SS
-            </div>
-            <div>
-              <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: W }}>Stacey Sefah</p>
-              <p style={{ ...F, fontSize: '11px', color: 'rgba(255,255,255,0.5)', letterSpacing: '0.04em', marginTop: '2px' }}>Founder &amp; Creative Director</p>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ═══════════════════════════════════════════════
 // TRUE COLORS — image left, text right (reversed)
 // ═══════════════════════════════════════════════
 function TrueColors() {
@@ -244,7 +196,6 @@ export default function Brand() {
       <Manifesto />
       <DiscoverCollection />
       <InstagramSection />
-      <Founder />
     </div>
   )
 }
