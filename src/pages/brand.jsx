@@ -97,6 +97,39 @@ function TrueColors() {
 }
 
 // ═══════════════════════════════════════════════
+// BRAND COLORS
+// ═══════════════════════════════════════════════
+const palette = [
+  { name: 'Gold',       hex: GOLD,  note: 'Warm and luxurious' },
+  { name: 'Terracotta', hex: TERRA, note: 'Earthy and bold' },
+  { name: 'Ink',        hex: INK,   note: 'Grounded and timeless' },
+  { name: 'Cream',      hex: PANEL, note: 'Soft and clean' },
+]
+
+function BrandColors() {
+  return (
+    <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
+      <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
+        <Eyebrow color={GOLD} center>Our Colors</Eyebrow>
+        <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 32px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', marginBottom: 'clamp(32px, 5vw, 48px)' }}>
+          The palette behind STAAY
+        </h2>
+
+        <div className="brand-palette-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+          {palette.map(c => (
+            <motion.div key={c.name} {...fadeUp} transition={{ duration: 0.5 }}>
+              <div style={{ aspectRatio: '1/1', background: c.hex, borderRadius: '8px', marginBottom: '14px', border: c.hex === PANEL ? `1px solid #DCD0AE` : 'none' }} />
+              <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: INK, marginBottom: '2px' }}>{c.name}</p>
+              <p style={{ ...F, fontSize: '12px', fontWeight: 400, color: MUTE }}>{c.note}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ═══════════════════════════════════════════════
 // MANIFESTO
 // ═══════════════════════════════════════════════
 function Manifesto() {
@@ -167,7 +200,7 @@ function DiscoverCollection() {
               Discover the Eden Collection
             </h2>
             <p style={{ ...F, fontSize: '14px', fontWeight: 400, lineHeight: 1.75, color: MUTE, marginBottom: '24px', maxWidth: '420px' }}>
-              Rooted in beauty, grace, and quiet strength. Made for the modern African woman.
+              Inspired by the Garden of Eden, a symbol of life and abundance. Effortless femininity, natural confidence, and quiet strength for the modern African woman.
             </p>
             <Link to="/shop"
               style={{ display: 'inline-block', background: TERRA, color: W, padding: '15px 38px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.25s' }}
@@ -263,6 +296,7 @@ export default function Brand() {
     <div style={{ background: PAPER, minHeight: '100vh' }}>
       <Hero />
       <TrueColors />
+      <BrandColors />
       <Manifesto />
       <CampaignSpotlight />
       <DiscoverCollection />
