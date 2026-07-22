@@ -52,7 +52,7 @@ function Hero() {
             STAAY
           </h1>
           <p style={{ ...F, fontSize: 'clamp(14px, 1.6vw, 17px)', fontWeight: 500, color: 'rgba(255,255,255,0.75)', maxWidth: '480px', margin: '0 auto' }}>
-            Ghanaian womenswear, designed with intention — for press, partners, and everyone building with us.
+            Ghanaian womenswear made with intention.
           </p>
         </div>
       </div>
@@ -84,11 +84,11 @@ function TrueColors() {
           </h2>
 
           <p style={{ ...F, fontSize: '15px', fontWeight: 400, lineHeight: 1.85, color: MUTE, marginBottom: '18px' }}>
-            What started as designing a few custom pieces for friends and family quickly became something bigger. Women connected deeply with the feeling behind the designs — elegant pieces that felt intentional, feminine, expressive, and timeless. STAAY became more than clothing; it became a reminder that women do not have to choose between softness and strength, simplicity and statement, elegance and confidence.
+            What started as custom pieces for friends and family grew into something bigger. Women connected with the feeling behind each design.
           </p>
 
           <p style={{ ...F, fontSize: '15px', fontWeight: 400, lineHeight: 1.85, color: MUTE }}>
-            Today, STAAY is a Ghanaian womenswear brand rooted in intention, craftsmanship, and grace. Every piece is thoughtfully designed for women who want to feel effortlessly put together — women who are evolving, growing, leading, celebrating, healing, building, and showing up fully as themselves.
+            Today, STAAY is a Ghanaian womenswear brand built on intention, craftsmanship, and grace. Every piece is made for women who want to feel effortlessly put together.
           </p>
         </motion.div>
       </div>
@@ -105,7 +105,7 @@ function Manifesto() {
       <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '880px', margin: '0 auto', textAlign: 'center' }}>
         <Eyebrow color={GOLD} center>The Manifesto</Eyebrow>
         <p style={{ ...F, fontSize: 'clamp(22px, 3vw, 34px)', fontWeight: 700, lineHeight: 1.5, color: '#EDE5D2' }}>
-          "STAAY exists to remind women that they were never meant to shrink. They were meant to bloom, to evolve, and most importantly —{' '}
+          "STAAY exists to remind women that they were never meant to shrink. They were meant to bloom, to evolve, and{' '}
           <span style={{ color: GOLD }}>to STAAY true to themselves.</span>"
         </p>
       </motion.div>
@@ -122,7 +122,7 @@ function CampaignSpotlight() {
       <div className="brand-split-grid" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
 
         <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ aspectRatio: '4/3', overflow: 'hidden', background: '#DCD0AE' }}>
-          <img src="/featured/rith-crowd.jpg" alt="R.I.T.H — STAAY at the British Museum"
+          <img src="/featured/rith-crowd.jpg" alt="STAAY at the British Museum"
             onError={e => { e.target.style.display = 'none' }}
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
         </motion.div>
@@ -130,10 +130,10 @@ function CampaignSpotlight() {
         <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }}>
           <Eyebrow color={TERRA}>Campaign Spotlight</Eyebrow>
           <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: '18px' }}>
-            R.I.T.H — Running in the Halls
+            Running in the Halls
           </h2>
           <p style={{ ...F, fontSize: '15px', fontWeight: 400, lineHeight: 1.8, color: MUTE, marginBottom: '24px', maxWidth: '440px' }}>
-            STAAY joined My Runway Group at the British Museum's Young People's Lates programme, bringing Ghanaian design into one of the world's most recognised cultural institutions. Full editorial, runway gallery, and event recap on our Featured page.
+            STAAY joined My Runway Group at the British Museum for their Young People's Lates programme. See the full story on our Featured page.
           </p>
           <Link to="/featured"
             style={{ display: 'inline-block', background: 'transparent', border: `1.5px solid ${INK}`, color: INK, padding: '13px 32px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.25s' }}
@@ -167,7 +167,7 @@ function DiscoverCollection() {
               Discover the Eden Collection
             </h2>
             <p style={{ ...F, fontSize: '14px', fontWeight: 400, lineHeight: 1.75, color: MUTE, marginBottom: '24px', maxWidth: '420px' }}>
-              An Eden for the modern African woman — rooted in beauty, grace, and quiet strength.
+              Rooted in beauty, grace, and quiet strength. Made for the modern African woman.
             </p>
             <Link to="/shop"
               style={{ display: 'inline-block', background: TERRA, color: W, padding: '15px 38px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.25s' }}
@@ -242,7 +242,7 @@ function PressContact() {
           Media, collaborations &amp; wholesale inquiries
         </h2>
         <p style={{ ...F, fontSize: '14px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(255,255,255,0.65)', marginBottom: '28px' }}>
-          For press requests, brand partnerships, or collaboration proposals, reach out and our team will follow up directly.
+          For press, partnerships, or collaborations, reach out and our team will follow up.
         </p>
         <Link to="/contact"
           style={{ display: 'inline-block', background: GOLD, color: INK, padding: '15px 40px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'opacity 0.25s' }}
