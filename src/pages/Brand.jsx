@@ -35,11 +35,14 @@ const fadeUp = {
 function Hero() {
   return (
     <section style={{ position: 'relative', height: 'clamp(420px, 60vh, 640px)', overflow: 'hidden', background: INK }}>
-      <img
-        src="/herobanner2.jpg"
-        alt="STAAY — About Us"
-        onError={e => { e.target.style.display = 'none' }}
-        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }}
+      <video
+        src="/stayvid2.mp4"
+        poster="/herobanner2.jpg"
+        autoPlay
+        loop
+        muted
+        playsInline
+        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 25%', display: 'block' }}
       />
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%)' }} />
       <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
@@ -138,10 +141,15 @@ function DiscoverCollection() {
           </div>
         </motion.div>
 
-        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} style={{ overflow: 'hidden', background: '#DCD0AE' }}>
-          <img src="/featured/feature6.jpeg" alt="STAAY runway"
-            onError={e => { e.target.style.display = 'none' }}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 25%', display: 'block' }} />
+        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} style={{ overflow: 'hidden', background: W }}>
+          <video
+            src="/staayvid7.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
         </motion.div>
       </div>
     </section>
