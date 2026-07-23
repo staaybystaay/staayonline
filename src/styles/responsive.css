@@ -210,6 +210,11 @@
     grid-template-columns: 1fr !important;
   }
 }
+@media (max-width: 560px) {
+  .featured-moments-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
 
 /* ============================================
    FindYourFit circles — smaller on mobile

@@ -17,7 +17,6 @@ const SAGE   = '#3D5A47'   // forest sage — Eden Collection
 const SLATE  = '#3A4A5C'   // slate blue  — editorial labels
 
 const F     = { fontFamily: "'Inter', sans-serif" }
-const SERIF = { fontFamily: "'Georgia', 'Times New Roman', serif" }
 
 // ─── LIGHTBOX ────────────────────────────────────────────────────
 function Lightbox({ images, startIndex, onClose }) {
@@ -97,7 +96,7 @@ function RITHSection() {
             Runway · The British Museum × My Runway Group
           </span>
 
-          <h2 style={{ ...SERIF, fontSize: 'clamp(48px, 8vw, 100px)', fontWeight: 700, color: W, letterSpacing: '-0.03em', lineHeight: 0.95, marginBottom: '20px' }}>
+          <h2 style={{ ...F, fontSize: 'clamp(40px, 7vw, 88px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', lineHeight: 0.95, marginBottom: '20px' }}>
             Running<br />in the Halls
           </h2>
 
@@ -123,7 +122,7 @@ function RITHSection() {
                 Editorial
               </span>
 
-              <h3 style={{ ...SERIF, fontSize: 'clamp(32px, 3.5vw, 52px)', fontWeight: 700, color: INK, letterSpacing: '-0.025em', lineHeight: 1.1, marginBottom: '36px' }}>
+              <h3 style={{ ...F, fontSize: 'clamp(28px, 3vw, 44px)', fontWeight: 800, color: INK, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '36px' }}>
                 About R.I.T.H
               </h3>
 
@@ -141,7 +140,7 @@ function RITHSection() {
 
               {/* Pull quote */}
               <blockquote style={{ margin: '0 0 48px', padding: '28px 0 28px 28px', borderLeft: `4px solid ${TERRA}` }}>
-                <p style={{ ...SERIF, fontSize: 'clamp(18px, 2vw, 24px)', fontStyle: 'italic', color: INK, lineHeight: 1.55, marginBottom: '14px' }}>
+                <p style={{ ...F, fontSize: 'clamp(17px, 1.8vw, 22px)', fontWeight: 700, color: INK, lineHeight: 1.5, marginBottom: '14px' }}>
                   "Rather than viewing history at a distance, audiences are invited to move with the programme — to experience the Museum as a living cultural space where past and present exist side by side."
                 </p>
                 <cite style={{ ...F, fontSize: '11px', fontWeight: 700, color: GREY, letterSpacing: '0.1em', textTransform: 'uppercase', fontStyle: 'normal' }}>
@@ -173,6 +172,47 @@ function RITHSection() {
       <AnimatePresence>
         {lb !== null && <Lightbox images={runway} startIndex={lb} onClose={() => setLb(null)} />}
       </AnimatePresence>
+    </article>
+  )
+}
+
+// ─── MOMENTS SECTION ─────────────────────────────────────────────
+function MomentsSection() {
+  const clips = [
+    { src: '/Nyahvid.mp4',   caption: 'NYAH Moments' },
+    { src: '/featured1.mp4', caption: 'STAAY Runway'  },
+  ]
+
+  return (
+    <article style={{ background: BK, padding: 'clamp(56px,8vw,96px) clamp(24px,5vw,64px)' }}>
+      <div style={{ maxWidth: '1320px', margin: '0 auto' }}>
+        <span style={{ ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: TERRA, display: 'block', marginBottom: '16px' }}>
+          In Motion
+        </span>
+        <h2 style={{ ...F, fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', lineHeight: 1.05, marginBottom: 'clamp(32px,5vw,56px)' }}>
+          STAAY Moments
+        </h2>
+
+        <div className="featured-moments-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+          {clips.map(clip => (
+            <div key={clip.src} style={{ position: 'relative', aspectRatio: '9/16', overflow: 'hidden', background: CHAR }}>
+              <video
+                src={clip.src}
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '18px', background: 'linear-gradient(0deg, rgba(0,0,0,0.6), transparent)' }}>
+                <span style={{ ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: W }}>
+                  {clip.caption}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </article>
   )
 }
@@ -211,7 +251,7 @@ function EdenSection() {
 
             {/* Pull quote */}
             <blockquote style={{ margin: '0 0 52px', padding: '32px', background: W, borderTop: `4px solid ${SAGE}` }}>
-              <p style={{ ...SERIF, fontSize: 'clamp(20px, 2.2vw, 28px)', fontStyle: 'italic', color: INK, lineHeight: 1.5, marginBottom: '16px' }}>
+              <p style={{ ...F, fontSize: 'clamp(19px, 2vw, 26px)', fontWeight: 700, color: INK, lineHeight: 1.45, marginBottom: '16px' }}>
                 "The collection tells a story of a woman in her purest form — uncovered, unafraid, and blooming."
               </p>
               <cite style={{ ...F, fontSize: '11px', fontWeight: 700, color: SAGE, letterSpacing: '0.12em', textTransform: 'uppercase', fontStyle: 'normal' }}>
@@ -253,7 +293,7 @@ export default function Featured() {
             <span style={{ ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', display: 'block', marginBottom: '12px' }}>
               Editorials &amp; Events
             </span>
-            <h1 style={{ ...SERIF, fontSize: 'clamp(52px, 8vw, 110px)', fontWeight: 700, color: W, letterSpacing: '-0.04em', lineHeight: 0.9, margin: 0 }}>
+            <h1 style={{ ...F, fontSize: 'clamp(44px, 7vw, 96px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', lineHeight: 0.9, margin: 0 }}>
               Featured
             </h1>
           </div>
@@ -265,6 +305,7 @@ export default function Featured() {
 
       {/* ── STORIES ── */}
       <RITHSection />
+      <MomentsSection />
       <EdenSection />
 
     </div>
