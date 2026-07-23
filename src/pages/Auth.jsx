@@ -3,59 +3,61 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { signIn, signUp, signInWithGoogle, resetPassword, uploadAvatar } from '../lib/api'
 
-const G   = '#B8903A'
-const GL  = '#F5ECD8'
-const W   = '#FFFFFF'
-const BK  = '#1A1612'
-const DK  = '#1A1612'
-const MD  = '#6B7280'
-const FT  = '#9CA3AF'
-const LG  = '#F9FAFB'
-const BR  = '#E5E7EB'
-const BL  = '#3B5BDB'
-const RD  = '#E53E3E'
-const F   = { fontFamily: "'Inter', sans-serif" }
+const G    = 'var(--accent)'
+const GL   = 'var(--accent-soft)'
+const W    = 'var(--white)'   // fixed white text/foreground
+const CARD = 'var(--bg-card)'
+const PAGE = 'var(--bg-panel)'
+const BK   = 'var(--ink)'     // fixed dark chrome (hover states)
+const DK   = 'var(--text-strong)'
+const MD   = 'var(--text-muted)'
+const FT   = 'var(--text-faint)'
+const LG   = 'var(--bg-panel)'
+const BR   = 'var(--border)'
+const BL   = '#3B5BDB'        // fixed accent blue, distinct from the brand's gold accent
+const RD   = 'var(--danger)'
+const F    = { fontFamily: "'Inter', sans-serif" }
 
 // ─── Icons ───────────────────────────────────
 const MailIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <rect x="1.5" y="3" width="13" height="10" rx="1.5" stroke="#9CA3AF" strokeWidth="1.2"/>
-    <path d="M1.5 5.5l6.5 4 6.5-4" stroke="#9CA3AF" strokeWidth="1.2" strokeLinecap="round"/>
+    <rect x="1.5" y="3" width="13" height="10" rx="1.5" stroke="var(--text-faint)" strokeWidth="1.2"/>
+    <path d="M1.5 5.5l6.5 4 6.5-4" stroke="var(--text-faint)" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 const LockIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <rect x="2.5" y="7" width="11" height="7.5" rx="1.5" stroke="#9CA3AF" strokeWidth="1.2"/>
-    <path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="#9CA3AF" strokeWidth="1.2" strokeLinecap="round"/>
-    <circle cx="8" cy="10.5" r="1" fill="#9CA3AF"/>
+    <rect x="2.5" y="7" width="11" height="7.5" rx="1.5" stroke="var(--text-faint)" strokeWidth="1.2"/>
+    <path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="var(--text-faint)" strokeWidth="1.2" strokeLinecap="round"/>
+    <circle cx="8" cy="10.5" r="1" fill="var(--text-faint)"/>
   </svg>
 )
 const UserIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <circle cx="8" cy="5.5" r="2.5" stroke="#9CA3AF" strokeWidth="1.2"/>
-    <path d="M2.5 13.5c0-2.8 2.5-5 5.5-5s5.5 2.2 5.5 5" stroke="#9CA3AF" strokeWidth="1.2" strokeLinecap="round"/>
+    <circle cx="8" cy="5.5" r="2.5" stroke="var(--text-faint)" strokeWidth="1.2"/>
+    <path d="M2.5 13.5c0-2.8 2.5-5 5.5-5s5.5 2.2 5.5 5" stroke="var(--text-faint)" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 const PhoneIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <rect x="3" y="1" width="10" height="14" rx="2" stroke="#9CA3AF" strokeWidth="1.2"/>
-    <circle cx="8" cy="12.5" r="0.6" fill="#9CA3AF"/>
-    <path d="M6 3h4" stroke="#9CA3AF" strokeWidth="1.2" strokeLinecap="round"/>
+    <rect x="3" y="1" width="10" height="14" rx="2" stroke="var(--text-faint)" strokeWidth="1.2"/>
+    <circle cx="8" cy="12.5" r="0.6" fill="var(--text-faint)"/>
+    <path d="M6 3h4" stroke="var(--text-faint)" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 const HeartIcon = () => (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M8 13S2 9.5 2 5.8A3.2 3.2 0 0 1 8 4a3.2 3.2 0 0 1 6 1.8C14 9.5 8 13 8 13z" stroke="#9CA3AF" strokeWidth="1.2" strokeLinejoin="round"/>
+    <path d="M8 13S2 9.5 2 5.8A3.2 3.2 0 0 1 8 4a3.2 3.2 0 0 1 6 1.8C14 9.5 8 13 8 13z" stroke="var(--text-faint)" strokeWidth="1.2" strokeLinejoin="round"/>
   </svg>
 )
 const EyeIcon = ({ show }) => show ? (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="#9CA3AF" strokeWidth="1.2"/>
-    <circle cx="8" cy="8" r="2" stroke="#9CA3AF" strokeWidth="1.2"/>
+    <path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="var(--text-faint)" strokeWidth="1.2"/>
+    <circle cx="8" cy="8" r="2" stroke="var(--text-faint)" strokeWidth="1.2"/>
   </svg>
 ) : (
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-    <path d="M2 2l12 12M6.3 6.5A2 2 0 0 0 9.5 9.7M4.2 4.4C2.4 5.6 1 8 1 8s2.5 5 7 5c1.4 0 2.6-.4 3.7-1.1M7 3.1l.5-.1c4.5 0 7 5 7 5s-.7 1.5-2.1 2.9" stroke="#9CA3AF" strokeWidth="1.2" strokeLinecap="round"/>
+    <path d="M2 2l12 12M6.3 6.5A2 2 0 0 0 9.5 9.7M4.2 4.4C2.4 5.6 1 8 1 8s2.5 5 7 5c1.4 0 2.6-.4 3.7-1.1M7 3.1l.5-.1c4.5 0 7 5 7 5s-.7 1.5-2.1 2.9" stroke="var(--text-faint)" strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 )
 
@@ -73,7 +75,7 @@ const GoogleIcon = () => (
 function Input({ icon: Icon, type = 'text', placeholder, value, onChange, showToggle, showPass, onToggle, prefix }) {
   const [focused, setFocused] = useState(false)
   return (
-    <div style={{ display: 'flex', alignItems: 'center', border: `1.5px solid ${focused ? BL : BR}`, borderRadius: '8px', background: W, height: '44px', overflow: 'hidden', transition: 'border-color 0.2s' }}>
+    <div style={{ display: 'flex', alignItems: 'center', border: `1.5px solid ${focused ? BL : BR}`, borderRadius: '8px', background: CARD, height: '44px', overflow: 'hidden', transition: 'border-color 0.2s' }}>
       {prefix && (
         <div style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '0 10px', borderRight: `1px solid ${BR}`, height: '100%', ...F, fontSize: '13px', color: DK, flexShrink: 0, cursor: 'pointer', background: LG }}>
           {prefix}
@@ -135,7 +137,7 @@ function ForgotPassword() {
         <form onSubmit={handleReset} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: '#0369A1' }}>Reset your password</p>
           <input type="email" placeholder="Your email address" value={email} onChange={e => setEmail(e.target.value)}
-            style={{ height: '40px', border: '1.5px solid #BAE6FD', borderRadius: '6px', padding: '0 12px', ...F, fontSize: '13px', color: DK, outline: 'none', background: W }} />
+            style={{ height: '40px', border: '1.5px solid #BAE6FD', borderRadius: '6px', padding: '0 12px', ...F, fontSize: '13px', color: DK, outline: 'none', background: CARD }} />
           {error && <p style={{ ...F, fontSize: '11px', color: RD }}>{error}</p>}
           <div style={{ display: 'flex', gap: '8px' }}>
             <button type="submit" disabled={loading}
@@ -172,9 +174,9 @@ function SignIn({ onSwitch }) {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F3F4F6', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+    <div style={{ minHeight: '100vh', background: PAGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}
-        style={{ background: W, borderRadius: '16px', padding: '36px 32px', width: '100%', maxWidth: '360px', boxShadow: '0 4px 32px rgba(0,0,0,0.1)' }}>
+        style={{ background: CARD, borderRadius: '16px', padding: '36px 32px', width: '100%', maxWidth: '360px', boxShadow: '0 4px 32px rgba(0,0,0,0.1)' }}>
 
         {/* Logo */}
         <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', marginBottom: '24px', justifyContent: 'center' }}>
@@ -186,7 +188,7 @@ function SignIn({ onSwitch }) {
 
         {/* Social buttons */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '20px' }}>
-          <button onClick={async () => { try { await signInWithGoogle() } catch { setError('Google sign in failed.') } }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
+          <button onClick={async () => { try { await signInWithGoogle() } catch { setError('Google sign in failed.') } }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: CARD, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = '#4285F4' }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = BR }}>
             <GoogleIcon /> Continue with Google
@@ -271,7 +273,7 @@ function Register({ onSwitch }) {
 
   const Toggle = ({ on, onToggle }) => (
     <button type="button" onClick={onToggle}
-      style={{ width: '44px', height: '24px', borderRadius: '12px', background: on ? BL : '#D1D5DB', border: 'none', cursor: 'pointer', position: 'relative', flexShrink: 0, transition: 'background 0.2s' }}>
+      style={{ width: '44px', height: '24px', borderRadius: '12px', background: on ? BL : 'var(--bg-surface)', border: 'none', cursor: 'pointer', position: 'relative', flexShrink: 0, transition: 'background 0.2s' }}>
       <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: W, position: 'absolute', top: '3px', left: on ? '23px' : '3px', transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
     </button>
   )
@@ -288,7 +290,7 @@ function Register({ onSwitch }) {
         {placeholder === 'Select Gender' ? <UserIcon /> : <HeartIcon />}
       </div>
       <select value={value} onChange={onChange}
-        style={{ width: '100%', height: '44px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, ...F, fontSize: '14px', color: value ? DK : FT, outline: 'none', cursor: 'pointer', paddingLeft: '38px', paddingRight: '12px', appearance: 'none' }}>
+        style={{ width: '100%', height: '44px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: CARD, ...F, fontSize: '14px', color: value ? DK : FT, outline: 'none', cursor: 'pointer', paddingLeft: '38px', paddingRight: '12px', appearance: 'none' }}>
         <option value="">{placeholder} (Optional)</option>
         {options.map(o => <option key={o} value={o}>{o}</option>)}
       </select>
@@ -299,8 +301,8 @@ function Register({ onSwitch }) {
   )
 
   if (done) return (
-    <div style={{ minHeight: '100vh', background: '#F3F4F6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} style={{ background: W, borderRadius: '16px', padding: '48px 40px', textAlign: 'center', maxWidth: '400px', boxShadow: '0 4px 32px rgba(0,0,0,0.1)' }}>
+    <div style={{ minHeight: '100vh', background: PAGE, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} style={{ background: CARD, borderRadius: '16px', padding: '48px 40px', textAlign: 'center', maxWidth: '400px', boxShadow: '0 4px 32px rgba(0,0,0,0.1)' }}>
         <div style={{ width: '64px', height: '64px', background: '#F0FDF4', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '28px', margin: '0 auto 20px' }}>✓</div>
         <h3 style={{ ...F, fontSize: '22px', fontWeight: 800, color: DK, marginBottom: '10px' }}>Account Created!</h3>
         <p style={{ ...F, fontSize: '14px', color: MD, lineHeight: 1.7, marginBottom: '24px' }}>Check your email <strong>{form.email}</strong> for a confirmation link.</p>
@@ -310,7 +312,7 @@ function Register({ onSwitch }) {
   )
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F3F4F6', padding: '32px 20px' }}>
+    <div style={{ minHeight: '100vh', background: PAGE, padding: '32px 20px' }}>
       <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.35 }}
         style={{ maxWidth: '1100px', margin: '0 auto' }}>
 
@@ -327,7 +329,7 @@ function Register({ onSwitch }) {
           <div className="grid-3-cols" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px', alignItems: 'start' }}>
 
             {/* ── COLUMN 1: Personal Information ── */}
-            <div style={{ background: W, borderRadius: '16px', padding: '28px 24px', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
+            <div style={{ background: CARD, borderRadius: '16px', padding: '28px 24px', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
               <h3 style={{ ...F, fontSize: '17px', fontWeight: 700, color: DK, textAlign: 'center', marginBottom: '4px' }}>Personal Information</h3>
               <p style={{ ...F, fontSize: '12px', color: FT, textAlign: 'center', marginBottom: '24px' }}>Tell us about yourself</p>
 
@@ -378,7 +380,7 @@ function Register({ onSwitch }) {
             </div>
 
             {/* ── COLUMN 2: Account Details ── */}
-            <div style={{ background: W, borderRadius: '16px', padding: '28px 24px', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
+            <div style={{ background: CARD, borderRadius: '16px', padding: '28px 24px', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
               <h3 style={{ ...F, fontSize: '17px', fontWeight: 700, color: DK, textAlign: 'center', marginBottom: '4px' }}>Account Details</h3>
               <p style={{ ...F, fontSize: '12px', color: FT, textAlign: 'center', marginBottom: '24px' }}>Secure your account</p>
 
@@ -414,7 +416,7 @@ function Register({ onSwitch }) {
                   <div style={{ flex: 1, height: '1px', background: BR }} />
                 </div>
 
-                <button type="button" onClick={async () => { try { await signInWithGoogle() } catch { setError('Google sign in failed.') } }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: W, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
+                <button type="button" onClick={async () => { try { await signInWithGoogle() } catch { setError('Google sign in failed.') } }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '11px', border: `1.5px solid ${BR}`, borderRadius: '8px', background: CARD, cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 500, color: DK, transition: 'border-color 0.2s' }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = '#4285F4' }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = BR }}>
                   <GoogleIcon /> Continue with Google
@@ -423,7 +425,7 @@ function Register({ onSwitch }) {
             </div>
 
             {/* ── COLUMN 3: Preferences ── */}
-            <div style={{ background: W, borderRadius: '16px', padding: '28px 24px', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
+            <div style={{ background: CARD, borderRadius: '16px', padding: '28px 24px', boxShadow: '0 2px 16px rgba(0,0,0,0.06)' }}>
               <h3 style={{ ...F, fontSize: '17px', fontWeight: 700, color: DK, textAlign: 'center', marginBottom: '4px' }}>Preferences</h3>
               <p style={{ ...F, fontSize: '12px', color: FT, textAlign: 'center', marginBottom: '24px' }}>Customise your experience</p>
 
@@ -467,7 +469,7 @@ function Register({ onSwitch }) {
                 </span>
               </label>
 
-              {error && <p style={{ ...F, fontSize: '12px', color: RD, background: '#FEF2F2', padding: '8px 12px', borderRadius: '6px', marginBottom: '12px' }}>{error}</p>}
+              {error && <p style={{ ...F, fontSize: '12px', color: RD, background: 'rgba(220,38,38,0.12)', padding: '8px 12px', borderRadius: '6px', marginBottom: '12px' }}>{error}</p>}
 
               {/* Submit */}
               <button type="submit" disabled={loading}

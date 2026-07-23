@@ -6,18 +6,19 @@ import { getOrdersByEmail, updateCustomerProfile } from '../lib/api'
 import { useWishlist } from '../hooks/useWishlist'
 
 // ─── TOKENS ──────────────────────────────────────────────────────
-const G    = '#B8903A'   // brand gold
-const GL   = '#F7F0E4'   // gold light
-const W    = '#FFFFFF'
-const LG   = '#F7F6F4'
-const BK   = '#111111'
-const DK   = '#1A1612'
-const MD   = '#666'
-const FT   = '#999'
-const BR   = '#E8E4DF'
-const RD   = '#C0392B'
-const GR   = '#2E7D5E'   // dark green (text / icons)
-const GRN  = '#16A34A'   // vivid green (toggles on-state)
+const G    = 'var(--accent)'
+const GL   = 'var(--accent-soft)'
+const W    = 'var(--white)'         // fixed white text/foreground
+const CARD = 'var(--bg-card)'
+const LG   = 'var(--bg-panel)'
+const BK   = 'var(--ink)'
+const DK   = 'var(--text-strong)'
+const MD   = 'var(--text-muted)'
+const FT   = 'var(--text-faint)'
+const BR   = 'var(--border)'
+const RD   = 'var(--danger)'
+const GR   = 'var(--success)'   // dark green (text / icons)
+const GRN  = 'var(--success)'   // vivid green (toggles on-state)
 const GRND = '#DCFCE7'   // green light bg
 const BL   = '#1D4ED8'   // blue for info
 const F    = { fontFamily: "'Inter', sans-serif" }
@@ -100,7 +101,7 @@ function Field({ label, value, onChange, type = 'text', disabled = false, hint }
         style={{
           width: '100%', boxSizing: 'border-box',
           padding: '12px 14px', border: `1px solid ${focused ? G : BR}`,
-          background: disabled ? LG : W, ...F, fontSize: '14px', color: DK,
+          background: disabled ? LG : CARD, ...F, fontSize: '14px', color: DK,
           outline: 'none', transition: 'border-color 0.2s', borderRadius: '8px',
           cursor: disabled ? 'not-allowed' : 'text',
         }}
@@ -142,10 +143,10 @@ function OrderCard({ order }) {
   const itemCount = order.order_items?.reduce((n, i) => n + i.qty, 0) || 0
 
   return (
-    <div style={{ border: `1px solid ${BR}`, background: W, borderRadius: '12px', overflow: 'hidden' }}>
+    <div style={{ border: `1px solid ${BR}`, background: CARD, borderRadius: '12px', overflow: 'hidden' }}>
       <div
         onClick={() => setOpen(o => !o)}
-        style={{ padding: '18px 22px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', background: open ? LG : W, transition: 'background 0.2s', gap: '12px', flexWrap: 'wrap' }}>
+        style={{ padding: '18px 22px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', background: open ? LG : CARD, transition: 'background 0.2s', gap: '12px', flexWrap: 'wrap' }}>
         <div style={{ display: 'flex', gap: '28px', alignItems: 'center', flexWrap: 'wrap', flex: 1 }}>
           <div>
             <p style={{ ...F, fontSize: '10px', fontWeight: 500, color: FT, letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: '3px' }}>Order</p>
@@ -251,7 +252,7 @@ function OrdersTab({ user }) {
         <div style={{ display: 'flex', gap: '6px', marginBottom: '20px', flexWrap: 'wrap' }}>
           {['all', 'pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'].map(s => (
             <button key={s} onClick={() => setFilter(s)}
-              style={{ padding: '6px 14px', borderRadius: '100px', border: `1px solid ${filter === s ? G : BR}`, background: filter === s ? GL : W, ...F, fontSize: '11px', fontWeight: filter === s ? 600 : 400, color: filter === s ? G : MD, cursor: 'pointer', transition: 'all 0.15s', textTransform: 'capitalize' }}>
+              style={{ padding: '6px 14px', borderRadius: '100px', border: `1px solid ${filter === s ? G : BR}`, background: filter === s ? GL : CARD, ...F, fontSize: '11px', fontWeight: filter === s ? 600 : 400, color: filter === s ? G : MD, cursor: 'pointer', transition: 'all 0.15s', textTransform: 'capitalize' }}>
               {s === 'all' ? `All (${orders.length})` : `${s} (${orders.filter(o => o.status === s).length})`}
             </button>
           ))}
@@ -266,7 +267,7 @@ function OrdersTab({ user }) {
           <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}`}</style>
         </div>
       ) : filtered.length === 0 ? (
-        <div style={{ background: W, border: `1px solid ${BR}`, padding: '64px 40px', textAlign: 'center', borderRadius: '16px' }}>
+        <div style={{ background: CARD, border: `1px solid ${BR}`, padding: '64px 40px', textAlign: 'center', borderRadius: '16px' }}>
           <div style={{ width: '56px', height: '56px', background: GL, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
             <OrderIcon size={22} color={G} />
           </div>
@@ -345,7 +346,7 @@ function ProfileTab({ user, profile, auth }) {
       <h2 style={{ ...F, fontSize: '20px', fontWeight: 700, color: DK, letterSpacing: '-0.02em', marginBottom: '28px' }}>Profile</h2>
 
       {/* Avatar */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px', padding: '24px', background: W, border: `1px solid ${BR}`, borderRadius: '12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '24px', padding: '24px', background: CARD, border: `1px solid ${BR}`, borderRadius: '12px' }}>
         <div style={{ position: 'relative', flexShrink: 0 }}>
           {profile?.avatar_url ? (
             <img src={profile.avatar_url} alt="" style={{ width: '72px', height: '72px', borderRadius: '50%', objectFit: 'cover' }} />
@@ -374,7 +375,7 @@ function ProfileTab({ user, profile, auth }) {
       </div>
 
       {/* Form */}
-      <div style={{ background: W, border: `1px solid ${BR}`, borderRadius: '12px', padding: '28px' }}>
+      <div style={{ background: CARD, border: `1px solid ${BR}`, borderRadius: '12px', padding: '28px' }}>
         <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '24px' }}>Personal Information</p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '20px' }}>
           <Field label="First Name" value={form.first_name} onChange={v => set('first_name', v)} />
@@ -383,7 +384,7 @@ function ProfileTab({ user, profile, auth }) {
           <div>
             <label style={{ display: 'block', ...F, fontSize: '11px', fontWeight: 600, color: FT, letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: '8px' }}>Gender</label>
             <select value={form.gender} onChange={e => set('gender', e.target.value)}
-              style={{ width: '100%', padding: '12px 14px', border: `1px solid ${BR}`, background: W, ...F, fontSize: '14px', color: form.gender ? DK : FT, outline: 'none', borderRadius: '8px', cursor: 'pointer' }}>
+              style={{ width: '100%', padding: '12px 14px', border: `1px solid ${BR}`, background: CARD, ...F, fontSize: '14px', color: form.gender ? DK : FT, outline: 'none', borderRadius: '8px', cursor: 'pointer' }}>
               <option value="">Select…</option>
               <option value="female">Female</option>
               <option value="male">Male</option>
@@ -428,7 +429,7 @@ function WishlistTab() {
       </div>
 
       {items.length === 0 ? (
-        <div style={{ background: W, border: `1px solid ${BR}`, padding: '64px 40px', textAlign: 'center', borderRadius: '16px' }}>
+        <div style={{ background: CARD, border: `1px solid ${BR}`, padding: '64px 40px', textAlign: 'center', borderRadius: '16px' }}>
           <div style={{ width: '56px', height: '56px', background: GL, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
             <HeartIcon size={22} color={G} />
           </div>
@@ -441,7 +442,7 @@ function WishlistTab() {
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '16px' }}>
           {items.map(item => (
-            <div key={item.id} style={{ background: W, border: `1px solid ${BR}`, borderRadius: '12px', overflow: 'hidden' }}>
+            <div key={item.id} style={{ background: CARD, border: `1px solid ${BR}`, borderRadius: '12px', overflow: 'hidden' }}>
               <div style={{ aspectRatio: '3/4', background: LG, overflow: 'hidden', position: 'relative' }}>
                 {item.image_url && <img src={item.image_url} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
                 <button onClick={() => removeItem(item.id)}
@@ -467,7 +468,7 @@ function Toggle({ on, onChange, saving }) {
     <button
       onClick={() => !saving && onChange(!on)}
       disabled={saving}
-      style={{ width: '44px', height: '26px', borderRadius: '13px', background: on ? GRN : '#D1D5DB', border: 'none', cursor: saving ? 'wait' : 'pointer', position: 'relative', transition: 'background 0.2s', flexShrink: 0, opacity: saving ? 0.7 : 1 }}>
+      style={{ width: '44px', height: '26px', borderRadius: '13px', background: on ? GRN : 'var(--bg-surface)', border: 'none', cursor: saving ? 'wait' : 'pointer', position: 'relative', transition: 'background 0.2s', flexShrink: 0, opacity: saving ? 0.7 : 1 }}>
       <span style={{ position: 'absolute', top: '3px', left: on ? '21px' : '3px', width: '20px', height: '20px', borderRadius: '50%', background: W, transition: 'left 0.18s', boxShadow: '0 1px 4px rgba(0,0,0,0.25)' }} />
     </button>
   )
@@ -544,7 +545,7 @@ function SettingsTab({ user, profile, auth, onLogout }) {
       <h2 style={{ ...F, fontSize: '20px', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>Settings</h2>
 
       {/* ── Account info ── */}
-      <div style={{ background: W, border: `1px solid ${BR}`, borderRadius: '12px', padding: '24px' }}>
+      <div style={{ background: CARD, border: `1px solid ${BR}`, borderRadius: '12px', padding: '24px' }}>
         <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '16px' }}>Account Details</p>
         {[
           { label: 'Email',        value: user.email },
@@ -561,7 +562,7 @@ function SettingsTab({ user, profile, auth, onLogout }) {
 
       {/* ── Change password ── */}
       {!isGoogle && (
-        <div style={{ background: W, border: `1px solid ${BR}`, borderRadius: '12px', padding: '24px' }}>
+        <div style={{ background: CARD, border: `1px solid ${BR}`, borderRadius: '12px', padding: '24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
             <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>Change Password</p>
             {pwDone && (
@@ -574,7 +575,7 @@ function SettingsTab({ user, profile, auth, onLogout }) {
             <Field label="New Password"     value={pwForm.next}    onChange={v => setPw('next', v)}    type="password" />
             <Field label="Confirm Password" value={pwForm.confirm} onChange={v => setPw('confirm', v)} type="password" />
             {pwError && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 14px', background: '#FEF2F2', borderRadius: '8px', border: '1px solid #FCA5A5' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '10px 14px', background: 'rgba(220,38,38,0.12)', borderRadius: '8px', border: '1px solid rgba(220,38,38,0.3)' }}>
                 <span style={{ ...F, fontSize: '12px', color: RD }}>{pwError}</span>
               </div>
             )}
@@ -591,7 +592,7 @@ function SettingsTab({ user, profile, auth, onLogout }) {
       )}
 
       {/* ── Notification preferences ── */}
-      <div style={{ background: W, border: `1px solid ${BR}`, borderRadius: '12px', padding: '24px' }}>
+      <div style={{ background: CARD, border: `1px solid ${BR}`, borderRadius: '12px', padding: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
           <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>Email Notifications</p>
           {notifSavedAt && !notifSaving && (
@@ -620,15 +621,15 @@ function SettingsTab({ user, profile, auth, onLogout }) {
       </div>
 
       {/* ── Danger zone ── */}
-      <div style={{ background: W, border: '1px solid #FECACA', borderRadius: '12px', padding: '24px' }}>
+      <div style={{ background: CARD, border: '1px solid rgba(220,38,38,0.3)', borderRadius: '12px', padding: '24px' }}>
         <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: RD, marginBottom: '8px' }}>Danger Zone</p>
         <p style={{ ...F, fontSize: '13px', color: MD, marginBottom: '16px', lineHeight: 1.7 }}>
           Signing out clears your local session. To permanently delete your account and all associated data, contact us at{' '}
           <a href="mailto:info@gogmi.org.gh" style={{ color: BL, fontWeight: 500 }}>info@gogmi.org.gh</a>.
         </p>
         <button onClick={onLogout}
-          style={{ padding: '11px 24px', background: 'transparent', border: '1px solid #FECACA', color: RD, borderRadius: '8px', ...F, fontSize: '13px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#FEF2F2' }}
+          style={{ padding: '11px 24px', background: 'transparent', border: '1px solid rgba(220,38,38,0.3)', color: RD, borderRadius: '8px', ...F, fontSize: '13px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(220,38,38,0.12)' }}
           onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}>
           Sign Out
         </button>
@@ -657,7 +658,7 @@ export default function Account() {
 
   if (loading) {
     return (
-      <div style={{ background: W, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ background: LG, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <p style={{ ...F, fontSize: '14px', color: MD }}>Loading…</p>
       </div>
     )
@@ -673,7 +674,7 @@ export default function Account() {
     <div style={{ background: LG, minHeight: '100vh' }}>
 
       {/* ── HEADER ── */}
-      <div style={{ background: W, borderBottom: `1px solid ${BR}` }}>
+      <div style={{ background: CARD, borderBottom: `1px solid ${BR}` }}>
         <div className="page-padding" style={{ maxWidth: '1280px', margin: '0 auto', padding: '28px 40px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '22px' }}>
             <Link to="/" style={{ ...F, fontSize: '12px', color: MD, transition: 'color 0.2s' }}
@@ -711,7 +712,7 @@ export default function Account() {
 
         {/* Sidebar */}
         <aside style={{ position: 'sticky', top: '32px' }}>
-          <div style={{ background: W, border: `1px solid ${BR}`, borderRadius: '14px', overflow: 'hidden' }}>
+          <div style={{ background: CARD, border: `1px solid ${BR}`, borderRadius: '14px', overflow: 'hidden' }}>
             <div style={{ height: '3px', background: `linear-gradient(90deg, ${G}, #D4A853)` }} />
             <nav className="account-sidebar-nav" style={{ padding: '8px' }}>
               {TABS.map(tab => {

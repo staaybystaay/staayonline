@@ -2,15 +2,17 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { updatePassword } from '../lib/api'
 
-const G  = '#B8903A'
-const W  = '#FFFFFF'
-const BK = '#111111'
-const DK = '#1A1612'
-const MD = '#666'
-const BR = '#E5E7EB'
-const RD = '#E53E3E'
-const GR = '#16A34A'
-const F  = { fontFamily: "'Inter', sans-serif" }
+const G    = 'var(--accent)'
+const W    = 'var(--white)'
+const CARD = 'var(--bg-card)'
+const PAGE = 'var(--bg-panel)'
+const BK   = 'var(--ink)'
+const DK   = 'var(--text-strong)'
+const MD   = 'var(--text-muted)'
+const BR   = 'var(--border)'
+const RD   = 'var(--danger)'
+const GR   = 'var(--success)'
+const F    = { fontFamily: "'Inter', sans-serif" }
 
 export default function ResetPassword() {
   const navigate  = useNavigate()
@@ -37,8 +39,8 @@ export default function ResetPassword() {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F3F4F6', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
-      <div style={{ background: W, borderRadius: '16px', padding: '40px 36px', width: '100%', maxWidth: '380px', boxShadow: '0 4px 32px rgba(0,0,0,0.1)' }}>
+    <div style={{ minHeight: '100vh', background: PAGE, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+      <div style={{ background: CARD, borderRadius: '16px', padding: '40px 36px', width: '100%', maxWidth: '380px', boxShadow: '0 4px 32px rgba(0,0,0,0.1)' }}>
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <h2 style={{ ...F, fontSize: '24px', fontWeight: 800, color: DK, marginBottom: '6px' }}>Set new password</h2>
           <p style={{ ...F, fontSize: '13px', color: MD }}>Choose a strong password for your account.</p>
