@@ -69,7 +69,7 @@ function Founder() {
           </h2>
 
           <p style={{ ...F, fontSize: '15px', fontWeight: 400, lineHeight: 1.85, color: MUTE, marginBottom: '18px' }}>
-            Fashion became Stacey's way of expressing herself in seasons where words fell short. While studying law, she found comfort in creating pieces that made women feel seen, confident, and unforgettable.
+            Founded by Stacey Sefah, STAAY began long before the first collection was released. From a young age, fashion became Stacey's way of expressing herself in seasons where words often fell short. While studying law and navigating the expectations of life, she found comfort in creating pieces that made women feel seen, beautiful, confident, and unforgettable.
           </p>
 
           <p style={{ ...F, fontSize: '15px', fontWeight: 400, lineHeight: 1.85, color: MUTE, marginBottom: '28px' }}>
