@@ -2,16 +2,17 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-const G   = '#B8903A'
-const GL  = '#F5ECD8'
-const W   = '#FFFFFF'
-const OW  = '#F8F7F4'
-const BK  = '#111111'
-const DK  = '#222222'
-const MD  = '#666666'
-const FT  = '#999999'
-const BR  = '#E4E0D8'
-const RD  = '#B91C1C'
+const G   = 'var(--accent)'
+const GL  = 'var(--accent-soft)'
+const W   = 'var(--white)'   // fixed white text
+const BG  = 'var(--bg)'
+const OW  = 'var(--bg-panel)'
+const BK  = 'var(--ink)'     // fixed dark chrome
+const DK  = 'var(--text-strong)'
+const MD  = 'var(--text-muted)'
+const FT  = 'var(--text-faint)'
+const BR  = 'var(--border)'
+const RD  = 'var(--danger)'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
 const sections = [
@@ -105,7 +106,7 @@ export default function Terms() {
   const [active, setActive] = useState('shipping')
 
   return (
-    <div style={{ background: W, minHeight: '100vh' }}>
+    <div style={{ background: BG, minHeight: '100vh' }}>
 
       {/* ── PAGE HEADER ── */}
       <div className="page-padding" style={{ background: OW, borderBottom: `1px solid ${BR}`, padding: '40px 64px' }}>
@@ -224,8 +225,8 @@ export default function Terms() {
                   {/* Notice banner */}
                   {section.notice && (
                     <div style={{
-                      background: '#FEF2F2',
-                      border: `1px solid #FECACA`,
+                      background: 'rgba(220,38,38,0.12)',
+                      border: `1px solid rgba(220,38,38,0.3)`,
                       borderLeft: `3px solid ${RD}`,
                       padding: '12px 16px',
                       marginBottom: '20px',

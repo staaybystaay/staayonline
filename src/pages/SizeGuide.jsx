@@ -1,15 +1,16 @@
 import { Link } from 'react-router-dom'
 
-const G   = '#B8903A'
-const GL  = '#F5ECD8'
-const W   = '#FFFFFF'
-const BK  = '#111111'
-const DK  = '#1A1612'
-const MD  = '#666'
-const FT  = '#999'
-const LG  = '#F7F6F4'
-const BR  = '#E8E4DF'
-const GR  = '#25D366'
+const G   = 'var(--accent)'
+const GL  = 'var(--accent-soft)'
+const W   = 'var(--white)'   // fixed white text
+const BG  = 'var(--bg)'
+const BK  = 'var(--ink)'     // fixed dark chrome
+const DK  = 'var(--text-strong)'
+const MD  = 'var(--text-muted)'
+const FT  = 'var(--text-faint)'
+const LG  = 'var(--bg-panel)'
+const BR  = 'var(--border)'
+const GR  = '#25D366'         // fixed — WhatsApp's official brand green
 const F   = { fontFamily: "'Inter', sans-serif" }
 
 const sizeChart = [
@@ -38,7 +39,7 @@ function SectionLabel({ children }) {
 
 export default function SizeGuide() {
   return (
-    <div style={{ background: W, minHeight: '100vh' }}>
+    <div style={{ background: BG, minHeight: '100vh' }}>
 
       {/* ── HEADER ── */}
       <div className="page-padding" style={{ background: LG, borderBottom: `1px solid ${BR}`, padding: '32px 40px' }}>
@@ -136,7 +137,7 @@ export default function SizeGuide() {
       </div>
 
       {/* ── CLOSING CTA ── */}
-      <section style={{ background: DK, padding: 'clamp(40px, 6vw, 64px) 24px' }}>
+      <section style={{ background: BK, padding: 'clamp(40px, 6vw, 64px) 24px' }}>
         <div style={{ maxWidth: '640px', margin: '0 auto', textAlign: 'center' }}>
           <p style={{ ...F, fontSize: '11px', fontWeight: 700, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '12px' }}>
             Still Not Sure?

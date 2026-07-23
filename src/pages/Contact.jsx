@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { submitContactMessage } from '../lib/api'
 
-const G    = '#B8903A'
-const GL   = '#F5ECD8'
-const W    = '#FFFFFF'
-const BK   = '#111111'
-const DK   = '#1A1612'
-const MD   = '#666'
-const FT   = '#999'
-const LG   = '#F7F6F4'
-const BR   = '#E8E4DF'
-const GR   = '#25D366'
-const GRL  = '#E9F9EF'
+const G    = 'var(--accent)'
+const GL   = 'var(--accent-soft)'
+const W    = 'var(--white)'   // fixed white text/foreground
+const BG   = 'var(--bg)'
+const DK   = 'var(--text-strong)'
+const MD   = 'var(--text-muted)'
+const FT   = 'var(--text-faint)'
+const LG   = 'var(--bg-panel)'
+const BR   = 'var(--border)'
+const GR   = '#25D366'        // fixed — WhatsApp's official brand green
+const GRL  = '#E9F9EF'        // fixed — light WhatsApp-tinted background
 const F    = { fontFamily: "'Inter', sans-serif" }
 
 const WHATSAPP_NUMBER = '233503977985'
@@ -136,7 +136,7 @@ export default function Contact() {
   }
 
   return (
-    <div style={{ background: W, minHeight: '100vh' }}>
+    <div style={{ background: BG, minHeight: '100vh' }}>
 
       {/* ── HEADER ── */}
       <div className="page-padding" style={{ background: LG, borderBottom: `1px solid ${BR}`, padding: '32px 40px' }}>
@@ -225,7 +225,7 @@ export default function Contact() {
                 <div className="contact-name-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '14px' }}>
                   <div>
                     <label style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, display: 'block', marginBottom: '8px' }}>
-                      Your Name <span style={{ color: '#C0392B' }}>*</span>
+                      Your Name <span style={{ color: 'var(--danger)' }}>*</span>
                     </label>
                     <input
                       value={name}
@@ -253,7 +253,7 @@ export default function Contact() {
                 </div>
 
                 <label style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, display: 'block', marginBottom: '8px' }}>
-                  Your Message <span style={{ color: '#C0392B' }}>*</span>
+                  Your Message <span style={{ color: 'var(--danger)' }}>*</span>
                 </label>
                 <textarea
                   value={message}
@@ -266,7 +266,7 @@ export default function Contact() {
                 />
 
                 {error && (
-                  <p style={{ ...F, fontSize: '12px', color: '#C0392B', marginBottom: '14px' }}>{error}</p>
+                  <p style={{ ...F, fontSize: '12px', color: 'var(--danger)', marginBottom: '14px' }}>{error}</p>
                 )}
 
                 <div style={{ background: LG, borderRadius: '8px', padding: '16px 18px', marginBottom: '20px' }}>

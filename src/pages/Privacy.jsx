@@ -1,14 +1,13 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-const G   = '#B8903A'
-const W   = '#FFFFFF'
-const OW  = '#F8F7F4'
-const BK  = '#111111'
-const DK  = '#222222'
-const MD  = '#666666'
-const FT  = '#999999'
-const BR  = '#E4E0D8'
+const G   = 'var(--accent)'
+const W   = 'var(--bg)'
+const OW  = 'var(--bg-panel)'
+const DK  = 'var(--text-strong)'
+const MD  = 'var(--text-muted)'
+const FT  = 'var(--text-faint)'
+const BR  = 'var(--border)'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
 const sections = [

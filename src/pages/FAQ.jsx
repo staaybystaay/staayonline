@@ -2,17 +2,19 @@ import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const G   = '#B8903A'
-const GL  = '#F5ECD8'
-const W   = '#FFFFFF'
-const BK  = '#111111'
-const DK  = '#1A1612'
-const MD  = '#666'
-const FT  = '#999'
-const LG  = '#F7F6F4'
-const BR  = '#E8E4DF'
-const GR  = '#25D366'
-const F   = { fontFamily: "'Inter', sans-serif" }
+const G    = 'var(--accent)'
+const GL   = 'var(--accent-soft)'
+const W    = 'var(--white)'   // fixed white text/foreground
+const BG   = 'var(--bg)'
+const CARD = 'var(--bg-card)'
+const BK   = 'var(--ink)'     // fixed dark chrome
+const DK   = 'var(--text-strong)'
+const MD   = 'var(--text-muted)'
+const FT   = 'var(--text-faint)'
+const LG   = 'var(--bg-panel)'
+const BR   = 'var(--border)'
+const GR   = '#25D366'        // fixed — WhatsApp's official brand green
+const F    = { fontFamily: "'Inter', sans-serif" }
 
 const categories = [
   { key: 'all',      label: 'All' },
@@ -145,7 +147,7 @@ export default function FAQ() {
   }, [activeCat, search])
 
   return (
-    <div style={{ background: W, minHeight: '100vh' }}>
+    <div style={{ background: BG, minHeight: '100vh' }}>
 
       {/* ── HEADER ── */}
       <div className="page-padding" style={{ background: LG, borderBottom: `1px solid ${BR}`, padding: '32px 40px' }}>
@@ -162,7 +164,7 @@ export default function FAQ() {
             Frequently Asked Questions
           </h1>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: W, border: `1px solid ${BR}`, borderRadius: '8px', padding: '11px 16px', maxWidth: '420px', margin: '0 auto' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: CARD, border: `1px solid ${BR}`, borderRadius: '8px', padding: '11px 16px', maxWidth: '420px', margin: '0 auto' }}>
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke={FT} strokeWidth="1.3"/><path d="M9.5 9.5L13 13" stroke={FT} strokeWidth="1.3" strokeLinecap="round"/></svg>
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search a question..."
               style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', ...F, fontSize: '13px', color: DK }} />
@@ -197,7 +199,7 @@ export default function FAQ() {
       </div>
 
       {/* ── CLOSING CTA ── */}
-      <section style={{ background: DK, padding: 'clamp(40px, 6vw, 64px) 24px', marginTop: '24px' }}>
+      <section style={{ background: BK, padding: 'clamp(40px, 6vw, 64px) 24px', marginTop: '24px' }}>
         <div style={{ maxWidth: '640px', margin: '0 auto', textAlign: 'center' }}>
           <p style={{ ...F, fontSize: '11px', fontWeight: 700, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '12px' }}>
             Still Have Questions?

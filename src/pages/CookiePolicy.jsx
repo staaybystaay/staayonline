@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
 
-const G   = '#B8903A'
-const W   = '#FFFFFF'
-const DK  = '#1A1612'
-const MD  = '#666'
-const FT  = '#999'
-const LG  = '#F7F6F4'
-const BR  = '#E8E4DF'
+const G   = 'var(--accent)'
+const W   = 'var(--bg)'
+const DK  = 'var(--text-strong)'
+const MD  = 'var(--text-muted)'
+const FT  = 'var(--text-faint)'
+const LG  = 'var(--bg-panel)'
+const BR  = 'var(--border)'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
 const LAST_UPDATED = 'June 2026'
@@ -91,7 +91,7 @@ export default function CookiePolicy() {
             <div key={type.name} style={{ border: `1px solid ${BR}`, borderRadius: '10px', padding: '20px' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
                 <h3 style={{ ...F, fontSize: '14px', fontWeight: 700, color: DK }}>{type.name}</h3>
-                <span style={{ ...F, fontSize: '10px', fontWeight: 700, color: type.canDisable ? G : '#16A34A', textTransform: 'uppercase', letterSpacing: '0.06em', background: type.canDisable ? '#FBF6EA' : '#ECFDF3', padding: '3px 10px', borderRadius: '100px' }}>
+                <span style={{ ...F, fontSize: '10px', fontWeight: 700, color: type.canDisable ? '#B8903A' : '#16A34A', textTransform: 'uppercase', letterSpacing: '0.06em', background: type.canDisable ? '#FBF6EA' : '#ECFDF3', padding: '3px 10px', borderRadius: '100px' }}>
                   {type.canDisable ? 'Optional' : 'Always Active'}
                 </span>
               </div>
