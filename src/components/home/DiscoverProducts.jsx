@@ -23,7 +23,7 @@ function StarRating() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
       {[1,2,3,4,5].map(i => (
-        <svg key={i} width="11" height="11" viewBox="0 0 11 11" fill="#EEE" stroke="#DDD" strokeWidth="0.8">
+        <svg key={i} width="11" height="11" viewBox="0 0 11 11" fill="var(--border)" stroke="var(--border-mid)" strokeWidth="0.8">
           <path d="M5.5 1l1.1 3.4h3.5L7.4 6.6l1.1 3.4L5.5 8.4 2.5 10l1.1-3.4L1 4.4h3.5z"/>
         </svg>
       ))}
@@ -48,7 +48,7 @@ function ProductCard({ product, index, onQuickView }) {
       transition={{ duration: 0.4, delay: (index % 4) * 0.07 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ background: CARD, border: `1px solid ${hovered ? '#CCC' : BR}`, transition: 'border-color 0.2s' }}>
+      style={{ background: CARD, border: `1px solid ${hovered ? 'var(--text-faint)' : BR}`, transition: 'border-color 0.2s' }}>
 
       <div style={{ position: 'relative', aspectRatio: '3/4', background: LG, overflow: 'hidden' }}>
         <img
@@ -67,9 +67,9 @@ function ProductCard({ product, index, onQuickView }) {
 
         <button
           onClick={e => { e.stopPropagation(); toggle({ ...product, category: product.collection?.name }) }}
-          style={{ position: 'absolute', top: '10px', right: '10px', width: '36px', height: '36px', borderRadius: '50%', background: CARD, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 8px rgba(0,0,0,0.15)', fontSize: '17px', color: faved ? RD : '#CCC', transition: 'color 0.2s, transform 0.2s' }}
+          style={{ position: 'absolute', top: '10px', right: '10px', width: '36px', height: '36px', borderRadius: '50%', background: CARD, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 8px rgba(0,0,0,0.15)', fontSize: '17px', color: faved ? RD : 'var(--text-faint)', transition: 'color 0.2s, transform 0.2s' }}
           onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.12)'; e.currentTarget.style.color = RD }}
-          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.color = faved ? RD : '#CCC' }}>
+          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.color = faved ? RD : 'var(--text-faint)' }}>
           {faved ? '♥' : '♡'}
         </button>
 
@@ -183,7 +183,7 @@ export default function DiscoverProducts() {
         </div>
 
         {error && (
-          <div style={{ padding: '16px', background: '#FEF2F2', border: '1px solid #FECACA', marginBottom: '24px', ...F, fontSize: '13px', color: RD }}>
+          <div style={{ padding: '16px', background: 'rgba(220,38,38,0.12)', border: '1px solid rgba(220,38,38,0.3)', marginBottom: '24px', ...F, fontSize: '13px', color: RD }}>
             Failed to load products: {error}
           </div>
         )}
