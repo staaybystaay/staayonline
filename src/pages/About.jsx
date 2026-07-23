@@ -80,19 +80,19 @@ function Founder() {
             "That realization changed everything."
           </p>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <div style={{ width: '46px', height: '46px', borderRadius: '50%', background: GOLD, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '16px', fontWeight: 700, color: W }}>
-              SS
-            </div>
-            <div>
-              <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: INK }}>Stacey Sefah</p>
-              <p style={{ ...F, fontSize: '11px', color: MUTE, letterSpacing: '0.04em', marginTop: '2px' }}>Founder &amp; Creative Director</p>
-              <a href="https://www.instagram.com/s.t.a.a.y?igsh=MXRueTlrZDdta3IyaQ=="
-                target="_blank" rel="noreferrer"
-                style={{ ...F, fontSize: '11px', fontWeight: 600, color: GOLD, letterSpacing: '0.04em', marginTop: '4px', display: 'inline-block' }}>
-                @s.t.a.a.y
-              </a>
-            </div>
+          <div>
+            <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: INK }}>Stacey Sefah</p>
+            <p style={{ ...F, fontSize: '11px', color: MUTE, letterSpacing: '0.04em', marginTop: '2px' }}>Founder &amp; Creative Director</p>
+            <a href="https://www.instagram.com/s.t.a.a.y?igsh=MXRueTlrZDdta3IyaQ=="
+              target="_blank" rel="noreferrer"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', ...F, fontSize: '11px', fontWeight: 600, color: GOLD, letterSpacing: '0.04em', marginTop: '6px' }}>
+              <svg width="13" height="13" viewBox="0 0 18 18" fill="none">
+                <rect x="1" y="1" width="16" height="16" rx="4" stroke="currentColor" strokeWidth="1.3"/>
+                <circle cx="9" cy="9" r="3.5" stroke="currentColor" strokeWidth="1.3"/>
+                <circle cx="13.2" cy="4.8" r="0.8" fill="currentColor"/>
+              </svg>
+              @s.t.a.a.y
+            </a>
           </div>
         </motion.div>
 
