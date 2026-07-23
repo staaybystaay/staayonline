@@ -37,6 +37,7 @@ const shopLinks = [
 ]
 const companyLinks = [
   { label: 'Our Brand', path: '/brand'    },
+  { label: 'About Us',  path: '/about'    },
   { label: 'Featured',  path: '/featured' },
 ]
 const supportLinks = [
