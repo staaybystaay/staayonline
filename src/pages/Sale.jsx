@@ -8,18 +8,20 @@ import { imgCard } from '../lib/images'
 import QuickView from '../components/QuickView'
 import MiniCurrencyPicker from '../components/MiniCurrencyPicker'
 
-const INK   = '#15130F'
-const G     = '#B8903A'
-const GL    = '#F5ECD8'
-const ACC   = '#E2542D'
-const W     = '#FFFFFF'
-const DK    = '#1A1612'
-const MD    = '#666'
-const FT    = '#999'
-const LG    = '#F7F6F4'
-const BR    = '#E8E4DF'
-const RD    = '#E11D48'
-const GR    = '#25D366'
+const INK   = 'var(--ink)'          // fixed dark chrome: hero/banner backgrounds, text-on-accent, solid buttons
+const G     = 'var(--accent)'
+const GL    = 'var(--accent-soft)'
+const ACC   = '#E2542D'             // fixed — discount headline against the permanently-dark hero
+const W     = 'var(--white)'        // fixed white text
+const BG    = 'var(--bg)'
+const CARD  = 'var(--bg-card)'
+const DK    = 'var(--text-strong)'
+const MD    = 'var(--text-muted)'
+const FT    = 'var(--text-faint)'
+const LG    = 'var(--bg-surface)'
+const BR    = 'var(--border)'
+const RD    = 'var(--danger)'
+const GR    = '#25D366'             // fixed — WhatsApp's official brand green
 const F     = { fontFamily: "'Inter', sans-serif" }
 
 const SORT_OPTIONS = [
@@ -59,7 +61,7 @@ function SaleCard({ product, onQuickView }) {
       transition={{ duration: 0.35 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ background: W }}>
+      style={{ background: CARD }}>
 
       <div style={{ position: 'relative', aspectRatio: '3/4', background: LG, overflow: 'hidden', marginBottom: '10px' }}>
         <img src={imgCard(product.image_url)} alt={product.name} loading="lazy" decoding="async" onError={e => { e.target.style.display = 'none' }}
@@ -70,7 +72,7 @@ function SaleCard({ product, onQuickView }) {
         </div>
 
         <button onClick={e => { e.stopPropagation(); toggle({ ...product, category: product.collection?.name }) }}
-          style={{ position: 'absolute', top: '10px', right: '10px', width: '34px', height: '34px', borderRadius: '50%', background: W, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 6px rgba(0,0,0,0.12)', fontSize: '16px', color: faved ? RD : '#CCC', transition: 'all 0.2s' }}>
+          style={{ position: 'absolute', top: '10px', right: '10px', width: '34px', height: '34px', borderRadius: '50%', background: CARD, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 6px rgba(0,0,0,0.12)', fontSize: '16px', color: faved ? RD : FT, transition: 'all 0.2s' }}>
           {faved ? '♥' : '♡'}
         </button>
 
@@ -80,11 +82,11 @@ function SaleCard({ product, onQuickView }) {
               className="desktop-only"
               style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', gap: '6px' }}>
               <button onClick={() => onQuickView(product)}
-                style={{ flex: 1, background: 'rgba(255,255,255,0.93)', border: 'none', padding: '9px', ...F, fontSize: '11px', fontWeight: 600, color: DK, cursor: 'pointer' }}>
+                style={{ flex: 1, background: 'rgba(255,255,255,0.93)', border: 'none', padding: '9px', ...F, fontSize: '11px', fontWeight: 600, color: INK, cursor: 'pointer' }}>
                 Quick View
               </button>
               <button onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY' })}
-                style={{ flex: 1, background: DK, border: 'none', padding: '9px', ...F, fontSize: '11px', fontWeight: 600, color: W, cursor: 'pointer' }}>
+                style={{ flex: 1, background: INK, border: 'none', padding: '9px', ...F, fontSize: '11px', fontWeight: 600, color: W, cursor: 'pointer' }}>
                 Add to Cart
               </button>
             </motion.div>
@@ -105,7 +107,7 @@ function SaleCard({ product, onQuickView }) {
             Quick View
           </button>
           <button onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY' })}
-            style={{ flex: 1, background: DK, border: 'none', padding: '8px 6px', ...F, fontSize: '11px', fontWeight: 600, color: W, cursor: 'pointer' }}>
+            style={{ flex: 1, background: INK, border: 'none', padding: '8px 6px', ...F, fontSize: '11px', fontWeight: 600, color: W, cursor: 'pointer' }}>
             Add to Cart
           </button>
         </div>
@@ -163,7 +165,7 @@ function PromoHero({ maxDiscount }) {
 // ─── Feature block: Shop the Sale teaser ──────
 function ShopTeaser({ image }) {
   return (
-    <section style={{ background: W, padding: 'clamp(48px, 7vw, 80px) 24px', borderBottom: `1px solid ${BR}` }}>
+    <section style={{ background: BG, padding: 'clamp(48px, 7vw, 80px) 24px', borderBottom: `1px solid ${BR}` }}>
       <div className="promo-feature-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(28px, 5vw, 64px)', alignItems: 'center' }}>
         <motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
           style={{ aspectRatio: '4/5', background: LG, overflow: 'hidden' }}>
@@ -179,9 +181,9 @@ function ShopTeaser({ image }) {
           <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, lineHeight: 1.8, marginBottom: '28px', maxWidth: '400px' }}>
             A rotating edit of marked-down pieces from across our collections. Once they're gone, they're gone.
           </p>
-          <a href="#shop-sale" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: DK, color: W, padding: '13px 32px', ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}
+          <a href="#shop-sale" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: INK, color: W, padding: '13px 32px', ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.background = G }}
-            onMouseLeave={e => { e.currentTarget.style.background = DK }}>
+            onMouseLeave={e => { e.currentTarget.style.background = INK }}>
             Browse the Sale
           </a>
         </motion.div>
@@ -229,14 +231,14 @@ function GiftCardSection() {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '22px' }}>
             {GIFT_AMOUNTS.map(amt => (
               <button key={amt} onClick={() => setSelected(amt)}
-                style={{ padding: '10px 18px', border: `1.5px solid ${selected === amt ? G : BR}`, background: selected === amt ? W : 'transparent', ...F, fontSize: '13px', fontWeight: selected === amt ? 700 : 400, color: selected === amt ? G : DK, cursor: 'pointer', transition: 'all 0.15s' }}>
+                style={{ padding: '10px 18px', border: `1.5px solid ${selected === amt ? G : BR}`, background: selected === amt ? CARD : 'transparent', ...F, fontSize: '13px', fontWeight: selected === amt ? 700 : 400, color: selected === amt ? G : DK, cursor: 'pointer', transition: 'all 0.15s' }}>
                 GH₵{amt.toLocaleString()}
               </button>
             ))}
           </div>
 
           <button onClick={handleAdd}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: added ? '#16A34A' : G, color: W, padding: '14px 36px', border: 'none', cursor: 'pointer', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', transition: 'background 0.2s' }}>
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: added ? 'var(--success)' : G, color: W, padding: '14px 36px', border: 'none', cursor: 'pointer', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', transition: 'background 0.2s' }}>
             {added ? '✓ Added to Bag' : `Add Gift Card · GH₵${(selected || 0).toLocaleString()}`}
           </button>
         </motion.div>
@@ -244,7 +246,7 @@ function GiftCardSection() {
         {/* Visual gift card mockup */}
         <motion.div initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
           style={{ display: 'flex', justifyContent: 'center' }}>
-          <div style={{ width: '100%', maxWidth: '380px', aspectRatio: '1.6/1', background: `linear-gradient(135deg, ${DK}, #2B2419)`, borderRadius: '16px', padding: '28px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 20px 50px rgba(0,0,0,0.18)', position: 'relative', overflow: 'hidden' }}>
+          <div style={{ width: '100%', maxWidth: '380px', aspectRatio: '1.6/1', background: `linear-gradient(135deg, ${INK}, #2B2419)`, borderRadius: '16px', padding: '28px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 20px 50px rgba(0,0,0,0.18)', position: 'relative', overflow: 'hidden' }}>
             <div style={{ position: 'absolute', top: '-40px', right: '-40px', width: '160px', height: '160px', borderRadius: '50%', background: 'rgba(184,144,58,0.18)' }} />
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
               <img src="/stayonlinelogo.jpeg" alt="" style={{ width: '26px', height: '26px', borderRadius: '50%', objectFit: 'cover' }} />
@@ -264,7 +266,7 @@ function GiftCardSection() {
 // ─── Closing help banner ──────────────────────
 function HelpBanner() {
   return (
-    <section style={{ background: DK, padding: 'clamp(40px, 6vw, 64px) 24px' }}>
+    <section style={{ background: INK, padding: 'clamp(40px, 6vw, 64px) 24px' }}>
       <div style={{ maxWidth: '760px', margin: '0 auto', textAlign: 'center' }}>
         <p style={{ ...F, fontSize: '11px', fontWeight: 700, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '12px' }}>
           Need Help Choosing?
@@ -316,7 +318,7 @@ export default function Sale() {
   const teaserImage = sorted[0]?.image_url
 
   return (
-    <div style={{ background: W, minHeight: '100vh' }}>
+    <div style={{ background: BG, minHeight: '100vh' }}>
 
       <PromoHero maxDiscount={maxDiscount} />
       <ShopTeaser image={teaserImage} />
@@ -342,7 +344,7 @@ export default function Sale() {
         </div>
 
         {sorted.length > 0 && (
-          <div className="page-padding" style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '0 40px' }}>
+          <div className="page-padding" style={{ background: BG, borderBottom: `1px solid ${BR}`, padding: '0 40px' }}>
             <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'flex-end', height: '52px', alignItems: 'center' }}>
               <div style={{ position: 'relative' }}>
                 <button onClick={() => setSortOpen(v => !v)}
@@ -357,10 +359,10 @@ export default function Sale() {
                     <>
                       <div style={{ position: 'fixed', inset: 0, zIndex: 48 }} onClick={() => setSortOpen(false)} />
                       <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.15 }}
-                        style={{ position: 'absolute', top: '100%', right: 0, zIndex: 49, minWidth: '180px', background: W, border: `1px solid ${BR}`, boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}>
+                        style={{ position: 'absolute', top: '100%', right: 0, zIndex: 49, minWidth: '180px', background: CARD, border: `1px solid ${BR}`, boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}>
                         {SORT_OPTIONS.map(opt => (
                           <button key={opt.value} onClick={() => { setSortBy(opt.value); setSortOpen(false) }}
-                            style={{ width: '100%', textAlign: 'left', padding: '11px 16px', border: 'none', borderBottom: `1px solid ${BR}`, background: sortBy === opt.value ? LG : W, ...F, fontSize: '13px', fontWeight: sortBy === opt.value ? 600 : 400, color: sortBy === opt.value ? RD : DK, cursor: 'pointer' }}>
+                            style={{ width: '100%', textAlign: 'left', padding: '11px 16px', border: 'none', borderBottom: `1px solid ${BR}`, background: sortBy === opt.value ? LG : CARD, ...F, fontSize: '13px', fontWeight: sortBy === opt.value ? 600 : 400, color: sortBy === opt.value ? RD : DK, cursor: 'pointer' }}>
                             {sortBy === opt.value && '✓ '}{opt.label}
                           </button>
                         ))}
@@ -387,7 +389,7 @@ export default function Sale() {
               <style>{`@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}`}</style>
             </div>
           ) : error ? (
-            <div style={{ padding: '16px', background: '#FEF2F2', border: '1px solid #FECACA', ...F, fontSize: '13px', color: RD }}>
+            <div style={{ padding: '16px', background: 'rgba(220,38,38,0.12)', border: '1px solid rgba(220,38,38,0.3)', ...F, fontSize: '13px', color: RD }}>
               Failed to load sale items: {error}
             </div>
           ) : sorted.length === 0 ? (
@@ -397,9 +399,9 @@ export default function Sale() {
                 Check back soon, or explore our full collection while you wait.
               </p>
               <Link to="/shop"
-                style={{ display: 'inline-block', background: DK, color: W, padding: '14px 40px', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', transition: 'background 0.2s' }}
+                style={{ display: 'inline-block', background: INK, color: W, padding: '14px 40px', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', transition: 'background 0.2s' }}
                 onMouseEnter={e => { e.currentTarget.style.background = G }}
-                onMouseLeave={e => { e.currentTarget.style.background = DK }}>
+                onMouseLeave={e => { e.currentTarget.style.background = INK }}>
                 Shop All Collections
               </Link>
             </div>

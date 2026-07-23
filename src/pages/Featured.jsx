@@ -2,16 +2,23 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // ─── DESIGN TOKENS ───────────────────────────────────────────────
+// BK/CHAR stay fixed — they're this editorial page's permanently-dark
+// chrome (title bar, video sections, image-loading placeholders),
+// the same treatment as the site's other full-bleed dark hero sections.
 const BK    = '#0A0A0A'
-const W     = '#FFFFFF'
-const CREAM = '#FAF9F7'
-const INK   = '#1C1C1C'
 const CHAR  = '#2D2D2D'
-const GREY  = '#5A5A5A'
-const LGREY = '#E5E5E5'
+const W     = 'var(--white)'
+const BG    = 'var(--bg)'
+const CARD  = 'var(--bg-card)'
+const CREAM = 'var(--bg-alt)'
+const INK   = 'var(--text-strong)'
+const TEXT  = 'var(--text)'
+const GREY  = 'var(--text-muted)'
+const FAINT = 'var(--text-faint)'
+const LGREY = 'var(--border)'
 const XLGREY= '#F2F2F0'
 
-// Per-story accent colors — no gold carpet everywhere
+// Per-story accent colors — fixed, not theme-tied (deliberate distinct identity per story)
 const TERRA  = '#C4673A'   // terracotta  — RITH / runway
 const SAGE   = '#3D5A47'   // forest sage — Eden Collection
 const SLATE  = '#3A4A5C'   // slate blue  — editorial labels
@@ -111,7 +118,7 @@ function RITHSection() {
       </div>
 
       {/* ── BODY ── */}
-      <div style={{ background: W }}>
+      <div style={{ background: BG }}>
         <div style={{ maxWidth: '1320px', margin: '0 auto', padding: 'clamp(48px,7vw,96px) clamp(24px,5vw,64px)' }}>
 
           {/* Intro 2-col */}
@@ -132,15 +139,15 @@ function RITHSection() {
                 About R.I.T.H
               </h3>
 
-              <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: CHAR, lineHeight: 1.85, marginBottom: '22px' }}>
+              <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: TEXT, lineHeight: 1.85, marginBottom: '22px' }}>
                 As part of the British Museum's Young People's Lates programme, <em>Running in the Halls</em> invited audiences to encounter the Museum in an entirely new way — bodies moving through galleries, ideas crossing centuries.
               </p>
 
-              <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: CHAR, lineHeight: 1.85, marginBottom: '22px' }}>
+              <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: TEXT, lineHeight: 1.85, marginBottom: '22px' }}>
                 Curated by My Runway Group — who work to amplify underrepresented voices and champion emerging creatives — the evening brought together DJs, live performance, visual interventions and interactive workshops responding directly to the Museum's architecture and permanent collection.
               </p>
 
-              <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: CHAR, lineHeight: 1.85, marginBottom: '48px' }}>
+              <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: TEXT, lineHeight: 1.85, marginBottom: '48px' }}>
                 Ancestral memory met present-day expression. Contemporary diasporic voices were placed deliberately within one of the world's most recognised cultural institutions — not as guests, but as inheritors.
               </p>
 
@@ -161,7 +168,7 @@ function RITHSection() {
             <span style={{ ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: GREY }}>
               The Runway — click any image to enlarge
             </span>
-            <span style={{ ...F, fontSize: '11px', color: LGREY }}>04 images</span>
+            <span style={{ ...F, fontSize: '11px', color: FAINT }}>04 images</span>
           </div>
 
           {/* Asymmetric 3-col editorial grid */}
@@ -243,20 +250,20 @@ function EdenSection() {
               Inspired by the Garden of Eden
             </p>
 
-            <p style={{ ...F, fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, color: CHAR, lineHeight: 1.8, marginBottom: '24px' }}>
+            <p style={{ ...F, fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, color: TEXT, lineHeight: 1.8, marginBottom: '24px' }}>
               The Eden Collection is rooted in the beauty and purity of the Garden of Eden — a place symbolic of life, innocence, abundance, and divine harmony.
             </p>
 
-            <p style={{ ...F, fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, color: CHAR, lineHeight: 1.8, marginBottom: '24px' }}>
+            <p style={{ ...F, fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, color: TEXT, lineHeight: 1.8, marginBottom: '24px' }}>
               It reflects a return to the beginning. Femininity is effortless here. Confidence is natural. Beauty exists without apology or limitation — each piece embodies grace, softness, and quiet strength.
             </p>
 
-            <p style={{ ...F, fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, color: CHAR, lineHeight: 1.8, marginBottom: '48px' }}>
+            <p style={{ ...F, fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, color: TEXT, lineHeight: 1.8, marginBottom: '48px' }}>
               The collection captures the feeling of being fully seen, fully present, and unapologetically radiant. An Eden for the modern African woman.
             </p>
 
             {/* Pull quote */}
-            <blockquote style={{ margin: '0 0 52px', padding: '32px', background: W, borderTop: `4px solid ${SAGE}` }}>
+            <blockquote style={{ margin: '0 0 52px', padding: '32px', background: CARD, borderTop: `4px solid ${SAGE}` }}>
               <p style={{ ...F, fontSize: 'clamp(19px, 2vw, 26px)', fontWeight: 700, color: INK, lineHeight: 1.45, marginBottom: '16px' }}>
                 "The collection tells a story of a woman in her purest form — uncovered, unafraid, and blooming."
               </p>
@@ -289,7 +296,7 @@ function EdenSection() {
 // ─── PAGE ─────────────────────────────────────────────────────────
 export default function Featured() {
   return (
-    <div style={{ background: W, minHeight: '100vh' }}>
+    <div style={{ background: BG, minHeight: '100vh' }}>
 
 
       {/* ── PAGE TITLE BAR ── */}
