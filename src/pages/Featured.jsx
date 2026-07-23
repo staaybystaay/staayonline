@@ -279,15 +279,6 @@ function EdenSection() {
           />
         </div>
 
-        {/* Mood keywords */}
-        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-          {['Femininity', 'Grace', 'Quiet Strength', 'Radiance', 'Garden of Eden', 'Effortless Beauty', 'African Fashion', 'Womenswear'].map(t => (
-            <span key={t} style={{ padding: '8px 18px', border: `1px solid ${LGREY}`, ...F, fontSize: '11px', fontWeight: 500, color: GREY, letterSpacing: '0.04em' }}>
-              {t}
-            </span>
-          ))}
-        </div>
-
       </div>
     </article>
   )
