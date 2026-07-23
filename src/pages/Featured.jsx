@@ -84,10 +84,16 @@ function RITHSection() {
   return (
     <article style={{ marginBottom: '0' }}>
 
-      {/* ── HERO: full-bleed crowd shot ── */}
+      {/* ── HERO: full-bleed video ── */}
       <div style={{ position: 'relative', height: 'clamp(500px, 75vh, 780px)', overflow: 'hidden' }}>
-        <img src="/featured/feature6.jpeg" alt="Running in the Halls — British Museum"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 25%' }} />
+        <video
+          src="/edenvid2.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+        />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(160deg, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.82) 100%)' }} />
 
         <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(32px,5vw,64px)' }}>
