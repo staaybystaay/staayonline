@@ -87,6 +87,11 @@ function Founder() {
             <div>
               <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: INK }}>Stacey Sefah</p>
               <p style={{ ...F, fontSize: '11px', color: MUTE, letterSpacing: '0.04em', marginTop: '2px' }}>Founder &amp; Creative Director</p>
+              <a href="https://www.instagram.com/s.t.a.a.y?igsh=MXRueTlrZDdta3IyaQ=="
+                target="_blank" rel="noreferrer"
+                style={{ ...F, fontSize: '11px', fontWeight: 600, color: GOLD, letterSpacing: '0.04em', marginTop: '4px', display: 'inline-block' }}>
+                @s.t.a.a.y
+              </a>
             </div>
           </div>
         </motion.div>
