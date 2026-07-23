@@ -9,6 +9,7 @@ import Auth from './pages/Auth'
 import Product from './pages/Product'
 import Featured from './pages/Featured'
 import Brand from './pages/Brand'
+import About from './pages/About'
 import Terms from './pages/Terms'
 import Privacy from './pages/Privacy'
 import AuthCallback  from './pages/AuthCallback'
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="/product/:id" element={<Product />}  />
           <Route path="/featured"    element={<Featured />} />
           <Route path="/brand"       element={<Brand />}    />
+          <Route path="/about"       element={<About />}    />
           <Route path="/terms"       element={<Terms />}    />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/auth/callback"       element={<AuthCallback />}  />

@@ -250,6 +250,9 @@
   .brand-ig-grid {
     grid-template-columns: repeat(3, 1fr) !important;
   }
+  .about-split-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 @media (max-width: 560px) {
   .brand-ig-grid {
