@@ -6,17 +6,19 @@ import { imgCard } from '../lib/images'
 import useCartStore from '../store/useCartStore'
 import MiniCurrencyPicker from '../components/MiniCurrencyPicker'
 
-const G   = '#B8903A'
-const W   = '#FFFFFF'
-const BK  = '#111111'
-const DK  = '#1A1612'
-const MD  = '#666'
-const FT  = '#999'
-const LG  = '#F7F6F4'
-const BR  = '#E8E4DF'
-const RD  = '#E53E3E'
-const GR  = '#16A34A'
-const F   = { fontFamily: "'Inter', sans-serif" }
+const G    = 'var(--accent)'
+const W    = 'var(--white)'   // fixed white text
+const BG   = 'var(--bg)'
+const CARD = 'var(--bg-card)'
+const BK   = 'var(--ink)'     // fixed dark chrome
+const DK   = 'var(--text-strong)'
+const MD   = 'var(--text-muted)'
+const FT   = 'var(--text-faint)'
+const LG   = 'var(--bg-panel)'
+const BR   = 'var(--border)'
+const RD   = 'var(--danger)'
+const GR   = 'var(--success)'
+const F    = { fontFamily: "'Inter', sans-serif" }
 
 function FavoriteCard({ item, onRemove }) {
   const [added, setAdded] = useState(false)
@@ -42,7 +44,7 @@ function FavoriteCard({ item, onRemove }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.92 }}
       transition={{ duration: 0.3 }}
-      style={{ background: W }}>
+      style={{ background: CARD }}>
 
       {/* Image */}
       <div style={{ position: 'relative', aspectRatio: '3/4', background: LG, overflow: 'hidden', marginBottom: '10px' }}>
@@ -63,7 +65,7 @@ function FavoriteCard({ item, onRemove }) {
         {/* Remove */}
         <button
           onClick={() => onRemove(item.id)}
-          style={{ position: 'absolute', top: '10px', right: '10px', width: '34px', height: '34px', borderRadius: '50%', background: W, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 6px rgba(0,0,0,0.12)', fontSize: '16px', color: RD, transition: 'all 0.2s' }}
+          style={{ position: 'absolute', top: '10px', right: '10px', width: '34px', height: '34px', borderRadius: '50%', background: CARD, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 6px rgba(0,0,0,0.12)', fontSize: '16px', color: RD, transition: 'all 0.2s' }}
           onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.12)' }}
           onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)' }}
           title="Remove from wishlist">
@@ -96,7 +98,7 @@ export default function Favorites() {
   const [confirmClear, setConfirmClear] = useState(false)
 
   return (
-    <div style={{ background: W, minHeight: '100vh' }}>
+    <div style={{ background: BG, minHeight: '100vh' }}>
 
       {/* Header */}
       <div style={{ background: LG, borderBottom: `1px solid ${BR}`, padding: '28px 40px' }} className="page-padding">
@@ -120,7 +122,7 @@ export default function Favorites() {
 
         {items.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '100px 20px' }}>
-            <div style={{ fontSize: '48px', marginBottom: '16px', color: '#E0DBD5' }}>♡</div>
+            <div style={{ fontSize: '48px', marginBottom: '16px', color: FT }}>♡</div>
             <h2 style={{ ...F, fontSize: '20px', fontWeight: 700, color: DK, marginBottom: '8px' }}>Your wishlist is empty</h2>
             <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, marginBottom: '28px', maxWidth: '360px', marginLeft: 'auto', marginRight: 'auto' }}>
               Save pieces you love by tapping the heart icon — they'll show up here so you can come back to them anytime.
