@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import useCurrencyStore, { SUPPORTED_CURRENCIES } from '../store/useCurrencyStore'
 
-const DK = '#1A1612'
-const MD = '#666'
-const BR = '#E8E4DF'
-const LG = '#F7F6F4'
-const G  = '#B8903A'
-const W  = '#FFFFFF'
+const DK = 'var(--text-strong)'
+const MD = 'var(--text-muted)'
+const BR = 'var(--border)'
+const LG = 'var(--bg-panel)'
+const G  = 'var(--accent)'
+const W  = 'var(--bg-card)'
 const F  = { fontFamily: "'Inter', sans-serif" }
 
 export default function CurrencySelector() {

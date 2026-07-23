@@ -7,18 +7,19 @@ import { useAuth } from '../hooks/useAuth'
 import { getReviewsByProduct, createReview } from '../lib/api'
 import useCurrencyStore from '../store/useCurrencyStore'
 
-const G   = '#B8903A'
-const GL  = '#F5ECD8'
-const W   = '#FFFFFF'
-const BK  = '#111111'
-const DK  = '#1A1612'
-const MD  = '#888'
-const FT  = '#BBB'
-const LG  = '#F7F6F4'
-const BR  = '#E8E4DF'
-const RD  = '#E53E3E'
-const GR  = '#16A34A'
-const F   = { fontFamily: "'Inter', sans-serif" }
+const G    = 'var(--accent)'
+const GL   = 'var(--accent-soft)'
+const W    = 'var(--white)'   // fixed white text/foreground
+const CARD = 'var(--bg-card)'
+const BK   = 'var(--ink)'     // fixed dark chrome
+const DK   = 'var(--text-strong)'
+const MD   = 'var(--text-muted)'
+const FT   = 'var(--text-faint)'
+const LG   = 'var(--bg-panel)'
+const BR   = 'var(--border)'
+const RD   = 'var(--danger)'
+const GR   = 'var(--success)'
+const F    = { fontFamily: "'Inter', sans-serif" }
 
 const DEFAULT_SIZES     = ['XS', 'S', 'M', 'L', 'XL', 'XXL']
 const CUSTOMIZATION_FEE = 300
@@ -35,7 +36,7 @@ function StarRow({ score = 0, count = 0, hideLabel = false }) {
     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
       <div style={{ display: 'flex', gap: '2px' }}>
         {[1,2,3,4,5].map(i => (
-          <svg key={i} width="13" height="13" viewBox="0 0 13 13" fill={i <= Math.round(score) ? G : '#E8E4DF'} stroke={i <= Math.round(score) ? G : '#D4CFC9'} strokeWidth="0.5">
+          <svg key={i} width="13" height="13" viewBox="0 0 13 13" fill={i <= Math.round(score) ? G : 'var(--border)'} stroke={i <= Math.round(score) ? G : 'var(--border-mid)'} strokeWidth="0.5">
             <path d="M6.5 1l1.3 4H12L8.6 7.8l1.3 4L6.5 9.5 3.1 11.8l1.3-4L1 5h4.2z"/>
           </svg>
         ))}
@@ -53,7 +54,7 @@ function StarPicker({ value, onChange }) {
         <button key={i} type="button" onClick={() => onChange(i)}
           onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(0)}
           style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}>
-          <svg width="24" height="24" viewBox="0 0 13 13" fill={i <= (hovered || value) ? G : '#E8E4DF'} stroke={i <= (hovered || value) ? G : '#D4CFC9'} strokeWidth="0.5">
+          <svg width="24" height="24" viewBox="0 0 13 13" fill={i <= (hovered || value) ? G : 'var(--border)'} stroke={i <= (hovered || value) ? G : 'var(--border-mid)'} strokeWidth="0.5">
             <path d="M6.5 1l1.3 4H12L8.6 7.8l1.3 4L6.5 9.5 3.1 11.8l1.3-4L1 5h4.2z"/>
           </svg>
         </button>
@@ -199,7 +200,7 @@ export default function QuickView({ product, onClose }) {
           width: '760px',
           maxWidth: '96vw',
           zIndex: 301,
-          background: W,
+          background: CARD,
           display: 'flex',
           flexDirection: 'column',
           boxShadow: '-12px 0 60px rgba(0,0,0,0.18)',
@@ -216,9 +217,9 @@ export default function QuickView({ product, onClose }) {
           </div>
           <button
             onClick={onClose}
-            style={{ width: '38px', height: '38px', border: `1px solid ${BR}`, background: W, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '16px', color: MD, transition: 'all 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.background = DK; e.currentTarget.style.color = W; e.currentTarget.style.borderColor = DK }}
-            onMouseLeave={e => { e.currentTarget.style.background = W; e.currentTarget.style.color = MD; e.currentTarget.style.borderColor = BR }}>
+            style={{ width: '38px', height: '38px', border: `1px solid ${BR}`, background: CARD, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '16px', color: MD, transition: 'all 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.background = BK; e.currentTarget.style.color = W; e.currentTarget.style.borderColor = BK }}
+            onMouseLeave={e => { e.currentTarget.style.background = CARD; e.currentTarget.style.color = MD; e.currentTarget.style.borderColor = BR }}>
             ✕
           </button>
         </div>
@@ -291,7 +292,7 @@ export default function QuickView({ product, onClose }) {
                   <button
                     type="button"
                     onClick={() => setCustomize(v => { const next = !v; if (!next) { setCustomColor(null); setCustomNote('') } return next })}
-                    style={{ width: '44px', height: '24px', borderRadius: '12px', background: customize ? G : '#D1D5DB', border: 'none', cursor: 'pointer', position: 'relative', flexShrink: 0, transition: 'background 0.2s', marginTop: '1px' }}>
+                    style={{ width: '44px', height: '24px', borderRadius: '12px', background: customize ? G : 'var(--bg-surface)', border: 'none', cursor: 'pointer', position: 'relative', flexShrink: 0, transition: 'background 0.2s', marginTop: '1px' }}>
                     <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: W, position: 'absolute', top: '3px', left: customize ? '23px' : '3px', transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
                   </button>
                   <div>
@@ -341,7 +342,7 @@ export default function QuickView({ product, onClose }) {
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                   {availSizes.map(s => (
                     <button key={s} onClick={() => { setSelectedSize(s); setSizeError(false) }}
-                      style={{ padding: '7px 14px', border: `1.5px solid ${selectedSize === s ? G : sizeError ? RD : BR}`, background: selectedSize === s ? GL : W, ...F, fontSize: '12px', fontWeight: selectedSize === s ? 700 : 400, color: selectedSize === s ? G : DK, cursor: 'pointer', transition: 'all 0.15s', minWidth: '46px', textAlign: 'center' }}>
+                      style={{ padding: '7px 14px', border: `1.5px solid ${selectedSize === s ? G : sizeError ? RD : BR}`, background: selectedSize === s ? GL : CARD, ...F, fontSize: '12px', fontWeight: selectedSize === s ? 700 : 400, color: selectedSize === s ? G : DK, cursor: 'pointer', transition: 'all 0.15s', minWidth: '46px', textAlign: 'center' }}>
                       {s}
                     </button>
                   ))}
@@ -371,7 +372,7 @@ export default function QuickView({ product, onClose }) {
                   {addedToBag ? '✓ Added to Cart' : 'Add to Cart'}
                 </button>
                 <button onClick={() => toggle({ ...product, category: product.collection?.name })}
-                  style={{ width: '46px', height: '46px', border: `1px solid ${faved ? RD : BR}`, background: faved ? '#FEF2F2' : W, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', color: faved ? RD : FT, transition: 'all 0.2s', flexShrink: 0 }}>
+                  style={{ width: '46px', height: '46px', border: `1px solid ${faved ? RD : BR}`, background: faved ? 'rgba(229,83,75,0.15)' : CARD, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', color: faved ? RD : FT, transition: 'all 0.2s', flexShrink: 0 }}>
                   {faved ? '♥' : '♡'}
                 </button>
               </div>
@@ -456,12 +457,12 @@ export default function QuickView({ product, onClose }) {
                         <div>
                           <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '8px' }}>Your Name</p>
                           <input value={reviewName} onChange={e => setReviewName(e.target.value)} placeholder="e.g. Ama K."
-                            style={{ width: '100%', padding: '10px 14px', border: `1px solid ${BR}`, background: W, ...F, fontSize: '13px', color: DK, outline: 'none', boxSizing: 'border-box' }} />
+                            style={{ width: '100%', padding: '10px 14px', border: `1px solid ${BR}`, background: CARD, ...F, fontSize: '13px', color: DK, outline: 'none', boxSizing: 'border-box' }} />
                         </div>
                         <div>
                           <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, marginBottom: '8px' }}>Your Review</p>
                           <textarea value={reviewComment} onChange={e => setReviewComment(e.target.value)} rows={3} placeholder="Tell us what you thought of this piece..."
-                            style={{ width: '100%', padding: '10px 14px', border: `1px solid ${BR}`, background: W, ...F, fontSize: '13px', color: DK, outline: 'none', resize: 'vertical', boxSizing: 'border-box' }} />
+                            style={{ width: '100%', padding: '10px 14px', border: `1px solid ${BR}`, background: CARD, ...F, fontSize: '13px', color: DK, outline: 'none', resize: 'vertical', boxSizing: 'border-box' }} />
                         </div>
                         {reviewError && <p style={{ ...F, fontSize: '12px', color: RD }}>{reviewError}</p>}
                         <div style={{ display: 'flex', gap: '8px' }}>

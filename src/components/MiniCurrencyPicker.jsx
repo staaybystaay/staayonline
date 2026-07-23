@@ -8,11 +8,12 @@ const PILLS = [
   { code: 'EUR', label: '€'   },
 ]
 
-const G  = '#B8903A'
-const W  = '#FFFFFF'
-const BR = '#E8E4DF'
-const MD = '#888'
-const F  = { fontFamily: "'Inter', sans-serif" }
+const G    = 'var(--accent)'
+const W    = 'var(--white)'   // fixed white text on the active pill
+const CARD = 'var(--bg-card)'
+const BR   = 'var(--border)'
+const MD   = 'var(--text-muted)'
+const F    = { fontFamily: "'Inter', sans-serif" }
 
 function fmtLocal(ghs, code, rates) {
   if (code === 'GHS') return `GH₵${Math.round(ghs).toLocaleString()}`
@@ -45,8 +46,8 @@ export default function MiniCurrencyPicker({ ghs, priceStyle = {}, strikethrough
   return (
     <div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px' }}>
-        <span style={{ ...F, fontWeight: 700, color: '#1A1612', ...priceStyle }}>{price}</span>
-        {orig && <span style={{ ...F, fontSize: '12px', color: '#AAA', textDecoration: 'line-through' }}>{orig}</span>}
+        <span style={{ ...F, fontWeight: 700, color: 'var(--text-strong)', ...priceStyle }}>{price}</span>
+        {orig && <span style={{ ...F, fontSize: '12px', color: 'var(--text-faint)', textDecoration: 'line-through' }}>{orig}</span>}
       </div>
       <div style={{ display: 'flex', gap: '3px' }}>
         {PILLS.map(({ code, label }) => {
@@ -58,7 +59,7 @@ export default function MiniCurrencyPicker({ ghs, priceStyle = {}, strikethrough
               style={{
                 padding: '2px 7px',
                 border: `1px solid ${active ? G : BR}`,
-                background: active ? G : W,
+                background: active ? G : CARD,
                 color: active ? W : MD,
                 ...F, fontSize: '10px', fontWeight: 600,
                 cursor: 'pointer', borderRadius: '3px',
