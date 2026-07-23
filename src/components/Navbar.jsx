@@ -3,17 +3,30 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
 import { useAuth } from '../hooks/useAuth'
+import { useTheme } from '../context/ThemeContext'
 import CurrencySelector from './CurrencySelector'
 
-const G  = '#B8903A'
-const GL = '#F5ECD8'
-const W  = '#FFFFFF'
-const BK = '#111111'
-const DK = '#1A1612'
-const MD = '#666666'
-const LG = '#F5F5F5'
-const BR = '#E8E4DF'
+const G  = 'var(--accent)'
+const GL = 'var(--accent-soft)'
+const W  = 'var(--white)'
+const BG = 'var(--bg)'
+const DK = 'var(--text-strong)'
+const MD = 'var(--text-muted)'
+const LG = 'var(--bg-surface)'
+const BR = 'var(--border)'
 const F  = { fontFamily: "'Inter', sans-serif" }
+
+const SunIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <circle cx="9" cy="9" r="3.5" stroke="currentColor" strokeWidth="1.4"/>
+    <path d="M9 1.5v2M9 14.5v2M2.6 2.6l1.4 1.4M14 14l1.4 1.4M1.5 9h2M14.5 9h2M2.6 15.4l1.4-1.4M14 4l1.4-1.4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
+  </svg>
+)
+const MoonIcon = () => (
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <path d="M15.5 10.3A6.5 6.5 0 1 1 7.7 2.5a5 5 0 0 0 7.8 7.8z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
+  </svg>
+)
 
 const SearchIcon = () => (
   <svg width="17" height="17" viewBox="0 0 17 17" fill="none">
@@ -79,7 +92,7 @@ function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch }) {
           <motion.div
             initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
             transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-            style={{ position: 'fixed', top: 0, left: 0, bottom: 0, width: '280px', zIndex: 1000, background: W, display: 'flex', flexDirection: 'column' }}>
+            style={{ position: 'fixed', top: 0, left: 0, bottom: 0, width: '280px', zIndex: 1000, background: BG, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 24px', borderBottom: `1px solid ${BR}` }}>
               <img src="/stayonlinelogo.jpeg" alt="Staay" style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }} />
               <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: DK }}><CloseIcon /></button>
@@ -158,6 +171,7 @@ export default function Navbar() {
   const items     = useCartStore(s => s.items)
   const cartCount = items.reduce((n, i) => n + i.qty, 0)
   const { user, profile, logout } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const searchRef = useRef()
 
   useEffect(() => {
@@ -180,7 +194,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header style={{ position: 'sticky', top: 0, zIndex: 100, background: W, boxShadow: scrolled ? '0 1px 12px rgba(0,0,0,0.08)' : 'none', borderBottom: `1px solid ${BR}`, transition: 'box-shadow 0.3s' }}>
+      <header style={{ position: 'sticky', top: 0, zIndex: 100, background: BG, boxShadow: scrolled ? '0 1px 12px rgba(0,0,0,0.08)' : 'none', borderBottom: `1px solid ${BR}`, transition: 'box-shadow 0.3s, background 0.2s' }}>
 
         {/* ── MAIN NAV ── */}
         <div className="page-padding" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px', height: '68px', display: 'flex', alignItems: 'center', gap: '24px' }}>
@@ -233,6 +247,12 @@ export default function Navbar() {
 
           {/* Icons */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginLeft: 'auto' }}>
+            <button onClick={toggleTheme} aria-label="Toggle dark mode"
+              style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none', border: 'none', color: MD, cursor: 'pointer', transition: 'color 0.2s', flexShrink: 0 }}
+              onMouseEnter={e => { e.currentTarget.style.color = G }}
+              onMouseLeave={e => { e.currentTarget.style.color = MD }}>
+              {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+            </button>
             <div className="desktop-only" style={{ display: 'flex' }}>
               <CurrencySelector />
             </div>

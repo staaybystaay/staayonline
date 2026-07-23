@@ -16,7 +16,7 @@ export function ThemeProvider({ children }) {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div data-theme={theme}>
+      <div data-theme={theme} className="theme-root">
         {children}
       </div>
     </ThemeContext.Provider>

@@ -8,13 +8,15 @@ import { supabase } from '../../lib/supabase'
 import QuickView from '../QuickView'
 import MiniCurrencyPicker from '../MiniCurrencyPicker'
 
-const G   = '#B8903A'
-const W   = '#FFFFFF'
-const DK  = '#1A1612'
-const MD  = '#666'
-const LG  = '#F5F5F5'
-const BR  = '#E8E4DF'
-const RD  = '#E53E3E'
+const G   = 'var(--accent)'
+const W   = 'var(--white)'
+const DK  = 'var(--text-strong)'
+const MD  = 'var(--text-muted)'
+const LG  = 'var(--bg-surface)'
+const BR  = 'var(--border)'
+const RD  = 'var(--danger)'
+const CARD = 'var(--bg-card)'
+const INK  = 'var(--ink)'
 const F   = { fontFamily: "'Inter', sans-serif" }
 
 function StarRating() {
@@ -46,7 +48,7 @@ function ProductCard({ product, index, onQuickView }) {
       transition={{ duration: 0.4, delay: (index % 4) * 0.07 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ background: W, border: `1px solid ${hovered ? '#CCC' : BR}`, transition: 'border-color 0.2s' }}>
+      style={{ background: CARD, border: `1px solid ${hovered ? '#CCC' : BR}`, transition: 'border-color 0.2s' }}>
 
       <div style={{ position: 'relative', aspectRatio: '3/4', background: LG, overflow: 'hidden' }}>
         <img
@@ -65,7 +67,7 @@ function ProductCard({ product, index, onQuickView }) {
 
         <button
           onClick={e => { e.stopPropagation(); toggle({ ...product, category: product.collection?.name }) }}
-          style={{ position: 'absolute', top: '10px', right: '10px', width: '36px', height: '36px', borderRadius: '50%', background: W, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 8px rgba(0,0,0,0.15)', fontSize: '17px', color: faved ? RD : '#CCC', transition: 'color 0.2s, transform 0.2s' }}
+          style={{ position: 'absolute', top: '10px', right: '10px', width: '36px', height: '36px', borderRadius: '50%', background: CARD, border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 8px rgba(0,0,0,0.15)', fontSize: '17px', color: faved ? RD : '#CCC', transition: 'color 0.2s, transform 0.2s' }}
           onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.12)'; e.currentTarget.style.color = RD }}
           onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.color = faved ? RD : '#CCC' }}>
           {faved ? '♥' : '♡'}
@@ -88,9 +90,9 @@ function ProductCard({ product, index, onQuickView }) {
               </button>
               <button
                 onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY', badge: product.badge })}
-                style={{ flex: 1, background: DK, border: 'none', padding: '9px 6px', ...F, fontSize: '11px', fontWeight: 600, color: W, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', transition: 'background 0.2s' }}
+                style={{ flex: 1, background: INK, border: 'none', padding: '9px 6px', ...F, fontSize: '11px', fontWeight: 600, color: W, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', transition: 'background 0.2s' }}
                 onMouseEnter={e => { e.currentTarget.style.background = G }}
-                onMouseLeave={e => { e.currentTarget.style.background = DK }}>
+                onMouseLeave={e => { e.currentTarget.style.background = INK }}>
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h1.5l1.5 6h5.5l1.5-4.5H3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/><circle cx="5.5" cy="10" r="0.8" fill="currentColor"/><circle cx="8.5" cy="10" r="0.8" fill="currentColor"/></svg>
                 Add to Cart
               </button>
@@ -131,7 +133,7 @@ function ProductCard({ product, index, onQuickView }) {
           </button>
           <button
             onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY', badge: product.badge })}
-            style={{ flex: 1, background: DK, border: 'none', padding: '8px 6px', ...F, fontSize: '11px', fontWeight: 600, color: W, cursor: 'pointer' }}>
+            style={{ flex: 1, background: INK, border: 'none', padding: '8px 6px', ...F, fontSize: '11px', fontWeight: 600, color: W, cursor: 'pointer' }}>
             Add to Cart
           </button>
         </div>
@@ -168,7 +170,7 @@ export default function DiscoverProducts() {
   }, [])
 
   return (
-    <section className="page-padding" style={{ background: W, padding: '48px 40px 56px' }}>
+    <section className="page-padding" style={{ background: 'var(--bg)', padding: '48px 40px 56px' }}>
       <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '28px', flexWrap: 'wrap', gap: '12px' }}>

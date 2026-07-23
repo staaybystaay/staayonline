@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
-const G  = '#B8903A'
-const W  = '#FFFFFF'
-const DK = '#1A1612'
+const G  = 'var(--accent)'
+const W  = 'var(--white)'
+const DK = 'var(--text-strong)'
+const BG = 'var(--bg-panel)'
 const F  = { fontFamily: "'Inter', sans-serif" }
 const categories = [
   { label: 'Eden Collection',  path: '/shop?col=eden',      image: '/Edenn.jpg' },
@@ -16,15 +17,15 @@ const categories = [
 const doubled = [...categories, ...categories]
 export default function FindYourFit() {
   return (
-    <section style={{ background: '#FBFAF8', padding: '40px 0', overflow: 'hidden' }}>
+    <section style={{ background: BG, padding: '40px 0', overflow: 'hidden' }}>
       <div className="page-padding" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px', marginBottom: '24px' }}>
         <h2 style={{ ...F, fontSize: '22px', fontWeight: 700, color: DK }}>Find Your Fit</h2>
         <div style={{ width: '40px', height: '3px', background: G, marginTop: '8px' }} />
       </div>
       <div style={{ position: 'relative' }}>
         {/* Fade edges */}
-        <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: '60px', background: 'linear-gradient(90deg, #FBFAF8, transparent)', zIndex: 2, pointerEvents: 'none' }} />
-        <div style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: '60px', background: 'linear-gradient(270deg, #FBFAF8, transparent)', zIndex: 2, pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: '60px', background: `linear-gradient(90deg, ${BG}, transparent)`, zIndex: 2, pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', top: 0, bottom: 0, right: 0, width: '60px', background: `linear-gradient(270deg, ${BG}, transparent)`, zIndex: 2, pointerEvents: 'none' }} />
         <div className="marquee-track" style={{ display: 'flex', gap: '24px', animation: 'marquee 36s linear infinite', width: 'max-content', padding: '0 40px' }}>
           {doubled.map((cat, i) => (
             <Link key={i} to={cat.path} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', textDecoration: 'none', flexShrink: 0 }}>

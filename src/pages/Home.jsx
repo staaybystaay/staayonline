@@ -7,7 +7,7 @@ import DiscoverProducts from '../components/home/DiscoverProducts'
 
 export default function Home() {
   return (
-    <main style={{ background: '#fff' }}>
+    <main style={{ background: 'var(--bg)' }}>
       <PromoPopup />
       <Hero />
       <FindYourFit />
