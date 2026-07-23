@@ -82,10 +82,10 @@ function Tile({ src, caption, style = {}, imgStyle = {} }) {
 function RITHSection() {
   const [lb, setLb] = useState(null)
   const runway = [
-    { src: '/featured/feature5.jpeg', caption: 'Running in the Halls — British Museum' },
-    { src: '/featured/feature6.jpeg', caption: 'Running in the Halls — The Great Court' },
+    { src: '/featured/feature5.jpeg', caption: 'Running in the Halls at the British Museum' },
+    { src: '/featured/feature6.jpeg', caption: 'Running in the Halls in The Great Court' },
     { src: '/featured/feature1.jpeg', caption: 'STAAY at the British Museum' },
-    { src: '/featured/feature3.jpeg', caption: 'RITH — Running in the Halls' },
+    { src: '/featured/feature3.jpeg', caption: 'RITH, Running in the Halls' },
   ]
 
   return (
@@ -140,21 +140,21 @@ function RITHSection() {
               </h3>
 
               <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: TEXT, lineHeight: 1.85, marginBottom: '22px' }}>
-                As part of the British Museum's Young People's Lates programme, <em>Running in the Halls</em> invited audiences to encounter the Museum in an entirely new way — bodies moving through galleries, ideas crossing centuries.
+                As part of the British Museum's Young People's Lates programme, <em>Running in the Halls</em> invited audiences to encounter the Museum in an entirely new way, with bodies moving through the galleries and ideas crossing centuries.
               </p>
 
               <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: TEXT, lineHeight: 1.85, marginBottom: '22px' }}>
-                Curated by My Runway Group — who work to amplify underrepresented voices and champion emerging creatives — the evening brought together DJs, live performance, visual interventions and interactive workshops responding directly to the Museum's architecture and permanent collection.
+                The evening was curated by My Runway Group, who work to amplify underrepresented voices and champion emerging creatives. It brought together DJs, live performance, visual interventions, and interactive workshops that responded directly to the Museum's architecture and permanent collection.
               </p>
 
               <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: TEXT, lineHeight: 1.85, marginBottom: '48px' }}>
-                Ancestral memory met present-day expression. Contemporary diasporic voices were placed deliberately within one of the world's most recognised cultural institutions — not as guests, but as inheritors.
+                Ancestral memory met present-day expression, with contemporary diasporic voices placed deliberately within one of the world's most recognised cultural institutions, not as guests but as inheritors.
               </p>
 
               {/* Pull quote */}
               <blockquote style={{ margin: '0 0 48px', padding: '28px 0 28px 28px', borderLeft: `4px solid ${TERRA}` }}>
                 <p style={{ ...F, fontSize: 'clamp(17px, 1.8vw, 22px)', fontWeight: 700, color: INK, lineHeight: 1.5, marginBottom: '14px' }}>
-                  "Rather than viewing history at a distance, audiences are invited to move with the programme — to experience the Museum as a living cultural space where past and present exist side by side."
+                  "Rather than viewing history at a distance, audiences are invited to move with the programme and experience the Museum as a living cultural space where past and present exist side by side."
                 </p>
                 <cite style={{ ...F, fontSize: '11px', fontWeight: 700, color: GREY, letterSpacing: '0.1em', textTransform: 'uppercase', fontStyle: 'normal' }}>
                   My Runway Group
@@ -166,7 +166,7 @@ function RITHSection() {
           {/* ── RUNWAY GALLERY ── */}
           <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderTop: `1px solid ${LGREY}`, paddingTop: '28px' }}>
             <span style={{ ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: GREY }}>
-              The Runway — click any image to enlarge
+              The Runway, click any image to enlarge
             </span>
             <span style={{ ...F, fontSize: '11px', color: FAINT }}>04 images</span>
           </div>
@@ -233,7 +233,7 @@ function MomentsSection() {
 // ─── EDEN SECTION ────────────────────────────────────────────────
 function EdenSection() {
   const gallery = [
-    { src: '/featured/feature2.jpeg', caption: 'The Eden Collection — STAAY' },
+    { src: '/featured/feature2.jpeg', caption: 'The Eden Collection by STAAY' },
     { src: '/featured/feature4.jpeg', caption: 'Eden Editorial'               },
   ]
 
@@ -251,11 +251,11 @@ function EdenSection() {
             </p>
 
             <p style={{ ...F, fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, color: TEXT, lineHeight: 1.8, marginBottom: '24px' }}>
-              The Eden Collection is rooted in the beauty and purity of the Garden of Eden — a place symbolic of life, innocence, abundance, and divine harmony.
+              The Eden Collection is rooted in the beauty and purity of the Garden of Eden, a place symbolic of life, innocence, abundance, and divine harmony.
             </p>
 
             <p style={{ ...F, fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, color: TEXT, lineHeight: 1.8, marginBottom: '24px' }}>
-              It reflects a return to the beginning. Femininity is effortless here. Confidence is natural. Beauty exists without apology or limitation — each piece embodies grace, softness, and quiet strength.
+              It reflects a return to the beginning. Femininity is effortless here, confidence is natural, and beauty exists without apology or limitation. Each piece embodies grace, softness, and quiet strength.
             </p>
 
             <p style={{ ...F, fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, color: TEXT, lineHeight: 1.8, marginBottom: '48px' }}>
@@ -265,7 +265,7 @@ function EdenSection() {
             {/* Pull quote */}
             <blockquote style={{ margin: '0 0 52px', padding: '32px', background: CARD, borderTop: `4px solid ${SAGE}` }}>
               <p style={{ ...F, fontSize: 'clamp(19px, 2vw, 26px)', fontWeight: 700, color: INK, lineHeight: 1.45, marginBottom: '16px' }}>
-                "The collection tells a story of a woman in her purest form — uncovered, unafraid, and blooming."
+                "The collection tells a story of a woman in her purest form, uncovered, unafraid, and blooming."
               </p>
               <cite style={{ ...F, fontSize: '11px', fontWeight: 700, color: SAGE, letterSpacing: '0.12em', textTransform: 'uppercase', fontStyle: 'normal' }}>
                 STAAY
