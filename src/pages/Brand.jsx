@@ -264,31 +264,6 @@ function InstagramSection() {
 }
 
 // ═══════════════════════════════════════════════
-// PRESS & PARTNERSHIPS — closing contact CTA
-// ═══════════════════════════════════════════════
-function PressContact() {
-  return (
-    <section style={{ background: INK, padding: 'clamp(56px, 8vw, 90px) clamp(24px, 6vw, 64px)', textAlign: 'center' }}>
-      <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '560px', margin: '0 auto' }}>
-        <Eyebrow color={GOLD} center>Press &amp; Partnerships</Eyebrow>
-        <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 32px)', fontWeight: 800, color: W, letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: '16px' }}>
-          Media, collaborations &amp; wholesale inquiries
-        </h2>
-        <p style={{ ...F, fontSize: '14px', fontWeight: 400, lineHeight: 1.75, color: 'rgba(255,255,255,0.65)', marginBottom: '28px' }}>
-          For press, partnerships, or collaborations, reach out and our team will follow up.
-        </p>
-        <Link to="/contact"
-          style={{ display: 'inline-block', background: GOLD, color: INK, padding: '15px 40px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'opacity 0.25s' }}
-          onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
-          onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}>
-          Get in Touch
-        </Link>
-      </motion.div>
-    </section>
-  )
-}
-
-// ═══════════════════════════════════════════════
 // PAGE
 // ═══════════════════════════════════════════════
 export default function Brand() {
@@ -301,7 +276,6 @@ export default function Brand() {
       <CampaignSpotlight />
       <DiscoverCollection />
       <InstagramSection />
-      <PressContact />
     </div>
   )
 }
