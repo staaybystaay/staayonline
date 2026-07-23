@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion'
 
 // ─── TOKENS ───────────────────────────────────
-const INK   = '#15130F'
-const PAPER = '#F8F3E8'
-const PANEL = '#EFE6D2'
-const GOLD  = '#B8903A'
-const TERRA = '#B5502E'
-const MUTE  = '#6E6657'
-const W     = '#FFFFFF'
+const INK   = 'var(--text-strong)'
+const PAPER = 'var(--bg)'
+const PANEL = 'var(--bg-panel)'
+const GOLD  = 'var(--accent)'
+const TERRA = 'var(--accent-2)'
+const MUTE  = 'var(--text-muted)'
+const W     = 'var(--white)'
+const DARK  = 'var(--ink)'
 
 const F = { fontFamily: "'Inter', sans-serif" }
 
@@ -33,7 +34,7 @@ const fadeUp = {
 // ═══════════════════════════════════════════════
 function Hero() {
   return (
-    <section style={{ position: 'relative', height: 'clamp(360px, 50vh, 520px)', overflow: 'hidden', background: INK }}>
+    <section style={{ position: 'relative', height: 'clamp(360px, 50vh, 520px)', overflow: 'hidden', background: DARK }}>
       <img
         src="/herobanner1.jpg"
         alt="STAAY"
@@ -130,7 +131,7 @@ function Evolution() {
 // ═══════════════════════════════════════════════
 function Manifesto() {
   return (
-    <section style={{ background: INK, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 80px)' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 80px)' }}>
       <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '880px', margin: '0 auto', textAlign: 'center' }}>
         <Eyebrow color={GOLD} center>The Manifesto</Eyebrow>
         <p style={{ ...F, fontSize: 'clamp(22px, 3vw, 34px)', fontWeight: 700, lineHeight: 1.5, color: '#EDE5D2' }}>

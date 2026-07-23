@@ -2,13 +2,24 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 // ─── TOKENS ───────────────────────────────────
-const INK   = '#15130F'
-const PAPER = '#F8F3E8'
-const PANEL = '#EFE6D2'
-const GOLD  = '#B8903A'
-const TERRA = '#B5502E'   // secondary accent — used to break the gold-everywhere flatness
-const MUTE  = '#6E6657'
-const W     = '#FFFFFF'
+// Literal fixed brand hex values — used only for the color swatches in
+// the "Our Colors" section below and the two permanently-dark sections
+// (Hero, Manifesto), where the actual values must not flip with theme.
+const GOLD_HEX  = '#B8903A'
+const TERRA_HEX = '#B5502E'
+const INK_HEX   = '#15130F'
+const CREAM_HEX = '#EFE6D2'
+
+// Theme-aware tokens used throughout the rest of the page
+const INK    = 'var(--text-strong)'
+const PAPER  = 'var(--bg)'
+const PANEL  = 'var(--bg-panel)'
+const GOLD   = 'var(--accent)'
+const TERRA  = 'var(--accent-2)'
+const MUTE   = 'var(--text-muted)'
+const W      = 'var(--white)'
+const DARK   = 'var(--ink)'
+const SURFACE = 'var(--bg-surface)'
 
 const F = { fontFamily: "'Inter', sans-serif" }
 
@@ -34,7 +45,7 @@ const fadeUp = {
 // ═══════════════════════════════════════════════
 function Hero() {
   return (
-    <section style={{ position: 'relative', height: 'clamp(420px, 60vh, 640px)', overflow: 'hidden', background: INK }}>
+    <section style={{ position: 'relative', height: 'clamp(420px, 60vh, 640px)', overflow: 'hidden', background: DARK }}>
       <video
         src="/stayvid2.mp4"
         poster="/herobanner2.jpg"
@@ -70,7 +81,7 @@ function TrueColors() {
 
         <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ position: 'relative' }}>
           <div style={{ position: 'absolute', bottom: '18px', right: '18px', left: '-18px', top: '-18px', background: GOLD, zIndex: 0 }} />
-          <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', background: '#DCD0AE', zIndex: 1 }}>
+          <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', background: SURFACE, zIndex: 1 }}>
             <img src="/herobanner1.jpg" alt="STAAY editorial"
               onError={e => { e.target.style.display = 'none' }}
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'right center', display: 'block' }} />
@@ -100,10 +111,10 @@ function TrueColors() {
 // BRAND COLORS
 // ═══════════════════════════════════════════════
 const palette = [
-  { name: 'Gold',       hex: GOLD,  note: 'Warm and luxurious' },
-  { name: 'Terracotta', hex: TERRA, note: 'Earthy and bold' },
-  { name: 'Ink',        hex: INK,   note: 'Grounded and timeless' },
-  { name: 'Cream',      hex: PANEL, note: 'Soft and clean' },
+  { name: 'Gold',       hex: GOLD_HEX,  note: 'Warm and luxurious' },
+  { name: 'Terracotta', hex: TERRA_HEX, note: 'Earthy and bold' },
+  { name: 'Ink',        hex: INK_HEX,   note: 'Grounded and timeless' },
+  { name: 'Cream',      hex: CREAM_HEX, note: 'Soft and clean' },
 ]
 
 function BrandColors() {
@@ -118,7 +129,7 @@ function BrandColors() {
         <div className="brand-palette-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
           {palette.map(c => (
             <motion.div key={c.name} {...fadeUp} transition={{ duration: 0.5 }}>
-              <div style={{ aspectRatio: '1/1', background: c.hex, borderRadius: '8px', marginBottom: '14px', border: c.hex === PANEL ? `1px solid #DCD0AE` : 'none' }} />
+              <div style={{ aspectRatio: '1/1', background: c.hex, borderRadius: '8px', marginBottom: '14px', border: c.hex === CREAM_HEX ? `1px solid #DCD0AE` : 'none' }} />
               <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: INK, marginBottom: '2px' }}>{c.name}</p>
               <p style={{ ...F, fontSize: '12px', fontWeight: 400, color: MUTE }}>{c.note}</p>
             </motion.div>
@@ -134,7 +145,7 @@ function BrandColors() {
 // ═══════════════════════════════════════════════
 function Manifesto() {
   return (
-    <section style={{ background: INK, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 80px)' }}>
+    <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 80px)' }}>
       <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '880px', margin: '0 auto', textAlign: 'center' }}>
         <Eyebrow color={GOLD} center>The Manifesto</Eyebrow>
         <p style={{ ...F, fontSize: 'clamp(22px, 3vw, 34px)', fontWeight: 700, lineHeight: 1.5, color: '#EDE5D2' }}>
@@ -154,7 +165,7 @@ function CampaignSpotlight() {
     <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
       <div className="brand-split-grid" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
 
-        <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ aspectRatio: '4/3', overflow: 'hidden', background: '#DCD0AE' }}>
+        <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ aspectRatio: '4/3', overflow: 'hidden', background: SURFACE }}>
           <img src="/featured/rith-crowd.jpg" alt="STAAY at the British Museum"
             onError={e => { e.target.style.display = 'none' }}
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
@@ -170,7 +181,7 @@ function CampaignSpotlight() {
           </p>
           <Link to="/featured"
             style={{ display: 'inline-block', background: 'transparent', border: `1.5px solid ${INK}`, color: INK, padding: '13px 32px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'all 0.25s' }}
-            onMouseEnter={e => { e.currentTarget.style.background = INK; e.currentTarget.style.color = W }}
+            onMouseEnter={e => { e.currentTarget.style.background = DARK; e.currentTarget.style.color = W }}
             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = INK }}>
             View the Full Story
           </Link>
@@ -189,7 +200,7 @@ function DiscoverCollection() {
       <div className="brand-split-grid" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(24px, 4vw, 40px)', alignItems: 'stretch' }}>
 
         <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <div style={{ flex: 1, overflow: 'hidden', background: '#DCD0AE', minHeight: '220px' }}>
+          <div style={{ flex: 1, overflow: 'hidden', background: SURFACE, minHeight: '220px' }}>
             <img src="/featured/feature2.jpeg" alt="The Eden Collection"
               onError={e => { e.target.style.display = 'none' }}
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
@@ -204,14 +215,14 @@ function DiscoverCollection() {
             </p>
             <Link to="/shop"
               style={{ display: 'inline-block', background: TERRA, color: W, padding: '15px 38px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.25s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = INK }}
+              onMouseEnter={e => { e.currentTarget.style.background = DARK }}
               onMouseLeave={e => { e.currentTarget.style.background = TERRA }}>
               Shop Now
             </Link>
           </div>
         </motion.div>
 
-        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} style={{ overflow: 'hidden', background: W }}>
+        <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }} style={{ overflow: 'hidden', background: SURFACE }}>
           <video
             src="/staayvid7.mp4"
             autoPlay
