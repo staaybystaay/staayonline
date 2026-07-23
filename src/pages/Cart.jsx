@@ -5,14 +5,17 @@ import { Link, useNavigate } from 'react-router-dom'
 import useCartStore from '../store/useCartStore'
 import useCurrencyStore from '../store/useCurrencyStore'
 
-const INK   = '#171614'
-const PAPER = '#FAF9F6'
-const LINE  = '#E6E2DA'
-const MUTE  = '#8C8579'
-const FAINT = '#BFBAB0'
-const W     = '#FFFFFF'
-const RD    = '#A33B34'
-const GR    = '#3F6B52'
+const INK   = 'var(--text-strong)'
+const PAPER = 'var(--bg-surface)'
+const LINE  = 'var(--border)'
+const MUTE  = 'var(--text-muted)'
+const FAINT = 'var(--text-faint)'
+const W     = 'var(--white)'
+const RD    = 'var(--danger)'
+const GR    = 'var(--success)'
+const BG    = 'var(--bg)'
+const CARD  = 'var(--bg-card)'
+const BTN   = 'var(--ink)'
 const F     = { fontFamily: "'Inter', sans-serif" }
 
 const BagIcon = ({ size = 28, color = INK }) => (
@@ -40,9 +43,9 @@ function EmptyCart() {
         Items you add will appear here. Take a look through our latest pieces.
       </p>
       <Link to="/shop"
-        style={{ background: INK, color: W, padding: '14px 40px', marginTop: '8px', ...F, fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em', display: 'inline-block', transition: 'background 0.2s' }}
+        style={{ background: BTN, color: W, padding: '14px 40px', marginTop: '8px', ...F, fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em', display: 'inline-block', transition: 'background 0.2s' }}
         onMouseEnter={e => { e.currentTarget.style.background = '#000' }}
-        onMouseLeave={e => { e.currentTarget.style.background = INK }}>
+        onMouseLeave={e => { e.currentTarget.style.background = BTN }}>
         Continue Shopping
       </Link>
     </motion.div>
@@ -61,7 +64,7 @@ function CartItem({ item, index }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, height: 0, overflow: 'hidden' }}
       transition={{ duration: 0.3, delay: index * 0.04 }}
-      style={{ display: 'grid', gridTemplateColumns: '92px 1fr auto', gap: '20px', padding: '22px 0', borderBottom: `1px solid ${LINE}`, background: W }}>
+      style={{ display: 'grid', gridTemplateColumns: '92px 1fr auto', gap: '20px', padding: '22px 0', borderBottom: `1px solid ${LINE}`, background: CARD }}>
 
       {/* Image */}
       <div style={{ width: '92px', aspectRatio: '3/4', background: PAPER, overflow: 'hidden', flexShrink: 0 }}>
@@ -195,7 +198,7 @@ function OrderSummary({ items }) {
                 onKeyDown={e => { if (e.key === 'Enter') applyPromo() }}
                 placeholder="Promo code"
                 style={{
-                  flex: 1, background: W,
+                  flex: 1, background: CARD,
                   border: `1px solid ${promoError ? RD : promoApplied ? GR : focused ? INK : LINE}`,
                   borderRight: 'none', padding: '11px 14px',
                   ...F, fontSize: '13px', color: INK,
@@ -205,7 +208,7 @@ function OrderSummary({ items }) {
               />
               <button
                 onClick={applyPromo}
-                style={{ padding: '0 18px', background: promoApplied ? GR : INK, color: W, border: 'none', cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>
+                style={{ padding: '0 18px', background: promoApplied ? GR : BTN, color: W, border: 'none', cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>
                 {promoApplied ? 'Applied' : 'Apply'}
               </button>
             </div>
@@ -236,9 +239,9 @@ function OrderSummary({ items }) {
           {/* Checkout */}
           <button
             onClick={() => navigate('/checkout')}
-            style={{ width: '100%', padding: '16px', background: INK, color: W, border: 'none', cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 600, letterSpacing: '0.04em', marginBottom: '10px', transition: 'background 0.2s' }}
+            style={{ width: '100%', padding: '16px', background: BTN, color: W, border: 'none', cursor: 'pointer', ...F, fontSize: '14px', fontWeight: 600, letterSpacing: '0.04em', marginBottom: '10px', transition: 'background 0.2s' }}
             onMouseEnter={e => { e.currentTarget.style.background = '#000' }}
-            onMouseLeave={e => { e.currentTarget.style.background = INK }}>
+            onMouseLeave={e => { e.currentTarget.style.background = BTN }}>
             Checkout
           </button>
 
@@ -262,7 +265,7 @@ export default function Cart() {
   const totalQty  = items.reduce((n, i) => n + i.qty, 0)
 
   return (
-    <div style={{ background: W, minHeight: '100vh' }}>
+    <div style={{ background: BG, minHeight: '100vh' }}>
 
       {/* ── HEADER ── */}
       <div className="page-padding" style={{ borderBottom: `1px solid ${LINE}`, padding: '36px 40px' }}>

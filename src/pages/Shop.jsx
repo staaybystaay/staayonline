@@ -8,18 +8,20 @@ import { supabase } from '../lib/supabase'
 import MiniCurrencyPicker from '../components/MiniCurrencyPicker'
 import QuickView from '../components/QuickView'
 
-const G   = '#B8903A'
-const GL  = '#F5ECD8'
-const W   = '#FFFFFF'
-const OW  = '#F8F7F4'
-const B2  = '#F2EFE9'
-const BK  = '#111111'
-const DK  = '#222222'
-const MD  = '#666666'
-const FT  = '#999999'
-const BR  = '#E4E0D8'
-const RD  = '#B91C1C'
-const F   = { fontFamily: "'Inter', sans-serif" }
+const G    = 'var(--accent)'
+const GL   = 'var(--accent-soft)'
+const W    = 'var(--white)'
+const OW   = 'var(--bg-panel)'
+const B2   = 'var(--bg-surface)'
+const BK   = 'var(--ink)'
+const DK   = 'var(--text-strong)'
+const MD   = 'var(--text-muted)'
+const FT   = 'var(--text-faint)'
+const BR   = 'var(--border)'
+const RD   = 'var(--danger)'
+const BG   = 'var(--bg)'
+const CARD = 'var(--bg-card)'
+const F    = { fontFamily: "'Inter', sans-serif" }
 
 // Banner shown at the top of the Shop page. All are square logo badges,
 // so they're shown with object-fit: contain.
@@ -160,7 +162,7 @@ function ProductCardGrid({ product, onQuickView }) {
           )}
           <button
             onClick={() => onWishlist(product.id)}
-            style={{ position: 'absolute', top: '10px', right: '10px', width: '32px', height: '32px', borderRadius: '50%', background: W, border: 'none', cursor: 'pointer', fontSize: '16px', color: wishlisted ? RD : DK, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: hovered || wishlisted ? 1 : 0, transition: 'opacity 0.25s', boxShadow: '0 1px 6px rgba(17,17,17,0.14)' }}>
+            style={{ position: 'absolute', top: '10px', right: '10px', width: '32px', height: '32px', borderRadius: '50%', background: CARD, border: 'none', cursor: 'pointer', fontSize: '16px', color: wishlisted ? RD : DK, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: hovered || wishlisted ? 1 : 0, transition: 'opacity 0.25s', boxShadow: '0 1px 6px rgba(17,17,17,0.14)' }}>
             {wishlisted ? '♥' : '♡'}
           </button>
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: BK, display: 'flex', transform: hovered ? 'translateY(0)' : 'translateY(100%)', transition: 'transform 0.3s' }}>
@@ -218,7 +220,7 @@ function ProductCardList({ product, onQuickView }) {
       transition={{ duration: 0.3 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      style={{ display: 'flex', background: W, border: `1px solid ${hovered ? DK : BR}`, transition: 'border-color 0.2s', overflow: 'hidden' }}>
+      style={{ display: 'flex', background: CARD, border: `1px solid ${hovered ? DK : BR}`, transition: 'border-color 0.2s', overflow: 'hidden' }}>
       <div style={{ width: '140px', flexShrink: 0, position: 'relative', overflow: 'hidden', background: B2 }}>
         <img src={imgThumb(product.image_url)} alt={product.name} loading="lazy" decoding="async" onError={e => { e.target.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s', transform: hovered ? 'scale(1.04)' : 'scale(1)', position: 'absolute', inset: 0 }} />
         {discount ? (
@@ -235,7 +237,7 @@ function ProductCardList({ product, onQuickView }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
           <MiniCurrencyPicker ghs={product.price} priceStyle={{ fontSize: '18px' }} strikethrough={originalPrice} />
-          <button onClick={() => onWishlist(product.id)} style={{ width: '36px', height: '36px', borderRadius: '50%', background: wishlisted ? '#FEE2E2' : OW, border: `1px solid ${wishlisted ? RD : BR}`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '15px', color: wishlisted ? RD : MD, transition: 'all 0.2s' }}>
+          <button onClick={() => onWishlist(product.id)} style={{ width: '36px', height: '36px', borderRadius: '50%', background: wishlisted ? 'rgba(229,83,75,0.15)' : OW, border: `1px solid ${wishlisted ? RD : BR}`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: '15px', color: wishlisted ? RD : MD, transition: 'all 0.2s' }}>
             {wishlisted ? '♥' : '♡'}
           </button>
           <button
@@ -339,7 +341,7 @@ export default function Shop() {
   ]
 
   return (
-    <div style={{ background: W, minHeight: '100vh' }}>
+    <div style={{ background: BG, minHeight: '100vh' }}>
 
       {/* ── COLLECTION BANNER (with name + description overlaid) ── */}
       {bannerImage && (
@@ -403,7 +405,7 @@ export default function Shop() {
       )}
 
       {/* ── TOOLBAR ── */}
-      <div className="shop-toolbar" style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '0 64px', position: 'sticky', top: '0', zIndex: 40 }}>
+      <div className="shop-toolbar" style={{ background: BG, borderBottom: `1px solid ${BR}`, padding: '0 64px', position: 'sticky', top: '0', zIndex: 40 }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'flex', alignItems: 'stretch', height: '52px' }}>
 
           {/* Collection pills */}
@@ -430,9 +432,9 @@ export default function Shop() {
                 {sortOpen && (
                   <>
                     <div style={{ position: 'fixed', inset: 0, zIndex: 48 }} onClick={() => setSortOpen(false)} />
-                    <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.15 }} style={{ position: 'absolute', top: '100%', right: 0, zIndex: 49, minWidth: '180px', background: W, border: `1px solid ${BR}`, boxShadow: '0 8px 24px rgba(17,17,17,0.1)' }}>
+                    <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.15 }} style={{ position: 'absolute', top: '100%', right: 0, zIndex: 49, minWidth: '180px', background: CARD, border: `1px solid ${BR}`, boxShadow: '0 8px 24px rgba(17,17,17,0.1)' }}>
                       {SORT_OPTIONS.map(opt => (
-                        <button key={opt.value} onClick={() => { setSortBy(opt.value); setSortOpen(false) }} style={{ width: '100%', textAlign: 'left', padding: '11px 16px', border: 'none', borderBottom: `1px solid ${BR}`, background: sortBy === opt.value ? OW : W, ...F, fontSize: '13px', fontWeight: sortBy === opt.value ? 600 : 400, color: sortBy === opt.value ? G : DK, cursor: 'pointer' }} onMouseEnter={e => { e.currentTarget.style.background = OW }} onMouseLeave={e => { e.currentTarget.style.background = sortBy === opt.value ? OW : W }}>
+                        <button key={opt.value} onClick={() => { setSortBy(opt.value); setSortOpen(false) }} style={{ width: '100%', textAlign: 'left', padding: '11px 16px', border: 'none', borderBottom: `1px solid ${BR}`, background: sortBy === opt.value ? OW : CARD, ...F, fontSize: '13px', fontWeight: sortBy === opt.value ? 600 : 400, color: sortBy === opt.value ? G : DK, cursor: 'pointer' }} onMouseEnter={e => { e.currentTarget.style.background = OW }} onMouseLeave={e => { e.currentTarget.style.background = sortBy === opt.value ? OW : CARD }}>
                           {sortBy === opt.value ? '✓ ' : ''}{opt.label}
                         </button>
                       ))}
@@ -454,7 +456,7 @@ export default function Shop() {
 
       {/* ── ACTIVE FILTERS ── */}
       {hasFilters && (
-        <div className="page-padding" style={{ background: W, borderBottom: `1px solid ${BR}`, padding: '10px 64px' }}>
+        <div className="page-padding" style={{ background: BG, borderBottom: `1px solid ${BR}`, padding: '10px 64px' }}>
           <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
             <span style={{ ...F, fontSize: '11px', fontWeight: 500, color: MD }}>Filters:</span>
             {activeCollection !== 'all' && activeCol && (
@@ -529,7 +531,7 @@ export default function Shop() {
                 <div style={{ textAlign: 'center', marginTop: '48px' }}>
                   <button onClick={() => setVisibleCount(n => n + 12)}
                     style={{ padding: '14px 48px', background: 'transparent', border: `1px solid ${DK}`, ...F, fontSize: '13px', fontWeight: 600, letterSpacing: '0.05em', color: DK, cursor: 'pointer', transition: 'all 0.2s' }}
-                    onMouseEnter={e => { e.currentTarget.style.background = DK; e.currentTarget.style.color = W }}
+                    onMouseEnter={e => { e.currentTarget.style.background = BK; e.currentTarget.style.color = W }}
                     onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = DK }}>
                     Load More ({sorted.length - visibleCount} remaining)
                   </button>
@@ -547,7 +549,7 @@ export default function Shop() {
                 <div style={{ textAlign: 'center', marginTop: '48px' }}>
                   <button onClick={() => setVisibleCount(n => n + 12)}
                     style={{ padding: '14px 48px', background: 'transparent', border: `1px solid ${DK}`, ...F, fontSize: '13px', fontWeight: 600, letterSpacing: '0.05em', color: DK, cursor: 'pointer', transition: 'all 0.2s' }}
-                    onMouseEnter={e => { e.currentTarget.style.background = DK; e.currentTarget.style.color = W }}
+                    onMouseEnter={e => { e.currentTarget.style.background = BK; e.currentTarget.style.color = W }}
                     onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = DK }}>
                     Load More ({sorted.length - visibleCount} remaining)
                   </button>

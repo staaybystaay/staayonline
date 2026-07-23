@@ -142,8 +142,8 @@ function RelatedCard({ product }) {
           {product.badge && (
             <span style={{
               position: 'absolute', top: 0, left: 0,
-              background: product.badge === 'Sale' ? '#e63946' : 'var(--accent)',
-              color: product.badge === 'Sale' ? '#fff' : '#0C0B09',
+              background: product.badge === 'Sale' ? 'var(--danger)' : 'var(--accent)',
+              color: product.badge === 'Sale' ? 'var(--white)' : 'var(--ink)',
               padding: '5px 10px',
               fontFamily: "'Outfit', sans-serif",
               fontSize: '9px', fontWeight: 700,
@@ -371,8 +371,8 @@ export default function Product() {
               {product.badge && (
                 <span style={{
                   position: 'absolute', top: 0, left: 0,
-                  background: product.badge === 'Sale' ? '#e63946' : 'var(--accent)',
-                  color: product.badge === 'Sale' ? '#fff' : '#0C0B09',
+                  background: product.badge === 'Sale' ? 'var(--danger)' : 'var(--accent)',
+                  color: product.badge === 'Sale' ? 'var(--white)' : 'var(--ink)',
                   padding: '7px 14px',
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: '9px', fontWeight: 700,
@@ -568,7 +568,7 @@ export default function Product() {
                   fontFamily: "'Outfit', sans-serif",
                   fontSize: '10px', letterSpacing: '0.24em',
                   textTransform: 'uppercase',
-                  color: sizeError ? '#e63946' : 'var(--text-muted)',
+                  color: sizeError ? 'var(--danger)' : 'var(--text-muted)',
                   fontWeight: 400, transition: 'color 0.2s',
                 }}>
                   {sizeError ? 'Select a size to continue' : 'Size'}
@@ -596,8 +596,8 @@ export default function Product() {
                       style={{
                         aspectRatio: '1/1',
                         background: active ? 'var(--text)' : 'transparent',
-                        border: `1px solid ${sizeError ? '#e63946' : active ? 'var(--text)' : 'var(--border)'}`,
-                        borderLeft: i > 0 ? 'none' : `1px solid ${sizeError ? '#e63946' : active ? 'var(--text)' : 'var(--border)'}`,
+                        border: `1px solid ${sizeError ? 'var(--danger)' : active ? 'var(--text)' : 'var(--border)'}`,
+                        borderLeft: i > 0 ? 'none' : `1px solid ${sizeError ? 'var(--danger)' : active ? 'var(--text)' : 'var(--border)'}`,
                         color: active ? 'var(--bg)' : 'var(--text-muted)',
                         fontFamily: "'Outfit', sans-serif",
                         fontSize: '11px', fontWeight: active ? 600 : 300,
@@ -677,8 +677,8 @@ export default function Product() {
                 onClick={handleAddToBag}
                 style={{
                   flex: 1,
-                  background: addedToBag ? '#2a7a2a' : 'var(--text)',
-                  color: 'var(--bg)', border: 'none',
+                  background: addedToBag ? 'var(--success)' : 'var(--text)',
+                  color: addedToBag ? 'var(--white)' : 'var(--bg)', border: 'none',
                   borderLeft: 'none',
                   fontFamily: "'Bebas Neue', sans-serif",
                   fontSize: '17px', letterSpacing: '0.1em',
