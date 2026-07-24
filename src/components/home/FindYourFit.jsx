@@ -5,11 +5,11 @@ const DK = 'var(--text-strong)'
 const BG = 'var(--bg-panel)'
 const F  = { fontFamily: "'Inter', sans-serif" }
 const categories = [
-  { label: 'Eden Collection',  path: '/shop?col=eden',      image: '/Edenn.jpg' },
-  { label: 'The Love Edit',    path: '/shop?col=love-edit', image: '/loveEdits.jpg' },
-  { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: '/BB.jpg' },
-  { label: 'Pleasure Pleats',  path: '/shop?col=pleasure-pleats', image: '/pleasure-findfit.jpg' },
-  { label: 'Featured',         path: '/featured',           image: '/featured-fit.jpg' },
+  { label: 'Eden Collection',  path: '/shop?col=eden',      image: '/Edenn-new.jpg' },
+  { label: 'The Love Edit',    path: '/shop?col=love-edit', image: '/Love-new.jpg' },
+  { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: '/BB-new.jpg' },
+  { label: 'Pleasure Pleats',  path: '/shop?col=pleasure-pleats', image: '/pleasure-new.jpg' },
+  { label: 'Featured',         path: '/featured',           image: '/featured-new.jpg' },
   { label: 'All Collections',  path: '/shop',               image: '/collection-fit.jpg'},
   { label: 'Sales Promotion',  path: '/sale',                image: '/sales-fit.jpg' },
   { label: 'Gift Card',        path: '/sale',                image: '/giftcard-findfit.jpg' },
