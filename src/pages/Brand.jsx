@@ -58,7 +58,7 @@ function Hero() {
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%)' }} />
       <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
         <div>
-          <Eyebrow color={GOLD} center>Brand &amp; Communications</Eyebrow>
+        
           <h1 style={{ ...F, fontSize: 'clamp(40px, 8vw, 92px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', lineHeight: 1, marginBottom: '18px' }}>
             STAAY
           </h1>
@@ -89,7 +89,7 @@ function TrueColors() {
         </motion.div>
 
         <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }}>
-          <Eyebrow>Our Evolution</Eyebrow>
+
           <h2 style={{ ...F, fontSize: 'clamp(26px, 3.4vw, 40px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: '24px' }}>
             Effortless. Feminine. Timeless.
           </h2>
@@ -121,7 +121,7 @@ function BrandColors() {
   return (
     <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
       <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-        <Eyebrow color={GOLD} center>Our Colors</Eyebrow>
+      
         <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 32px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', marginBottom: 'clamp(32px, 5vw, 48px)' }}>
           The palette behind STAAY
         </h2>
@@ -147,7 +147,7 @@ function Manifesto() {
   return (
     <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 80px)' }}>
       <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '880px', margin: '0 auto', textAlign: 'center' }}>
-        <Eyebrow color={GOLD} center>The Manifesto</Eyebrow>
+       
         <p style={{ ...F, fontSize: 'clamp(22px, 3vw, 34px)', fontWeight: 700, lineHeight: 1.5, color: '#EDE5D2' }}>
           "STAAY exists to remind women that they were never meant to shrink. They were meant to bloom, to evolve, and{' '}
           <span style={{ color: GOLD }}>to STAAY true to themselves.</span>"
@@ -172,7 +172,7 @@ function CampaignSpotlight() {
         </motion.div>
 
         <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }}>
-          <Eyebrow color={TERRA}>Campaign Spotlight</Eyebrow>
+     
           <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: '18px' }}>
             Running in the Halls
           </h2>
@@ -206,7 +206,7 @@ function DiscoverCollection() {
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
           </div>
           <div>
-            <Eyebrow color={TERRA}>New Season</Eyebrow>
+          
             <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: '18px' }}>
               Discover Our Collection
             </h2>
@@ -252,7 +252,7 @@ function InstagramSection() {
   return (
     <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center' }}>
-        <Eyebrow color={GOLD} center>Stay Current With Us</Eyebrow>
+       
         <h2 style={{ ...F, fontSize: 'clamp(22px, 2.6vw, 30px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', marginBottom: 'clamp(32px, 5vw, 48px)' }}>
           Tag Us @staaybystaay on Instagram
         </h2>
