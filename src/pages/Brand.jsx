@@ -201,7 +201,7 @@ function DiscoverCollection() {
 
         <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <div style={{ flex: 1, overflow: 'hidden', background: SURFACE, minHeight: '220px' }}>
-            <img src="/featured/feature2.jpeg" alt="The Eden Collection"
+            <img src="/brand-discover.jpeg" alt="The Eden Collection"
               onError={e => { e.target.style.display = 'none' }}
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
           </div>
