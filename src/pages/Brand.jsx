@@ -241,8 +241,8 @@ function DiscoverCollection() {
 // INSTAGRAM GRID
 // ═══════════════════════════════════════════════
 const igImages = [
-  '/featured/feature1.jpeg',
-  '/featured/feature3.jpeg',
+  '/brand-tag.jpeg',
+  '/brand-tag1.jpeg',
   '/featured/feature4.jpeg',
   '/featured/feature5.jpeg',
   '/featured/feature8.jpeg',
