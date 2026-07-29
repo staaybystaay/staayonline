@@ -82,7 +82,7 @@ function TrueColors() {
         <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ position: 'relative' }}>
           <div style={{ position: 'absolute', bottom: '18px', right: '18px', left: '-18px', top: '-18px', background: GOLD, zIndex: 0 }} />
           <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', background: SURFACE, zIndex: 1 }}>
-            <img src="/brand-evolution-section.jpeg" alt="STAAY editorial"
+            <img src="/brand-tag.jpeg" alt="STAAY editorial"
               onError={e => { e.target.style.display = 'none' }}
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'right center', display: 'block' }} />
           </div>
