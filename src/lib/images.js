@@ -29,28 +29,3 @@ export const imgCard  = (path) => getImageUrl(path)
 export const imgHero  = (path) => getImageUrl(path)
 export const imgThumb = (path) => getImageUrl(path)
 export const imgFull  = (path) => getImageUrl(path)
-
-// ─── Upload image to Supabase Storage ─────────
-export async function uploadProductImage(file, productSlug) {
-  const ext      = file.name.split('.').pop().toLowerCase()
-  const filename = `${productSlug}-${Date.now()}.${ext}`
-  const path     = `collection/${filename}`
-
-  const { data, error } = await supabase.storage
-    .from(BUCKET)
-    .upload(path, file, {
-      cacheControl: '3600',
-      upsert: true,
-      contentType: file.type,
-    })
-
-  if (error) throw error
-  return data.path
-}
-
-// ─── Delete image from Supabase Storage ───────
-export async function deleteProductImage(path) {
-  if (!path || path.startsWith('/') || path.startsWith('http')) return
-  const { error } = await supabase.storage.from(BUCKET).remove([path])
-  if (error) throw error
-}

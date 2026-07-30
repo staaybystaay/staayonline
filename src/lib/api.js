@@ -224,7 +224,11 @@ export async function signInWithGoogle() {
 
 export async function resetPassword(email) {
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: `${window.location.origin}/reset-password`,
+    // AuthCallback.jsx is what listens for the PASSWORD_RECOVERY event and
+    // forwards to /auth/reset-password — redirecting straight to a
+    // "/reset-password" route (which doesn't exist) skipped that listener
+    // and left the user on a blank page.
+    redirectTo: `${window.location.origin}/auth/callback`,
   })
   if (error) throw error
 }

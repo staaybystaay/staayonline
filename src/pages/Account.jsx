@@ -423,7 +423,7 @@ function WishlistTab() {
         <h2 style={{ ...F, fontSize: '20px', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>
           Wishlist <span style={{ fontWeight: 300, color: MD, fontSize: '16px' }}>({items.length})</span>
         </h2>
-        <Link to="/wishlist" style={{ ...F, fontSize: '12px', fontWeight: 600, color: G, borderBottom: `1px solid ${G}`, paddingBottom: '1px' }}>
+        <Link to="/favorites" style={{ ...F, fontSize: '12px', fontWeight: 600, color: G, borderBottom: `1px solid ${G}`, paddingBottom: '1px' }}>
           View full wishlist →
         </Link>
       </div>
