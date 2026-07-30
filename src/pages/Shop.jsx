@@ -479,7 +479,7 @@ export default function Shop() {
       <div className="layout-sidebar page-padding shop-body" style={{ maxWidth: '1280px', margin: '0 auto', padding: '40px 64px 96px', display: 'flex', gap: '40px' }}>
 
         {/* Sidebar */}
-        <aside style={{ width: '220px', flexShrink: 0, position: 'sticky', top: '64px', alignSelf: 'flex-start' }}>
+        <aside style={{ width: '220px', flexShrink: 0, position: 'sticky', top: '64px', alignSelf: 'flex-start', background: CARD, border: `1px solid ${BR}`, borderRadius: '14px', padding: '24px 20px', boxShadow: 'var(--shadow)' }}>
           <div style={{ marginBottom: '32px' }}>
             <p style={{ ...F, fontSize: '12px', fontWeight: 700, color: DK, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '14px', paddingBottom: '10px', borderBottom: `1px solid ${BR}` }}>Collections</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
