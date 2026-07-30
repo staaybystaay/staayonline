@@ -75,6 +75,7 @@ export default function Checkout() {
     try {
       const order = await createOrder({
         email: form.email.trim(),
+        subtotal,
         total: subtotal,
         status: 'pending',
         payment_status: 'unpaid',
