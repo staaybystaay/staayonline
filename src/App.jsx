@@ -5,6 +5,8 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import Shop from './pages/Shop'
 import Cart from './pages/Cart'
+import Checkout from './pages/Checkout'
+import CheckoutCallback from './pages/CheckoutCallback'
 import Auth from './pages/Auth'
 import Product from './pages/Product'
 import Featured from './pages/Featured'
@@ -51,6 +53,8 @@ export default function App() {
           <Route path="/"            element={<Home />}     />
           <Route path="/shop"        element={<Shop />}     />
           <Route path="/cart"        element={<Cart />}     />
+          <Route path="/checkout"          element={<Checkout />}         />
+          <Route path="/checkout/callback" element={<CheckoutCallback />} />
           <Route path="/login"       element={<Auth />}     />
           <Route path="/product/:id" element={<Product />}  />
           <Route path="/featured"    element={<Featured />} />

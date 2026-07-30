@@ -123,6 +123,25 @@ export async function getOrderById(id) {
   return data
 }
 
+// ─── PAYMENTS ────────────────────────────────
+
+export async function initializePayment(orderId) {
+  const { data, error } = await supabase.functions.invoke('initialize-payment', {
+    body: { orderId },
+  })
+  if (error) throw error
+  if (data?.error) throw new Error(data.error)
+  return data // { authorization_url, reference }
+}
+
+export async function verifyPayment(reference) {
+  const { data, error } = await supabase.functions.invoke('verify-payment', {
+    body: { reference },
+  })
+  if (error) throw error
+  return data // { status: 'success' | 'failed', reason?, order? }
+}
+
 // ─── AUTH / CUSTOMERS ────────────────────────
 
 export async function signUp({ email, password, firstName, lastName, phone }) {
