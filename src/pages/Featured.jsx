@@ -18,11 +18,6 @@ const FAINT = 'var(--text-faint)'
 const LGREY = 'var(--border)'
 const XLGREY= '#F2F2F0'
 
-// Per-story accent colors — fixed, not theme-tied (deliberate distinct identity per story)
-const TERRA  = '#C4673A'   // terracotta  — RITH / runway
-const SAGE   = '#3D5A47'   // forest sage — Eden Collection
-const SLATE  = '#3A4A5C'   // slate blue  — editorial labels
-
 const F     = { fontFamily: "'Inter', sans-serif" }
 
 // ─── LIGHTBOX ────────────────────────────────────────────────────
@@ -105,7 +100,7 @@ function RITHSection() {
 
         <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: 'clamp(32px,5vw,64px)' }}>
           {/* Label */}
-          <span style={{ ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: TERRA, marginBottom: '16px', display: 'block' }}>
+          <span style={{ ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: '16px', display: 'block' }}>
             Runway · The British Museum × My Runway Group
           </span>
 
@@ -131,7 +126,7 @@ function RITHSection() {
 
             {/* Text block */}
             <div style={{ paddingTop: '8px' }}>
-              <span style={{ ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: SLATE, display: 'block', marginBottom: '24px' }}>
+              <span style={{ ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: GREY, display: 'block', marginBottom: '24px' }}>
                 Editorial
               </span>
 
@@ -152,7 +147,7 @@ function RITHSection() {
               </p>
 
               {/* Pull quote */}
-              <blockquote style={{ margin: '0 0 48px', padding: '28px 0 28px 28px', borderLeft: `4px solid ${TERRA}` }}>
+              <blockquote style={{ margin: '0 0 48px', padding: '28px 0 28px 28px', borderLeft: `4px solid ${INK}` }}>
                 <p style={{ ...F, fontSize: 'clamp(17px, 1.8vw, 22px)', fontWeight: 700, color: INK, lineHeight: 1.5, marginBottom: '14px' }}>
                   "Rather than viewing history at a distance, audiences are invited to move with the programme and experience the Museum as a living cultural space where past and present exist side by side."
                 </p>
@@ -199,7 +194,7 @@ function MomentsSection() {
   return (
     <article style={{ background: BK, padding: 'clamp(56px,8vw,96px) clamp(24px,5vw,64px)' }}>
       <div style={{ maxWidth: '1320px', margin: '0 auto' }}>
-        <span style={{ ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: TERRA, display: 'block', marginBottom: '16px' }}>
+        <span style={{ ...F, fontSize: '10px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', display: 'block', marginBottom: '16px' }}>
           In Motion
         </span>
         <h2 style={{ ...F, fontSize: 'clamp(32px, 4.5vw, 56px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', lineHeight: 1.05, marginBottom: 'clamp(32px,5vw,56px)' }}>
@@ -246,7 +241,7 @@ function EdenSection() {
 
           {/* Text */}
           <div>
-            <p style={{ ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: SAGE, marginBottom: '28px' }}>
+            <p style={{ ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: GREY, marginBottom: '28px' }}>
               Inspired by the Garden of Eden
             </p>
 
@@ -263,11 +258,11 @@ function EdenSection() {
             </p>
 
             {/* Pull quote */}
-            <blockquote style={{ margin: '0 0 52px', padding: '32px', background: CARD, borderTop: `4px solid ${SAGE}` }}>
+            <blockquote style={{ margin: '0 0 52px', padding: '32px', background: CARD, borderTop: `4px solid ${INK}` }}>
               <p style={{ ...F, fontSize: 'clamp(19px, 2vw, 26px)', fontWeight: 700, color: INK, lineHeight: 1.45, marginBottom: '16px' }}>
                 "The collection tells a story of a woman in her purest form, uncovered, unafraid, and blooming."
               </p>
-              <cite style={{ ...F, fontSize: '11px', fontWeight: 700, color: SAGE, letterSpacing: '0.12em', textTransform: 'uppercase', fontStyle: 'normal' }}>
+              <cite style={{ ...F, fontSize: '11px', fontWeight: 700, color: GREY, letterSpacing: '0.12em', textTransform: 'uppercase', fontStyle: 'normal' }}>
                 STAAY
               </cite>
             </blockquote>
