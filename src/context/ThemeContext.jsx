@@ -1,27 +1,10 @@
-import { createContext, useContext, useState } from 'react'
-
-const ThemeContext = createContext()
-
+// The site is fixed to the light theme — the light/dark toggle feature
+// was removed. This wrapper is kept only so the "theme-root" element and
+// its CSS variables (used throughout the app's styles) keep working.
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem('syo-theme') || 'light'
-  )
-
-  const toggleTheme = () =>
-    setTheme(t => {
-      const next = t === 'light' ? 'dark' : 'light'
-      localStorage.setItem('syo-theme', next)
-      return next
-    })
-
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div data-theme={theme} className="theme-root">
-        {children}
-      </div>
-    </ThemeContext.Provider>
+    <div data-theme="light" className="theme-root">
+      {children}
+    </div>
   )
 }
-
-// eslint-disable-next-line react-refresh/only-export-components -- single small hook, not worth a separate file
-export const useTheme = () => useContext(ThemeContext)
