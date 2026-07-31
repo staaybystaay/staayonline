@@ -12,6 +12,7 @@ const BG    = 'var(--bg)'
 const CARD  = 'var(--bg-card)'
 const CREAM = 'var(--bg-alt)'
 const INK   = 'var(--text-strong)'
+const TEXT  = 'var(--text)'
 const GREY  = 'var(--text-muted)'
 const FAINT = 'var(--text-faint)'
 const LGREY = 'var(--border)'
@@ -133,6 +134,18 @@ function RITHSection() {
                 About R.I.T.H
               </h3>
 
+              <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: TEXT, lineHeight: 1.85, marginBottom: '22px' }}>
+                As part of the British Museum's Young People's Lates programme, <em>Running in the Halls</em> invited audiences to encounter the Museum in an entirely new way, with bodies moving through the galleries and ideas crossing centuries.
+              </p>
+
+              <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: TEXT, lineHeight: 1.85, marginBottom: '22px' }}>
+                The evening was curated by My Runway Group, who work to amplify underrepresented voices and champion emerging creatives. It brought together DJs, live performance, visual interventions, and interactive workshops that responded directly to the Museum's architecture and permanent collection.
+              </p>
+
+              <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: TEXT, lineHeight: 1.85, marginBottom: '48px' }}>
+                Ancestral memory met present-day expression, with contemporary diasporic voices placed deliberately within one of the world's most recognised cultural institutions, not as guests but as inheritors.
+              </p>
+
               {/* Pull quote */}
               <blockquote style={{ margin: '0 0 48px', padding: '28px 0 28px 28px', borderLeft: `4px solid ${INK}` }}>
                 <p style={{ ...F, fontSize: 'clamp(17px, 1.8vw, 22px)', fontWeight: 700, color: INK, lineHeight: 1.5, marginBottom: '14px' }}>
@@ -230,6 +243,18 @@ function EdenSection() {
           <div>
             <p style={{ ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: GREY, marginBottom: '28px' }}>
               Inspired by the Garden of Eden
+            </p>
+
+            <p style={{ ...F, fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, color: TEXT, lineHeight: 1.8, marginBottom: '24px' }}>
+              The Eden Collection is rooted in the beauty and purity of the Garden of Eden, a place symbolic of life, innocence, abundance, and divine harmony.
+            </p>
+
+            <p style={{ ...F, fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, color: TEXT, lineHeight: 1.8, marginBottom: '24px' }}>
+              It reflects a return to the beginning. Femininity is effortless here, confidence is natural, and beauty exists without apology or limitation. Each piece embodies grace, softness, and quiet strength.
+            </p>
+
+            <p style={{ ...F, fontSize: 'clamp(16px, 1.6vw, 19px)', fontWeight: 500, color: TEXT, lineHeight: 1.8, marginBottom: '48px' }}>
+              The collection captures the feeling of being fully seen, fully present, and unapologetically radiant. An Eden for the modern African woman.
             </p>
 
             {/* Pull quote */}
