@@ -5,8 +5,6 @@ import useCartStore from '../store/useCartStore'
 import { useAuth } from '../hooks/useAuth'
 import CurrencySelector from './CurrencySelector'
 
-const G  = 'var(--accent)'
-const GL = 'var(--accent-soft)'
 const W  = 'var(--white)'
 const BG = 'var(--bg)'
 const DK = 'var(--text-strong)'
@@ -101,7 +99,7 @@ function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch }) {
             {/* User greeting */}
             {user && (
               <Link to="/account" onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 24px', textDecoration: 'none' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: GL, display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '13px', fontWeight: 700, color: G, flexShrink: 0, overflow: 'hidden' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: LG, display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '13px', fontWeight: 700, color: DK, flexShrink: 0, overflow: 'hidden' }}>
                   {profile?.avatar_url ? <img src={profile.avatar_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : (profile?.first_name?.[0]?.toUpperCase() || user.email[0].toUpperCase())}
                 </div>
                 <span style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>
@@ -113,9 +111,7 @@ function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch }) {
             <div style={{ flex: 1, overflowY: 'auto', padding: '8px 0' }}>
               {navLinks.map(link => (
                 <Link key={link.label} to={link.path} onClick={onClose}
-                  style={{ display: 'block', padding: '13px 24px', ...F, fontSize: '14px', fontWeight: 500, color: DK, borderBottom: `1px solid ${BR}`, transition: 'color 0.2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.color = G }}
-                  onMouseLeave={e => { e.currentTarget.style.color = DK }}>
+                  style={{ display: 'block', padding: '13px 24px', ...F, fontSize: '14px', fontWeight: 500, color: DK, borderBottom: `1px solid ${BR}` }}>
                   {link.label}
                 </Link>
               ))}
@@ -124,7 +120,7 @@ function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch }) {
                 {secondaryLinks.map(col => (
                   <Link key={col.slug} to={col.path} onClick={onClose}
                     style={{ display: 'block', padding: '10px 0', ...F, fontSize: '13px', fontWeight: 400, color: MD, borderBottom: `1px solid ${BR}`, transition: 'color 0.2s' }}
-                    onMouseEnter={e => { e.currentTarget.style.color = G }}
+                    onMouseEnter={e => { e.currentTarget.style.color = DK }}
                     onMouseLeave={e => { e.currentTarget.style.color = MD }}>
                     {col.label}
                   </Link>
@@ -206,9 +202,9 @@ export default function Navbar() {
               const active = location.pathname === link.path && link.path !== '/shop'
               return (
                 <Link key={link.label} to={link.path}
-                  style={{ ...F, fontSize: '13px', fontWeight: active ? 600 : 400, color: active ? DK : MD, paddingBottom: '2px', borderBottom: `2px solid ${active ? G : 'transparent'}`, transition: 'all 0.2s', whiteSpace: 'nowrap' }}
-                  onMouseEnter={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = G }}
-                  onMouseLeave={e => { e.currentTarget.style.color = active ? DK : MD; e.currentTarget.style.borderBottomColor = active ? G : 'transparent' }}>
+                  style={{ ...F, fontSize: '13px', fontWeight: active ? 600 : 400, color: active ? DK : MD, paddingBottom: '2px', borderBottom: `2px solid ${active ? DK : 'transparent'}`, transition: 'all 0.2s', whiteSpace: 'nowrap' }}
+                  onMouseEnter={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = DK }}
+                  onMouseLeave={e => { e.currentTarget.style.color = active ? DK : MD; e.currentTarget.style.borderBottomColor = active ? DK : 'transparent' }}>
                   {link.label}
                 </Link>
               )
@@ -217,7 +213,7 @@ export default function Navbar() {
 
           {/* Search bar */}
           <form onSubmit={handleSearch} className="desktop-only" style={{ flex: 1, maxWidth: '360px', marginLeft: 'auto' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: LG, border: `1.5px solid ${searchFocused ? G : 'transparent'}`, borderRadius: '8px', padding: '9px 14px', transition: 'border-color 0.2s' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: LG, border: `1.5px solid ${searchFocused ? DK : 'transparent'}`, borderRadius: '8px', padding: '9px 14px', transition: 'border-color 0.2s' }}>
               <span style={{ color: MD, flexShrink: 0, display: 'flex' }}><SearchIcon /></span>
               <input
                 ref={searchRef}
@@ -239,19 +235,19 @@ export default function Navbar() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
               <Link to="/favorites"
                 style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.color = G }}
+                onMouseEnter={e => { e.currentTarget.style.color = DK }}
                 onMouseLeave={e => { e.currentTarget.style.color = MD }}>
                 <HeartIcon />
               </Link>
               <Link to="/cart"
                 style={{ position: 'relative', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: MD, transition: 'color 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.color = G }}
+                onMouseEnter={e => { e.currentTarget.style.color = DK }}
                 onMouseLeave={e => { e.currentTarget.style.color = MD }}>
                 <CartIcon />
                 <AnimatePresence>
                   {cartCount > 0 && (
                     <motion.span key="badge" initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
-                      style={{ position: 'absolute', top: '4px', right: '4px', width: '16px', height: '16px', background: G, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '9px', fontWeight: 700, color: W }}>
+                      style={{ position: 'absolute', top: '4px', right: '4px', width: '16px', height: '16px', background: DK, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '9px', fontWeight: 700, color: W }}>
                       {cartCount}
                     </motion.span>
                   )}
@@ -259,16 +255,14 @@ export default function Navbar() {
               </Link>
               {user && (
                 <Link to="/account" className="desktop-only"
-                  style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, textDecoration: 'none', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.color = G }}
-                  onMouseLeave={e => { e.currentTarget.style.color = DK }}>
+                  style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, textDecoration: 'none', whiteSpace: 'nowrap' }}>
                   Hi, {profile?.first_name || user.email.split('@')[0]}
                 </Link>
               )}
               <Link to={user ? '/account' : '/login'}
-                style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: user ? G : MD, transition: 'color 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.color = G }}
-                onMouseLeave={e => { e.currentTarget.style.color = user ? G : MD }}>
+                style={{ width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: user ? DK : MD, transition: 'color 0.2s' }}
+                onMouseEnter={e => { e.currentTarget.style.color = DK }}
+                onMouseLeave={e => { e.currentTarget.style.color = user ? DK : MD }}>
                 <UserIcon />
               </Link>
             </div>
@@ -283,9 +277,9 @@ export default function Navbar() {
                 const active = col.path === location.pathname || (activeCol === col.slug && location.pathname === '/shop') || (!activeCol && col.slug === 'all' && location.pathname === '/shop')
                 return (
                   <Link key={col.slug} to={col.path}
-                    style={{ ...F, fontSize: '12px', fontWeight: active ? 600 : 400, color: active ? G : MD, padding: '11px 18px', borderBottom: `2px solid ${active ? G : 'transparent'}`, whiteSpace: 'nowrap', transition: 'all 0.2s', display: 'block' }}
-                    onMouseEnter={e => { e.currentTarget.style.color = G; e.currentTarget.style.borderBottomColor = G }}
-                    onMouseLeave={e => { e.currentTarget.style.color = active ? G : MD; e.currentTarget.style.borderBottomColor = active ? G : 'transparent' }}>
+                    style={{ ...F, fontSize: '12px', fontWeight: active ? 600 : 400, color: active ? DK : MD, padding: '11px 18px', borderBottom: `2px solid ${active ? DK : 'transparent'}`, whiteSpace: 'nowrap', transition: 'all 0.2s', display: 'block' }}
+                    onMouseEnter={e => { e.currentTarget.style.color = DK; e.currentTarget.style.borderBottomColor = DK }}
+                    onMouseLeave={e => { e.currentTarget.style.color = active ? DK : MD; e.currentTarget.style.borderBottomColor = active ? DK : 'transparent' }}>
                     {col.label}
                   </Link>
                 )
