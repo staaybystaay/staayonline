@@ -2,14 +2,6 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 // ─── TOKENS ───────────────────────────────────
-// Literal fixed brand hex values — used only for the color swatches in
-// the "Our Colors" section below and the two permanently-dark sections
-// (Hero, Manifesto), where the actual values must not flip with theme.
-const GOLD_HEX  = '#B8903A'
-const TERRA_HEX = '#B5502E'
-const INK_HEX   = '#15130F'
-const CREAM_HEX = '#EFE6D2'
-
 // Theme-aware tokens used throughout the rest of the page
 const INK    = 'var(--text-strong)'
 const PAPER  = 'var(--bg)'
@@ -79,9 +71,8 @@ function TrueColors() {
     <section style={{ background: PANEL, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
       <div className="brand-split-grid brand-split-reverse" style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: '0.9fr 1fr', gap: 'clamp(40px, 6vw, 80px)', alignItems: 'center' }}>
 
-        <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ position: 'relative' }}>
-          <div style={{ position: 'absolute', bottom: '18px', right: '18px', left: '-18px', top: '-18px', background: GOLD, zIndex: 0 }} />
-          <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', background: SURFACE, zIndex: 1 }}>
+        <motion.div {...fadeUp} transition={{ duration: 0.6 }}>
+          <div style={{ aspectRatio: '4/5', overflow: 'hidden', background: SURFACE }}>
             <img src="/brand-tag.jpeg" alt="STAAY editorial"
               onError={e => { e.target.style.display = 'none' }}
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'right center', display: 'block' }} />
@@ -102,39 +93,6 @@ function TrueColors() {
             Today, STAAY is a Ghanaian womenswear brand built on intention, craftsmanship, and grace. Every piece is made for women who want to feel effortlessly put together.
           </p>
         </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ═══════════════════════════════════════════════
-// BRAND COLORS
-// ═══════════════════════════════════════════════
-const palette = [
-  { name: 'Gold',       hex: GOLD_HEX,  note: 'Warm and luxurious' },
-  { name: 'Terracotta', hex: TERRA_HEX, note: 'Earthy and bold' },
-  { name: 'Ink',        hex: INK_HEX,   note: 'Grounded and timeless' },
-  { name: 'Cream',      hex: CREAM_HEX, note: 'Soft and clean' },
-]
-
-function BrandColors() {
-  return (
-    <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
-      <div style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
-      
-        <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 32px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', marginBottom: 'clamp(32px, 5vw, 48px)' }}>
-          The palette behind STAAY
-        </h2>
-
-        <div className="brand-palette-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
-          {palette.map(c => (
-            <motion.div key={c.name} {...fadeUp} transition={{ duration: 0.5 }}>
-              <div style={{ aspectRatio: '1/1', background: c.hex, borderRadius: '8px', marginBottom: '14px', border: c.hex === CREAM_HEX ? `1px solid #DCD0AE` : 'none' }} />
-              <p style={{ ...F, fontSize: '14px', fontWeight: 700, color: INK, marginBottom: '2px' }}>{c.name}</p>
-              <p style={{ ...F, fontSize: '12px', fontWeight: 400, color: MUTE }}>{c.note}</p>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   )
@@ -282,7 +240,6 @@ export default function Brand() {
     <div style={{ background: PAPER, minHeight: '100vh' }}>
       <Hero />
       <TrueColors />
-      <BrandColors />
       <Manifesto />
       <CampaignSpotlight />
       <DiscoverCollection />
