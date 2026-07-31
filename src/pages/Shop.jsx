@@ -8,8 +8,7 @@ import { supabase } from '../lib/supabase'
 import MiniCurrencyPicker from '../components/MiniCurrencyPicker'
 import QuickView from '../components/QuickView'
 
-const G    = 'var(--accent)'
-const GL   = 'var(--accent-soft)'
+const G    = 'var(--accent)' // the one deliberate touch of butter yellow: product badges (e.g. "New")
 const W    = 'var(--white)'
 const OW   = 'var(--bg-panel)'
 const B2   = 'var(--bg-surface)'
@@ -111,13 +110,13 @@ function ComingSoon({ label }) {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '100px 0', gap: '16px', textAlign: 'center' }}>
-      <div style={{ width: '64px', height: '64px', background: GL, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', marginBottom: '8px' }}>✦</div>
+      <div style={{ width: '64px', height: '64px', background: OW, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', marginBottom: '8px' }}>✦</div>
       <h3 style={{ ...F, fontSize: '28px', fontWeight: 800, color: DK, letterSpacing: '-0.02em' }}>Coming Soon</h3>
       <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, maxWidth: '320px', lineHeight: 1.65 }}>
         The <strong>{label}</strong> collection is on its way. Check back soon.
       </p>
       <Link to="/" style={{ marginTop: '8px', padding: '12px 28px', background: BK, color: W, ...F, fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em', display: 'inline-block', transition: 'background 0.2s' }}
-        onMouseEnter={e => { e.currentTarget.style.background = G }}
+        onMouseEnter={e => { e.currentTarget.style.background = '#000' }}
         onMouseLeave={e => { e.currentTarget.style.background = BK }}>
         Back to Home
       </Link>
@@ -178,7 +177,7 @@ function ProductCardGrid({ product, onQuickView }) {
             </button>
           </div>
         </div>
-        <p style={{ ...F, fontSize: '10px', fontWeight: 500, color: G, marginBottom: '3px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+        <p style={{ ...F, fontSize: '10px', fontWeight: 500, color: MD, marginBottom: '3px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
           {product.collection?.name}
         </p>
         <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK, marginBottom: '6px' }}>{product.name}</p>
@@ -231,7 +230,7 @@ function ProductCardList({ product, onQuickView }) {
       </div>
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 24px', gap: '16px' }}>
         <div style={{ flex: 1 }}>
-          <p style={{ ...F, fontSize: '10px', fontWeight: 500, color: G, marginBottom: '4px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{product.collection?.name}</p>
+          <p style={{ ...F, fontSize: '10px', fontWeight: 500, color: MD, marginBottom: '4px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{product.collection?.name}</p>
           <h3 style={{ ...F, fontSize: '16px', fontWeight: 600, color: DK, marginBottom: '6px', letterSpacing: '-0.01em' }}>{product.name}</h3>
           <p style={{ ...F, fontSize: '12px', fontWeight: 300, color: MD }}>{product.in_stock ? 'In stock' : 'Out of stock'}</p>
         </div>
@@ -249,7 +248,7 @@ function ProductCardList({ product, onQuickView }) {
           </button>
           <button
             onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY', badge: product.badge })}
-            style={{ background: hovered ? G : BK, border: 'none', color: W, padding: '10px 20px', cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', transition: 'background 0.2s', whiteSpace: 'nowrap' }}>
+            style={{ background: hovered ? '#000' : BK, border: 'none', color: W, padding: '10px 20px', cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase', transition: 'background 0.2s', whiteSpace: 'nowrap' }}>
             Add to Bag
           </button>
         </div>
@@ -345,7 +344,7 @@ export default function Shop() {
 
       {/* ── COLLECTION BANNER (with name + description overlaid) ── */}
       {bannerImage && (
-        <div style={{ position: 'relative', width: '100%', aspectRatio: '1920 / 540', overflow: 'hidden', background: GL }}>
+        <div style={{ position: 'relative', width: '100%', aspectRatio: '1920 / 540', overflow: 'hidden', background: OW }}>
           <img
             src={bannerImage.src}
             alt={activeCol?.name || activeCollection}
@@ -353,7 +352,7 @@ export default function Shop() {
           />
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center' }}>
             <div className="page-padding" style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', padding: '0 64px' }}>
-              <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
+              <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: MD, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
                 {activeCollection === 'all' ? 'All Collections' : 'Collection'}
               </p>
               <h1 style={{ ...F, fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: activeCol?.subtitle ? '6px' : '0' }}>
@@ -372,19 +371,19 @@ export default function Shop() {
         <div className="page-padding shop-header" style={{ background: OW, borderBottom: `1px solid ${BR}`, padding: '40px 64px' }}>
           <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '20px' }}>
-              <Link to="/" style={{ ...F, fontSize: '12px', fontWeight: 400, color: MD, transition: 'color 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = G }} onMouseLeave={e => { e.currentTarget.style.color = MD }}>Home</Link>
+              <Link to="/" style={{ ...F, fontSize: '12px', fontWeight: 400, color: MD, transition: 'color 0.2s' }} onMouseEnter={e => { e.currentTarget.style.color = DK }} onMouseLeave={e => { e.currentTarget.style.color = MD }}>Home</Link>
               <span style={{ color: FT, fontSize: '12px' }}>/</span>
               <span style={{ ...F, fontSize: '12px', fontWeight: 500, color: DK }}>Shop</span>
               {activeCollection !== 'all' && activeCol && (
                 <>
                   <span style={{ color: FT, fontSize: '12px' }}>/</span>
-                  <span style={{ ...F, fontSize: '12px', fontWeight: 500, color: G }}>{activeCol.name}</span>
+                  <span style={{ ...F, fontSize: '12px', fontWeight: 500, color: DK }}>{activeCol.name}</span>
                 </>
               )}
             </div>
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
               <div>
-                <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
+                <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: MD, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
                   {activeCollection === 'all' ? 'All Collections' : 'Collection'}
                 </p>
                 <h1 style={{ ...F, fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: activeCol?.subtitle && activeCollection !== 'all' ? '6px' : '0' }}>
@@ -434,7 +433,7 @@ export default function Shop() {
                     <div style={{ position: 'fixed', inset: 0, zIndex: 48 }} onClick={() => setSortOpen(false)} />
                     <motion.div initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.15 }} style={{ position: 'absolute', top: '100%', right: 0, zIndex: 49, minWidth: '180px', background: CARD, border: `1px solid ${BR}`, boxShadow: '0 8px 24px rgba(17,17,17,0.1)' }}>
                       {SORT_OPTIONS.map(opt => (
-                        <button key={opt.value} onClick={() => { setSortBy(opt.value); setSortOpen(false) }} style={{ width: '100%', textAlign: 'left', padding: '11px 16px', border: 'none', borderBottom: `1px solid ${BR}`, background: sortBy === opt.value ? OW : CARD, ...F, fontSize: '13px', fontWeight: sortBy === opt.value ? 600 : 400, color: sortBy === opt.value ? G : DK, cursor: 'pointer' }} onMouseEnter={e => { e.currentTarget.style.background = OW }} onMouseLeave={e => { e.currentTarget.style.background = sortBy === opt.value ? OW : CARD }}>
+                        <button key={opt.value} onClick={() => { setSortBy(opt.value); setSortOpen(false) }} style={{ width: '100%', textAlign: 'left', padding: '11px 16px', border: 'none', borderBottom: `1px solid ${BR}`, background: sortBy === opt.value ? OW : CARD, ...F, fontSize: '13px', fontWeight: sortBy === opt.value ? 600 : 400, color: DK, cursor: 'pointer' }} onMouseEnter={e => { e.currentTarget.style.background = OW }} onMouseLeave={e => { e.currentTarget.style.background = sortBy === opt.value ? OW : CARD }}>
                           {sortBy === opt.value ? '✓ ' : ''}{opt.label}
                         </button>
                       ))}
@@ -460,14 +459,14 @@ export default function Shop() {
           <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
             <span style={{ ...F, fontSize: '11px', fontWeight: 500, color: MD }}>Filters:</span>
             {activeCollection !== 'all' && activeCol && (
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', background: GL, border: `1px solid ${G}`, ...F, fontSize: '11px', fontWeight: 500, color: G, borderRadius: '100px' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', background: OW, border: `1px solid ${BR}`, ...F, fontSize: '11px', fontWeight: 500, color: DK, borderRadius: '100px' }}>
                 {activeCol.name}
-                <button onClick={() => setActiveCollection('all')} style={{ background: 'none', border: 'none', color: G, cursor: 'pointer', padding: 0, fontSize: '14px', lineHeight: 1 }}>×</button>
+                <button onClick={() => setActiveCollection('all')} style={{ background: 'none', border: 'none', color: DK, cursor: 'pointer', padding: 0, fontSize: '14px', lineHeight: 1 }}>×</button>
               </span>
             )}
             {activePrices.map(p => (
-              <span key={p} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', background: GL, border: `1px solid ${G}`, ...F, fontSize: '11px', fontWeight: 500, color: G, borderRadius: '100px' }}>
-                {p}<button onClick={() => togglePrice(p)} style={{ background: 'none', border: 'none', color: G, cursor: 'pointer', padding: 0, fontSize: '14px', lineHeight: 1 }}>×</button>
+              <span key={p} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', background: OW, border: `1px solid ${BR}`, ...F, fontSize: '11px', fontWeight: 500, color: DK, borderRadius: '100px' }}>
+                {p}<button onClick={() => togglePrice(p)} style={{ background: 'none', border: 'none', color: DK, cursor: 'pointer', padding: 0, fontSize: '14px', lineHeight: 1 }}>×</button>
               </span>
             ))}
             <button onClick={clearAll} style={{ background: 'none', border: 'none', ...F, fontSize: '11px', fontWeight: 500, color: MD, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: '2px', padding: '4px 0' }}>Clear all</button>
@@ -484,9 +483,9 @@ export default function Shop() {
             <p style={{ ...F, fontSize: '12px', fontWeight: 700, color: DK, letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '14px', paddingBottom: '10px', borderBottom: `1px solid ${BR}` }}>Collections</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
               {collectionPills.map(col => (
-                <button key={col.slug} onClick={() => setCollection(col.slug)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '10px 12px', background: activeCollection === col.slug ? GL : 'transparent', border: 'none', borderLeft: `2px solid ${activeCollection === col.slug ? G : 'transparent'}`, ...F, cursor: 'pointer', textAlign: 'left', transition: 'all 0.18s' }} onMouseEnter={e => { if (activeCollection !== col.slug) e.currentTarget.style.background = OW }} onMouseLeave={e => { if (activeCollection !== col.slug) e.currentTarget.style.background = 'transparent' }}>
-                  <span style={{ fontSize: '13px', fontWeight: activeCollection === col.slug ? 600 : 400, color: activeCollection === col.slug ? G : DK }}>{col.name}</span>
-                  {col.subtitle && <span style={{ fontSize: '11px', fontWeight: 300, color: activeCollection === col.slug ? G : FT, marginTop: '1px' }}>{col.subtitle}</span>}
+                <button key={col.slug} onClick={() => setCollection(col.slug)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '10px 12px', background: activeCollection === col.slug ? OW : 'transparent', border: 'none', borderLeft: `2px solid ${activeCollection === col.slug ? DK : 'transparent'}`, ...F, cursor: 'pointer', textAlign: 'left', transition: 'all 0.18s' }} onMouseEnter={e => { if (activeCollection !== col.slug) e.currentTarget.style.background = OW }} onMouseLeave={e => { if (activeCollection !== col.slug) e.currentTarget.style.background = 'transparent' }}>
+                  <span style={{ fontSize: '13px', fontWeight: activeCollection === col.slug ? 600 : 400, color: DK }}>{col.name}</span>
+                  {col.subtitle && <span style={{ fontSize: '11px', fontWeight: 300, color: FT, marginTop: '1px' }}>{col.subtitle}</span>}
                 </button>
               ))}
             </div>
@@ -499,7 +498,7 @@ export default function Shop() {
                 const active = activePrices.includes(range.label)
                 return (
                   <label key={range.label} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '6px 0' }}>
-                    <input type="checkbox" checked={active} onChange={() => togglePrice(range.label)} style={{ width: '15px', height: '15px', accentColor: G, cursor: 'pointer' }} />
+                    <input type="checkbox" checked={active} onChange={() => togglePrice(range.label)} style={{ width: '15px', height: '15px', accentColor: DK, cursor: 'pointer' }} />
                     <span style={{ ...F, fontSize: '13px', fontWeight: active ? 600 : 400, color: active ? DK : MD }}>{range.label}</span>
                   </label>
                 )
