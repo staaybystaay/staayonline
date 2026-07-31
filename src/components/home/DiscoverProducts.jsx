@@ -8,7 +8,6 @@ import { supabase } from '../../lib/supabase'
 import QuickView from '../QuickView'
 import MiniCurrencyPicker from '../MiniCurrencyPicker'
 
-const G   = 'var(--accent)'
 const W   = 'var(--white)'
 const DK  = 'var(--text-strong)'
 const MD  = 'var(--text-muted)'
@@ -91,7 +90,7 @@ function ProductCard({ product, index, onQuickView }) {
               <button
                 onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image_url, category: product.collection?.name || 'STAAY', badge: product.badge })}
                 style={{ flex: 1, background: INK, border: 'none', padding: '9px 6px', ...F, fontSize: '11px', fontWeight: 600, color: W, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', transition: 'background 0.2s' }}
-                onMouseEnter={e => { e.currentTarget.style.background = G }}
+                onMouseEnter={e => { e.currentTarget.style.background = '#000' }}
                 onMouseLeave={e => { e.currentTarget.style.background = INK }}>
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1h1.5l1.5 6h5.5l1.5-4.5H3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/><circle cx="5.5" cy="10" r="0.8" fill="currentColor"/><circle cx="8.5" cy="10" r="0.8" fill="currentColor"/></svg>
                 Add to Cart
@@ -175,7 +174,7 @@ export default function DiscoverProducts() {
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '28px', flexWrap: 'wrap', gap: '12px' }}>
           <h2 style={{ ...F, fontSize: '22px', fontWeight: 700, color: DK }}>Discover Your Best Products</h2>
-          <Link to="/shop" style={{ ...F, fontSize: '13px', fontWeight: 500, color: G }}
+          <Link to="/shop" style={{ ...F, fontSize: '13px', fontWeight: 500, color: DK }}
             onMouseEnter={e => { e.currentTarget.style.opacity = '0.7' }}
             onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}>
             View all →
@@ -220,9 +219,9 @@ export default function DiscoverProducts() {
         {!loading && (
           <div style={{ textAlign: 'center', marginTop: '40px' }}>
             <Link to="/shop"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', background: G, color: W, padding: '14px 52px', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', transition: 'background 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#9A7830' }}
-              onMouseLeave={e => { e.currentTarget.style.background = G }}>
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', background: INK, color: W, padding: '14px 52px', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', transition: 'background 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#000' }}
+              onMouseLeave={e => { e.currentTarget.style.background = INK }}>
               VIEW ALL PRODUCTS →
             </Link>
           </div>

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
-const G = '#B8903A'
 const W = '#FFFFFF'
 const F = { fontFamily: "'Inter', sans-serif" }
 
@@ -45,7 +44,7 @@ export default function EditorialBanner() {
             margin: '0 0 32px',
           }}>
             WEAR YOUR<br />
-            <span style={{ color: G }}>STORY.</span>
+            STORY.
           </h2>
 
           <Link
@@ -58,7 +57,7 @@ export default function EditorialBanner() {
               letterSpacing: '0.06em', textTransform: 'uppercase',
               transition: 'background 0.2s, color 0.2s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.color = W }}
+            onMouseEnter={e => { e.currentTarget.style.background = '#000'; e.currentTarget.style.color = W }}
             onMouseLeave={e => { e.currentTarget.style.background = W; e.currentTarget.style.color = '#1A0A0A' }}>
             Shop Now
           </Link>

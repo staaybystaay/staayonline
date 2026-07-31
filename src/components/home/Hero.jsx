@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
 
-const G  = '#B8903A'
+const G  = '#E2BC6A'  // the one deliberate touch of butter yellow: the active carousel dot + progress bar
+const BK = '#1A1612'
 const W  = '#FFFFFF'
 const F  = { fontFamily: "'Inter', sans-serif" }
 
@@ -123,14 +124,14 @@ export default function Hero() {
               to={s.href}
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '10px',
-                background: G, color: W,
+                background: BK, color: W,
                 padding: '14px 36px',
                 ...F, fontSize: '13px', fontWeight: 700,
                 letterSpacing: '0.06em', textTransform: 'uppercase',
                 transition: 'background 0.25s, transform 0.2s',
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#9A7830'; e.currentTarget.style.transform = 'translateY(-2px)' }}
-              onMouseLeave={e => { e.currentTarget.style.background = G; e.currentTarget.style.transform = 'translateY(0)' }}>
+              onMouseEnter={e => { e.currentTarget.style.background = '#000'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.background = BK; e.currentTarget.style.transform = 'translateY(0)' }}>
               {s.cta}
             </Link>
 
@@ -160,7 +161,7 @@ export default function Hero() {
             transition: 'background 0.2s',
             borderRadius: '50%',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = G; e.currentTarget.style.borderColor = G }}
+          onMouseEnter={e => { e.currentTarget.style.background = BK; e.currentTarget.style.borderColor = BK }}
           onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.15)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)' }}>
           {label}
         </button>

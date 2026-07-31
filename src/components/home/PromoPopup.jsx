@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 
-const G    = 'var(--accent)'
+const G    = 'var(--accent)' // the one deliberate touch of butter yellow: the thin top strip
 const W    = 'var(--white)'
 const DK   = 'var(--text-strong)'
 const FT   = 'var(--text-muted)'
@@ -53,7 +53,7 @@ export default function PromoPopup() {
             to="/shop"
             onClick={() => setOpen(false)}
             style={{
-              flex: 1, textAlign: 'center', background: G, color: W,
+              flex: 1, textAlign: 'center', background: INK, color: W,
               padding: '11px', ...F, fontSize: '12px', fontWeight: 600,
               letterSpacing: '0.06em', textTransform: 'uppercase',
             }}
