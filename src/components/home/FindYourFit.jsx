@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-const G  = 'var(--accent)'
 const W  = 'var(--white)'
 const DK = 'var(--text-strong)'
 const BG = 'var(--bg-panel)'
@@ -20,7 +19,7 @@ export default function FindYourFit() {
     <section style={{ background: BG, padding: '40px 0', overflow: 'hidden' }}>
       <div className="page-padding" style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 40px', marginBottom: '24px' }}>
         <h2 style={{ ...F, fontSize: '22px', fontWeight: 700, color: DK }}>Find Your Fit</h2>
-        <div style={{ width: '40px', height: '3px', background: G, marginTop: '8px' }} />
+        <div style={{ width: '40px', height: '3px', background: DK, marginTop: '8px' }} />
       </div>
       <div style={{ position: 'relative' }}>
         {/* Fade edges */}
