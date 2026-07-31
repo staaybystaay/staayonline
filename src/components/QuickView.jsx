@@ -7,8 +7,7 @@ import { useAuth } from '../hooks/useAuth'
 import { getReviewsByProduct, createReview } from '../lib/api'
 import useCurrencyStore from '../store/useCurrencyStore'
 
-const G    = 'var(--accent)'
-const GL   = 'var(--accent-soft)'
+const G    = 'var(--accent)' // the one deliberate touch of butter yellow: the price
 const W    = 'var(--white)'   // fixed white text/foreground
 const CARD = 'var(--bg-card)'
 const BK   = 'var(--ink)'     // fixed dark chrome
@@ -36,7 +35,7 @@ function StarRow({ score = 0, count = 0, hideLabel = false }) {
     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
       <div style={{ display: 'flex', gap: '2px' }}>
         {[1,2,3,4,5].map(i => (
-          <svg key={i} width="13" height="13" viewBox="0 0 13 13" fill={i <= Math.round(score) ? G : 'var(--border)'} stroke={i <= Math.round(score) ? G : 'var(--border-mid)'} strokeWidth="0.5">
+          <svg key={i} width="13" height="13" viewBox="0 0 13 13" fill={i <= Math.round(score) ? DK : 'var(--border)'} stroke={i <= Math.round(score) ? DK : 'var(--border-mid)'} strokeWidth="0.5">
             <path d="M6.5 1l1.3 4H12L8.6 7.8l1.3 4L6.5 9.5 3.1 11.8l1.3-4L1 5h4.2z"/>
           </svg>
         ))}
@@ -54,7 +53,7 @@ function StarPicker({ value, onChange }) {
         <button key={i} type="button" onClick={() => onChange(i)}
           onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(0)}
           style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}>
-          <svg width="24" height="24" viewBox="0 0 13 13" fill={i <= (hovered || value) ? G : 'var(--border)'} stroke={i <= (hovered || value) ? G : 'var(--border-mid)'} strokeWidth="0.5">
+          <svg width="24" height="24" viewBox="0 0 13 13" fill={i <= (hovered || value) ? DK : 'var(--border)'} stroke={i <= (hovered || value) ? DK : 'var(--border-mid)'} strokeWidth="0.5">
             <path d="M6.5 1l1.3 4H12L8.6 7.8l1.3 4L6.5 9.5 3.1 11.8l1.3-4L1 5h4.2z"/>
           </svg>
         </button>
@@ -209,7 +208,7 @@ export default function QuickView({ product, onClose }) {
         {/* ── HEADER ── */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', borderBottom: `1px solid ${BR}`, flexShrink: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '3px', height: '20px', background: G }} />
+            <div style={{ width: '3px', height: '20px', background: DK }} />
             <div>
               <p style={{ ...F, fontSize: '10px', fontWeight: 600, color: MD, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Quick View</p>
               <h2 style={{ ...F, fontSize: '18px', fontWeight: 700, color: DK, letterSpacing: '-0.01em', marginTop: '1px' }}>{product.name}</h2>
@@ -234,7 +233,7 @@ export default function QuickView({ product, onClose }) {
             <div style={{ background: LG, borderRight: `1px solid ${BR}`, display: 'flex', flexDirection: 'column', gap: '6px', padding: '12px 8px', overflowY: 'auto' }}>
               {images.map((img, i) => (
                 <div key={i} onClick={() => setActiveImg(i)}
-                  style={{ width: '54px', height: '68px', overflow: 'hidden', cursor: 'pointer', border: `2px solid ${activeImg === i ? G : 'transparent'}`, flexShrink: 0, transition: 'border-color 0.2s' }}>
+                  style={{ width: '54px', height: '68px', overflow: 'hidden', cursor: 'pointer', border: `2px solid ${activeImg === i ? DK : 'transparent'}`, flexShrink: 0, transition: 'border-color 0.2s' }}>
                   <img src={img} alt="" loading="lazy" decoding="async" onError={e => { e.target.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                 </div>
               ))}
@@ -292,12 +291,12 @@ export default function QuickView({ product, onClose }) {
                   <button
                     type="button"
                     onClick={() => setCustomize(v => { const next = !v; if (!next) { setCustomColor(null); setCustomNote('') } return next })}
-                    style={{ width: '44px', height: '24px', borderRadius: '12px', background: customize ? G : 'var(--bg-surface)', border: 'none', cursor: 'pointer', position: 'relative', flexShrink: 0, transition: 'background 0.2s', marginTop: '1px' }}>
+                    style={{ width: '44px', height: '24px', borderRadius: '12px', background: customize ? DK : 'var(--bg-surface)', border: 'none', cursor: 'pointer', position: 'relative', flexShrink: 0, transition: 'background 0.2s', marginTop: '1px' }}>
                     <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: W, position: 'absolute', top: '3px', left: customize ? '23px' : '3px', transition: 'left 0.2s', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
                   </button>
                   <div>
                     <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: DK }}>
-                      Customize this piece <span style={{ color: G, fontWeight: 700 }}>+{format(CUSTOMIZATION_FEE)}</span>
+                      Customize this piece <span style={{ color: DK, fontWeight: 700 }}>+{format(CUSTOMIZATION_FEE)}</span>
                     </p>
                     <p style={{ ...F, fontSize: '11px', fontWeight: 300, color: MD, marginTop: '2px', lineHeight: 1.5 }}>
                       Request a custom colour or adjustments to fit, length, or styling. We'll follow up to confirm details.
@@ -315,7 +314,7 @@ export default function QuickView({ product, onClose }) {
                     <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
                       {COLORS.map(c => (
                         <button key={c.name} type="button" onClick={() => setCustomColor(c.name)} title={c.name}
-                          style={{ width: '28px', height: '28px', borderRadius: '50%', background: c.hex, border: `3px solid ${W}`, cursor: 'pointer', padding: 0, outline: `2px solid ${customColor === c.name ? G : 'transparent'}`, outlineOffset: '2px', transition: 'outline-color 0.2s' }} />
+                          style={{ width: '28px', height: '28px', borderRadius: '50%', background: c.hex, border: `3px solid ${W}`, cursor: 'pointer', padding: 0, outline: `2px solid ${customColor === c.name ? DK : 'transparent'}`, outlineOffset: '2px', transition: 'outline-color 0.2s' }} />
                       ))}
                     </div>
 
@@ -337,12 +336,12 @@ export default function QuickView({ product, onClose }) {
                   <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: sizeError ? RD : DK, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                     Size {sizeError && <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>— please select a size</span>}
                   </p>
-                  <button style={{ background: 'none', border: 'none', ...F, fontSize: '11px', color: G, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: '2px', padding: 0 }}>Size Guide</button>
+                  <button style={{ background: 'none', border: 'none', ...F, fontSize: '11px', color: DK, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: '2px', padding: 0 }}>Size Guide</button>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                   {availSizes.map(s => (
                     <button key={s} onClick={() => { setSelectedSize(s); setSizeError(false) }}
-                      style={{ padding: '7px 14px', border: `1.5px solid ${selectedSize === s ? G : sizeError ? RD : BR}`, background: selectedSize === s ? GL : CARD, ...F, fontSize: '12px', fontWeight: selectedSize === s ? 700 : 400, color: selectedSize === s ? G : DK, cursor: 'pointer', transition: 'all 0.15s', minWidth: '46px', textAlign: 'center' }}>
+                      style={{ padding: '7px 14px', border: `1.5px solid ${selectedSize === s ? DK : sizeError ? RD : BR}`, background: selectedSize === s ? LG : CARD, ...F, fontSize: '12px', fontWeight: selectedSize === s ? 700 : 400, color: DK, cursor: 'pointer', transition: 'all 0.15s', minWidth: '46px', textAlign: 'center' }}>
                       {s}
                     </button>
                   ))}
@@ -367,7 +366,7 @@ export default function QuickView({ product, onClose }) {
               <div style={{ display: 'flex', gap: '10px' }}>
                 <button onClick={handleAddToCart}
                   style={{ flex: 1, padding: '13px', background: addedToBag ? GR : BK, color: W, border: 'none', cursor: 'pointer', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.05em', transition: 'background 0.2s' }}
-                  onMouseEnter={e => { if (!addedToBag) e.currentTarget.style.background = G }}
+                  onMouseEnter={e => { if (!addedToBag) e.currentTarget.style.background = '#000' }}
                   onMouseLeave={e => { if (!addedToBag) e.currentTarget.style.background = addedToBag ? GR : BK }}>
                   {addedToBag ? '✓ Added to Cart' : 'Add to Cart'}
                 </button>
@@ -383,7 +382,7 @@ export default function QuickView({ product, onClose }) {
           {/* ── SHIPPING LINK ── */}
           <div style={{ padding: '14px 28px', borderBottom: `1px solid ${BR}` }}>
             <a href="/terms" style={{ ...F, fontSize: '12px', fontWeight: 500, color: MD, textDecoration: 'underline', textUnderlineOffset: '3px', transition: 'color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.color = G }}
+              onMouseEnter={e => { e.currentTarget.style.color = DK }}
               onMouseLeave={e => { e.currentTarget.style.color = MD }}>
               View shipping &amp; returns information →
             </a>
@@ -408,7 +407,7 @@ export default function QuickView({ product, onClose }) {
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
               <h3 style={{ ...F, fontSize: '16px', fontWeight: 700, color: DK }}>Reviews & Ratings</h3>
               {!showReviewForm && (
-                <button onClick={() => setShowReviewForm(true)} style={{ background: G, border: 'none', color: W, padding: '9px 20px', ...F, fontSize: '12px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}>
+                <button onClick={() => setShowReviewForm(true)} style={{ background: BK, border: 'none', color: W, padding: '9px 20px', ...F, fontSize: '12px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}>
                   Write a Review
                 </button>
               )}
@@ -429,7 +428,7 @@ export default function QuickView({ product, onClose }) {
                     <div key={star} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
                       <span style={{ ...F, fontSize: '12px', color: MD, width: '12px', textAlign: 'right', flexShrink: 0 }}>{star}</span>
                       <div style={{ flex: 1, height: '8px', background: BR, borderRadius: '4px', overflow: 'hidden' }}>
-                        <div style={{ width: `${pct}%`, height: '100%', background: G, borderRadius: '4px', transition: 'width 0.4s ease' }} />
+                        <div style={{ width: `${pct}%`, height: '100%', background: DK, borderRadius: '4px', transition: 'width 0.4s ease' }} />
                       </div>
                       <span style={{ ...F, fontSize: '12px', color: MD, width: '16px', flexShrink: 0 }}>{count}</span>
                     </div>
@@ -467,7 +466,7 @@ export default function QuickView({ product, onClose }) {
                         {reviewError && <p style={{ ...F, fontSize: '12px', color: RD }}>{reviewError}</p>}
                         <div style={{ display: 'flex', gap: '8px' }}>
                           <button type="submit" disabled={submitting}
-                            style={{ flex: 1, padding: '11px', background: submitting ? FT : G, color: W, border: 'none', cursor: submitting ? 'not-allowed' : 'pointer', ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.04em' }}>
+                            style={{ flex: 1, padding: '11px', background: submitting ? FT : BK, color: W, border: 'none', cursor: submitting ? 'not-allowed' : 'pointer', ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.04em' }}>
                             {submitting ? 'Submitting...' : 'Submit Review'}
                           </button>
                           <button type="button" onClick={() => setShowReviewForm(false)}
@@ -492,7 +491,7 @@ export default function QuickView({ product, onClose }) {
                   Be the first to review this product
                 </p>
                 {!showReviewForm && (
-                  <button onClick={() => setShowReviewForm(true)} style={{ background: G, border: 'none', color: W, padding: '11px 36px', ...F, fontSize: '13px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}>
+                  <button onClick={() => setShowReviewForm(true)} style={{ background: BK, border: 'none', color: W, padding: '11px 36px', ...F, fontSize: '13px', fontWeight: 700, cursor: 'pointer', letterSpacing: '0.04em' }}>
                     Write First Review
                   </button>
                 )}
