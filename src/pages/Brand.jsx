@@ -6,25 +6,12 @@ import { motion } from 'framer-motion'
 const INK    = 'var(--text-strong)'
 const PAPER  = 'var(--bg)'
 const PANEL  = 'var(--bg-panel)'
-const GOLD   = 'var(--accent)'
-const TERRA  = 'var(--accent-2)'
 const MUTE   = 'var(--text-muted)'
 const W      = 'var(--white)'
 const DARK   = 'var(--ink)'
 const SURFACE = 'var(--bg-surface)'
 
 const F = { fontFamily: "'Inter', sans-serif" }
-
-function Eyebrow({ children, color = GOLD, center = false }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: center ? 'center' : 'flex-start', gap: '10px', marginBottom: '16px' }}>
-      <div style={{ width: '5px', height: '5px', borderRadius: '50%', background: color, flexShrink: 0 }} />
-      <span style={{ ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color }}>
-        {children}
-      </span>
-    </div>
-  )
-}
 
 const fadeUp = {
   initial: { opacity: 0, y: 18 },
@@ -50,7 +37,6 @@ function Hero() {
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.55) 100%)' }} />
       <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '0 24px' }}>
         <div>
-        
           <h1 style={{ ...F, fontSize: 'clamp(40px, 8vw, 92px)', fontWeight: 800, color: W, letterSpacing: '-0.02em', lineHeight: 1, marginBottom: '18px' }}>
             STAAY
           </h1>
@@ -105,10 +91,9 @@ function Manifesto() {
   return (
     <section style={{ background: DARK, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 80px)' }}>
       <motion.div {...fadeUp} transition={{ duration: 0.6 }} style={{ maxWidth: '880px', margin: '0 auto', textAlign: 'center' }}>
-       
         <p style={{ ...F, fontSize: 'clamp(22px, 3vw, 34px)', fontWeight: 700, lineHeight: 1.5, color: '#EDE5D2' }}>
           "STAAY exists to remind women that they were never meant to shrink. They were meant to bloom, to evolve, and{' '}
-          <span style={{ color: GOLD }}>to STAAY true to themselves.</span>"
+          <span style={{ fontWeight: 800 }}>to STAAY true to themselves.</span>"
         </p>
       </motion.div>
     </section>
@@ -130,7 +115,6 @@ function CampaignSpotlight() {
         </motion.div>
 
         <motion.div {...fadeUp} transition={{ duration: 0.6, delay: 0.1 }}>
-     
           <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: '18px' }}>
             Running in the Halls
           </h2>
@@ -164,7 +148,6 @@ function DiscoverCollection() {
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'block' }} />
           </div>
           <div>
-          
             <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', lineHeight: 1.2, marginBottom: '18px' }}>
               Discover Our Collection
             </h2>
@@ -172,9 +155,9 @@ function DiscoverCollection() {
               Inspired by the Garden of Eden, a symbol of life and abundance. Effortless femininity, natural confidence, and quiet strength for the modern African woman.
             </p>
             <Link to="/shop"
-              style={{ display: 'inline-block', background: TERRA, color: W, padding: '15px 38px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.25s' }}
-              onMouseEnter={e => { e.currentTarget.style.background = DARK }}
-              onMouseLeave={e => { e.currentTarget.style.background = TERRA }}>
+              style={{ display: 'inline-block', background: DARK, color: W, padding: '15px 38px', ...F, fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.25s' }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#000' }}
+              onMouseLeave={e => { e.currentTarget.style.background = DARK }}>
               Shop Now
             </Link>
           </div>
@@ -210,7 +193,6 @@ function InstagramSection() {
   return (
     <section style={{ background: PAPER, padding: 'clamp(56px, 8vw, 100px) clamp(24px, 6vw, 64px)' }}>
       <div style={{ maxWidth: '1280px', margin: '0 auto', textAlign: 'center' }}>
-       
         <h2 style={{ ...F, fontSize: 'clamp(22px, 2.6vw, 30px)', fontWeight: 800, color: INK, letterSpacing: '-0.01em', marginBottom: 'clamp(32px, 5vw, 48px)' }}>
           Tag Us @staaybystaay on Instagram
         </h2>
