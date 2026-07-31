@@ -6,8 +6,7 @@ import { getOrdersByEmail, updateCustomerProfile } from '../lib/api'
 import { useWishlist } from '../hooks/useWishlist'
 
 // ─── TOKENS ──────────────────────────────────────────────────────
-const G    = 'var(--accent)'
-const GL   = 'var(--accent-soft)'
+const G    = 'var(--accent)' // the one deliberate touch of butter yellow: item prices in the wishlist grid
 const W    = 'var(--white)'         // fixed white text/foreground
 const CARD = 'var(--bg-card)'
 const LG   = 'var(--bg-panel)'
@@ -20,7 +19,6 @@ const RD   = 'var(--danger)'
 const GR   = 'var(--success)'   // dark green (text / icons)
 const GRN  = 'var(--success)'   // vivid green (toggles on-state)
 const GRND = '#DCFCE7'   // green light bg
-const BL   = '#1D4ED8'   // blue for info
 const F    = { fontFamily: "'Inter', sans-serif" }
 
 const NOTIF_DEFAULTS = {
@@ -91,7 +89,7 @@ function Field({ label, value, onChange, type = 'text', disabled = false, hint }
   const [focused, setFocused] = useState(false)
   return (
     <div>
-      <label style={{ display: 'block', ...F, fontSize: '11px', fontWeight: 600, color: focused ? G : FT, letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: '8px', transition: 'color 0.2s' }}>
+      <label style={{ display: 'block', ...F, fontSize: '11px', fontWeight: 600, color: focused ? DK : FT, letterSpacing: '0.07em', textTransform: 'uppercase', marginBottom: '8px', transition: 'color 0.2s' }}>
         {label}
       </label>
       <input
@@ -100,7 +98,7 @@ function Field({ label, value, onChange, type = 'text', disabled = false, hint }
         onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
         style={{
           width: '100%', boxSizing: 'border-box',
-          padding: '12px 14px', border: `1px solid ${focused ? G : BR}`,
+          padding: '12px 14px', border: `1px solid ${focused ? DK : BR}`,
           background: disabled ? LG : CARD, ...F, fontSize: '14px', color: DK,
           outline: 'none', transition: 'border-color 0.2s', borderRadius: '8px',
           cursor: disabled ? 'not-allowed' : 'text',
@@ -210,7 +208,7 @@ function OrderCard({ order }) {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '14px', paddingTop: '14px', borderTop: `1px solid ${BR}`, flexWrap: 'wrap', gap: '8px' }}>
                 <a href="https://wa.me/233503977985" target="_blank" rel="noreferrer"
-                  style={{ ...F, fontSize: '12px', color: G, fontWeight: 500 }}>
+                  style={{ ...F, fontSize: '12px', color: DK, fontWeight: 500 }}>
                   Need help with this order? →
                 </a>
                 <p style={{ ...F, fontSize: '15px', fontWeight: 700, color: DK }}>Total: GH₵{Number(order.total).toLocaleString()}</p>
@@ -243,7 +241,7 @@ function OrdersTab({ user }) {
     <div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
         <h2 style={{ ...F, fontSize: '20px', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>My Orders</h2>
-        <Link to="/shop" style={{ ...F, fontSize: '12px', fontWeight: 600, color: G, borderBottom: `1px solid ${G}`, paddingBottom: '1px' }}>
+        <Link to="/shop" style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, borderBottom: `1px solid ${DK}`, paddingBottom: '1px' }}>
           Shop Again →
         </Link>
       </div>
@@ -252,7 +250,7 @@ function OrdersTab({ user }) {
         <div style={{ display: 'flex', gap: '6px', marginBottom: '20px', flexWrap: 'wrap' }}>
           {['all', 'pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'].map(s => (
             <button key={s} onClick={() => setFilter(s)}
-              style={{ padding: '6px 14px', borderRadius: '100px', border: `1px solid ${filter === s ? G : BR}`, background: filter === s ? GL : CARD, ...F, fontSize: '11px', fontWeight: filter === s ? 600 : 400, color: filter === s ? G : MD, cursor: 'pointer', transition: 'all 0.15s', textTransform: 'capitalize' }}>
+              style={{ padding: '6px 14px', borderRadius: '100px', border: `1px solid ${filter === s ? DK : BR}`, background: filter === s ? LG : CARD, ...F, fontSize: '11px', fontWeight: filter === s ? 600 : 400, color: filter === s ? DK : MD, cursor: 'pointer', transition: 'all 0.15s', textTransform: 'capitalize' }}>
               {s === 'all' ? `All (${orders.length})` : `${s} (${orders.filter(o => o.status === s).length})`}
             </button>
           ))}
@@ -268,8 +266,8 @@ function OrdersTab({ user }) {
         </div>
       ) : filtered.length === 0 ? (
         <div style={{ background: CARD, border: `1px solid ${BR}`, padding: '64px 40px', textAlign: 'center', borderRadius: '16px' }}>
-          <div style={{ width: '56px', height: '56px', background: GL, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-            <OrderIcon size={22} color={G} />
+          <div style={{ width: '56px', height: '56px', background: LG, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+            <OrderIcon size={22} color={DK} />
           </div>
           <p style={{ ...F, fontSize: '16px', fontWeight: 700, color: DK, marginBottom: '8px' }}>No orders yet</p>
           <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, marginBottom: '28px', maxWidth: '280px', margin: '0 auto 28px' }}>
@@ -277,7 +275,7 @@ function OrdersTab({ user }) {
           </p>
           <Link to="/shop"
             style={{ background: BK, color: W, padding: '13px 32px', ...F, fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em', display: 'inline-block', borderRadius: '8px', transition: 'background 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.background = G }}
+            onMouseEnter={e => { e.currentTarget.style.background = '#000' }}
             onMouseLeave={e => { e.currentTarget.style.background = BK }}>
             Start Shopping
           </Link>
@@ -351,13 +349,13 @@ function ProfileTab({ user, profile, auth }) {
           {profile?.avatar_url ? (
             <img src={profile.avatar_url} alt="" style={{ width: '72px', height: '72px', borderRadius: '50%', objectFit: 'cover' }} />
           ) : (
-            <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: GL, display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '24px', fontWeight: 700, color: G }}>
+            <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: LG, display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '24px', fontWeight: 700, color: DK }}>
               {initials}
             </div>
           )}
           <button
             onClick={() => fileRef.current?.click()} disabled={uploading}
-            style={{ position: 'absolute', bottom: 0, right: 0, width: '26px', height: '26px', borderRadius: '50%', background: G, border: `2px solid ${W}`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            style={{ position: 'absolute', bottom: 0, right: 0, width: '26px', height: '26px', borderRadius: '50%', background: BK, border: `2px solid ${W}`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
             <CameraIcon size={12} />
           </button>
           <input ref={fileRef} type="file" accept="image/*" onChange={handleAvatarChange} style={{ display: 'none' }} />
@@ -368,7 +366,7 @@ function ProfileTab({ user, profile, auth }) {
           </p>
           <p style={{ ...F, fontSize: '13px', color: MD, marginTop: '2px' }}>{user.email}</p>
           <button onClick={() => fileRef.current?.click()} disabled={uploading}
-            style={{ marginTop: '8px', background: 'none', border: 'none', ...F, fontSize: '12px', color: G, cursor: 'pointer', padding: 0, fontWeight: 500 }}>
+            style={{ marginTop: '8px', background: 'none', border: 'none', ...F, fontSize: '12px', color: DK, cursor: 'pointer', padding: 0, fontWeight: 500 }}>
             {uploading ? 'Uploading…' : 'Change photo'}
           </button>
         </div>
@@ -396,7 +394,7 @@ function ProfileTab({ user, profile, auth }) {
         </div>
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
           <button onClick={handleSave} disabled={saving}
-            style={{ padding: '12px 32px', background: saving ? MD : G, color: W, border: 'none', borderRadius: '8px', ...F, fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em', cursor: saving ? 'wait' : 'pointer', transition: 'background 0.2s' }}>
+            style={{ padding: '12px 32px', background: saving ? MD : BK, color: W, border: 'none', borderRadius: '8px', ...F, fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em', cursor: saving ? 'wait' : 'pointer', transition: 'background 0.2s' }}>
             {saving ? 'Saving…' : 'Save Changes'}
           </button>
         </div>
@@ -423,15 +421,15 @@ function WishlistTab() {
         <h2 style={{ ...F, fontSize: '20px', fontWeight: 700, color: DK, letterSpacing: '-0.02em' }}>
           Wishlist <span style={{ fontWeight: 300, color: MD, fontSize: '16px' }}>({items.length})</span>
         </h2>
-        <Link to="/favorites" style={{ ...F, fontSize: '12px', fontWeight: 600, color: G, borderBottom: `1px solid ${G}`, paddingBottom: '1px' }}>
+        <Link to="/favorites" style={{ ...F, fontSize: '12px', fontWeight: 600, color: DK, borderBottom: `1px solid ${DK}`, paddingBottom: '1px' }}>
           View full wishlist →
         </Link>
       </div>
 
       {items.length === 0 ? (
         <div style={{ background: CARD, border: `1px solid ${BR}`, padding: '64px 40px', textAlign: 'center', borderRadius: '16px' }}>
-          <div style={{ width: '56px', height: '56px', background: GL, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
-            <HeartIcon size={22} color={G} />
+          <div style={{ width: '56px', height: '56px', background: LG, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+            <HeartIcon size={22} color={DK} />
           </div>
           <p style={{ ...F, fontSize: '16px', fontWeight: 700, color: DK, marginBottom: '8px' }}>Nothing saved yet</p>
           <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, marginBottom: '28px' }}>Heart items while browsing to save them here.</p>
@@ -535,9 +533,9 @@ function SettingsTab({ user, profile, auth, onLogout }) {
   const isGoogle = user.app_metadata?.provider === 'google'
 
   const NOTIF_ROWS = [
-    { key: 'order_updates', label: 'Order updates',       sub: 'Shipping and delivery status updates',   color: BL   },
-    { key: 'new_arrivals',  label: 'New arrivals',        sub: 'Be the first to see new collections',    color: G    },
-    { key: 'promotions',    label: 'Promotions & sales',  sub: 'Exclusive deals, discounts, and events', color: RD   },
+    { key: 'order_updates', label: 'Order updates',       sub: 'Shipping and delivery status updates',   color: MD   },
+    { key: 'new_arrivals',  label: 'New arrivals',        sub: 'Be the first to see new collections',    color: MD   },
+    { key: 'promotions',    label: 'Promotions & sales',  sub: 'Exclusive deals, discounts, and events', color: MD   },
   ]
 
   return (
@@ -625,7 +623,7 @@ function SettingsTab({ user, profile, auth, onLogout }) {
         <p style={{ ...F, fontSize: '13px', fontWeight: 600, color: RD, marginBottom: '8px' }}>Danger Zone</p>
         <p style={{ ...F, fontSize: '13px', color: MD, marginBottom: '16px', lineHeight: 1.7 }}>
           Signing out clears your local session. To permanently delete your account and all associated data, contact us at{' '}
-          <a href="mailto:info@gogmi.org.gh" style={{ color: BL, fontWeight: 500 }}>info@gogmi.org.gh</a>.
+          <a href="mailto:info@gogmi.org.gh" style={{ color: DK, fontWeight: 500 }}>info@gogmi.org.gh</a>.
         </p>
         <button onClick={onLogout}
           style={{ padding: '11px 24px', background: 'transparent', border: '1px solid rgba(220,38,38,0.3)', color: RD, borderRadius: '8px', ...F, fontSize: '13px', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
@@ -678,7 +676,7 @@ export default function Account() {
         <div className="page-padding" style={{ maxWidth: '1280px', margin: '0 auto', padding: '28px 40px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '22px' }}>
             <Link to="/" style={{ ...F, fontSize: '12px', color: MD, transition: 'color 0.2s' }}
-              onMouseEnter={e => { e.currentTarget.style.color = G }}
+              onMouseEnter={e => { e.currentTarget.style.color = DK }}
               onMouseLeave={e => { e.currentTarget.style.color = MD }}>Home</Link>
             <span style={{ color: FT, fontSize: '12px' }}>/</span>
             <span style={{ ...F, fontSize: '12px', fontWeight: 500, color: DK }}>My Account</span>
@@ -687,16 +685,16 @@ export default function Account() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
             <div style={{ position: 'relative', flexShrink: 0 }}>
               {profile?.avatar_url ? (
-                <img src={profile.avatar_url} alt="" style={{ width: '68px', height: '68px', borderRadius: '50%', objectFit: 'cover', border: `3px solid ${GL}` }} />
+                <img src={profile.avatar_url} alt="" style={{ width: '68px', height: '68px', borderRadius: '50%', objectFit: 'cover', border: `3px solid ${BR}` }} />
               ) : (
-                <div style={{ width: '68px', height: '68px', borderRadius: '50%', background: GL, display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '22px', fontWeight: 700, color: G, border: `3px solid ${GL}` }}>
+                <div style={{ width: '68px', height: '68px', borderRadius: '50%', background: LG, display: 'flex', alignItems: 'center', justifyContent: 'center', ...F, fontSize: '22px', fontWeight: 700, color: DK, border: `3px solid ${BR}` }}>
                   {initials}
                 </div>
               )}
               <div style={{ position: 'absolute', bottom: '2px', right: '2px', width: '14px', height: '14px', borderRadius: '50%', background: GR, border: `2px solid ${W}` }} />
             </div>
             <div>
-              <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '4px' }}>Welcome back</p>
+              <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: DK, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '4px' }}>Welcome back</p>
               <h1 style={{ ...F, fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: 800, color: DK, letterSpacing: '-0.025em', lineHeight: 1.1 }}>
                 {firstName} {lastName}
               </h1>
@@ -713,7 +711,7 @@ export default function Account() {
         {/* Sidebar */}
         <aside style={{ position: 'sticky', top: '32px' }}>
           <div style={{ background: CARD, border: `1px solid ${BR}`, borderRadius: '14px', overflow: 'hidden' }}>
-            <div style={{ height: '3px', background: `linear-gradient(90deg, ${G}, #D4A853)` }} />
+            <div style={{ height: '3px', background: BK }} />
             <nav className="account-sidebar-nav" style={{ padding: '8px' }}>
               {TABS.map(tab => {
                 const Icon = tab.icon
@@ -722,14 +720,14 @@ export default function Account() {
                   <button key={tab.key} onClick={() => setActiveTab(tab.key)}
                     style={{
                       width: '100%', padding: '11px 14px', display: 'flex', alignItems: 'center', gap: '10px',
-                      background: active ? GL : 'transparent', borderRadius: '8px',
+                      background: active ? LG : 'transparent', borderRadius: '8px',
                       border: 'none', ...F, fontSize: '13px',
-                      fontWeight: active ? 600 : 400, color: active ? G : MD,
+                      fontWeight: active ? 600 : 400, color: active ? DK : MD,
                       cursor: 'pointer', textAlign: 'left', transition: 'all 0.15s', marginBottom: '2px',
                     }}
                     onMouseEnter={e => { if (!active) e.currentTarget.style.background = LG }}
                     onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'transparent' }}>
-                    <Icon size={16} color={active ? G : MD} />
+                    <Icon size={16} color={active ? DK : MD} />
                     {tab.label}
                   </button>
                 )
