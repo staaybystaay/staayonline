@@ -135,7 +135,7 @@ function RITHSection() {
               </h3>
 
               <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: TEXT, lineHeight: 1.85, marginBottom: '22px' }}>
-                As part of the British Museum's Young People's Lates programme, <em>Running in the Halls</em> invited audiences to encounter the Museum in an entirely new way, with bodies moving through the galleries and ideas crossing centuries.
+                As part of the British Museum's Young People's Lates programme, Running in the Halls invited audiences to encounter the Museum in an entirely new way, with bodies moving through the galleries and ideas crossing centuries.
               </p>
 
               <p style={{ ...F, fontSize: '16px', fontWeight: 500, color: TEXT, lineHeight: 1.85, marginBottom: '22px' }}>
@@ -147,7 +147,7 @@ function RITHSection() {
               </p>
 
               {/* Pull quote */}
-              <blockquote style={{ margin: '0 0 48px', padding: '28px 0 28px 28px', borderLeft: `4px solid ${INK}` }}>
+              <blockquote style={{ margin: '0 0 48px', padding: '28px 0' }}>
                 <p style={{ ...F, fontSize: 'clamp(17px, 1.8vw, 22px)', fontWeight: 700, color: INK, lineHeight: 1.5, marginBottom: '14px' }}>
                   "Rather than viewing history at a distance, audiences are invited to move with the programme and experience the Museum as a living cultural space where past and present exist side by side."
                 </p>
@@ -258,7 +258,7 @@ function EdenSection() {
             </p>
 
             {/* Pull quote */}
-            <blockquote style={{ margin: '0 0 52px', padding: '32px', background: CARD, borderTop: `4px solid ${INK}` }}>
+            <blockquote style={{ margin: '0 0 52px', padding: '32px', background: CARD }}>
               <p style={{ ...F, fontSize: 'clamp(19px, 2vw, 26px)', fontWeight: 700, color: INK, lineHeight: 1.45, marginBottom: '16px' }}>
                 "The collection tells a story of a woman in her purest form, uncovered, unafraid, and blooming."
               </p>
