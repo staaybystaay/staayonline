@@ -27,7 +27,7 @@ function Hero() {
     <section style={{ position: 'relative', height: 'clamp(420px, 60vh, 640px)', overflow: 'hidden', background: DARK }}>
       <video
         src="/stayvid2.mp4"
-        poster="/herobanner2.jpg"
+        poster="/brand-banner.jpg"
         autoPlay
         loop
         muted
