@@ -26,9 +26,9 @@ const F    = { fontFamily: "'Inter', sans-serif" }
 // so they're shown with object-fit: contain.
 const COLLECTION_BANNERS = {
   all:              { src: '/collection-banner.jpg', fit: 'contain' },
-  eden:             { src: '/eden-ash.jpg',     fit: 'contain' },
-  'love-edit':      { src: '/love-ash.jpg',     fit: 'contain' },
-  bold:             { src: '/bold-ash.jpg',     fit: 'contain' },
+  eden:             { src: '/Eden-new.jpg',     fit: 'contain' },
+  'love-edit':      { src: '/Love-banner.jpg',     fit: 'contain' },
+  bold:             { src: '/BB-new.jpg',     fit: 'contain' },
   'pleasure-pleats': { src: '/pleasure-ash.jpg', fit: 'contain' },
 }
 
