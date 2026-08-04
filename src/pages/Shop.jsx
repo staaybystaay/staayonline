@@ -29,7 +29,7 @@ const COLLECTION_BANNERS = {
   eden:             { src: '/Eden-new.jpg',     fit: 'contain' },
   'love-edit':      { src: '/Love-banner.jpg',     fit: 'contain' },
   bold:             { src: '/BB-new.jpg',     fit: 'contain' },
-  'pleasure-pleats': { src: '/pleasure-ash.jpg', fit: 'contain' },
+  'pleasure-pleats': { src: '/PP-new.jpg', fit: 'contain' },
 }
 
 // Pleasure Pleats isn't in Supabase yet — this stands in for its name
