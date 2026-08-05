@@ -2,7 +2,10 @@ import { useState, useEffect, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
+import useCurrencyStore from '../store/useCurrencyStore'
 import { useAuth } from '../hooks/useAuth'
+import { getAllProducts } from '../lib/api'
+import { imgThumb } from '../lib/images'
 import CurrencySelector from './CurrencySelector'
 
 const W  = 'var(--white)'
@@ -65,8 +68,64 @@ const secondaryLinks = [
   { label: 'Gift Card',                  path: '/sale',               slug: 'sale' },
 ]
 
-function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch }) {
+// Live search-as-you-type suggestions: matches both collections (by label)
+// and individual products (by name), so a search finds specific dresses,
+// not just the Shop page in general.
+function SearchSuggestions({ query, collections, products, formatPrice, onSelect }) {
+  const hasResults = collections.length > 0 || products.length > 0
+  return (
+    <div
+      onMouseDown={e => e.preventDefault()}
+      style={{ position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, background: 'var(--bg-card)', border: `1px solid ${BR}`, borderRadius: '10px', boxShadow: '0 12px 32px rgba(17,17,17,0.14)', maxHeight: '420px', overflowY: 'auto', zIndex: 200 }}>
+      {!hasResults && (
+        <p style={{ ...F, fontSize: '12px', color: MD, padding: '16px 14px' }}>No results for "{query}"</p>
+      )}
+      {collections.length > 0 && (
+        <div style={{ padding: '10px 0' }}>
+          <p style={{ ...F, fontSize: '10px', fontWeight: 700, color: MD, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '0 14px 6px' }}>Collections</p>
+          {collections.map(c => (
+            <button key={c.slug} onClick={() => onSelect(c.path)}
+              style={{ display: 'block', width: '100%', textAlign: 'left', padding: '9px 14px', background: 'none', border: 'none', cursor: 'pointer', ...F, fontSize: '13px', color: DK }}
+              onMouseEnter={e => { e.currentTarget.style.background = LG }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'none' }}>
+              {c.label}
+            </button>
+          ))}
+        </div>
+      )}
+      {products.length > 0 && (
+        <div style={{ padding: '10px 0', borderTop: collections.length > 0 ? `1px solid ${BR}` : 'none' }}>
+          <p style={{ ...F, fontSize: '10px', fontWeight: 700, color: MD, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '0 14px 6px' }}>Products</p>
+          {products.map(p => (
+            <button key={p.id} onClick={() => onSelect(`/shop?q=${encodeURIComponent(p.name)}`)}
+              style={{ display: 'flex', alignItems: 'center', gap: '10px', width: '100%', textAlign: 'left', padding: '8px 14px', background: 'none', border: 'none', cursor: 'pointer' }}
+              onMouseEnter={e => { e.currentTarget.style.background = LG }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'none' }}>
+              <div style={{ width: '34px', height: '42px', flexShrink: 0, background: LG, overflow: 'hidden', borderRadius: '4px' }}>
+                <img src={imgThumb(p.image_url)} alt="" onError={e => { e.target.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <div style={{ minWidth: 0 }}>
+                <p style={{ ...F, fontSize: '12px', fontWeight: 500, color: DK, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</p>
+                <p style={{ ...F, fontSize: '11px', color: MD, marginTop: '1px' }}>{formatPrice(p.price)}</p>
+              </div>
+            </button>
+          ))}
+          <button onClick={() => onSelect(`/shop?q=${encodeURIComponent(query)}`)}
+            style={{ display: 'block', width: '100%', textAlign: 'left', padding: '10px 14px', background: 'none', border: 'none', borderTop: `1px solid ${BR}`, cursor: 'pointer', ...F, fontSize: '12px', fontWeight: 600, color: DK, marginTop: '4px' }}>
+            See all results for "{query}" →
+          </button>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch, onNavigate, products = [] }) {
   const [drawerSearch, setDrawerSearch] = useState('')
+  const formatPrice = useCurrencyStore(s => s.format)
+  const drawerQuery = drawerSearch.trim().toLowerCase()
+  const drawerMatchedCollections = drawerQuery ? secondaryLinks.filter(c => c.slug !== 'all' && c.label.toLowerCase().includes(drawerQuery)) : []
+  const drawerMatchedProducts    = drawerQuery ? products.filter(p => p.name?.toLowerCase().includes(drawerQuery)).slice(0, 6) : []
   return (
     <AnimatePresence>
       {open && (
@@ -84,16 +143,25 @@ function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch }) {
             </div>
 
             {/* Search */}
-            <form onSubmit={e => { e.preventDefault(); onSearch?.(drawerSearch); onClose() }} style={{ padding: '16px 24px 4px' }}>
+            <form onSubmit={e => { e.preventDefault(); onSearch?.(drawerSearch); onClose() }} style={{ padding: '16px 24px 4px', position: 'relative' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: LG, borderRadius: '8px', padding: '10px 14px' }}>
                 <span style={{ color: MD, flexShrink: 0, display: 'flex' }}><SearchIcon /></span>
                 <input
                   value={drawerSearch}
                   onChange={e => setDrawerSearch(e.target.value)}
-                  placeholder="Search collections..."
+                  placeholder="Search products & collections..."
                   style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', ...F, fontSize: '13px', color: DK }}
                 />
               </div>
+              {drawerQuery && (
+                <SearchSuggestions
+                  query={drawerSearch.trim()}
+                  collections={drawerMatchedCollections}
+                  products={drawerMatchedProducts}
+                  formatPrice={formatPrice}
+                  onSelect={path => { onNavigate?.(path); setDrawerSearch('') }}
+                />
+              )}
             </form>
 
             {/* User greeting */}
@@ -149,11 +217,13 @@ export default function Navbar() {
   const [searchVal,     setSearchVal]     = useState('')
   const [mobileOpen,    setMobileOpen]    = useState(false)
   const [scrolled,      setScrolled]      = useState(false)
+  const [allProducts,   setAllProducts]   = useState([])
   const location  = useLocation()
   const navigate  = useNavigate()
   const items     = useCartStore(s => s.items)
   const cartCount = items.reduce((n, i) => n + i.qty, 0)
   const { user, profile, logout } = useAuth()
+  const formatPrice = useCurrencyStore(s => s.format)
   const searchRef = useRef()
 
   useEffect(() => {
@@ -161,6 +231,9 @@ export default function Navbar() {
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  // Loaded once for the search-suggestions dropdown (Navbar is mounted for the whole session)
+  useEffect(() => { getAllProducts().then(setAllProducts).catch(() => {}) }, [])
 
   // eslint-disable-next-line react-hooks/set-state-in-effect -- intentionally close mobile menu on route change
   useEffect(() => { setMobileOpen(false) }, [location])
@@ -172,7 +245,17 @@ export default function Navbar() {
     if (searchVal.trim()) { navigate(`/shop?q=${encodeURIComponent(searchVal.trim())}`); setSearchVal(''); searchRef.current?.blur() }
   }
 
+  function handleSuggestionSelect(path) {
+    navigate(path)
+    setSearchVal('')
+    searchRef.current?.blur()
+  }
+
   const activeCol = new URLSearchParams(location.search).get('col')
+
+  const searchQuery       = searchVal.trim().toLowerCase()
+  const matchedCollections = searchQuery ? secondaryLinks.filter(c => c.slug !== 'all' && c.label.toLowerCase().includes(searchQuery)) : []
+  const matchedProducts    = searchQuery ? allProducts.filter(p => p.name?.toLowerCase().includes(searchQuery)).slice(0, 6) : []
 
   return (
     <>
@@ -212,7 +295,7 @@ export default function Navbar() {
           </nav>
 
           {/* Search bar */}
-          <form onSubmit={handleSearch} className="desktop-only" style={{ flex: 1, maxWidth: '360px', marginLeft: 'auto' }}>
+          <form onSubmit={handleSearch} className="desktop-only" style={{ flex: 1, maxWidth: '360px', marginLeft: 'auto', position: 'relative' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: LG, border: `1.5px solid ${searchFocused ? DK : 'transparent'}`, borderRadius: '8px', padding: '9px 14px', transition: 'border-color 0.2s' }}>
               <span style={{ color: MD, flexShrink: 0, display: 'flex' }}><SearchIcon /></span>
               <input
@@ -220,11 +303,21 @@ export default function Navbar() {
                 value={searchVal}
                 onChange={e => setSearchVal(e.target.value)}
                 onFocus={() => setSearchFocused(true)}
-                onBlur={() => setSearchFocused(false)}
-                placeholder="Search collections..."
+                onBlur={() => setTimeout(() => setSearchFocused(false), 150)}
+                onKeyDown={e => { if (e.key === 'Escape') searchRef.current?.blur() }}
+                placeholder="Search products & collections..."
                 style={{ flex: 1, background: 'transparent', border: 'none', outline: 'none', ...F, fontSize: '13px', color: DK }}
               />
             </div>
+            {searchFocused && searchVal.trim() && (
+              <SearchSuggestions
+                query={searchVal.trim()}
+                collections={matchedCollections}
+                products={matchedProducts}
+                formatPrice={formatPrice}
+                onSelect={handleSuggestionSelect}
+              />
+            )}
           </form>
 
           {/* Icons */}
@@ -291,7 +384,9 @@ export default function Navbar() {
       </header>
 
       <MobileDrawer open={mobileOpen} onClose={() => setMobileOpen(false)} user={user} profile={profile} onLogout={handleLogout}
-        onSearch={(val) => { if (val.trim()) navigate(`/shop?q=${encodeURIComponent(val.trim())}`) }} />
+        products={allProducts}
+        onSearch={(val) => { if (val.trim()) navigate(`/shop?q=${encodeURIComponent(val.trim())}`) }}
+        onNavigate={(path) => { navigate(path); setMobileOpen(false) }} />
     </>
   )
 }

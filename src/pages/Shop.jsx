@@ -124,6 +124,26 @@ function ComingSoon({ label }) {
   )
 }
 
+function NoSearchResults({ query, onClear }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '100px 0', gap: '16px', textAlign: 'center' }}>
+      <div style={{ width: '64px', height: '64px', background: OW, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', marginBottom: '8px' }}>✦</div>
+      <h3 style={{ ...F, fontSize: '28px', fontWeight: 800, color: DK, letterSpacing: '-0.02em' }}>No results found</h3>
+      <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, maxWidth: '340px', lineHeight: 1.65 }}>
+        We couldn't find anything matching <strong>"{query}"</strong>. Try a different search or browse our collections.
+      </p>
+      <button onClick={onClear} style={{ marginTop: '8px', padding: '12px 28px', background: BK, color: W, border: 'none', ...F, fontSize: '13px', fontWeight: 600, letterSpacing: '0.04em', cursor: 'pointer', transition: 'background 0.2s' }}
+        onMouseEnter={e => { e.currentTarget.style.background = '#000' }}
+        onMouseLeave={e => { e.currentTarget.style.background = BK }}>
+        Clear Search
+      </button>
+    </motion.div>
+  )
+}
+
 // ─── PRODUCT CARD — GRID ─────────────────────
 function ProductCardGrid({ product, onQuickView }) {
   const [hovered, setHovered] = useState(false)
@@ -265,6 +285,7 @@ export default function Shop() {
   const [products,         setProducts]         = useState([])
   const [loading,          setLoading]          = useState(true)
   const [activeCollection, setActiveCollection] = useState('all')
+  const [searchQuery,      setSearchQuery]      = useState('')
   const [activePrices,     setActivePrices]     = useState([])
   const [sortBy,           setSortBy]           = useState('newest')
   const [viewMode,         setViewMode]         = useState('grid')
@@ -272,10 +293,11 @@ export default function Shop() {
   const [visibleCount,     setVisibleCount]     = useState(12)
   const [quickViewProduct, setQuickViewProduct] = useState(null)
 
-  // Sync active collection from URL ?col= param (used by navbar links & mobile drawer)
+  // Sync active collection + search term from the URL (?col=, ?q=) — used by navbar links, search, and mobile drawer
   useEffect(() => {
-    const col = new URLSearchParams(location.search).get('col')
-    setActiveCollection(col || 'all')
+    const params = new URLSearchParams(location.search)
+    setActiveCollection(params.get('col') || 'all')
+    setSearchQuery(params.get('q') || '')
     setVisibleCount(12)
   }, [location.search])
   // Fetch collections + products together
@@ -304,8 +326,16 @@ export default function Shop() {
   const togglePrice    = label => { setActivePrices(prev => prev.includes(label) ? prev.filter(l => l !== label) : [...prev, label]); setVisibleCount(12) }
   const clearAll       = () => { navigate('/shop'); setActivePrices([]); setVisibleCount(12) }
   const setCollection  = (slug) => { navigate(slug === 'all' ? '/shop' : `/shop?col=${slug}`) }
+  const clearSearch    = () => {
+    const params = new URLSearchParams(location.search)
+    params.delete('q')
+    navigate(params.toString() ? `/shop?${params.toString()}` : '/shop')
+  }
+
+  const searchActive = searchQuery.trim().length > 0
 
   const filtered = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase()
     return products.filter(p => {
       if (activeCollection !== 'all' && p.collection?.slug !== activeCollection) return false
       if (activePrices.length) {
@@ -315,9 +345,14 @@ export default function Shop() {
         })
         if (!ok) return false
       }
+      if (q) {
+        const inName       = p.name?.toLowerCase().includes(q)
+        const inCollection = p.collection?.name?.toLowerCase().includes(q)
+        if (!inName && !inCollection) return false
+      }
       return true
     })
-  }, [products, activeCollection, activePrices])
+  }, [products, activeCollection, activePrices, searchQuery])
 
   const sorted = useMemo(() => {
     return [...filtered].sort((a, b) => {
@@ -328,7 +363,7 @@ export default function Shop() {
     })
   }, [filtered, sortBy])
 
-  const hasFilters = activeCollection !== 'all' || activePrices.length > 0
+  const hasFilters = activeCollection !== 'all' || activePrices.length > 0 || searchActive
 
   // Collections for the pills — "All" + db collections + fallback stand-ins
   const collectionPills = [
@@ -353,12 +388,12 @@ export default function Shop() {
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center' }}>
             <div className="page-padding" style={{ width: '100%', maxWidth: '1280px', margin: '0 auto', padding: '0 64px' }}>
               <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: MD, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
-                {activeCollection === 'all' ? 'All Collections' : 'Collection'}
+                {searchActive ? 'Search' : activeCollection === 'all' ? 'All Collections' : 'Collection'}
               </p>
               <h1 style={{ ...F, fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: activeCol?.subtitle ? '6px' : '0' }}>
-                {activeCollection === 'all' ? 'Shop All Collections' : (activeCol?.name || FALLBACK_COLLECTION_NAMES[activeCollection] || 'Collection')}
+                {searchActive ? `Results for "${searchQuery}"` : activeCollection === 'all' ? 'Shop All Collections' : (activeCol?.name || FALLBACK_COLLECTION_NAMES[activeCollection] || 'Collection')}
               </h1>
-              {activeCol?.subtitle && (
+              {!searchActive && activeCol?.subtitle && (
                 <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, maxWidth: '360px' }}>{activeCol.subtitle}</p>
               )}
             </div>
@@ -384,12 +419,12 @@ export default function Shop() {
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
               <div>
                 <p style={{ ...F, fontSize: '11px', fontWeight: 600, color: MD, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '6px' }}>
-                  {activeCollection === 'all' ? 'All Collections' : 'Collection'}
+                  {searchActive ? 'Search' : activeCollection === 'all' ? 'All Collections' : 'Collection'}
                 </p>
                 <h1 style={{ ...F, fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: DK, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: activeCol?.subtitle && activeCollection !== 'all' ? '6px' : '0' }}>
-                  {activeCollection === 'all' ? 'Shop All Collections' : (activeCol?.name || FALLBACK_COLLECTION_NAMES[activeCollection])}
+                  {searchActive ? `Results for "${searchQuery}"` : activeCollection === 'all' ? 'Shop All Collections' : (activeCol?.name || FALLBACK_COLLECTION_NAMES[activeCollection])}
                 </h1>
-                {activeCol?.subtitle && activeCollection !== 'all' && (
+                {!searchActive && activeCol?.subtitle && activeCollection !== 'all' && (
                   <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD }}>{activeCol.subtitle}</p>
                 )}
               </div>
@@ -458,6 +493,12 @@ export default function Shop() {
         <div className="page-padding" style={{ background: BG, borderBottom: `1px solid ${BR}`, padding: '10px 64px' }}>
           <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
             <span style={{ ...F, fontSize: '11px', fontWeight: 500, color: MD }}>Filters:</span>
+            {searchActive && (
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', background: OW, border: `1px solid ${BR}`, ...F, fontSize: '11px', fontWeight: 500, color: DK, borderRadius: '100px' }}>
+                Search: "{searchQuery}"
+                <button onClick={clearSearch} style={{ background: 'none', border: 'none', color: DK, cursor: 'pointer', padding: 0, fontSize: '14px', lineHeight: 1 }}>×</button>
+              </span>
+            )}
             {activeCollection !== 'all' && activeCol && (
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 10px', background: OW, border: `1px solid ${BR}`, ...F, fontSize: '11px', fontWeight: 500, color: DK, borderRadius: '100px' }}>
                 {activeCol.name}
@@ -518,7 +559,9 @@ export default function Shop() {
           {loading ? (
             <Skeleton />
           ) : sorted.length === 0 ? (
-            <ComingSoon label={activeCol?.name || 'this collection'} />
+            searchActive
+              ? <NoSearchResults query={searchQuery} onClear={clearSearch} />
+              : <ComingSoon label={activeCol?.name || 'this collection'} />
           ) : viewMode === 'grid' ? (
             <>
               <motion.div key="grid" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid-3-cols" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px 20px' }}>
