@@ -6,7 +6,7 @@ const F  = { fontFamily: "'Inter', sans-serif" }
 const categories = [
   { label: 'Eden Collection',  path: '/shop?col=eden',      image: '/Edenn-new.jpg' },
   { label: 'The Love Edit',    path: '/shop?col=love-edit', image: '/Love-new.jpg' },
-  { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: '/BB-new.jpg' },
+  { label: 'Bold & Beautiful', path: '/shop?col=bold',      image: '/BBB.jpg' },
   { label: 'Pleasure Pleats',  path: '/shop?col=pleasure-pleats', image: '/Pleasure-new.jpg' },
   { label: 'Featured',         path: '/featured',           image: '/Featured-new.jpg' },
   { label: 'All Collections',  path: '/shop',               image: '/collection-fit.jpg'},
