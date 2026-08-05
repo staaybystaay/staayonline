@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
 import { useWishlist } from '../hooks/useWishlist'
@@ -336,7 +337,8 @@ export default function QuickView({ product, onClose }) {
                   <p style={{ ...F, fontSize: '12px', fontWeight: 600, color: sizeError ? RD : DK, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                     Size {sizeError && <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>— please select a size</span>}
                   </p>
-                  <button style={{ background: 'none', border: 'none', ...F, fontSize: '11px', color: DK, cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: '2px', padding: 0 }}>Size Guide</button>
+                  <Link to="/size-guide" target="_blank" rel="noreferrer"
+                    style={{ ...F, fontSize: '11px', color: DK, textDecoration: 'underline', textUnderlineOffset: '2px' }}>Size Guide</Link>
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
                   {availSizes.map(s => (
