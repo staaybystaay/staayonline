@@ -14,7 +14,7 @@ const slides = [
     image: '/home-hero.jpg',
     headline: 'WHERE BEAUTY\nBEGINS TODAY',
     // sub: 'Soft, feminine, intentional.',
-    cta: 'Shop Eden Collection',
+    cta: 'Explore Staay',
     href: '/shop?col=eden',
     align: 'left',
   },
