@@ -25,7 +25,7 @@ const slides = [
     // sub: 'Styles that match every version of you.',
     cta: 'Shop All Collections',
     href: '/shop',
-    align: 'right',
+    align: 'left',
   },
   {
     id: 3,
