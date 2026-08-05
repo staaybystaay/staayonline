@@ -62,7 +62,7 @@ const secondaryLinks = [
   { label: 'The Love Edit',   path: '/shop?col=love-edit', slug: 'love' },
   { label: 'Bold & Beautiful',path: '/shop?col=bold',      slug: 'bold' },
   { label: 'Pleasure Pleats', path: '/shop?col=pleasure-pleats', slug: 'pleasure' },
-  { label: 'Sales Promotion',            path: '/sale',               slug: 'sale' },
+  { label: 'Gift Card',                  path: '/sale',               slug: 'sale' },
 ]
 
 function MobileDrawer({ open, onClose, user, profile, onLogout, onSearch }) {

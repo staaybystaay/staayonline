@@ -11,7 +11,6 @@ import MiniCurrencyPicker from '../components/MiniCurrencyPicker'
 const INK   = 'var(--ink)'          // fixed dark chrome: hero/banner backgrounds, text-on-accent, solid buttons
 const G     = 'var(--accent)'
 const GL    = 'var(--accent-soft)'
-const ACC   = '#E2542D'             // fixed — discount headline against the permanently-dark hero
 const W     = 'var(--white)'        // fixed white text
 const BG    = 'var(--bg)'
 const CARD  = 'var(--bg-card)'
@@ -113,82 +112,6 @@ function SaleCard({ product, onQuickView }) {
         </div>
       </div>
     </motion.div>
-  )
-}
-
-// ─── Hero ──────────────────────────────────────
-function PromoHero({ maxDiscount }) {
-  return (
-    <section style={{ background: INK, position: 'relative', overflow: 'hidden', padding: 'clamp(64px, 10vw, 110px) 24px clamp(56px, 8vw, 90px)' }}>
-
-      {/* Ambient texture */}
-      <div style={{ position: 'absolute', inset: 0, backgroundImage: `radial-gradient(circle, rgba(184,144,58,0.18) 1px, transparent 1px)`, backgroundSize: '26px 26px', opacity: 0.5 }} />
-      <div style={{ position: 'absolute', top: '-20%', left: '50%', transform: 'translateX(-50%)', width: '700px', height: '700px', background: `radial-gradient(circle, rgba(226,84,45,0.18), transparent 70%)`, pointerEvents: 'none' }} />
-
-      <div style={{ position: 'relative', maxWidth: '720px', margin: '0 auto', textAlign: 'center' }}>
-
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginBottom: '24px' }}>
-          <img src="/stayonlinelogo.jpeg" alt="" style={{ width: '24px', height: '24px', borderRadius: '50%', objectFit: 'cover' }} />
-          <span style={{ ...F, fontSize: '13px', fontWeight: 700, color: W, letterSpacing: '0.04em' }}>STAAY <span style={{ color: G }}>ONLINE</span></span>
-        </div>
-
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <p style={{ ...F, fontSize: '12px', fontWeight: 700, color: G, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: '14px' }}>
-            Seasonal Promotions
-          </p>
-
-          {maxDiscount > 0 ? (
-            <h1 style={{ ...F, fontSize: 'clamp(56px, 11vw, 110px)', fontWeight: 900, color: ACC, letterSpacing: '-0.03em', lineHeight: 0.95, marginBottom: '18px' }}>
-              UP TO {maxDiscount}%<br />OFF
-            </h1>
-          ) : (
-            <h1 style={{ ...F, fontSize: 'clamp(36px, 6vw, 60px)', fontWeight: 900, color: W, letterSpacing: '-0.02em', lineHeight: 1.05, marginBottom: '18px' }}>
-              STAAY<br /><span style={{ color: G }}>Promotions</span>
-            </h1>
-          )}
-
-          <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: 'rgba(255,255,255,0.6)', lineHeight: 1.8, maxWidth: '420px', margin: '0 auto 32px' }}>
-            Discounted pieces, gift cards, and everything new — all in one place. Treat yourself, or someone who deserves it.
-          </p>
-
-          <a href="#shop-sale" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: G, color: INK, padding: '15px 40px', ...F, fontSize: '13px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.background = '#CBA34F' }}
-            onMouseLeave={e => { e.currentTarget.style.background = G }}>
-            Shop the Sale
-          </a>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
-
-// ─── Feature block: Shop the Sale teaser ──────
-function ShopTeaser({ image }) {
-  return (
-    <section style={{ background: BG, padding: 'clamp(48px, 7vw, 80px) 24px', borderBottom: `1px solid ${BR}` }}>
-      <div className="promo-feature-grid" style={{ maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'clamp(28px, 5vw, 64px)', alignItems: 'center' }}>
-        <motion.div initial={{ opacity: 0, x: -16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
-          style={{ aspectRatio: '4/5', background: LG, overflow: 'hidden' }}>
-          {image && <img src={image} alt="" onError={e => { e.target.style.display = 'none' }} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />}
-        </motion.div>
-        <motion.div initial={{ opacity: 0, x: 16 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-          <p style={{ ...F, fontSize: '11px', fontWeight: 700, color: G, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '12px' }}>
-            Limited Time
-          </p>
-          <h2 style={{ ...F, fontSize: 'clamp(24px, 3vw, 34px)', fontWeight: 800, color: DK, letterSpacing: '-0.02em', lineHeight: 1.15, marginBottom: '16px' }}>
-            Discover your next favourite piece
-          </h2>
-          <p style={{ ...F, fontSize: '14px', fontWeight: 300, color: MD, lineHeight: 1.8, marginBottom: '28px', maxWidth: '400px' }}>
-            A rotating edit of marked-down pieces from across our collections. Once they're gone, they're gone.
-          </p>
-          <a href="#shop-sale" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: INK, color: W, padding: '13px 32px', ...F, fontSize: '12px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', textDecoration: 'none', transition: 'background 0.2s' }}
-            onMouseEnter={e => { e.currentTarget.style.background = G }}
-            onMouseLeave={e => { e.currentTarget.style.background = INK }}>
-            Browse the Sale
-          </a>
-        </motion.div>
-      </div>
-    </section>
   )
 }
 
@@ -310,18 +233,9 @@ export default function Sale() {
     })
   }, [products, sortBy])
 
-  const maxDiscount = useMemo(() => {
-    if (!products.length) return 0
-    return Math.max(...products.map(p => p.discount_percent || 0))
-  }, [products])
-
-  const teaserImage = sorted[0]?.image_url
-
   return (
     <div style={{ background: BG, minHeight: '100vh' }}>
 
-      <PromoHero maxDiscount={maxDiscount} />
-      <ShopTeaser image={teaserImage} />
       <GiftCardSection />
       <HelpBanner />
 

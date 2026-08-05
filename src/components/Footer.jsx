@@ -33,7 +33,7 @@ const shopLinks = [
   { label: 'The Love Edit',   path: '/shop?col=love-edit'},
   { label: 'Bold & Beautiful',path: '/shop?col=bold'     },
   { label: 'Pleasure Pleats',path: '/shop?col=pleasure-pleats'     },
-  { label: 'Sales Promotion', path: '/sale'              },
+  { label: 'Gift Card',       path: '/sale'              },
 ]
 const companyLinks = [
   { label: 'Our Brand', path: '/brand'    },
