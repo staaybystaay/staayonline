@@ -29,7 +29,7 @@ const slides = [
   },
   {
     id: 3,
-    image: '/home-hero2.jpg',
+    image: '/home-hero-new3.jpg',
     headline: 'MADE IN ACCRA.\nWORN EVERYWHERE.',
     // sub: 'Local craftsmanship. International standard.',
     cta: 'Explore the Brand',
