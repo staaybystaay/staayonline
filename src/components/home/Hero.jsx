@@ -11,7 +11,7 @@ const F  = { fontFamily: "'Inter', sans-serif" }
 const slides = [
   {
     id: 1,
-    image: '/home-hero.jpg',
+    image: '/home-hero-new.jpg',
     headline: 'WHERE BEAUTY\nBEGINS TODAY',
     // sub: 'Soft, feminine, intentional.',
     cta: 'Explore Staay',
