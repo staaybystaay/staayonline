@@ -20,7 +20,7 @@ const slides = [
   },
   {
     id: 2,
-    image: '/home-hero1.jpg',
+    image: '/home-hero-new1.jpg',
     headline: 'DRESS THE WAY\nYOU FEEL TODAY',
     // sub: 'Styles that match every version of you.',
     cta: 'Shop All Collections',
