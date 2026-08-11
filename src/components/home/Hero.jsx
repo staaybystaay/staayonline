@@ -11,7 +11,7 @@ const F  = { fontFamily: "'Inter', sans-serif" }
 const slides = [
   {
     id: 1,
-    image: '/home-hero.jpg',
+    image: '/home-hero-new.jpg',
     headline: 'WHERE BEAUTY\nBEGINS TODAY',
     // sub: 'Soft, feminine, intentional.',
     cta: 'Explore Staay',
@@ -20,7 +20,7 @@ const slides = [
   },
   {
     id: 2,
-    image: '/home-hero1.jpg',
+    image: '/home-hero-new1.jpg',
     headline: 'DRESS THE WAY\nYOU FEEL TODAY',
     // sub: 'Styles that match every version of you.',
     cta: 'Shop All Collections',
@@ -29,7 +29,7 @@ const slides = [
   },
   {
     id: 3,
-    image: '/home-hero2.jpg',
+    image: '/home-hero-new2.jpg',
     headline: 'MADE IN ACCRA.\nWORN EVERYWHERE.',
     // sub: 'Local craftsmanship. International standard.',
     cta: 'Explore the Brand',
