@@ -20,7 +20,7 @@ const slides = [
   },
   {
     id: 2,
-    image: '/home-hero-new1.jpg',
+    image: '/staay-hero1.jpg',
     headline: 'DRESS THE WAY\nYOU FEEL TODAY',
     // sub: 'Styles that match every version of you.',
     cta: 'Shop All Collections',
@@ -29,7 +29,7 @@ const slides = [
   },
   {
     id: 3,
-    image: '/home-hero-new2.jpg',
+    image: '/staay-hero2.jpg',
     headline: 'MADE IN ACCRA.\nWORN EVERYWHERE.',
     // sub: 'Local craftsmanship. International standard.',
     cta: 'Explore the Brand',
