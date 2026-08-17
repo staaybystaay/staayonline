@@ -103,134 +103,76 @@ export default function Hero() {
     <section
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
-      style={{ position: 'relative', width: '100%', background: '#1A1612' }}>
+      style={{ position: 'relative', width: '100%', height: '88vh', minHeight: '520px', overflow: 'hidden', background: '#1A1612' }}>
 
-      {/* ══ DESKTOP — text panel + video shown at its own (portrait) ratio, so nothing is cropped ══ */}
-      <div className="desktop-only" style={{ position: 'relative', width: '100%', height: '88vh', minHeight: '520px', maxHeight: '820px', display: 'flex', overflow: 'hidden' }}>
+      {/* Single looping video fills the whole hero — only the text/CTA rotate */}
+      <video
+        src={HERO_VIDEO}
+        poster={HERO_POSTER}
+        autoPlay muted loop playsInline
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover', objectPosition: 'center center',
+        }}
+      />
 
-        {/* Text panel */}
-        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 clamp(40px, 5vw, 80px)', background: W }}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={s.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.55 }}>
+      {/* Subtle overlay — keep the model visible under the text */}
+      <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.28)' }} />
 
-              <h1 style={{
-                ...F, fontWeight: 900,
-                fontSize: 'clamp(40px, 5.2vw, 80px)',
-                lineHeight: 1.0,
-                letterSpacing: '-0.02em',
-                color: BK,
-                margin: '0 0 16px',
-                whiteSpace: 'pre-line',
-                textTransform: 'uppercase',
-              }}>
-                {s.headline}
-              </h1>
-
-              <p style={{
-                ...F, fontWeight: 400,
-                fontSize: 'clamp(14px, 1.8vw, 18px)',
-                color: 'rgba(26,22,18,0.65)',
-                marginBottom: '28px',
-                letterSpacing: '0.04em',
-                fontStyle: 'italic',
-              }}>
-                {s.sub}
-              </p>
-
-              <Link
-                to={s.href}
-                style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '10px',
-                  background: BK, color: W,
-                  padding: '14px 36px',
-                  ...F, fontSize: '13px', fontWeight: 700,
-                  letterSpacing: '0.06em', textTransform: 'uppercase',
-                  transition: 'background 0.25s, transform 0.2s',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = '#000'; e.currentTarget.style.transform = 'translateY(-2px)' }}
-                onMouseLeave={e => { e.currentTarget.style.background = BK; e.currentTarget.style.transform = 'translateY(0)' }}>
-                {s.cta}
-              </Link>
-
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Video panel — width follows the video's own 9:16 ratio, so it's never cropped */}
-        <div style={{ position: 'relative', height: '100%', aspectRatio: '9 / 16', flexShrink: 0, overflow: 'hidden', background: BK }}>
-          <video
-            src={HERO_VIDEO}
-            poster={HERO_POSTER}
-            autoPlay muted loop playsInline
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 78%, rgba(26,22,18,0.55) 100%)' }} />
-          <Arrows onPrev={prev} onNext={next} />
-          <Dots slides={slides} activeIdx={idx} onSelect={setIdx} style={{ bottom: '20px' }} />
-
-          {!paused && (
-            <motion.div
-              key={`bar-${s.id}`}
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 6, ease: 'linear' }}
-              style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '3px', background: G, transformOrigin: 'left', zIndex: 4 }}
-            />
-          )}
-        </div>
-      </div>
-
-      {/* ══ MOBILE — full, uncropped video on top (it's shot portrait); text below, not overlaid ══ */}
-      <div className="mobile-only" style={{ display: 'none', flexDirection: 'column' }}>
-
-        <div style={{ position: 'relative', width: '100%', aspectRatio: '9 / 16', overflow: 'hidden' }}>
-          <video
-            src={HERO_VIDEO}
-            poster={HERO_POSTER}
-            autoPlay muted loop playsInline
-            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(26,22,18,0.55) 100%)' }} />
-          <Arrows onPrev={prev} onNext={next} size={36} />
-          <Dots slides={slides} activeIdx={idx} onSelect={setIdx} style={{ bottom: '14px' }} />
-        </div>
-
+      {/* ── HUGE TEXT — overlaid directly on the video ── */}
+      <div className="hero-content" style={{
+        position: 'absolute', inset: 0, zIndex: 2,
+        display: 'flex', flexDirection: 'column',
+        justifyContent: 'flex-end',
+        padding: '0 60px 60px',
+      }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={s.id}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.45 }}
-            style={{ padding: '28px 24px 36px' }}>
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.55 }}
+            style={{ maxWidth: '720px' }}>
 
             <h1 style={{
               ...F, fontWeight: 900,
-              fontSize: 'clamp(28px, 8vw, 40px)',
-              lineHeight: 1.05,
+              fontSize: 'clamp(40px, 7vw, 96px)',
+              lineHeight: 1.0,
               letterSpacing: '-0.02em',
               color: W,
-              margin: '0 0 20px',
+              margin: '0 0 16px',
               whiteSpace: 'pre-line',
               textTransform: 'uppercase',
+              textShadow: '0 2px 20px rgba(0,0,0,0.3)',
             }}>
               {s.headline}
             </h1>
+
+            <p style={{
+              ...F, fontWeight: 400,
+              fontSize: 'clamp(14px, 1.8vw, 18px)',
+              color: 'rgba(255,255,255,0.85)',
+              marginBottom: '28px',
+              letterSpacing: '0.04em',
+              fontStyle: 'italic',
+            }}>
+              {s.sub}
+            </p>
 
             <Link
               to={s.href}
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '10px',
-                background: W, color: BK,
-                padding: '13px 30px',
+                background: BK, color: W,
+                padding: '14px 36px',
                 ...F, fontSize: '13px', fontWeight: 700,
                 letterSpacing: '0.06em', textTransform: 'uppercase',
-              }}>
+                transition: 'background 0.25s, transform 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = '#000'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.background = BK; e.currentTarget.style.transform = 'translateY(0)' }}>
               {s.cta}
             </Link>
 
@@ -238,6 +180,18 @@ export default function Hero() {
         </AnimatePresence>
       </div>
 
+      <Arrows onPrev={prev} onNext={next} />
+      <Dots slides={slides} activeIdx={idx} onSelect={setIdx} style={{ bottom: '28px' }} />
+
+      {!paused && (
+        <motion.div
+          key={`bar-${s.id}`}
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 6, ease: 'linear' }}
+          style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '3px', background: G, transformOrigin: 'left', zIndex: 4 }}
+        />
+      )}
     </section>
   )
 }
