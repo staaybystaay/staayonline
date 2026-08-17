@@ -27,6 +27,24 @@ Deno.serve(async (req) => {
       return json({ error: 'Order not found' }, 404)
     }
 
+    // If the caller is signed in, the order must actually be theirs.
+    // Guest checkouts (no signed-in caller — just the anon key) are left
+    // alone: requiring an account would break guest checkout, and the
+    // order id is an unguessable UUID, not something to brute-force.
+    const authHeader = req.headers.get('Authorization')
+    const token = authHeader?.replace(/^Bearer\s+/i, '')
+    if (token) {
+      const { data } = await supabase.auth.getUser(token).catch(() => ({ data: null }))
+      const caller = data?.user
+      if (caller) {
+        const ownsByCustomerId = !!order.customer_id && order.customer_id === caller.id
+        const ownsByEmail      = !!order.email && order.email.toLowerCase() === caller.email?.toLowerCase()
+        if (!ownsByCustomerId && !ownsByEmail) {
+          return json({ error: 'You do not have permission to pay for this order' }, 403)
+        }
+      }
+    }
+
     if (order.payment_status === 'paid') {
       return json({ error: 'This order has already been paid for' }, 400)
     }
