@@ -8,10 +8,12 @@ const BK = '#1A1612'
 const W  = '#FFFFFF'
 const F  = { fontFamily: "'Inter', sans-serif" }
 
+const HERO_VIDEO  = '/hero-video.mp4'
+const HERO_POSTER = '/hero-video-poster.jpg'
+
 const slides = [
   {
     id: 1,
-    image: '/home-hero-new.jpg',
     headline: 'WHERE BEAUTY\nBEGINS TODAY',
     // sub: 'Soft, feminine, intentional.',
     cta: 'Explore Staay',
@@ -20,7 +22,6 @@ const slides = [
   },
   {
     id: 2,
-    image: '/home-hero-new1.jpg',
     headline: 'DRESS THE WAY\nYOU FEEL TODAY',
     // sub: 'Styles that match every version of you.',
     cta: 'Shop All Collections',
@@ -29,7 +30,6 @@ const slides = [
   },
   {
     id: 3,
-    image: '/home-hero-new2.jpg',
     headline: 'MADE IN ACCRA.\nWORN EVERYWHERE.',
     // sub: 'Local craftsmanship. International standard.',
     cta: 'Explore the Brand',
@@ -105,54 +105,28 @@ export default function Hero() {
       onMouseLeave={() => setPaused(false)}
       style={{ position: 'relative', width: '100%', background: '#1A1612' }}>
 
-      {/* ══ DESKTOP — full-bleed image with huge text overlaid ══ */}
-      <div className="desktop-only" style={{ position: 'relative', width: '100%', height: '88vh', minHeight: '520px', overflow: 'hidden' }}>
+      {/* ══ DESKTOP — text panel + video shown at its own (portrait) ratio, so nothing is cropped ══ */}
+      <div className="desktop-only" style={{ position: 'relative', width: '100%', height: '88vh', minHeight: '520px', maxHeight: '820px', display: 'flex', overflow: 'hidden' }}>
 
-        <AnimatePresence mode="crossfade">
-          <motion.div
-            key={s.id}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.9 }}
-            style={{
-              position: 'absolute', inset: 0,
-              backgroundImage: `url(${s.image})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center top',
-            }}
-          />
-        </AnimatePresence>
-
-        {/* Subtle overlay — keep model visible */}
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.28)' }} />
-
-        {/* ── HUGE TEXT — Damsyn style ── */}
-        <div className="hero-content" style={{
-          position: 'absolute', inset: 0, zIndex: 2,
-          display: 'flex', flexDirection: 'column',
-          justifyContent: 'flex-end',
-          padding: '0 60px 60px',
-        }}>
+        {/* Text panel */}
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 clamp(40px, 5vw, 80px)', background: W }}>
           <AnimatePresence mode="wait">
             <motion.div
               key={s.id}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.55 }}
-              style={{ maxWidth: s.align === 'right' ? '100%' : '720px', marginLeft: s.align === 'right' ? 'auto' : '0', textAlign: s.align === 'right' ? 'right' : 'left' }}>
+              transition={{ duration: 0.55 }}>
 
               <h1 style={{
                 ...F, fontWeight: 900,
-                fontSize: 'clamp(48px, 7vw, 96px)',
+                fontSize: 'clamp(40px, 5.2vw, 80px)',
                 lineHeight: 1.0,
                 letterSpacing: '-0.02em',
-                color: W,
+                color: BK,
                 margin: '0 0 16px',
                 whiteSpace: 'pre-line',
                 textTransform: 'uppercase',
-                textShadow: '0 2px 20px rgba(0,0,0,0.3)',
               }}>
                 {s.headline}
               </h1>
@@ -160,7 +134,7 @@ export default function Hero() {
               <p style={{
                 ...F, fontWeight: 400,
                 fontSize: 'clamp(14px, 1.8vw, 18px)',
-                color: 'rgba(255,255,255,0.85)',
+                color: 'rgba(26,22,18,0.65)',
                 marginBottom: '28px',
                 letterSpacing: '0.04em',
                 fontStyle: 'italic',
@@ -187,36 +161,40 @@ export default function Hero() {
           </AnimatePresence>
         </div>
 
-        <Arrows onPrev={prev} onNext={next} />
-        <Dots slides={slides} activeIdx={idx} onSelect={setIdx} style={{ bottom: '28px' }} />
-
-        {!paused && (
-          <motion.div
-            key={`bar-${s.id}`}
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            transition={{ duration: 6, ease: 'linear' }}
-            style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '3px', background: G, transformOrigin: 'left', zIndex: 4 }}
+        {/* Video panel — width follows the video's own 9:16 ratio, so it's never cropped */}
+        <div style={{ position: 'relative', height: '100%', aspectRatio: '9 / 16', flexShrink: 0, overflow: 'hidden', background: BK }}>
+          <video
+            src={HERO_VIDEO}
+            poster={HERO_POSTER}
+            autoPlay muted loop playsInline
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
-        )}
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 78%, rgba(26,22,18,0.55) 100%)' }} />
+          <Arrows onPrev={prev} onNext={next} />
+          <Dots slides={slides} activeIdx={idx} onSelect={setIdx} style={{ bottom: '20px' }} />
+
+          {!paused && (
+            <motion.div
+              key={`bar-${s.id}`}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 6, ease: 'linear' }}
+              style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '3px', background: G, transformOrigin: 'left', zIndex: 4 }}
+            />
+          )}
+        </div>
       </div>
 
-      {/* ══ MOBILE — full, uncropped image on top; text below, not overlaid ══ */}
+      {/* ══ MOBILE — full, uncropped video on top (it's shot portrait); text below, not overlaid ══ */}
       <div className="mobile-only" style={{ display: 'none', flexDirection: 'column' }}>
 
-        <div style={{ position: 'relative', width: '100%', aspectRatio: '16 / 9', overflow: 'hidden' }}>
-          <AnimatePresence mode="crossfade">
-            <motion.img
-              key={s.id}
-              src={s.image}
-              alt={s.headline.replace('\n', ' ')}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.9 }}
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-          </AnimatePresence>
+        <div style={{ position: 'relative', width: '100%', aspectRatio: '9 / 16', overflow: 'hidden' }}>
+          <video
+            src={HERO_VIDEO}
+            poster={HERO_POSTER}
+            autoPlay muted loop playsInline
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 65%, rgba(26,22,18,0.55) 100%)' }} />
           <Arrows onPrev={prev} onNext={next} size={36} />
           <Dots slides={slides} activeIdx={idx} onSelect={setIdx} style={{ bottom: '14px' }} />
